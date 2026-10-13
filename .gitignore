@@ -151,3 +151,6 @@ report/supplement.pdf
 *~
 *.orig
 *.rej
+
+# Local Claude guidance is not part of the shared project.
+/CLAUDE.md
