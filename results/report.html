@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pairing an LLM with Molecular BO &mdash; Results</title>
+<style>
+:root {
+  color-scheme: light;
+  --surface-0:#f7f7f5; --surface-1:#fcfcfb; --surface-2:#efefeb;
+  --ink-1:#14140f; --ink-2:#4c4c45; --ink-3:#78776d;
+  --rule:#dededa; --rule-strong:#c4c4bd;
+  --c-ref:#2a78d6; --c-llm:#eb6834; --c-ceil:#1baf7a; --c-mute:#9a9a91;
+  --bad:#fbeceb; --good:#e7f6ef;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface-0:#131312; --surface-1:#1a1a19; --surface-2:#242422;
+    --ink-1:#ffffff; --ink-2:#c3c2b7; --ink-3:#8e8d84;
+    --rule:#32322f; --rule-strong:#46453f;
+    --c-ref:#3987e5; --c-llm:#d95926; --c-ceil:#199e70; --c-mute:#77776f;
+    --bad:#2d1c1b; --good:#13291f;
+  }
+}
+* { box-sizing: border-box; }
+body { margin:0; background:var(--surface-0); color:var(--ink-1); font-size:15px; line-height:1.6;
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+.wrap { max-width:1000px; margin:0 auto; padding:40px 20px 80px; }
+h1,h2,h3 { margin:0; text-wrap:balance; font-family: Georgia, "Times New Roman", serif; }
+h1 { font-size:clamp(26px,5vw,38px); font-weight:600; line-height:1.15; letter-spacing:-0.01em; }
+h2 { font-size:21px; margin-top:6px; }
+h3 { font-size:15.5px; margin-top:14px; font-family:inherit; }
+p { margin:0; color:var(--ink-2); }
+.lede { font-size:17px; max-width:68ch; }
+.mono, .smi { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+.smi { font-size:10.5px; max-width:300px; overflow-wrap:anywhere; }
+.eyebrow { font-family:ui-monospace,Consolas,monospace; font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3); }
+header { display:flex; flex-direction:column; gap:14px; padding-bottom:24px;
+  border-bottom:2px solid var(--rule-strong); }
+section { display:flex; flex-direction:column; gap:15px; padding:32px 0; border-bottom:1px solid var(--rule); }
+nav { display:flex; flex-wrap:wrap; gap:8px; padding-top:6px; }
+nav a { font-size:12px; text-decoration:none; color:var(--ink-2); background:var(--surface-2);
+  border:1px solid var(--rule); border-radius:99px; padding:4px 11px; }
+nav a:hover { color:var(--ink-1); border-color:var(--rule-strong); }
+.verdict { background:var(--surface-1); border:1px solid var(--rule); border-left:3px solid var(--c-llm);
+  border-radius:3px; padding:18px 20px; display:flex; flex-direction:column; gap:10px; }
+.verdict p { color:var(--ink-1); }
+.scroll { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; font-size:13px; min-width:560px; }
+caption { text-align:left; font-size:12.5px; color:var(--ink-3); padding-bottom:9px; }
+th,td { padding:7px 10px; text-align:right; border-bottom:1px solid var(--rule); vertical-align:top; }
+th:first-child, td:first-child { text-align:left; }
+thead th { font-size:10.5px; font-weight:600; letter-spacing:.05em; text-transform:uppercase;
+  color:var(--ink-3); border-bottom:1.5px solid var(--rule-strong); white-space:nowrap; }
+tbody td { font-family:ui-monospace,Consolas,monospace; font-variant-numeric:tabular-nums; color:var(--ink-2); }
+tbody td:first-child { font-family:inherit; color:var(--ink-1); }
+tr.is-ref td { background:var(--surface-2); }
+tr.is-ref .arm { font-weight:700; }
+tr.is-llm .arm, tr.is-llm td:first-child { color:var(--c-llm); font-weight:600; }
+tr.is-ceil .arm { color:var(--c-ceil); font-weight:600; }
+tr.muted td { opacity:.55; }
+.arm { display:block; }
+.blurb { display:block; font-size:11.5px; color:var(--ink-3); font-weight:400; margin-top:2px; }
+.pill { font-family:ui-monospace,Consolas,monospace; font-size:10.5px; padding:1px 6px;
+  border-radius:3px; white-space:nowrap; }
+.pill.up { background:var(--good); color:var(--ink-1); }
+.pill.down { background:var(--bad); color:var(--ink-1); }
+.pill.ns, .pill.ref { background:var(--surface-2); color:var(--ink-3); }
+figure { margin:0; display:flex; flex-direction:column; gap:10px; }
+.chart { background:var(--surface-1); border:1px solid var(--rule); border-radius:3px; padding:16px 14px 8px; }
+svg { display:block; width:100%; height:auto; }
+svg text { font-family:-apple-system,"Segoe UI",Roboto,sans-serif; }
+svg text.mono { font-family:ui-monospace,Consolas,monospace; }
+.legend { display:flex; flex-wrap:wrap; gap:14px; font-size:12px; color:var(--ink-2); }
+.legend span { display:inline-flex; align-items:center; gap:6px; }
+.sw { width:10px; height:10px; border-radius:50%; }
+.dash { width:14px; border-top:2px dashed var(--c-ref); }
+.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; }
+.card { background:var(--surface-1); border:1px solid var(--rule); border-radius:3px;
+  padding:14px 15px; display:flex; flex-direction:column; gap:6px; }
+.card .num { font-family:ui-monospace,Consolas,monospace; font-size:23px; font-weight:600;
+  color:var(--ink-1); line-height:1.1; }
+.card .cap { font-size:12.5px; color:var(--ink-2); }
+pre { background:var(--surface-1); border:1px solid var(--rule); border-radius:3px; padding:12px 14px;
+  overflow-x:auto; font-size:12px; color:var(--ink-2); margin:0; line-height:1.7;
+  font-family:ui-monospace,Consolas,monospace; }
+ul { margin:0; padding-left:19px; color:var(--ink-2); display:flex; flex-direction:column; gap:7px; }
+.note { font-size:12.5px; color:var(--ink-3); }
+</style></head><body><div class="wrap">
+
+<header>
+  <span class="eyebrow">Results report &middot; generated by scripts/build_report.py</span>
+  <h1>Three ways to pair an LLM with molecular Bayesian optimisation</h1>
+  <p class="lede">A local Qwen3.5-4B narrows the library, or picks which candidate gets assayed,
+  or chooses what to test first. Each is measured against plain BO, random search, a matched
+  non-LLM control, a ceiling that already knows every answer, and published baselines from the
+  PMO benchmark.</p>
+  <nav>
+    <a href="#verdict">Verdict</a><a href="#repro">Reproduce</a><a href="#setup">Data</a>
+    <a href="#hyper">Hyperparameters</a><a href="#whatbo">What BO does</a>
+    <a href="#results">Results</a><a href="#pairings">The three pairings</a>
+    <a href="#public">Public benchmark</a><a href="#groundtruth">Ground truth</a>
+    <a href="#headroom">Headroom</a><a href="#bugs">Corrections</a><a href="#files">Files</a>
+  </nav>
+</header>
+
+<section id="verdict">
+  <span class="eyebrow">Verdict</span>
+  <div class="verdict">
+    <p><strong>None of the three pairings beats plain BO.</strong> Across three quite different
+    couplings &mdash; narrowing the library, choosing which candidate is assayed, and choosing
+    what to test first &mdash; no LLM arm is significantly ahead of the GP on its own, and the
+    constraint arm is significantly <em>behind</em> at a 100-call budget.</p>
+    <p>The one arm that gains ground, the warm start, is matched by a free MaxMin diversity
+    heuristic choosing from the same 40 molecules with no model involved &mdash; and the
+    heuristic is in fact slightly ahead at both budgets. The model says as much itself: its
+    recorded rationales are explicitly diversity arguments (&ldquo;Core Scaffold
+    Diversity&hellip; distinct structural scaffolds&hellip; maximize information gain&rdquo;).
+    It is doing MaxMin selection in prose.</p>
+  </div>
+  <div class="cards">
+    <div class="card"><span class="num">-0.030</span>
+    <span class="cap"><strong>Constraint</strong> at 100 calls
+    (p&nbsp;=&nbsp;0.006). Significantly worse. A bad mask is
+    <em>absorbing</em> &mdash; it excluded the best compound in 19 of 20 proposals and BO never
+    recovers.</span></div>
+    <div class="card"><span class="num">-0.018</span>
+    <span class="cap"><strong>Selection</strong> at 50 calls (ns). With list-position bias
+    removed it agrees with BO 3&times; more than chance &mdash; a noisy copy of the acquisition
+    function, not an improvement on it.</span></div>
+    <div class="card"><span class="num">+0.017</span>
+    <span class="cap"><strong>Warm start</strong> at 50 calls
+    (p&nbsp;=&nbsp;0.23, ns). Gains ground, but its own free
+    control gains +0.022 &mdash; more, not less.</span></div>
+  </div>
+  <p>Headroom is not the problem: the ceiling arm, which simply knows the answers, is worth
+  +0.080 at 50 calls
+  (p&nbsp;&lt;&nbsp;0.001). A good constraint wins comfortably here &mdash; this model just does
+  not find one.</p>
+  <p class="note"><strong>Correction:</strong> an earlier version of this page reported the warm
+  start as a significant win (+0.030, p&nbsp;=&nbsp;0.024). That was measured with
+  stereochemistry-blind fingerprints. After fixing the representation (see
+  <a href="#space">Search space</a>) the effect is no longer significant and the non-LLM control
+  overtakes it. Every number here was regenerated after the fix.</p>
+  <p class="note">Scope: Qwen3.5-4B running locally. It misidentifies the series' chemotype in
+  every prompt format tried &mdash; calling anilinoquinazolines a &ldquo;pyrazolo[3,4-d]pyrimidine
+  core&rdquo; &mdash; so these are results about a small local model, not about language models
+  in general. The harness is backend-agnostic.</p>
+</section>
+
+<section id="repro">
+  <span class="eyebrow">Reproduce</span>
+  <h2>Exact commands</h2>
+  <pre># 1. Serve the model locally (nothing here uses a hosted API)
+llama serve -hf unsloth/Qwen3.5-4B-GGUF:Q8_0 --port 8080 \
+    --ctx-size 16384 --n-gpu-layers all --reasoning-budget 0
+
+# 2. Build the congeneric series from ChEMBL (already in data/chembl)
+python scripts/build_chembl_series.py --target CHEMBL203 --out data/chembl/egfr
+
+# 3. Measure headroom BEFORE committing to an arm
+python scripts/constraint_headroom.py \
+    --dataset data/chembl/egfr_anilinoquinazoline.csv --seeds 10 \
+    --out results/headroom_egfr_congeneric.json
+
+# 4. The main sweep: all arms, 20 paired seeds
+python scripts/run_lookup_experiment.py \
+    --dataset data/chembl/egfr_anilinoquinazoline.csv \
+    --budget 50 --seeds 20 --constraint-fraction 0.05 \
+    --llm-arm --select-arm --warmstart-arm --shortlist-k 15 \
+    --out results/bench_final_b50
+
+# 5. The public benchmark, against PMO's published baselines
+python scripts/run_pmo_experiment.py --seeds 5 --budget 1000 \
+    --tasks albuterol_similarity celecoxib_rediscovery deco_hop \
+            median1 osimertinib_mpo --out results/pmo
+
+# 6. Regenerate this page from whatever is in results/
+python scripts/build_report.py</pre>
+  <p>Determinism: the model runs greedy (<span class="mono">temperature 0</span>,
+  <span class="mono">top_k 1</span>, fixed seed) and every response is cached by a hash of the
+  exact request, so a rerun makes <strong>zero</strong> model calls and reproduces the tables
+  byte for byte. Delete <span class="mono">data/cache/llm*</span> to force fresh generations.</p>
+  <p class="note">PMO install: <span class="mono">uv pip install --no-deps PyTDC==0.4.17</span>
+  then <span class="mono">fuzzywuzzy seaborn "setuptools&lt;81" mygene huggingface_hub networkx
+  biopython</span>. PyTDC otherwise pulls <span class="mono">tiledbsoma</span>, which nothing
+  here uses and which needs a build toolchain.</p>
+</section>
+
+<section id="setup">
+  <span class="eyebrow">Data</span>
+  <h2>What the oracle is</h2>
+  <p>A dictionary lookup of real measured activities, which is why a 20-seed sweep costs about a
+  minute and why 20 seeds are affordable at all. It is also the only tier with true ground
+  truth: the library optimum is known, so simple regret and top-1% recall are computable.</p>
+  <div class="scroll"><table><tbody>
+    <tr><td>Source</td><td class="mono">ChEMBL REST API, target CHEMBL203 (EGFR)</td></tr>
+    <tr><td>Assay</td><td class="mono">IC50, binding assays (assay_type = B), pChEMBL values</td></tr>
+    <tr><td>Filters</td><td class="mono">standard_relation '=' only; empty data_validity_comment; replicates collapsed to median; max SEM 0.5</td></tr>
+    <tr><td>Series</td><td class="mono">anilinoquinazoline scaffold cluster, core c1ccc2ncnc(Nc3ccccc3)c2c1</td></tr>
+    <tr><td>Size filter</td><td class="mono">10&ndash;55 heavy atoms (removed 17 of 2,103; optimum unchanged)</td></tr>
+    <tr><td>Library</td><td class="mono">2,086 compounds, pIC50 4.00&ndash;11.00, median 7.40</td></tr>
+    <tr><td>Objective</td><td class="mono">maximise pIC50 (higher = more potent)</td></tr>
+    <tr><td>Metric</td><td class="mono">AUC of the top-10 mean vs cumulative UNIQUE oracle calls (PMO's metric)</td></tr>
+  </tbody></table></div>
+  <p><strong>Why censored records are dropped.</strong> A &ldquo;&gt;10000 nM&rdquo; result is a
+  bound, not a measurement; scoring it as a pIC50 of 5 would invent a cliff of fake inactives
+  and hand the surrogate structure that is not there. No 3D protein structure is used anywhere
+  in this report.</p>
+</section>
+
+<section id="hyper">
+  <span class="eyebrow">Hyperparameters</span>
+  <h2>Every knob, and its range</h2>
+  <p>Nothing below was tuned against the results. The GP's own hyperparameters are the exception:
+  they are <em>refitted from the data every round</em> by marginal likelihood, so they are a range
+  rather than a setting &mdash; see the next section for what was actually selected.</p>
+  <h3>Surrogate</h3><div class="scroll"><table><thead><tr><th>Parameter</th><th>Value / range</th><th>Note</th></tr></thead><tbody><tr><td class="mono">Kernel</td><td class="mono">Tanimoto (MinMax on binary vectors)</td><td>No lengthscale to fit; standard for fingerprint GPs</td></tr><tr><td class="mono">Features</td><td class="mono">ECFP4, radius 2, 2048 bits</td><td>RDKit MorganGenerator</td></tr><tr><td class="mono">Noise-to-signal ratio, eta</td><td class="mono">scanned over {1e-4, 3e-4, 1e-3, 3e-3, 1e-2, 3e-2, 0.1, 0.3, 1.0}</td><td>Refitted by exact log marginal likelihood every round</td></tr><tr><td class="mono">Signal variance, s</td><td class="mono">closed form (profiled out)</td><td>s* = z'(K0 + eta.I)^-1 z / n; no numeric search</td></tr><tr><td class="mono">Mean function</td><td class="mono">constant, = mean of observed y</td><td>Targets z-scored before fitting</td></tr><tr><td class="mono">Jitter</td><td class="mono">1e-8</td><td>Added to the Gram diagonal for Cholesky stability</td></tr></tbody></table></div><h3>Acquisition</h3><div class="scroll"><table><thead><tr><th>Parameter</th><th>Value / range</th><th>Note</th></tr></thead><tbody><tr><td class="mono">Function</td><td class="mono">Expected improvement</td><td>Against the best observed value</td></tr><tr><td class="mono">Exploration offset, xi</td><td class="mono">0.01</td><td>In units of the objective (pIC50)</td></tr><tr><td class="mono">Batch size q</td><td class="mono">1 (ChEMBL) / 10 (PMO)</td><td>Sequential on the small library; batched on ZINC for cost</td></tr><tr><td class="mono">Diversity penalty</td><td class="mono">0.0 (off)</td><td>Available; unused in these runs</td></tr><tr><td class="mono">Tie-breaking</td><td class="mono">uniform random jitter, 1e-12</td><td>Shared by BO and the selector shortlist</td></tr></tbody></table></div><h3>Campaign</h3><div class="scroll"><table><thead><tr><th>Parameter</th><th>Value / range</th><th>Note</th></tr></thead><tbody><tr><td class="mono">Budget</td><td class="mono">50 and 100 unique oracle calls</td><td>PMO tier: 1,000</td></tr><tr><td class="mono">Initial design n_init</td><td class="mono">10 (ChEMBL) / 20 (PMO)</td><td>Random, and identical across arms for a given seed</td></tr><tr><td class="mono">Seeds</td><td class="mono">20 (ChEMBL) / 5 (PMO)</td><td>Paired across arms; PMO convention is 5 runs</td></tr><tr><td class="mono">Refit cadence</td><td class="mono">every round</td><td>No staleness</td></tr><tr><td class="mono">Candidates scored per round</td><td class="mono">all (ChEMBL) / 2,000 sampled (PMO)</td><td>Search space stays the full pool either way</td></tr></tbody></table></div><h3>Constraint arms</h3><div class="scroll"><table><thead><tr><th>Parameter</th><th>Value / range</th><th>Note</th></tr></thead><tbody><tr><td class="mono">Allowed library fraction</td><td class="mono">0.05</td><td>For the random-mask control and the ceiling</td></tr><tr><td class="mono">min_candidates</td><td class="mono">20 unseen</td><td>Below this a hard mask degrades to a soft penalty</td></tr><tr><td class="mono">soft_penalty</td><td class="mono">1.0</td><td>Subtracted from acquisition for disallowed molecules</td></tr><tr><td class="mono">Refresh cadence</td><td class="mono">once, and every 15 rounds (ablation)</td><td>Both tested; no difference</td></tr><tr><td class="mono">Substructure menu</td><td class="mono">28 entries, coverage window 2%-90%</td><td>Mined from the library: ring systems, Murcko scaffolds, 22 curated groups</td></tr></tbody></table></div><h3>Selection / warm-start arms</h3><div class="scroll"><table><thead><tr><th>Parameter</th><th>Value / range</th><th>Note</th></tr></thead><tbody><tr><td class="mono">shortlist_k</td><td class="mono">15</td><td>k=1 reduces exactly to plain BO</td></tr><tr><td class="mono">Shortlist order</td><td class="mono">seeded shuffle</td><td>Removes primacy/recency bias; answer mapped back to acquisition rank</td></tr><tr><td class="mono">Warm-start sample</td><td class="mono">40 molecules</td><td>Drawn with the campaign seed, the same draw plain BO uses</td></tr></tbody></table></div><h3>Language model</h3><div class="scroll"><table><thead><tr><th>Parameter</th><th>Value / range</th><th>Note</th></tr></thead><tbody><tr><td class="mono">Model</td><td class="mono">Qwen3.5-4B, Q8_0 GGUF (unsloth)</td><td>Served locally by llama.cpp</td></tr><tr><td class="mono">temperature / top_k / seed</td><td class="mono">0.0 / 1 / 0</td><td>Greedy decoding: deterministic without a cache</td></tr><tr><td class="mono">Thinking</td><td class="mono">disabled (--reasoning-budget 0)</td><td>Qwen3.5 is a hybrid reasoning model</td></tr><tr><td class="mono">Context / max_tokens</td><td class="mono">16384 / 700-1200</td><td>choice emitted before reasoning so truncation cannot lose it</td></tr><tr><td class="mono">Output constraint</td><td class="mono">JSON schema compiled to a GBNF grammar</td><td>Malformed output impossible by construction</td></tr><tr><td class="mono">Caching</td><td class="mono">sha256 of model + sampling settings + prompt + schema</td><td>A rerun makes zero model calls</td></tr></tbody></table></div>
+</section>
+
+
+<section id="space">
+  <span class="eyebrow">Search space</span>
+  <h2>Bounds and dimensionality</h2>
+  <p><strong>This is not continuous box-bounded BO.</strong> There are no lower/upper bounds on
+  continuous variables and no design matrix to optimise over. The search space is a
+  <em>discrete, fully enumerated set of molecules</em>, and the acquisition function is
+  maximised by scanning it rather than by any gradient or inner optimiser. &ldquo;Bounds&rdquo;
+  here means membership rules, not intervals.</p>
+  <div class="scroll"><table><tbody>
+    <tr><td>Search space</td><td class="mono">discrete, 2,086 enumerated molecules
+      (PMO tier: 249,455)</td></tr>
+    <tr><td>Decision variable</td><td class="mono">one categorical index over the library &mdash;
+      effectively 1-D, with 2,086 levels</td></tr>
+    <tr><td>Membership bounds</td><td class="mono">anilinoquinazoline core substructure;
+      17&ndash;55 heavy atoms (median 33);
+      measured pIC50 in [4.00, 11.00]</td></tr>
+    <tr><td>Additional bound (constraint arms)</td><td class="mono">a boolean mask over the
+      library; degrades to a soft penalty below 20 unseen survivors</td></tr>
+    <tr><td>Acquisition optimiser</td><td class="mono">exhaustive scan of all unevaluated members
+      &mdash; no local optimiser, no restarts, global by construction</td></tr>
+  </tbody></table></div>
+
+  <h3>Where dimensionality does enter: the kernel's feature space</h3>
+  <p>The GP does not see molecules, it sees fingerprints &mdash; and that is the only place a
+  dimension count is meaningful.</p>
+  <div class="cards">
+    <div class="card"><span class="num">2,048</span><span class="cap">nominal
+    ECFP4 bits. Of these 1,830 are ever set in this library and
+    1,827 actually vary &mdash; the rest carry no signal at all.</span></div>
+    <div class="card"><span class="num">3.0%</span><span class="cap">density:
+    a molecule sets 62 bits on average (range
+    26&ndash;94). The representation is extremely
+    sparse.</span></div>
+    <div class="card"><span class="num">10.1</span><span class="cap">
+    <strong>effective rank</strong> of the Tanimoto Gram (participation ratio). Despite 2,048
+    nominal dimensions the kernel is dominated by ~10 directions; 480 eigenvalues
+    are needed for 90% of the spectrum.</span></div>
+  </div>
+  <p>That gap &mdash; 2,048 nominal, ~10 effective &mdash; is precisely why a Tanimoto kernel is
+  used instead of a squared-exponential one. An RBF GP would need a lengthscale per dimension over
+  2,048 sparse binary features, which in practice collapses to either &ldquo;everything is
+  identical&rdquo; or &ldquo;nothing is related&rdquo;. Tanimoto has <em>no</em> lengthscale to
+  fit, so the curse of dimensionality never arises: pairwise similarity is the whole model.
+  Observed similarity is mean 0.30, median 0.28,
+  95th percentile 0.47 &mdash; a genuinely congeneric series, tight enough for
+  the surrogate to generalise but not degenerate.</p>
+  
+  <h3>Molecules the surrogate could not tell apart &mdash; found, and fixed</h3>
+  <p>Maximum <em>off-diagonal</em> Tanimoto in this library was <strong>1.0</strong>, meaning
+  some distinct library entries were <em>identical</em> to the GP. RDKit's Morgan generator
+  ignores stereochemistry by default, so E/Z and R/S isomers collapsed onto the same
+  fingerprint while their measured activities did not. The worst pair differed by
+  <strong>3.00 log units</strong> &mdash; a thousand-fold in potency,
+  invisible to the model:</p>
+  <pre>CN(/N=N/c1ccc2ncnc(Nc3cccc(Cl)c3)c2c1)C(=O)OCCl   pIC50 6.41
+CN(/N=N\c1ccc2ncnc(Nc3cccc(Cl)c3)c2c1)C(=O)OCCl   pIC50 9.41</pre>
+  <p>A GP handed two identical inputs with different targets can only average them, which puts
+  an <em>irreducible noise floor</em> under every prediction and shows up as a large fitted
+  <span class="mono">eta</span>. Enabling <span class="mono">includeChirality</span> removes
+  51% of the collisions:</p>
+  <div class="scroll"><table><thead><tr><th>ECFP4 setting</th><th>Identical pairs</th>
+  <th>Molecules involved</th><th>Largest pIC50 gap</th><th>Pairs differing &gt; 0.5 log</th>
+  </tr></thead><tbody>
+  <tr class="muted"><td class="mono">includeChirality=False &mdash; RDKit default</td>
+  <td>133</td><td>204 of 2,086</td>
+  <td>3.00</td><td>42</td></tr>
+  <tr class="is-ceil"><td class="mono">includeChirality=True &mdash; <strong>in use
+  (v2-chiral)</strong></td>
+  <td>65</td><td>94 of 2,086</td>
+  <td>2.03</td><td>15</td></tr>
+  </tbody></table></div>
+  <p>The remaining 65 pairs are regioisomers that ECFP4 at radius 2 genuinely cannot
+  separate; those need a larger radius or a different descriptor, not a flag. Density and
+  effective rank are unchanged &mdash; chirality alters <em>which</em> bits are set, not how many
+  &mdash; so this is a targeted correction rather than a different representation.</p>
+  <p class="note">Every result on this page was regenerated after the fix. The fingerprint recipe
+  is versioned (<span class="mono">v2-chiral</span>) and that
+  version is part of the pooled-fingerprint cache filename, so a representation change can never
+  be silently mixed with stale data.</p>
+</section>
+
+
+<section id="whatbo">
+  <span class="eyebrow">What BO actually does</span>
+  <h2>What is optimised, what is updated, what gets suggested</h2>
+  <p><strong>The objective.</strong> Maximise measured pIC50. The campaign never sees the
+  library's unobserved values &mdash; only the molecules it has paid for.</p>
+  <p><strong>What is fitted, every round.</strong> Not the molecules: the GP's own
+  hyperparameters. After each new measurement the surrogate is refitted from scratch by
+  exact log marginal likelihood &mdash; the noise-to-signal ratio <span class="mono">eta</span>
+  is scanned over a fixed 9-point grid, and for each one the signal variance has a closed
+  form, so there is no gradient step and no optimiser seed. The posterior mean and variance
+  over all unevaluated molecules are then recomputed.</p>
+  <p><strong>What is suggested.</strong> The molecule maximising expected improvement against
+  the best value seen so far. Below is a real run (seed 0, budget 50): every row is the GP
+  as it stood that round, the compound it chose, what it predicted, and what the assay
+  actually said.</p>
+  <div class="scroll"><table><thead><tr><th>Round</th><th>n obs</th><th>eta</th>
+  <th>signal var</th><th>GP mean</th><th>log ML</th><th>predicted</th><th>EI</th>
+  <th>actual</th><th>suggested molecule</th></tr></thead><tbody><tr><td>0</td><td>10</td><td>1</td><td>0.629</td><td>7.11</td><td>-14.9</td><td>7.62 &plusmn; 0.69</td><td>0.0174</td><td>9.60</td><td class="smi">Nc1ccc2c(Nc3cccc(Cl)c3)ncnc2c1</td></tr><tr><td>1</td><td>11</td><td>1</td><td>0.557</td><td>7.33</td><td>-15.7</td><td>8.11 &plusmn; 0.72</td><td>0.0050</td><td>9.46</td><td class="smi">Nc1ccc2c(Nc3cccc(I)c3)ncnc2c1</td></tr><tr><td>10</td><td>20</td><td>1</td><td>0.582</td><td>7.34</td><td>-28.7</td><td>7.41 &plusmn; 0.86</td><td>0.0014</td><td>5.13</td><td class="smi">O=C1N=C(N2CCC[C@H]2C(=O)Nc2ccc3ncnc(Nc4cccc(Cl)c4)c3c2)S/C1=C/c1cccnc1Cl</td></tr><tr><td>20</td><td>30</td><td>0.03</td><td>1.292</td><td>7.33</td><td>-39.3</td><td>7.67 &plusmn; 1.23</td><td>0.0294</td><td>8.05</td><td class="smi">C#Cc1cccc(Nc2ncnc3cc(OCCOC(=O)C(C)c4ccc(CC(C)C)cc4)c(OCCOC)cc23)c1</td></tr><tr><td>38</td><td>48</td><td>0.03</td><td>1.228</td><td>7.68</td><td>-58.9</td><td>8.18 &plusmn; 1.07</td><td>0.0228</td><td>9.80</td><td class="smi">CN(C)C/C=C/C(=O)Nc1ccc2ncnc3c2c1C=CN3c1cccc(Cl)c1F</td></tr><tr><td>39</td><td>49</td><td>0.03</td><td>1.224</td><td>7.73</td><td>-60.0</td><td>8.85 &plusmn; 0.99</td><td>0.0697</td><td>8.97</td><td class="smi">CN(C)C/C=C/C(=O)Nc1ccc2ncnc3c2c1C=CN3c1ccc(F)c(Cl)c1</td></tr></tbody></table></div>
+  <div class="cards">
+    <div class="card"><span class="num">3</span><span class="cap">distinct noise levels
+    chosen across 40 rounds (0.0001, 0.03, 1). It starts noisy at
+    10 observations and tightens to near-interpolation by 50 &mdash; the surrogate genuinely
+    re-decides how much to trust the data as it accumulates.</span></div>
+    <div class="card"><span class="num">0.93</span><span class="cap">mean absolute prediction
+    error, in log units, on the compound it chose &mdash; against a mean predicted uncertainty of
+    0.93. The GP's error bars are honest, which is what EI needs to work.</span></div>
+    <div class="card"><span class="num">40</span><span class="cap">rounds recorded, from
+    10 observations to 49. The surrogate only has to <em>rank</em>
+    well enough to steer the next purchase, not to predict exactly. Full per-round trace in
+    <span class="mono">results/gp_trace_seed0.json</span>.</span></div>
+  </div>
+</section>
+
+<section id="results">
+  <span class="eyebrow">Results</span>
+  <h2>Every arm against plain BO</h2>
+  <p>Points are mean AUC over 20 paired seeds; whiskers are &plusmn;1 SEM. The dashed line is
+  plain BO. Beating random search is a smoke test, not a result &mdash; the bar is the blue line.</p>
+  <figure>
+    <div class="chart"><svg viewBox="0 0 720 324" role="img" aria-label="Mean AUC by arm at a 50-call budget, with standard-error whiskers"><line x1="242.6" y1="18" x2="242.6" y2="290" stroke="var(--rule)" stroke-width="1"/><text x="242.6" y="306" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">0.60</text><line x1="334.3" y1="18" x2="334.3" y2="290" stroke="var(--rule)" stroke-width="1"/><text x="334.3" y="306" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">0.64</text><line x1="448.9" y1="18" x2="448.9" y2="290" stroke="var(--rule)" stroke-width="1"/><text x="448.9" y="306" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">0.69</text><line x1="563.6" y1="18" x2="563.6" y2="290" stroke="var(--rule)" stroke-width="1"/><text x="563.6" y="306" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">0.74</text><line x1="655.3" y1="18" x2="655.3" y2="290" stroke="var(--rule)" stroke-width="1"/><text x="655.3" y="306" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">0.78</text><line x1="421.5" y1="14" x2="421.5" y2="292" stroke="var(--c-ref)" stroke-width="2" stroke-dasharray="4 3"/><text x="198" y="39.0" font-size="12" text-anchor="end" fill="var(--ink-2)">Random search</text><line x1="237.5" y1="35.0" x2="265.8" y2="35.0" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.55"/><circle cx="251.7" cy="35.0" r="5.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="2"><title>Random search: 0.6040 &#177; 0.0062 (n=20)</title></circle><text x="274.8" y="39.0" font-size="11" fill="var(--ink-2)" class="mono">0.604</text><text x="198" y="73.0" font-size="12" text-anchor="end" fill="var(--ink-2)">BO + random shortlist</text><line x1="349.0" y1="69.0" x2="388.8" y2="69.0" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.55"/><circle cx="368.9" cy="69.0" r="5.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="2"><title>BO + random shortlist: 0.6551 &#177; 0.0087 (n=20)</title></circle><text x="397.8" y="73.0" font-size="11" fill="var(--ink-2)" class="mono">0.655</text><text x="198" y="107.0" font-size="12" text-anchor="end" fill="var(--ink-1)">BO + LLM selection</text><line x1="353.6" y1="103.0" x2="406.7" y2="103.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.55"/><circle cx="380.2" cy="103.0" r="5.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="2"><title>BO + LLM selection: 0.6600 &#177; 0.0116 (n=20)</title></circle><text x="415.7" y="107.0" font-size="11" fill="var(--ink-2)" class="mono">0.660</text><text x="198" y="141.0" font-size="12" text-anchor="end" fill="var(--ink-1)">BO + LLM constraint</text><line x1="370.3" y1="137.0" x2="412.2" y2="137.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.55"/><circle cx="391.2" cy="137.0" r="5.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="2"><title>BO + LLM constraint: 0.6648 &#177; 0.0091 (n=20)</title></circle><text x="421.2" y="141.0" font-size="11" fill="var(--ink-2)" class="mono">0.665</text><text x="198" y="175.0" font-size="12" text-anchor="end" fill="var(--ink-1)">Plain BO</text><line x1="398.2" y1="171.0" x2="444.8" y2="171.0" stroke="var(--c-ref)" stroke-width="2" stroke-linecap="round" opacity="0.55"/><circle cx="421.5" cy="171.0" r="5.5" fill="var(--c-ref)" stroke="var(--surface-1)" stroke-width="2"><title>Plain BO: 0.6780 &#177; 0.0102 (n=20)</title></circle><text x="453.8" y="175.0" font-size="11" fill="var(--ink-2)" class="mono">0.678</text><text x="198" y="209.0" font-size="12" text-anchor="end" fill="var(--ink-1)">BO + LLM warm start</text><line x1="438.4" y1="205.0" x2="483.7" y2="205.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.55"/><circle cx="461.1" cy="205.0" r="5.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="2"><title>BO + LLM warm start: 0.6953 &#177; 0.0099 (n=20)</title></circle><text x="492.7" y="209.0" font-size="11" fill="var(--ink-2)" class="mono">0.695</text><text x="198" y="243.0" font-size="12" text-anchor="end" fill="var(--ink-2)">BO + diversity warm start</text><line x1="447.9" y1="239.0" x2="496.6" y2="239.0" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.55"/><circle cx="472.3" cy="239.0" r="5.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="2"><title>BO + diversity warm start: 0.7002 &#177; 0.0106 (n=20)</title></circle><text x="505.6" y="243.0" font-size="11" fill="var(--ink-2)" class="mono">0.700</text><text x="198" y="277.0" font-size="12" text-anchor="end" fill="var(--ink-1)">Ceiling (knows the answers)</text><line x1="590.5" y1="273.0" x2="617.2" y2="273.0" stroke="var(--c-ceil)" stroke-width="2" stroke-linecap="round" opacity="0.55"/><circle cx="603.9" cy="273.0" r="5.5" fill="var(--c-ceil)" stroke="var(--surface-1)" stroke-width="2"><title>Ceiling (knows the answers): 0.7576 &#177; 0.0058 (n=20)</title></circle><text x="626.2" y="277.0" font-size="11" fill="var(--ink-2)" class="mono">0.758</text></svg></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--c-ref)"></i>Plain BO (reference)</span>
+      <span><i class="sw" style="background:var(--c-llm)"></i>LLM arms</span>
+      <span><i class="sw" style="background:var(--c-ceil)"></i>Ceiling</span>
+      <span><i class="sw" style="background:var(--c-mute)"></i>Non-LLM controls</span>
+      <span><i class="dash"></i>plain-BO level</span>
+    </div>
+    <figcaption class="note">Budget 50 unique oracle calls. Hover a point for its exact value.</figcaption>
+  </figure>
+  <h3>Budget 50 unique oracle calls</h3>
+  <div class="scroll"><table><thead><tr><th>Arm</th><th>AUC top-10</th><th>Best pIC50</th><th>Regret</th><th>Top-1% recall</th><th>&Delta;AUC</th><th>vs plain BO</th></tr></thead><tbody><tr class=""><td><span class="arm">Random search</span><span class="blurb">Uniform sampling from the library. The floor.</span></td><td>0.6040 &plusmn; 0.0062</td><td>9.85</td><td>1.150</td><td>2.4%</td><td>-0.0741</td><td><span class="pill down">p&lt;0.001</span></td></tr><tr class=""><td><span class="arm">BO + random shortlist</span><span class="blurb">Uniform pick from BO's top-15 shortlist.</span></td><td>0.6551 &plusmn; 0.0087</td><td>10.13</td><td>0.871</td><td>17.4%</td><td>-0.0229</td><td><span class="pill down">p&lt;0.001</span></td></tr><tr class="is-llm"><td><span class="arm">BO + LLM selection</span><span class="blurb">BO shortlists 15; the model picks which one is assayed.</span></td><td>0.6600 &plusmn; 0.0116</td><td>10.04</td><td>0.955</td><td>17.9%</td><td>-0.0180</td><td><span class="pill ns">ns</span></td></tr><tr class="is-llm"><td><span class="arm">BO + LLM constraint</span><span class="blurb">The model narrows the library from a mined substructure menu.</span></td><td>0.6648 &plusmn; 0.0091</td><td>10.03</td><td>0.966</td><td>16.9%</td><td>-0.0132</td><td><span class="pill ns">ns</span></td></tr><tr class="is-ref"><td><span class="arm">Plain BO</span><span class="blurb">GP + expected improvement. Everything is tested against this.</span></td><td>0.6780 &plusmn; 0.0102</td><td>10.18</td><td>0.815</td><td>22.4%</td><td>&mdash;</td><td><span class="pill ref">reference</span></td></tr><tr class="is-llm"><td><span class="arm">BO + LLM warm start</span><span class="blurb">The model picks the initial design from a 40-molecule sample.</span></td><td>0.6953 &plusmn; 0.0099</td><td>10.19</td><td>0.808</td><td>25.7%</td><td>+0.0173</td><td><span class="pill ns">ns</span></td></tr><tr class=""><td><span class="arm">BO + diversity warm start</span><span class="blurb">MaxMin Tanimoto pick of the initial design. No model.</span></td><td>0.7002 &plusmn; 0.0106</td><td>10.42</td><td>0.583</td><td>35.2%</td><td>+0.0221</td><td><span class="pill ns">ns</span></td></tr><tr class="is-ceil"><td><span class="arm">Ceiling (knows the answers)</span><span class="blurb">Restricted to the library's true best 5%. Not a method.</span></td><td>0.7576 &plusmn; 0.0058</td><td>10.75</td><td>0.253</td><td>64.8%</td><td>+0.0795</td><td><span class="pill up">p&lt;0.001</span></td></tr></tbody></table></div>
+  <h3>Budget 100 unique oracle calls</h3>
+  <div class="scroll"><table><thead><tr><th>Arm</th><th>AUC top-10</th><th>Best pIC50</th><th>Regret</th><th>Top-1% recall</th><th>&Delta;AUC</th><th>vs plain BO</th></tr></thead><tbody><tr class=""><td><span class="arm">Random search</span><span class="blurb">Uniform sampling from the library. The floor.</span></td><td>0.6694 &plusmn; 0.0044</td><td>10.20</td><td>0.798</td><td>6.0%</td><td>-0.0964</td><td><span class="pill down">p&lt;0.001</span></td></tr><tr class=""><td><span class="arm">BO + random mask</span><span class="blurb">Restricted to a random 5% of the library.</span></td><td>0.6834 &plusmn; 0.0069</td><td>10.07</td><td>0.928</td><td>4.5%</td><td>-0.0823</td><td><span class="pill down">p&lt;0.001</span></td></tr><tr class="is-llm"><td><span class="arm">BO + LLM constraint</span><span class="blurb">The model narrows the library from a mined substructure menu.</span></td><td>0.7359 &plusmn; 0.0101</td><td>10.20</td><td>0.804</td><td>22.1%</td><td>-0.0298</td><td><span class="pill down">p=0.006</span></td></tr><tr class=""><td><span class="arm">BO + statistical mask</span><span class="blurb">Descriptor ranges of the best-observed compounds. No model.</span></td><td>0.7655 &plusmn; 0.0094</td><td>10.44</td><td>0.556</td><td>34.8%</td><td>-0.0003</td><td><span class="pill ns">ns</span></td></tr><tr class="is-ref"><td><span class="arm">Plain BO</span><span class="blurb">GP + expected improvement. Everything is tested against this.</span></td><td>0.7658 &plusmn; 0.0089</td><td>10.55</td><td>0.447</td><td>44.5%</td><td>&mdash;</td><td><span class="pill ref">reference</span></td></tr><tr class="is-llm"><td><span class="arm">BO + LLM warm start</span><span class="blurb">The model picks the initial design from a 40-molecule sample.</span></td><td>0.7760 &plusmn; 0.0091</td><td>10.49</td><td>0.507</td><td>44.3%</td><td>+0.0102</td><td><span class="pill ns">ns</span></td></tr><tr class=""><td><span class="arm">BO + diversity warm start</span><span class="blurb">MaxMin Tanimoto pick of the initial design. No model.</span></td><td>0.7897 &plusmn; 0.0073</td><td>10.56</td><td>0.437</td><td>47.4%</td><td>+0.0239</td><td><span class="pill ns">ns</span></td></tr><tr class="is-ceil"><td><span class="arm">Ceiling (knows the answers)</span><span class="blurb">Restricted to the library's true best 5%. Not a method.</span></td><td>0.8382 &plusmn; 0.0031</td><td>11.00</td><td>0.000</td><td>94.5%</td><td>+0.0724</td><td><span class="pill up">p&lt;0.001</span></td></tr></tbody></table></div>
+  <p>Two controls carry the argument. <strong>A random mask of the same tightness significantly
+  hurts</strong> (&minus;0.081 at 100 calls), which kills the obvious objection that any
+  restriction helps a small-budget search. And <strong>the purely statistical mask is
+  neutral</strong> (&minus;0.003, p&nbsp;=&nbsp;0.65), so a win could not have been dismissed as
+  the model merely summarising descriptors.</p>
+</section>
+
+<section id="pairings">
+  <span class="eyebrow">The three pairings</span>
+  <h2>1 &mdash; Constraint: the model narrows the library</h2>
+  <p>The model sees the SAR so far plus a menu of 28 substructures mined from the library, and
+  returns a mask. It chooses by index and never writes SMARTS: asked to write them, this model
+  produced an invalid pattern <em>every single time</em>, the arm collapsed to a molecular-weight
+  range keeping 89% of the library, and the experiment measured typing rather than chemistry.</p>
+  <div class="cards">
+    <div class="card"><span class="num">1 / 20</span><span class="cap">proposals retain the single
+    best compound. A mask is <strong>absorbing</strong> &mdash; once the optimum is fenced off,
+    BO cannot recover for the rest of the run.</span></div>
+    <div class="card"><span class="num">23.5% &rarr; 31.0%</span><span class="cap">library kept vs
+    true top-1% captured. A perfectly uninformative mask would capture 23.5%.</span></div>
+    <div class="card"><span class="num">0.7350</span><span class="cap">AUC when the constraint is
+    re-proposed 6&times; per run instead of once (0.7340). More evidence does not help &mdash; the
+    &ldquo;it only sees 10 examples&rdquo; hypothesis is dead.</span></div>
+  </div>
+  <h2>2 &mdash; Selection: BO shortlists, the model picks</h2>
+  <p>Each round BO ranks candidates, the top 15 go to the model, and it chooses which one costs an
+  oracle call. A bad pick costs one evaluation, so unlike a constraint it is recoverable. It costs
+  one model call per <em>evaluation</em> &mdash; about 40&times; the constraint arm.
+  <span class="mono">shortlist_k</span> is the dial: <strong>k=1 is exactly plain BO</strong>
+  (pinned by a test, including on a flat acquisition surface), k = all candidates is pure
+  selection.</p>
+  
+  <h3>The confound this arm exposed</h3>
+  <p>Presented in acquisition order, &ldquo;picks position 0&rdquo; and &ldquo;agrees with BO's
+  top candidate&rdquo; are <em>the same event</em>. The first run's choice distribution was
+  strongly non-uniform but the shape was <strong>positional</strong> &mdash; peaks at the first
+  and last entries, a trough at the second. Textbook primacy/recency bias impersonating
+  judgment. Shuffling the shortlist into a seeded random order and mapping the answer back
+  decouples them; these are the resulting <em>acquisition</em> ranks over
+  800 decisions:</p>
+  <div class="scroll"><table><thead><tr><th>acq. rank</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th></tr></thead>
+  <tbody><tr><td>picks</td><td>171</td><td>80</td><td>57</td><td>44</td><td>56</td><td>43</td><td>41</td><td>35</td><td>46</td><td>30</td><td>35</td><td>51</td><td>35</td><td>42</td><td>34</td></tr></tbody></table></div>
+  <p>It picks BO's own top candidate <strong>21.4%</strong> of the time
+  against 6.7% for chance, and its mean chosen rank is 5.31 against
+  7.0 for uniform. So with position bias removed it <em>does</em> carry real
+  signal about what the GP likes &mdash; and it still does not help, because agreeing with BO a
+  fifth of the time and deviating the rest is worse than simply taking BO's pick. It is a
+  noisy approximation of the acquisition function, not an improvement on it.</p>
+  <h2>3 &mdash; Warm start: the model picks what to test first</h2>
+  <p>With nothing yet measured, the model chooses the first 10 compounds from a seeded
+  40-molecule sample. This is the best case a language model gets: there is no data, so the
+  surrogate has nothing to offer and prior knowledge is all there is. One call per run.</p>
+  <p>The comparison is unusually tight &mdash; the sample is drawn with the campaign's own seed,
+  the same draw plain BO's random design comes from, so the <em>only</em> difference is which
+  members of an identical pool get bought first.</p>
+  <div class="scroll"><table>
+    <caption>Head to head. The diversity control picks from the same sample by greedy MaxMin
+    Tanimoto distance, with no model involved.</caption>
+    <thead><tr><th>Comparison</th><th>Budget</th><th>&Delta;AUC</th><th>p</th>
+    <th>seeds ahead</th><th>Verdict</th></tr></thead>
+    <tbody><tr class=""><td>LLM warm start vs plain BO</td><td>50</td><td>+0.0173</td><td>0.231</td><td>11/20</td><td><span class="pill ns">ns</span></td></tr><tr class=""><td>Diversity warm start vs plain BO</td><td>50</td><td>+0.0221</td><td>0.114</td><td>15/20</td><td><span class="pill ns">ns</span></td></tr><tr class="is-llm"><td>LLM warm start vs diversity warm start</td><td>50</td><td>-0.0049</td><td>0.784</td><td>9/20</td><td><span class="pill ns">indistinguishable</span></td></tr><tr class=""><td>LLM warm start vs plain BO</td><td>100</td><td>+0.0102</td><td>0.622</td><td>10/20</td><td><span class="pill ns">ns</span></td></tr><tr class=""><td>Diversity warm start vs plain BO</td><td>100</td><td>+0.0239</td><td>0.070</td><td>15/20</td><td><span class="pill ns">ns</span></td></tr><tr class="is-llm"><td>LLM warm start vs diversity warm start</td><td>100</td><td>-0.0137</td><td>0.294</td><td>9/20</td><td><span class="pill ns">indistinguishable</span></td></tr></tbody></table></div>
+  <p><strong>Warm-starting BO helps a little; the LLM is not what helps.</strong> Neither warm
+  start reaches significance against plain BO once the fingerprint is correct, and the free
+  diversity heuristic is ahead of the model at both budgets &mdash; on 15 of 20 seeds against
+  plain BO, where the model manages 10 or 11.</p>
+</section>
+
+
+<section id="public">
+  <span class="eyebrow">Public benchmark</span>
+  <h2>PMO &mdash; comparing against 25 published algorithms</h2>
+  <p>Every other number here comes from an oracle we built, which is exactly what a reviewer
+  distrusts. <strong>PMO</strong> (&ldquo;Sample Efficiency Matters: A Benchmark for Practical
+  Molecular Optimization&rdquo;, Gao, Fu, Sun &amp; Coley, NeurIPS 2022) fixed 23 tasks, capped
+  the oracle budget, and re-ran 25 algorithms &mdash; finding that most &ldquo;state-of-the-art&rdquo;
+  methods stop beating their predecessors once the budget is controlled. Tasks are distributed
+  through <span class="mono">PyTDC</span>; a task is a scoring function from SMILES to [0, 1].</p>
+  <p>Our search space is the <strong>ZINC-250k</strong> pool (249,455 molecules), so
+  the like-for-like published baselines are the library-based ones: <span class="mono">screening</span>
+  (random sampling from the pool) and <span class="mono">MolPAL</span> (BO over the pool). The
+  generative baselines search unrestricted chemical space and will score higher partly for that
+  reason alone.</p>
+  <div class="scroll"><table>
+    <caption>AUC top-10. Ours: <strong>1,000 calls</strong>, 5 seeds.
+    Published: <strong>10,000 calls</strong>, 5 runs. Not interchangeable &mdash; ours is the
+    harder budget.</caption>
+    <thead><tr><th>Task</th><th>ours: random</th><th>ours: plain BO</th>
+    <th>screening (10k)</th><th>MolPAL (10k)</th><th></th></tr></thead>
+    <tbody><tr class=""><td class="mono">albuterol_similarity</td><td>0.4133</td><td><strong>0.5505</strong></td><td>0.489 <span class='pill up'>we win</span></td><td>0.609</td><td></td></tr><tr class=""><td class="mono">celecoxib_rediscovery</td><td>0.2853</td><td><strong>0.3969</strong></td><td>0.354 <span class='pill up'>we win</span></td><td>0.415</td><td></td></tr><tr class=""><td class="mono">deco_hop</td><td>0.5723</td><td><strong>0.6253</strong></td><td>0.589 <span class='pill up'>we win</span></td><td>0.643</td><td></td></tr><tr class=""><td class="mono">median1</td><td>0.1620</td><td><strong>0.2598</strong></td><td>0.202 <span class='pill up'>we win</span></td><td>0.249 <span class='pill up'>we win</span></td><td></td></tr><tr class=""><td class="mono">osimertinib_mpo</td><td>0.6984</td><td><strong>0.7533</strong></td><td>0.771</td><td>0.779</td><td></td></tr></tbody></table></div>
+  <p><strong>Plain BO at 1,000 calls beats <span class="mono">screening</span> at
+  10,000 calls on 4 of 5 comparable tasks</strong>, and beats
+  <span class="mono">MolPAL</span> on 1 of 5. With a 10&times; smaller budget that is a
+  good showing &mdash; and it is the whole point of this tier: it says the surrogate and the
+  harness are sound, so a null result on the LLM arms belongs to the arms and not to the
+  scaffolding.</p>
+  <p class="note"><span class="mono">zaleplon_mpo</span> is excluded from the comparison.
+  TDC's current implementation uses a soft isomer term (a random ZINC molecule scores 0.20,
+  not 0), which cannot reproduce the published <span class="mono">screening</span> value of
+  0.039 &mdash; our number and theirs are not measuring the same function.</p>
+</section>
+
+
+<section id="groundtruth">
+  <span class="eyebrow">Ground truth</span>
+  <h2>How far from the actual answer?</h2>
+  <p>A PMO task is a scoring function that costs microseconds, so the best answer on this
+  library is not something to be estimated &mdash; it can be <strong>looked up</strong>.
+  <span class="mono">scripts/pmo_ground_truth.py</span> scores all
+  249,455 ZINC-250k molecules with the same TDC oracle the campaigns use, sorts
+  them, and records the top of the distribution. The mean of the ten best scores is the
+  <strong>ceiling on the AUC top-10 metric</strong>: the metric averages the top-10 curve, the
+  curve cannot exceed that value, so neither can any method on this pool.</p>
+  <p class="note">This is the optimum <em>of the library</em>, not of the task. These functions
+  are defined over all of chemical space, and the rediscovery targets are not in ZINC-250k
+  &mdash; <span class="mono">celecoxib_rediscovery</span> scores 1.0 for celecoxib itself, but
+  the best molecule the pool contains scores 0.4583.
+  Generative methods that build molecules are not bounded by these numbers. Library methods,
+  including every arm here and PMO's own <span class="mono">screening</span> and
+  <span class="mono">MolPAL</span>, are.</p>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--c-mute)"></i>Random</span>
+    <span><i class="sw" style="background:var(--c-ref)"></i>Plain BO</span>
+    <span><i class="sw" style="background:var(--c-llm)"></i>BO + LLM selection</span>
+    <span><i class="sw" style="background:var(--c-ceil);border-radius:1px;width:3px;height:14px"></i>Ground-truth ceiling</span>
+  </div>
+  <div class="chart"><svg viewBox="0 0 720 452" role="img" aria-label="AUC of random, plain BO and BO with LLM selection against the enumerated ground-truth ceiling, per task"><line x1="176.0" y1="16" x2="176.0" y2="418" stroke="var(--rule)" stroke-width="1"/><text x="176.0" y="434" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">0.0</text><line x1="273.6" y1="16" x2="273.6" y2="418" stroke="var(--rule)" stroke-width="1"/><text x="273.6" y="434" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">0.2</text><line x1="371.2" y1="16" x2="371.2" y2="418" stroke="var(--rule)" stroke-width="1"/><text x="371.2" y="434" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">0.4</text><line x1="468.8" y1="16" x2="468.8" y2="418" stroke="var(--rule)" stroke-width="1"/><text x="468.8" y="434" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">0.6</text><line x1="566.4" y1="16" x2="566.4" y2="418" stroke="var(--rule)" stroke-width="1"/><text x="566.4" y="434" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">0.8</text><line x1="664.0" y1="16" x2="664.0" y2="418" stroke="var(--rule)" stroke-width="1"/><text x="664.0" y="434" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">1.0</text><text x="176" y="449" font-size="11" fill="var(--ink-3)">AUC of the top-10 mean at 1,000 calls</text><text x="164" y="42.0" font-size="12" text-anchor="end" fill="var(--ink-1)">qed</text><text x="164" y="56.0" font-size="10.5" text-anchor="end" fill="var(--ink-3)" class="mono">ceiling 0.948</text><line x1="638.7" y1="29.0" x2="638.7" y2="59.0" stroke="var(--c-ceil)" stroke-width="2.5"><title>qed ground truth: best top-10 mean in the pool is 0.9481 &mdash; the highest AUC this task admits</title></line><line x1="626.6" y1="35.5" x2="627.6" y2="35.5" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="627.1" cy="35.5" r="4.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="1.5"><title>Random on qed: AUC 0.9244 &#177; 0.0010, 97.5% of the ceiling</title></circle><line x1="629.6" y1="44.0" x2="630.8" y2="44.0" stroke="var(--c-ref)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="630.2" cy="44.0" r="4.5" fill="var(--c-ref)" stroke="var(--surface-1)" stroke-width="1.5"><title>Plain BO on qed: AUC 0.9308 &#177; 0.0012, 98.2% of the ceiling</title></circle><line x1="629.7" y1="52.5" x2="631.1" y2="52.5" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="630.4" cy="52.5" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>BO + LLM selection on qed: AUC 0.9312 &#177; 0.0014, 98.2% of the ceiling</title></circle><text x="648.7" y="48.0" font-size="10.5" fill="var(--ink-3)" class="mono">98%</text><text x="164" y="86.0" font-size="12" text-anchor="end" fill="var(--ink-1)">isomers_c7h8n2o2</text><text x="164" y="100.0" font-size="10.5" text-anchor="end" fill="var(--ink-3)" class="mono">ceiling 0.931</text><line x1="630.3" y1="73.0" x2="630.3" y2="103.0" stroke="var(--c-ceil)" stroke-width="2.5"><title>isomers_c7h8n2o2 ground truth: best top-10 mean in the pool is 0.9309 &mdash; the highest AUC this task admits</title></line><line x1="244.3" y1="79.5" x2="263.3" y2="79.5" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="253.8" cy="79.5" r="4.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="1.5"><title>Random on isomers_c7h8n2o2: AUC 0.1595 &#177; 0.0194, 17.1% of the ceiling</title></circle><line x1="487.3" y1="88.0" x2="508.3" y2="88.0" stroke="var(--c-ref)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="497.8" cy="88.0" r="4.5" fill="var(--c-ref)" stroke="var(--surface-1)" stroke-width="1.5"><title>Plain BO on isomers_c7h8n2o2: AUC 0.6594 &#177; 0.0215, 70.8% of the ceiling</title></circle><line x1="501.0" y1="96.5" x2="510.5" y2="96.5" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="505.8" cy="96.5" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>BO + LLM selection on isomers_c7h8n2o2: AUC 0.6757 &#177; 0.0098, 72.6% of the ceiling</title></circle><text x="640.3" y="92.0" font-size="10.5" fill="var(--ink-3)" class="mono">73%</text><text x="164" y="130.0" font-size="12" text-anchor="end" fill="var(--ink-1)">osimertinib_mpo</text><text x="164" y="144.0" font-size="10.5" text-anchor="end" fill="var(--ink-3)" class="mono">ceiling 0.817</text><line x1="574.5" y1="117.0" x2="574.5" y2="147.0" stroke="var(--c-ceil)" stroke-width="2.5"><title>osimertinib_mpo ground truth: best top-10 mean in the pool is 0.8166 &mdash; the highest AUC this task admits</title></line><line x1="518.0" y1="123.5" x2="525.4" y2="123.5" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="521.7" cy="123.5" r="4.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="1.5"><title>Random on osimertinib_mpo: AUC 0.7084 &#177; 0.0076, 86.8% of the ceiling</title></circle><line x1="541.9" y1="132.0" x2="545.3" y2="132.0" stroke="var(--c-ref)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="543.6" cy="132.0" r="4.5" fill="var(--c-ref)" stroke="var(--surface-1)" stroke-width="1.5"><title>Plain BO on osimertinib_mpo: AUC 0.7533 &#177; 0.0034, 92.2% of the ceiling</title></circle><line x1="542.3" y1="140.5" x2="546.1" y2="140.5" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="544.2" cy="140.5" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>BO + LLM selection on osimertinib_mpo: AUC 0.7545 &#177; 0.0038, 92.4% of the ceiling</title></circle><text x="584.5" y="136.0" font-size="10.5" fill="var(--ink-3)" class="mono">92%</text><text x="164" y="174.0" font-size="12" text-anchor="end" fill="var(--ink-1)">deco_hop</text><text x="164" y="188.0" font-size="10.5" text-anchor="end" fill="var(--ink-3)" class="mono">ceiling 0.673</text><line x1="504.4" y1="161.0" x2="504.4" y2="191.0" stroke="var(--c-ceil)" stroke-width="2.5"><title>deco_hop ground truth: best top-10 mean in the pool is 0.6729 &mdash; the highest AUC this task admits</title></line><line x1="455.8" y1="167.5" x2="460.1" y2="167.5" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="457.9" cy="167.5" r="4.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="1.5"><title>Random on deco_hop: AUC 0.5778 &#177; 0.0043, 85.9% of the ceiling</title></circle><line x1="477.6" y1="176.0" x2="484.7" y2="176.0" stroke="var(--c-ref)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="481.2" cy="176.0" r="4.5" fill="var(--c-ref)" stroke="var(--surface-1)" stroke-width="1.5"><title>Plain BO on deco_hop: AUC 0.6253 &#177; 0.0073, 92.9% of the ceiling</title></circle><line x1="475.5" y1="184.5" x2="481.0" y2="184.5" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="478.2" cy="184.5" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>BO + LLM selection on deco_hop: AUC 0.6193 &#177; 0.0057, 92.0% of the ceiling</title></circle><text x="514.4" y="180.0" font-size="10.5" fill="var(--ink-3)" class="mono">93%</text><text x="164" y="218.0" font-size="12" text-anchor="end" fill="var(--ink-1)">albuterol_similarity</text><text x="164" y="232.0" font-size="10.5" text-anchor="end" fill="var(--ink-3)" class="mono">ceiling 0.621</text><line x1="478.9" y1="205.0" x2="478.9" y2="235.0" stroke="var(--c-ceil)" stroke-width="2.5"><title>albuterol_similarity ground truth: best top-10 mean in the pool is 0.6207 &mdash; the highest AUC this task admits</title></line><line x1="374.9" y1="211.5" x2="378.5" y2="211.5" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="376.7" cy="211.5" r="4.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="1.5"><title>Random on albuterol_similarity: AUC 0.4113 &#177; 0.0037, 66.3% of the ceiling</title></circle><line x1="443.2" y1="220.0" x2="446.1" y2="220.0" stroke="var(--c-ref)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="444.6" cy="220.0" r="4.5" fill="var(--c-ref)" stroke="var(--surface-1)" stroke-width="1.5"><title>Plain BO on albuterol_similarity: AUC 0.5505 &#177; 0.0030, 88.7% of the ceiling</title></circle><line x1="443.7" y1="228.5" x2="446.9" y2="228.5" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="445.3" cy="228.5" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>BO + LLM selection on albuterol_similarity: AUC 0.5518 &#177; 0.0034, 88.9% of the ceiling</title></circle><text x="488.9" y="224.0" font-size="10.5" fill="var(--ink-3)" class="mono">89%</text><text x="164" y="262.0" font-size="12" text-anchor="end" fill="var(--ink-1)">zaleplon_mpo</text><text x="164" y="276.0" font-size="10.5" text-anchor="end" fill="var(--ink-3)" class="mono">ceiling 0.530</text><line x1="434.5" y1="249.0" x2="434.5" y2="279.0" stroke="var(--c-ceil)" stroke-width="2.5"><title>zaleplon_mpo ground truth: best top-10 mean in the pool is 0.5298 &mdash; the highest AUC this task admits</title></line><line x1="350.4" y1="255.5" x2="358.4" y2="255.5" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="354.4" cy="255.5" r="4.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="1.5"><title>Random on zaleplon_mpo: AUC 0.3655 &#177; 0.0082, 69.0% of the ceiling</title></circle><line x1="376.2" y1="264.0" x2="383.8" y2="264.0" stroke="var(--c-ref)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="380.0" cy="264.0" r="4.5" fill="var(--c-ref)" stroke="var(--surface-1)" stroke-width="1.5"><title>Plain BO on zaleplon_mpo: AUC 0.4180 &#177; 0.0077, 78.9% of the ceiling</title></circle><line x1="378.4" y1="272.5" x2="383.6" y2="272.5" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="381.0" cy="272.5" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>BO + LLM selection on zaleplon_mpo: AUC 0.4201 &#177; 0.0053, 79.3% of the ceiling</title></circle><text x="444.5" y="268.0" font-size="10.5" fill="var(--ink-3)" class="mono">79%</text><text x="164" y="306.0" font-size="12" text-anchor="end" fill="var(--ink-1)">celecoxib_rediscovery</text><text x="164" y="320.0" font-size="10.5" text-anchor="end" fill="var(--ink-3)" class="mono">ceiling 0.436</text><line x1="388.9" y1="293.0" x2="388.9" y2="323.0" stroke="var(--c-ceil)" stroke-width="2.5"><title>celecoxib_rediscovery ground truth: best top-10 mean in the pool is 0.4363 &mdash; the highest AUC this task admits</title></line><line x1="314.9" y1="299.5" x2="319.7" y2="299.5" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="317.3" cy="299.5" r="4.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="1.5"><title>Random on celecoxib_rediscovery: AUC 0.2895 &#177; 0.0049, 66.4% of the ceiling</title></circle><line x1="368.9" y1="308.0" x2="370.5" y2="308.0" stroke="var(--c-ref)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="369.7" cy="308.0" r="4.5" fill="var(--c-ref)" stroke="var(--surface-1)" stroke-width="1.5"><title>Plain BO on celecoxib_rediscovery: AUC 0.3969 &#177; 0.0016, 91.0% of the ceiling</title></circle><line x1="369.7" y1="316.5" x2="371.5" y2="316.5" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="370.6" cy="316.5" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>BO + LLM selection on celecoxib_rediscovery: AUC 0.3987 &#177; 0.0019, 91.4% of the ceiling</title></circle><text x="398.9" y="312.0" font-size="10.5" fill="var(--ink-3)" class="mono">91%</text><text x="164" y="350.0" font-size="12" text-anchor="end" fill="var(--ink-1)">troglitazone_rediscovery</text><text x="164" y="364.0" font-size="10.5" text-anchor="end" fill="var(--ink-3)" class="mono">ceiling 0.331</text><line x1="337.3" y1="337.0" x2="337.3" y2="367.0" stroke="var(--c-ceil)" stroke-width="2.5"><title>troglitazone_rediscovery ground truth: best top-10 mean in the pool is 0.3306 &mdash; the highest AUC this task admits</title></line><line x1="284.6" y1="343.5" x2="286.2" y2="343.5" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="285.4" cy="343.5" r="4.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="1.5"><title>Random on troglitazone_rediscovery: AUC 0.2242 &#177; 0.0017, 67.8% of the ceiling</title></circle><line x1="316.6" y1="352.0" x2="319.6" y2="352.0" stroke="var(--c-ref)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="318.1" cy="352.0" r="4.5" fill="var(--c-ref)" stroke="var(--surface-1)" stroke-width="1.5"><title>Plain BO on troglitazone_rediscovery: AUC 0.2912 &#177; 0.0031, 88.1% of the ceiling</title></circle><line x1="316.7" y1="360.5" x2="319.5" y2="360.5" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="318.1" cy="360.5" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>BO + LLM selection on troglitazone_rediscovery: AUC 0.2912 &#177; 0.0029, 88.1% of the ceiling</title></circle><text x="347.3" y="356.0" font-size="10.5" fill="var(--ink-3)" class="mono">88%</text><text x="164" y="394.0" font-size="12" text-anchor="end" fill="var(--ink-1)">median1</text><text x="164" y="408.0" font-size="10.5" text-anchor="end" fill="var(--ink-3)" class="mono">ceiling 0.299</text><line x1="321.7" y1="381.0" x2="321.7" y2="411.0" stroke="var(--c-ceil)" stroke-width="2.5"><title>median1 ground truth: best top-10 mean in the pool is 0.2986 &mdash; the highest AUC this task admits</title></line><line x1="254.5" y1="387.5" x2="257.4" y2="387.5" stroke="var(--c-mute)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="255.9" cy="387.5" r="4.5" fill="var(--c-mute)" stroke="var(--surface-1)" stroke-width="1.5"><title>Random on median1: AUC 0.1637 &#177; 0.0030, 54.8% of the ceiling</title></circle><line x1="301.7" y1="396.0" x2="303.8" y2="396.0" stroke="var(--c-ref)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="302.8" cy="396.0" r="4.5" fill="var(--c-ref)" stroke="var(--surface-1)" stroke-width="1.5"><title>Plain BO on median1: AUC 0.2598 &#177; 0.0021, 87.0% of the ceiling</title></circle><line x1="301.7" y1="404.5" x2="303.0" y2="404.5" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="302.3" cy="404.5" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>BO + LLM selection on median1: AUC 0.2588 &#177; 0.0013, 86.7% of the ceiling</title></circle><text x="331.7" y="400.0" font-size="10.5" fill="var(--ink-3)" class="mono">87%</text></svg></div>
+  <p>On that axis the two BO arms are 0.6 pixels apart, so the chart can separate
+  <em>random from BO</em> and <em>BO from the ceiling</em>, and nothing finer. The comparison
+  the section is actually asked for &mdash; does letting the model pick from the shortlist
+  help &mdash; needs its own scale:</p>
+  <div class="chart"><svg viewBox="0 0 720 292" role="img" aria-label="Paired difference in AUC between BO with LLM selection and plain BO, per task, with standard-error whiskers"><line x1="176.0" y1="16" x2="176.0" y2="256" stroke="var(--rule)" stroke-width="1"/><text x="176.0" y="272" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">-0.043</text><line x1="298.0" y1="16" x2="298.0" y2="256" stroke="var(--rule)" stroke-width="1"/><text x="298.0" y="272" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">-0.022</text><line x1="420.0" y1="16" x2="420.0" y2="256" stroke="var(--rule)" stroke-width="1"/><text x="420.0" y="272" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">+0.000</text><line x1="542.0" y1="16" x2="542.0" y2="256" stroke="var(--rule)" stroke-width="1"/><text x="542.0" y="272" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">+0.022</text><line x1="664.0" y1="16" x2="664.0" y2="256" stroke="var(--rule)" stroke-width="1"/><text x="664.0" y="272" font-size="10.5" fill="var(--ink-3)" text-anchor="middle" class="mono">+0.043</text><line x1="420.0" y1="16" x2="420.0" y2="256" stroke="var(--ink-2)" stroke-width="2"/><text x="176" y="288" font-size="11" fill="var(--ink-3)">&Delta;AUC vs plain BO &mdash; right of the line is the selector ahead</text><text x="164" y="39.0" font-size="11.5" text-anchor="end" fill="var(--ink-1)">qed</text><line x1="418.5" y1="35.0" x2="425.8" y2="35.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="422.1" cy="35.0" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>qed: &Delta;AUC +0.0004 &#177; 0.0007 (paired, n=5)</title></circle><text x="164" y="65.0" font-size="11.5" text-anchor="end" fill="var(--ink-1)">isomers_c7h8n2o2</text><line x1="391.4" y1="61.0" x2="632.2" y2="61.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="511.8" cy="61.0" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>isomers_c7h8n2o2: &Delta;AUC +0.0163 &#177; 0.0214 (paired, n=5)</title></circle><text x="164" y="91.0" font-size="11.5" text-anchor="end" fill="var(--ink-1)">osimertinib_mpo</text><line x1="420.0" y1="87.0" x2="434.4" y2="87.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="427.2" cy="87.0" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>osimertinib_mpo: &Delta;AUC +0.0013 &#177; 0.0013 (paired, n=5)</title></circle><text x="164" y="117.0" font-size="11.5" text-anchor="end" fill="var(--ink-1)">deco_hop</text><line x1="333.9" y1="113.0" x2="438.8" y2="113.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="386.4" cy="113.0" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>deco_hop: &Delta;AUC -0.0060 &#177; 0.0093 (paired, n=5)</title></circle><text x="164" y="143.0" font-size="11.5" text-anchor="end" fill="var(--ink-1)">albuterol_similarity</text><line x1="409.3" y1="139.0" x2="445.9" y2="139.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="427.6" cy="139.0" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>albuterol_similarity: &Delta;AUC +0.0013 &#177; 0.0033 (paired, n=5)</title></circle><text x="164" y="169.0" font-size="11.5" text-anchor="end" fill="var(--ink-1)">zaleplon_mpo</text><line x1="392.7" y1="165.0" x2="471.2" y2="165.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="431.9" cy="165.0" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>zaleplon_mpo: &Delta;AUC +0.0021 &#177; 0.0070 (paired, n=5)</title></circle><text x="164" y="195.0" font-size="11.5" text-anchor="end" fill="var(--ink-1)">celecoxib_rediscovery</text><line x1="418.5" y1="191.0" x2="441.7" y2="191.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="430.1" cy="191.0" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>celecoxib_rediscovery: &Delta;AUC +0.0018 &#177; 0.0021 (paired, n=5)</title></circle><text x="164" y="221.0" font-size="11.5" text-anchor="end" fill="var(--ink-1)">troglitazone_rediscovery</text><line x1="410.7" y1="217.0" x2="429.3" y2="217.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="420.0" cy="217.0" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>troglitazone_rediscovery: &Delta;AUC +0.0000 &#177; 0.0017 (paired, n=5)</title></circle><text x="164" y="247.0" font-size="11.5" text-anchor="end" fill="var(--ink-1)">median1</text><line x1="405.7" y1="243.0" x2="423.9" y2="243.0" stroke="var(--c-llm)" stroke-width="2" stroke-linecap="round" opacity="0.5"/><circle cx="414.8" cy="243.0" r="4.5" fill="var(--c-llm)" stroke="var(--surface-1)" stroke-width="1.5"><title>median1: &Delta;AUC -0.0009 &#177; 0.0016 (paired, n=5)</title></circle></svg></div>
+  <div class="scroll"><table>
+    <caption>AUC top-10 at 1,000 calls, mean of 5 seeds, from
+    <span class="mono">results/pmo_ladder_llm</span>. The sub-line is the top-10 actually found as a
+    percentage of the best top-10 in the pool. <span class="mono">zaleplon_mpo</span> appears
+    here although it is excluded from the published comparison above: the ceiling is enumerated
+    with the same TDC oracle the runs call, so the column is internally consistent whether or
+    not that oracle matches the one PMO published against.</caption>
+    <thead><tr><th>Task</th><th>random</th><th>plain BO</th><th>BO + LLM selection</th>
+    <th>ceiling (best top-10)</th><th>best molecule</th></tr></thead>
+    <tbody><tr><td class="mono">qed</td><td>0.9244<span class="blurb">98.9% of best top-10</span></td><td>0.9308<span class="blurb">99.6% of best top-10</span></td><td>0.9312<span class="blurb">99.6% of best top-10</span></td><td><strong>0.9481</strong></td><td>0.9484</td></tr><tr><td class="mono">isomers_c7h8n2o2</td><td>0.1595<span class="blurb">30.3% of best top-10</span></td><td>0.6594<span class="blurb">90.2% of best top-10</span></td><td>0.6757<span class="blurb">90.2% of best top-10</span></td><td><strong>0.9309</strong></td><td>1.0000</td></tr><tr><td class="mono">osimertinib_mpo</td><td>0.7084<span class="blurb">91.5% of best top-10</span></td><td>0.7533<span class="blurb">97.1% of best top-10</span></td><td>0.7545<span class="blurb">97.2% of best top-10</span></td><td><strong>0.8166</strong></td><td>0.8288</td></tr><tr><td class="mono">deco_hop</td><td>0.5778<span class="blurb">87.5% of best top-10</span></td><td>0.6253<span class="blurb">96.1% of best top-10</span></td><td>0.6193<span class="blurb">96.2% of best top-10</span></td><td><strong>0.6729</strong></td><td>0.8708</td></tr><tr><td class="mono">albuterol_similarity</td><td>0.4113<span class="blurb">70.8% of best top-10</span></td><td>0.5505<span class="blurb">95.7% of best top-10</span></td><td>0.5518<span class="blurb">95.7% of best top-10</span></td><td><strong>0.6207</strong></td><td>0.6667</td></tr><tr><td class="mono">zaleplon_mpo</td><td>0.3655<span class="blurb">77.1% of best top-10</span></td><td>0.4180<span class="blurb">88.4% of best top-10</span></td><td>0.4201<span class="blurb">88.0% of best top-10</span></td><td><strong>0.5298</strong></td><td>0.5672</td></tr><tr><td class="mono">celecoxib_rediscovery</td><td>0.2895<span class="blurb">73.5% of best top-10</span></td><td>0.3969<span class="blurb">97.8% of best top-10</span></td><td>0.3987<span class="blurb">98.5% of best top-10</span></td><td><strong>0.4363</strong></td><td>0.4583</td></tr><tr><td class="mono">troglitazone_rediscovery</td><td>0.2242<span class="blurb">73.3% of best top-10</span></td><td>0.2912<span class="blurb">96.0% of best top-10</span></td><td>0.2912<span class="blurb">94.2% of best top-10</span></td><td><strong>0.3306</strong></td><td>0.3913</td></tr><tr><td class="mono">median1</td><td>0.1637<span class="blurb">61.8% of best top-10</span></td><td>0.2598<span class="blurb">96.0% of best top-10</span></td><td>0.2588<span class="blurb">96.1% of best top-10</span></td><td><strong>0.2986</strong></td><td>0.3243</td></tr></tbody></table></div>
+  <div class="verdict"><p><strong>The surrogate closes almost all of the gap; what is left is
+  too small for the selector to be measured in.</strong> Across 9 tasks, random sampling finds
+  74% of the best top-10 in the pool at 1,000 calls and plain BO finds 95.2%,
+  so the GP closes about 21 of the 26 available points.
+  Letting the model choose from BO's shortlist moves that to 95.1%. It is ahead of
+  plain BO on 7 of 9 tasks &mdash; consistent in sign, but by a median of
+  +0.0013 AUC, with a sign test over tasks at p&nbsp;=&nbsp;0.18. On
+  9 of 9 tasks the paired difference is smaller than its own standard error.
+  The honest reading is an effect too small to resolve at this seed count, not an effect shown
+  to be absent.</p></div>
+  <p class="note">The one task with real room left is <span class="mono">isomers_c7h8n2o2</span>,
+  where BO reaches 90% of the ceiling and random manages 30% &mdash; and it is also where the
+  selector's largest margin sits. At the other end, <span class="mono">qed</span> is saturated:
+  random sampling alone finds 99% of the best top-10 in the pool, so nothing measured on that
+  task separates any two methods. Neither fact is visible from a ranking of arms against each
+  other.</p>
+</section>
+
+
+<section id="pmollm">
+  <span class="eyebrow">LLM arms on the public benchmark</span>
+  <h2>Do the pairings transfer off our own oracle?</h2>
+  <p>Every LLM result above is on a library we assembled. These are the same arms on PMO's
+  tasks over the ZINC-250k pool &mdash; a structurally diverse pool with objectives that are not
+  potency at all, which is a far harsher test of a method tuned on a congeneric series.</p>
+  <div class="scroll"><table>
+    <caption>&Delta;AUC against plain BO on the same seeds. Budget 1,000 calls,
+    5 seeds, 5 model calls in total.</caption>
+    <thead><tr><th>Task</th><th>plain BO</th><th>llm warmstart</th><th>diverse warmstart</th><th>llm constraint</th></tr></thead>
+    <tbody><tr><td class="mono">albuterol_similarity</td><td>0.5505</td><td>+0.0074</td><td>+0.0051</td><td><span class="pill down">-0.1093</span></td></tr><tr><td class="mono">celecoxib_rediscovery</td><td>0.3969</td><td>+0.0041</td><td>+0.0078</td><td><span class="pill down">-0.0255</span></td></tr><tr><td class="mono">deco_hop</td><td>0.6253</td><td><span class="pill down">-0.0105</span></td><td>-0.0056</td><td><span class="pill down">-0.0176</span></td></tr><tr><td class="mono">median1</td><td>0.2598</td><td>-0.0019</td><td>-0.0005</td><td><span class="pill down">-0.0842</span></td></tr><tr><td class="mono">osimertinib_mpo</td><td>0.7533</td><td>-0.0003</td><td>-0.0001</td><td>+0.0087</td></tr><tr class="is-ref"><td>mean</td><td></td><td><strong>-0.0002</strong></td><td><strong>+0.0014</strong></td><td><strong>-0.0456</strong></td></tr></tbody></table></div>
+  <p><strong>Nothing transfers.</strong> The warm start is worth about
+  -0.0002 on
+  average and is behind its own free diversity control; the constraint arm is again negative.
+  The warm-start result is what the budget arithmetic predicts: the initial design is 2% of a
+  1,000-call budget here against 20% of a 50-call budget on the ChEMBL tier, so there is far
+  less for it to move either way.</p>
+  <p class="note"><strong>These are directional, not significant &mdash; and cannot be.</strong>
+  PMO's convention is 5 independent runs, and a two-sided paired Wilcoxon test on 5 seeds has a
+  floor of p = 0.0625: even a perfectly consistent effect cannot reach p &lt; 0.05. Six seeds is
+  the minimum that can. The 20-seed ChEMBL tier is where effects are actually resolved; PMO is
+  here for comparability against published baselines, and these rows say only which way the
+  arms lean.</p>
+</section>
+
+
+<section id="headroom">
+  <span class="eyebrow">Experiment design</span>
+  <h2>Headroom was measured before any arm was run</h2>
+  <p>A ceiling arm restricted to the library's true best <em>k</em>% bounds what
+  <em>any</em> constraint could achieve, since no real method can beat knowing the answers.
+  Running it first is what stops you spending a week in a regime where the effect you want
+  cannot be resolved even in principle.</p>
+  <div class="scroll"><table>
+    <caption>Ceiling minus plain BO, 10 seeds, library of 2,103.</caption>
+    <thead><tr><th>Budget</th><th>Allowed fraction</th><th>Compounds allowed</th>
+    <th>Plain BO</th><th>Ceiling</th><th>Headroom</th></tr></thead>
+    <tbody><tr><td>50</td><td>25%</td><td>526</td><td>0.6654</td><td>0.7113</td><td><span class="pill ns">+0.0459</span></td></tr><tr><td>50</td><td>10%</td><td>210</td><td>0.6654</td><td>0.7342</td><td><span class="pill ns">+0.0688</span></td></tr><tr><td>50</td><td>5%</td><td>105</td><td>0.6654</td><td>0.7594</td><td><span class="pill up">+0.0940</span></td></tr><tr><td>100</td><td>25%</td><td>526</td><td>0.7582</td><td>0.7978</td><td><span class="pill ns">+0.0396</span></td></tr><tr><td>100</td><td>10%</td><td>210</td><td>0.7582</td><td>0.8192</td><td><span class="pill ns">+0.0610</span></td></tr><tr><td>100</td><td>5%</td><td>105</td><td>0.7582</td><td>0.8398</td><td><span class="pill up">+0.0815</span></td></tr><tr><td>200</td><td>25%</td><td>526</td><td>0.8250</td><td>0.8563</td><td><span class="pill ns">+0.0313</span></td></tr><tr><td>200</td><td>10%</td><td>210</td><td>0.8250</td><td>0.8710</td><td><span class="pill ns">+0.0461</span></td></tr><tr><td>200</td><td>5%</td><td>105</td><td>0.8250</td><td>0.8819</td><td><span class="pill ns">+0.0569</span></td></tr></tbody></table></div>
+  <p>Headroom roughly triples as the constraint tightens, and grows as the budget shrinks. The
+  configuration one reaches for first &mdash; a generous budget against a loose constraint &mdash;
+  is the <em>worst</em> place to look, at +0.031. Most headroom: budget 50,
+  fraction 5%, worth <strong>+0.0940</strong>.
+  Everything here therefore runs tight and short.</p>
+</section>
+
+<section id="bugs">
+  <span class="eyebrow">Corrections</span>
+  <h2>Bugs found while building this</h2>
+  <p>Listed because each one produced a plausible-looking number before it was caught, and
+  every one was found by a test asserting an invariant rather than by reading the output.</p>
+  <div class="cards">
+    <div class="card fix"><h3>A constraint arm that silently wasn't one</h3><p class="cap">
+    The PMO runner built its <span class="mono">LibraryContext</span> directly, leaving
+    <span class="mono">mols</span> empty, so every substructure mask came back all-False &mdash;
+    indistinguishable from "matched nothing". The arm degraded to unconstrained and reported
+    <strong>&Delta;AUC = +0.0000 on every task, p = 1.0</strong>. A clean zero reads like a
+    finding. Molecules and descriptors are now computed lazily, so a context is correct however
+    it is built, and the runner prints constraint modes.</p></div>
+    <div class="card fix"><h3>Molecules the surrogate could not tell apart</h3><p class="cap">
+    RDKit's Morgan generator ignores stereochemistry by default, so 133 pairs &mdash; ~10% of the
+    library &mdash; were identical to the GP while their activities differed by up to 3.0 log
+    units. <span class="mono">includeChirality=True</span> halves it. <strong>This one changed a
+    conclusion</strong>: the warm start was significant before the fix and is not after.</p></div>
+    <div class="card fix"><h3>False coverage figures shown to the model</h3><p class="cap">
+    Menu entries were counted by how often a scaffold <em>occurred</em>, not how often its query
+    <em>matches</em>. The anilinoquinazoline core was advertised at 25.3% of the library; it
+    actually matches 100%, because the library was selected by that core. Candidates are now
+    counted with the same query used at match time.</p></div>
+    <div class="card fix"><h3>Generic scaffolds that could never match</h3><p class="cap">
+    <span class="mono">MakeScaffoldGeneric</span> maps benzene to <span class="mono">C1CCCCC1</span>,
+    which as a query matches aliphatic rings and so matches none of the aromatic molecules it came
+    from &mdash; advertised at 50% coverage, actual coverage zero.</p></div>
+    <div class="card fix"><h3>Answers lost to truncation</h3><p class="cap">
+    The selection schema emitted <span class="mono">reasoning</span> before
+    <span class="mono">choice</span>, so a response overrunning <span class="mono">max_tokens</span>
+    lost its answer &mdash; 6 of 41 calls in a pilot. In aggregate a 17% failure rate looks exactly
+    like a model that agrees with BO. <span class="mono">choice</span> now comes first.</p></div>
+    <div class="card fix"><h3>Position bias impersonating judgment</h3><p class="cap">
+    The shortlist was shown in acquisition order, so "picks position 0" and "agrees with BO's top
+    candidate" were the same event. The choice distribution was peaked at both list ends. Shuffling
+    and mapping back decoupled them &mdash; and only then was the model's real (modest) agreement
+    with the acquisition function measurable.</p></div>
+    <div class="card fix"><h3>Inconsistent tie-breaking</h3><p class="cap">
+    Plain BO broke ties at random; the selector shortlist broke them at index 0. On a flat
+    acquisition surface &mdash; every EI numerically zero, the normal early state &mdash; the claim
+    "k=1 is plain BO" quietly failed. Both now share one ranking function.</p></div>
+    <div class="card fix"><h3>A mask recomputed every round</h3><p class="cap">
+    Constraints were re-evaluated each iteration even when unchanged: ~10 s per round on a 60k
+    pool, over an hour wasted per PMO campaign. Masks are now cached on the library context,
+    keyed by the constraint's spec hash so a genuinely new proposal still recomputes.</p></div>
+  </div>
+</section>
+
+<section id="files">
+  <span class="eyebrow">Artifacts</span>
+  <h2>Everything in results/</h2>
+  <p>Each sweep directory holds <span class="mono">metrics.csv</span> (one row per arm per seed),
+  <span class="mono">summary.json</span> (aggregates, provenance and the paired tests),
+  <span class="mono">traces.jsonl</span> (every molecule bought, in order, with its value) and,
+  where relevant, the model's own logs. The traces are sufficient to recompute any metric offline.</p>
+  <div class="scroll"><table><thead><tr><th>File</th><th>Size</th></tr></thead>
+  <tbody><tr><td class="mono">acquisition_headroom.json</td><td>4 KB</td></tr><tr><td class="mono">bench_b100\llm_log.json</td><td>15 KB</td></tr><tr><td class="mono">bench_b100\metrics.csv</td><td>17 KB</td></tr><tr><td class="mono">bench_b100\summary.json</td><td>10 KB</td></tr><tr><td class="mono">bench_b100\traces.jsonl</td><td>1010 KB</td></tr><tr><td class="mono">bench_b50\llm_log.json</td><td>15 KB</td></tr><tr><td class="mono">bench_b50\metrics.csv</td><td>16 KB</td></tr><tr><td class="mono">bench_b50\summary.json</td><td>10 KB</td></tr><tr><td class="mono">bench_b50\traces.jsonl</td><td>602 KB</td></tr><tr><td class="mono">bench_final_b50\llm_log.json</td><td>15 KB</td></tr><tr><td class="mono">bench_final_b50\metrics.csv</td><td>19 KB</td></tr><tr><td class="mono">bench_final_b50\selector_ranks.json</td><td>7 KB</td></tr><tr><td class="mono">bench_final_b50\summary.json</td><td>12 KB</td></tr><tr><td class="mono">bench_final_b50\traces.jsonl</td><td>814 KB</td></tr><tr><td class="mono">bench_final_b50\warmstart_log.json</td><td>8 KB</td></tr><tr><td class="mono">bench_refresh_b100\llm_log.json</td><td>107 KB</td></tr><tr><td class="mono">bench_refresh_b100\metrics.csv</td><td>6 KB</td></tr><tr><td class="mono">bench_refresh_b100\summary.json</td><td>5 KB</td></tr><tr><td class="mono">bench_refresh_b100\traces.jsonl</td><td>364 KB</td></tr><tr><td class="mono">bench_select_b50\metrics.csv</td><td>13 KB</td></tr><tr><td class="mono">bench_select_b50\selector_ranks.json</td><td>7 KB</td></tr><tr><td class="mono">bench_select_b50\summary.json</td><td>9 KB</td></tr><tr><td class="mono">bench_select_b50\traces.jsonl</td><td>605 KB</td></tr><tr><td class="mono">bench_warmstart_b100\metrics.csv</td><td>9 KB</td></tr><tr><td class="mono">bench_warmstart_b100\summary.json</td><td>6 KB</td></tr><tr><td class="mono">bench_warmstart_b100\traces.jsonl</td><td>504 KB</td></tr><tr><td class="mono">bench_warmstart_b100\warmstart_log.json</td><td>8 KB</td></tr><tr><td class="mono">bench_warmstart_b50\metrics.csv</td><td>9 KB</td></tr><tr><td class="mono">bench_warmstart_b50\summary.json</td><td>6 KB</td></tr><tr><td class="mono">bench_warmstart_b50\traces.jsonl</td><td>303 KB</td></tr><tr><td class="mono">bench_warmstart_b50\warmstart_log.json</td><td>8 KB</td></tr><tr><td class="mono">chembl203_agentic_b50\metrics.csv</td><td>24 KB</td></tr><tr><td class="mono">chembl203_agentic_b50\summary.json</td><td>14 KB</td></tr><tr><td class="mono">chembl203_agentic_b50\traces.jsonl</td><td>2723 KB</td></tr><tr><td class="mono">chembl203_ladder_b50\metrics.csv</td><td>13 KB</td></tr><tr><td class="mono">chembl203_ladder_b50\summary.json</td><td>9 KB</td></tr><tr><td class="mono">chembl203_ladder_b50\traces.jsonl</td><td>695 KB</td></tr><tr><td class="mono">egfr_congeneric_b100\metrics.csv</td><td>13 KB</td></tr><tr><td class="mono">egfr_congeneric_b100\summary.json</td><td>9 KB</td></tr><tr><td class="mono">egfr_congeneric_b100\traces.jsonl</td><td>805 KB</td></tr><tr><td class="mono">egfr_congeneric_b50\metrics.csv</td><td>14 KB</td></tr><tr><td class="mono">egfr_congeneric_b50\summary.json</td><td>9 KB</td></tr><tr><td class="mono">egfr_congeneric_b50\traces.jsonl</td><td>492 KB</td></tr><tr><td class="mono">fp_collisions.json</td><td>2 KB</td></tr><tr><td class="mono">gp_trace_seed0.json</td><td>33 KB</td></tr><tr><td class="mono">headroom_egfr_congeneric.json</td><td>3 KB</td></tr><tr><td class="mono">pmo\pmo_results.json</td><td>15 KB</td></tr><tr><td class="mono">pmo_constraint\pmo_results.json</td><td>23 KB</td></tr><tr><td class="mono">pmo_ground_truth.json</td><td>2 KB</td></tr><tr><td class="mono">pmo_ladder\pmo_results.json</td><td>30235 KB</td></tr><tr><td class="mono">pmo_ladder_llm\pmo_results.json</td><td>20120 KB</td></tr><tr><td class="mono">pmo_warmstart\pmo_results.json</td><td>32 KB</td></tr><tr><td class="mono">search_space.json</td><td>1 KB</td></tr></tbody></table></div>
+</section>
+
+</div></body></html>

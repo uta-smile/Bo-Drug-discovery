@@ -1,0 +1,95 @@
+{
+  "family": "k07",
+  "arm": "mt",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 12.268295761234334,
+  "baseline_auc_sem": 0.13343287677928856,
+  "bad_quantile": null,
+  "n_pool": 430,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.39346269761600916,
+      "delta_sem": 0.027213937101189262,
+      "n": 32,
+      "sem_multiple": 14.458132101687507,
+      "clears_bar": true,
+      "flag": "14.5 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.06846389503817207,
+      "delta_sem": 0.045842963605714084,
+      "n": 32,
+      "sem_multiple": 1.4934439149051526,
+      "clears_bar": false,
+      "flag": "1.5 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.029090921361774658,
+      "delta_sem": 0.03920432172487843,
+      "n": 32,
+      "sem_multiple": 0.7420335330865839,
+      "clears_bar": false,
+      "flag": "0.7 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": -0.03676378842190259,
+      "delta_sem": 0.034721374191131193,
+      "n": 32,
+      "sem_multiple": 1.0588229664969044,
+      "clears_bar": false,
+      "flag": "1.1 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.3643717762542345,
+    "sem": 0.047723968972155494,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.1285299809051884,
+  "rho_eff_mean": 0.11675722912131078,
+  "rho_eff_n": 92,
+  "top_k_seeded": {
+    "maxmin": 0.21875,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.15625
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "DCLK1",
+      "ROCK2",
+      "DYRK4",
+      "FGFR3"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_dclk1-dyrk4-fgfr3-rock2.csv",
+    "n_block": 430,
+    "n_pool": 430,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

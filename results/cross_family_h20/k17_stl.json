@@ -1,0 +1,95 @@
+{
+  "family": "k17",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 20,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 12.723889178875137,
+  "baseline_auc_sem": 0.10422427420510376,
+  "bad_quantile": null,
+  "n_pool": 431,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.41216701653060833,
+      "delta_sem": 0.029904080950768044,
+      "n": 32,
+      "sem_multiple": 13.782968859975027,
+      "clears_bar": true,
+      "flag": "13.8 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.35887976628007356,
+      "delta_sem": 0.05986225910346863,
+      "n": 32,
+      "sem_multiple": 5.995092261048311,
+      "clears_bar": true,
+      "flag": "6.0 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.035841080618158605,
+      "delta_sem": 0.05888525290238578,
+      "n": 32,
+      "sem_multiple": 0.6086597042823684,
+      "clears_bar": false,
+      "flag": "0.6 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.011511077378506096,
+      "delta_sem": 0.06575280955359263,
+      "n": 32,
+      "sem_multiple": 0.17506593948846935,
+      "clears_bar": false,
+      "flag": "0.2 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.3763259359124497,
+    "sem": 0.06604337261896928,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.3711241198148268,
+  "rho_eff_mean": 0.35750685211949496,
+  "rho_eff_n": 95,
+  "top_k_seeded": {
+    "maxmin": 0.0,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.21875
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "LCK",
+      "NEK2",
+      "MELK",
+      "MARK2"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_lck-mark2-melk-nek2.csv",
+    "n_block": 431,
+    "n_pool": 431,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

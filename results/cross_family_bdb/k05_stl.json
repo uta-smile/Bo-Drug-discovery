@@ -1,0 +1,95 @@
+{
+  "family": "k05",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 20,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 8.336504261169692,
+  "baseline_auc_sem": 0.09095105244966256,
+  "bad_quantile": null,
+  "n_pool": 248,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.41353427377270735,
+      "delta_sem": 0.030242652937090404,
+      "n": 32,
+      "sem_multiple": 13.673875589979668,
+      "clears_bar": true,
+      "flag": "13.7 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.04612211834967503,
+      "delta_sem": 0.040485410800121906,
+      "n": 32,
+      "sem_multiple": 1.1392281179356627,
+      "clears_bar": false,
+      "flag": "1.1 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.16772622723012368,
+      "delta_sem": 0.03780045919176925,
+      "n": 32,
+      "sem_multiple": 4.4371478764111085,
+      "clears_bar": true,
+      "flag": "4.4 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.03529007881962387,
+      "delta_sem": 0.051461739479613654,
+      "n": 32,
+      "sem_multiple": 0.6857537109409969,
+      "clears_bar": false,
+      "flag": "0.7 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.24580804654258367,
+    "sem": 0.04840963511308379,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.5804511278195489,
+  "rho_eff_mean": 0.561052110148695,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.25,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.15625
+  },
+  "provenance": {
+    "source": "data/cache/tdc/bindingdb_ic50.csv",
+    "potency": "nanomolar",
+    "blocks_from": "results/cross_family_blocks_bindingdb.json",
+    "seed_pool": "random",
+    "targets": [
+      "MMP2",
+      "MMP3",
+      "MMP1",
+      "MMP9"
+    ],
+    "block_csv": "data/bindingdb/block_mmp1-mmp2-mmp3-mmp9.csv",
+    "n_block": 464,
+    "n_pool": 248,
+    "censoring": "pile_frac=0.02",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

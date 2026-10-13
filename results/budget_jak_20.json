@@ -1,0 +1,54 @@
+{
+  "family": "jak",
+  "history": 50,
+  "history_cluster": 0.0,
+  "reach": 0.8607637515655461,
+  "history_excludes_top": true,
+  "budget": 20,
+  "batch": 5,
+  "k": 10,
+  "acquisition": "ei",
+  "repeats": 15,
+  "n_pool": 904,
+  "arms": {
+    "stl": {
+      "auc_mean": 7.437097185821652,
+      "auc_sem": 0.06980221158446179,
+      "recall_mean": 0.046666666666666676,
+      "delta_vs_stl": 0.0,
+      "delta_sem": 0.0,
+      "frac_better": 0.0
+    },
+    "mt": {
+      "auc_mean": 7.475073120615288,
+      "auc_sem": 0.06942803988810263,
+      "recall_mean": 0.04000000000000001,
+      "delta_vs_stl": 0.037975934793635896,
+      "delta_sem": 0.01266112017351125,
+      "frac_better": 0.6666666666666666
+    }
+  },
+  "per_target": {
+    "JAK1": {
+      "stl_recall": 0.04,
+      "mt_recall": 0.04666666666666666,
+      "delta": 0.006666666666666661
+    },
+    "JAK2": {
+      "stl_recall": 0.04666666666666666,
+      "mt_recall": 0.05999999999999999,
+      "delta": 0.013333333333333329
+    },
+    "JAK3": {
+      "stl_recall": 0.06666666666666667,
+      "mt_recall": 0.03333333333333333,
+      "delta": -0.03333333333333333
+    },
+    "TYK2": {
+      "stl_recall": 0.03333333333333333,
+      "mt_recall": 0.020000000000000004,
+      "delta": -0.013333333333333329
+    }
+  },
+  "targets_improving": 2
+}

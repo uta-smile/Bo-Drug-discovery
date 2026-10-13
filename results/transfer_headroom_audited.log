@@ -1,0 +1,100 @@
+﻿loading data\dockstring\dockstring-dataset.tsv ...
+loaded 260,148 rows, 260,053 complete, pool 2,000, 1s
+fingerprints + gram in 1s
+
+[A] transfer headroom  (21 primary targets, aux=LCK+SRC+ABL1, pool=2000, 20 repeats)
+    budget is measured in cells; the arms below all spend the same number.
+    ABL1      fp_inf 0.652  aux_inf 0.838   best reachable -0.046+-0.014
+    AKT1      fp_inf 0.789  aux_inf 0.930   best reachable -0.194+-0.028
+    AKT2      fp_inf 0.749  aux_inf 0.889   best reachable -0.147+-0.022
+    CDK2      fp_inf 0.786  aux_inf 0.935   best reachable -0.116+-0.023
+    CSF1R     fp_inf 0.727  aux_inf 0.835   best reachable -0.120+-0.011
+    EGFR      fp_inf 0.761  aux_inf 0.913   best reachable -0.166+-0.017
+    FGFR1     fp_inf 0.666  aux_inf 0.824   best reachable -0.093+-0.018
+    IGF1R     fp_inf 0.671  aux_inf 0.812   best reachable -0.141+-0.020
+    JAK2      fp_inf 0.729  aux_inf 0.896   best reachable -0.152+-0.025
+    KDR       fp_inf 0.633  aux_inf 0.861   best reachable -0.122+-0.016
+    KIT       fp_inf 0.750  aux_inf 0.892   best reachable -0.142+-0.020
+    LCK       fp_inf 0.795  aux_inf 0.918   best reachable -0.124+-0.020
+    MAP2K1    fp_inf 0.834  aux_inf 0.929   best reachable -0.161+-0.025
+    MAPK1     fp_inf 0.718  aux_inf 0.891   best reachable -0.120+-0.021
+    MAPK14    fp_inf 0.666  aux_inf 0.846   best reachable -0.121+-0.024
+    MAPKAPK2  fp_inf 0.750  aux_inf 0.909   best reachable -0.154+-0.025
+    MET       fp_inf 0.634  aux_inf 0.854   best reachable -0.121+-0.019
+    PLK1      fp_inf 0.787  aux_inf 0.899   best reachable -0.173+-0.015
+    PTK2      fp_inf 0.699  aux_inf 0.866   best reachable -0.132+-0.020
+    ROCK1     fp_inf 0.787  aux_inf 0.930   best reachable -0.165+-0.021
+    SRC       fp_inf 0.755  aux_inf 0.900   best reachable -0.116+-0.022
+    [audit] [A] 17,538 checks over 2,520 cells
+            evaluation rows disjoint from training; exact draw sizes, no duplicates;
+            no target as its own auxiliary or in its own ceiling features;
+            every multi-task arm spends no more cells than stl
+
+     cells  mols      stl    mt_gp  mt_spread    mt_eq  mt_free    headroom(mt_gp)   ceiling@n
+    -----------------------------------------------------------------------------------------
+         5     1    0.131      n/a        n/a      n/a    0.579                n/a      +0.449
+        10     2    0.194    0.078      0.120    0.068    0.745       -0.117+-0.025      +0.551
+        20     5    0.273    0.134      0.204    0.128    0.772       -0.139+-0.007      +0.499
+        30     7    0.326    0.164      0.255    0.162    0.777       -0.162+-0.007      +0.451
+        50    12    0.406    0.227      0.345    0.220    0.781       -0.179+-0.006      +0.375
+        80    20    0.471    0.280      0.415    0.270    0.784       -0.191+-0.006      +0.313
+
+    task correlation the ICM arm selected by marginal likelihood: 1.00 .. 1.00
+
+    ceilings with budget removed (mean over targets):
+      fp_inf  0.730   a Tanimoto GP on 80% of the pool
+      aux_inf 0.884   ridge from the other 57 targets, out-of-fold
+      gap     +0.154   what cross-target structure is worth
+                     once neither side is budget-limited
+
+    verdict:
+      ceiling at budget: +0.551   (free exact auxiliary labels)
+      multi-task GP, blocked  : -0.117+-0.025  (best, at 10 cells, 2 molecules)
+      multi-task GP, spread   : -0.056   (no molecule measured twice)
+      two-stage ridge         : -0.127
+      H1 fails at equal cost: the better design still loses 0.056 at its
+      best budget (80 cells), 0/21 targets improving. The
+      free-label ceiling above is large, so the cross-target structure
+      is real; what fails is converting it once the auxiliary cells
+      are paid for out of the same budget. Any later multi-task result
+      that does not hold cells fixed is measuring that substitution,
+      not transfer.
+      (blocked design, worst budget: -0.191 at 80 cells)
+
+[B] joint vs separated  (objective=jak2, targets=JAK2+LCK, 20 repeats, 2000 molecules admitted)
+    free-descriptor floor: ranking by QED alone scores rho 0.929 with zero assays
+
+    Spearman over all held-out rows
+       n    qed_only       joint   joint_qed   separated
+    ----------------------------------------------------
+       5       0.929       0.070       0.930       0.930
+      10       0.929       0.150       0.930       0.930
+      20       0.929       0.209       0.931       0.932
+      30       0.929       0.250       0.931       0.931
+      50       0.929       0.302       0.933       0.933
+      80       0.929       0.371       0.934       0.937
+
+    top-50 recall -- the thing a campaign is actually buying
+       n    qed_only       joint   joint_qed   separated    sep - joint_qed
+    -----------------------------------------------------------------------
+       5      48.1%        3.8%       47.5%       47.2%         -0.3%+-0.3% 
+      10      48.4%        5.2%       48.4%       48.7%         +0.3%+-0.4% 
+      20      48.8%        5.2%       49.0%       49.0%         +0.0%+-0.3% 
+      30      49.1%        5.6%       49.0%       47.7%         -1.3%+-0.6% 
+      50      49.8%        7.2%       47.0%       47.6%         +0.6%+-0.6% 
+      80      51.0%        7.7%       50.4%       49.1%         -1.3%+-1.0% 
+
+    verdict:
+      the free descriptor alone recovers 48.1% of the top-50, and
+      rho 0.929 of the whole ranking. A global rank correlation
+      therefore cannot tell these arms apart; top-k can.
+      best assayed arm: 50.4% recall, +2.3% over the floor.
+      separated vs joint_qed: +0.6%+-0.6% at n=50 -- no separation. Once both
+      arms are given the free term, a per-target surrogate has to
+      justify itself on allocation rather than on accuracy.
+    [audit] [B] 601 checks over 120 cells
+            evaluation rows disjoint from training; exact draw sizes, no duplicates;
+            all four arms scored on the same rows; the top-k fits in them;
+            free + assayed reconstruct the objective, and qed_only uses the free part only
+
+wrote results\transfer_headroom_audited.json  (37s total)

@@ -1,0 +1,12 @@
+﻿loading data\dockstring\dockstring-dataset.tsv ...
+loaded 260,148 rows, 260,053 complete, pool 2,000, 1s
+fingerprints + gram in 1s
+
+[C] cold target with historical auxiliaries  (4 targets, aux=LCK+SRC+ABL1, 10 repeats)
+    H is free -- already-collected data, not budget. Contrast check A.
+    auxiliary region: distant  (a separated half of the pool)
+    measured reach ratio 0.85 (1.00 = no separation). Real ChEMBL
+    libraries measure 0.53, so this is a WEAKER separation than the thing
+    it imitates; it cannot on its own acquit chemical reach.
+    JAK2      done
+    CDK2      done

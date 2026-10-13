@@ -1,0 +1,46 @@
+
+[0] censoring filter (values held by >0% of a column)
+    CYP3A4   pile-ups: 5.00 x317, 4.52 x122, 4.30 x90, 5.30 x68, 4.00 x64, 4.70 x62, 4.40 x41, 4.60 x38, 5.15 x19, 6.00 x18, 5.12 x16, 5.52 x14, 5.22 x14, 5.05 x11, 4.92 x10, 5.70 x10, 5.10 x9, 4.96 x9, 5.40 x8, 5.06 x8
+    CYP2D6   pile-ups: 5.00 x399, 4.52 x136, 4.30 x88, 4.00 x79, 4.70 x76, 5.30 x62, 4.40 x57, 4.60 x35, 6.00 x17, 5.52 x12, 4.82 x10, 5.10 x9, 4.74 x9, 5.22 x8, 4.96 x8, 4.80 x8, 4.77 x8
+    CYP2C9   pile-ups: 5.00 x307, 4.52 x119, 5.30 x97, 4.30 x87, 4.70 x67, 4.60 x57, 4.00 x50, 4.40 x41, 5.52 x19, 4.77 x19, 6.00 x16, 5.12 x15, 5.40 x14, 5.10 x13, 5.22 x11, 5.15 x11, 4.89 x10, 4.72 x10, 4.92 x9, 5.05 x9, 7.52 x8, 4.80 x8
+    CYP2C19  pile-ups: 5.00 x325, 4.52 x119, 4.30 x101, 4.70 x76, 5.30 x72, 4.00 x50, 4.40 x46, 4.60 x38, 5.12 x19, 4.77 x18, 6.00 x17, 5.15 x12, 5.22 x12, 5.52 x11, 4.92 x11, 4.85 x11, 5.40 x10, 5.05 x10, 5.10 x9, 4.80 x9, 4.82 x8, 4.72 x8
+    kept 201 of 1,472 compounds (13.7%)
+cyp: 201 compounds x 4 targets, budget 44, batch 10, H=50 (0s)
+      CYP3A4: success set = top-10
+    CYP3A4   done
+      CYP2D6: success set = top-10
+    CYP2D6   done
+      CYP2C9: success set = top-10
+    CYP2C9   done
+      CYP2C19: success set = top-10
+    CYP2C19  done
+    [audit] 576 checks over 32 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 1.27 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    CYP3A4               25.0%   42.5%         +17.5%
+    CYP2D6               52.5%   50.0%          -2.5%
+    CYP2C9               17.5%   58.7%         +41.2%
+    CYP2C19              50.0%   47.5%          -2.5%
+    2/4 targets improve; spread -2.5% to +41.2%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               6.0342       36.3%                
+    mt                6.0597       49.7%   +0.0255+-0.0226
+    pooled            6.0866       62.2%   +0.0525+-0.0232
+
+    verdict:
+      no campaign gain: +0.0255+-0.0226 AUC. The regression improvement in
+      sections 18-19 does not convert into finding the top faster.
+      That is the section 4 pattern again: an offline proxy moving
+      without the campaign outcome moving.
+
+wrote results\pf_cyp_0.005.json  (8s total)

@@ -1,0 +1,118 @@
+{
+  "dataset": "data/chembl/usp7.csv",
+  "library_size": 539,
+  "seeds": 200,
+  "method": "kmeans",
+  "diagnostics": [
+    {
+      "k": 10,
+      "concentration": {
+        "n_clusters": 10,
+        "n_top": 5,
+        "best_cluster": 0,
+        "best_lift": 14.972222222222223,
+        "coverage_best": 1.0,
+        "clusters_for_half_the_top": 1
+      },
+      "coherence": {
+        "within": 0.4224348935463396,
+        "between": 0.1668645631097143,
+        "separation": 0.25557033043662536,
+        "size_min": 19,
+        "size_median": 48,
+        "size_max": 103,
+        "n_singletons": 0
+      }
+    }
+  ],
+  "rows": [
+    {
+      "k": 10,
+      "budget": 30,
+      "arm": "bo_whole",
+      "auc": 0.5483681609301752,
+      "sem": 0.007597731074682341,
+      "top1pct_recall": 0.292,
+      "delta_vs_whole": null,
+      "p_value": null,
+      "cohens_dz": null
+    },
+    {
+      "k": 10,
+      "budget": 30,
+      "arm": "bo_random_cluster",
+      "auc": 0.40298652592729667,
+      "sem": 0.0037043916483361504,
+      "top1pct_recall": 0.019000000000000003,
+      "delta_vs_whole": -0.14538163500287848,
+      "p_value": 2.19204995896119e-34,
+      "cohens_dz": -1.9402079479505143
+    },
+    {
+      "k": 10,
+      "budget": 30,
+      "arm": "bo_ucb_cluster",
+      "auc": 0.5652780198823916,
+      "sem": 0.004096460250227225,
+      "top1pct_recall": 0.442,
+      "delta_vs_whole": 0.016909858952216417,
+      "p_value": 0.008429918128370191,
+      "cohens_dz": 0.20009105178130043
+    },
+    {
+      "k": 10,
+      "budget": 30,
+      "arm": "bo_best_cluster",
+      "auc": 0.6248568051443375,
+      "sem": 0.003324547393580801,
+      "top1pct_recall": 0.556,
+      "delta_vs_whole": 0.07648864421416235,
+      "p_value": 1.1378260096948339e-32,
+      "cohens_dz": 0.9719786156757059
+    },
+    {
+      "k": 10,
+      "budget": 50,
+      "arm": "bo_whole",
+      "auc": 0.6644681159018012,
+      "sem": 0.007558524849107737,
+      "top1pct_recall": 0.6509999999999999,
+      "delta_vs_whole": null,
+      "p_value": null,
+      "cohens_dz": null
+    },
+    {
+      "k": 10,
+      "budget": 50,
+      "arm": "bo_random_cluster",
+      "auc": 0.42093853040957313,
+      "sem": 0.003250550319472788,
+      "top1pct_recall": 0.029000000000000005,
+      "delta_vs_whole": -0.24352958549222808,
+      "p_value": 1.4361464127613523e-34,
+      "cohens_dz": -2.9903679592233354
+    },
+    {
+      "k": 10,
+      "budget": 50,
+      "arm": "bo_ucb_cluster",
+      "auc": 0.7046898430175179,
+      "sem": 0.003623579633991405,
+      "top1pct_recall": 0.945,
+      "delta_vs_whole": 0.0402217271157167,
+      "p_value": 0.00042532256618393405,
+      "cohens_dz": 0.4093897618015854
+    },
+    {
+      "k": 10,
+      "budget": 50,
+      "arm": "bo_best_cluster",
+      "auc": 0.7484563283370343,
+      "sem": 0.0019904318712163404,
+      "top1pct_recall": 1.0,
+      "delta_vs_whole": 0.08398821243523313,
+      "p_value": 1.4361464127613523e-34,
+      "cohens_dz": 0.9193415650028246
+    }
+  ]
+}

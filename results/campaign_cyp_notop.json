@@ -1,0 +1,36 @@
+{
+  "family": "cyp",
+  "history": 50,
+  "budget": 60,
+  "batch": 5,
+  "k": 10,
+  "acquisition": "ei",
+  "repeats": 15,
+  "n_pool": 335,
+  "arms": {
+    "stl": {
+      "auc_mean": 6.177270321573333,
+      "auc_sem": 0.035287919036188664,
+      "recall_mean": 0.38000000000000006,
+      "delta_vs_stl": 0.0,
+      "delta_sem": 0.0,
+      "frac_better": 0.0
+    },
+    "mt": {
+      "auc_mean": 6.2787802681385045,
+      "auc_sem": 0.025759111419344352,
+      "recall_mean": 0.4066666666666667,
+      "delta_vs_stl": 0.10150994656516983,
+      "delta_sem": 0.028370005633634815,
+      "frac_better": 0.6666666666666666
+    },
+    "pooled": {
+      "auc_mean": 6.268276375751385,
+      "auc_sem": 0.025651233632741986,
+      "recall_mean": 0.4333333333333334,
+      "delta_vs_stl": 0.09100605417804926,
+      "delta_sem": 0.029452216670326763,
+      "frac_better": 0.6
+    }
+  }
+}

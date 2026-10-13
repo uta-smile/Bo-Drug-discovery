@@ -1,0 +1,28 @@
+{
+  "backend": "llamacpp:qwen3.5-4b:t=0.0:topk=1:seed=0:think=0",
+  "version": "v3",
+  "system": "You are a medicinal chemist advising a hit-to-lead optimisation campaign.\n\nYou will be shown compounds from a congeneric series with their measured\npotencies, and a numbered menu of substructures that occur in the virtual\nlibrary. Your job is to state a structural hypothesis about what makes a\ncompound potent in this series, as a constraint that will narrow the library.\n\nYou choose substructures by their menu index. You do not write SMARTS.\n\nGuidance:\n- Aim to keep roughly 5-25% of the library. Each menu entry shows how much of\n  the library it matches; requiring two entries keeps at most the smaller.\n- Prefer one or two well-chosen entries. Requiring many at once usually matches\n  nothing, which wastes the constraint entirely.\n- Only state a descriptor range if the data supports it. Use a wide range when\n  you mean \"unbounded on this side\".\n- You are choosing what to *explore*, not predicting individual values. A\n  constraint that excludes the best compound is far worse than one that is\n  slightly too permissive.\n\nRespond with JSON only.",
+  "prompt": "20 compounds measured so far. Values are a task-specific desirability score in [0, 1] (higher is better).\n\n    0.12   COc1ccccc1NC(=O)[C@H](C)N1CCN(C(=O)[C@@H]2C[C@H]2C)CC1\n    0.10   CC[C@]1(C(=O)[O-])CCN(C(=O)[C@]2(C)CCCO2)C1\n    0.10   COc1ccccc1C(=O)N[C@H]1CCS(=O)(=O)C1\n    0.09   N#Cc1ccccc1C(=O)O[C@H]1CCSC1\n    0.08   [NH3+][C@@H](Cc1ccccc1Br)[C@H]1CCOC2(CCCCC2)C1\n    0.08   CCCc1cc(NC(=O)c2ccc(S[C@H]3CCOC3=O)cc2)n(C)n1\n    0.07   Cc1ccc(CC(=O)N[C@@H]2C=C[C@H](CO)C2)cc1O\n    0.07   O=C(NNC(=O)c1cccs1)c1ccc(NC(=O)C2CCCCC2)cc1\n    0.06   Cc1ccc(N2C[C@H](C(=O)NCCn3cc[nH+]c3)CC2=O)c(F)c1\n    0.05   Cc1nc(C)c([C@@H](C)N(C)C(=O)c2cccc(OCc3cccnc3)c2)s1\n    0.05   Cc1ccc(S(=O)(=O)N(C)Cc2[nH+]ccn2C)cc1[N+](=O)[O-]\n    0.04   CC(C)(C)c1ccc(Nc2ccc3nnc(C(F)F)n3n2)cc1\n    0.04   Cc1ccc(NCCC(=O)c2ccc3c(c2)OCO3)cc1C\n    0.04   O=C1[C@H]2[C@@H]3C=C[C@@H](O3)[C@@H]2C(=O)N1c1cccc([N+](=O)[O-])c1\n    0.04   CCN(CC)C(=O)COc1ccc(NC(=O)Nc2cc(C)nn2C)cc1Cl\n    0.04   Cc1nc(C)c(/C=C2\\N=C(c3cccc([N+](=O)[O-])c3)OC2=O)s1\n    0.03   COC(=O)CNC(=O)c1cc(-c2ccc(Cl)cc2)nn1C\n    0.02   Cc1cc(Br)ccc1SCC(=O)Nc1ccc(C(N)=O)cc1\n    0.02   CCOc1ccc(C(=O)NCc2nnc3ccccn23)cc1[N+](=O)[O-]\n    0.00   O=C(Nc1ccc(Cl)cc1Cl)c1ccc(NS(=O)(=O)c2cccs2)cc1\n\nThe virtual library to be narrowed contains 249455 compounds from the same series.\n\nAvailable substructures, with how much of the library each matches:\n\n  [ 0] aromatic nitrogen                  matches 126870 (50.9%)\n  [ 1] ether oxygen                       matches 105845 (42.4%)\n  [ 2] aniline nitrogen                   matches 100649 (40.3%)\n  [ 3] halogen                            matches 87647 (35.1%)\n  [ 4] chlorine or bromine                matches 47669 (19.1%)\n  [ 5] fluorine                           matches 46779 (18.8%)\n  [ 6] methoxy                            matches 42904 (17.2%)\n  [ 7] c1ccncc1                           matches 35960 (14.4%)\n  [ 8] C1CCNCC1                           matches 35254 (14.1%)\n  [ 9] fused bicyclic aromatic            matches 27907 (11.2%)\n  [10] hydroxyl                           matches 27716 (11.1%)\n  [11] C1CCNC1                            matches 24176 ( 9.7%)\n  [12] c1cnnc1                            matches 23377 ( 9.4%)\n  [13] ester                              matches 20904 ( 8.4%)\n  [14] c1ccsc1                            matches 18040 ( 7.2%)\n  [15] c1cncnc1                           matches 17641 ( 7.1%)\n  [16] sulfonamide                        matches 17251 ( 6.9%)\n  [17] c1cscn1                            matches 16598 ( 6.7%)\n  [18] C1CCCCC1                           matches 16404 ( 6.6%)\n  [19] C1CNCCN1                           matches 15773 ( 6.3%)\n  [20] C1CC1                              matches 14829 ( 5.9%)\n  [21] c1cncn1                            matches 12935 ( 5.2%)\n  [22] nitrile                            matches 12932 ( 5.2%)\n  [23] c1ccoc1                            matches 12581 ( 5.0%)\n  [24] c1nncn1                            matches 12581 ( 5.0%)\n  [25] C1COCCN1                           matches 11360 ( 4.6%)\n  [26] C1CCCC1                            matches 10948 ( 4.4%)\n  [27] C1CC[NH+]CC1                       matches 10665 ( 4.3%)\n\nPropose a constraint that keeps the region of the library most likely to contain more potent compounds.",
+  "response": {
+    "hypothesis": "The data suggests that high potency correlates with the presence of a specific bicyclic scaffold containing a fused nitrogen ring system (likely a piperazine or similar diazabicyclo system) and an ether linkage, while excluding simple aromatic amines or halogenated anilines which show low activity.",
+    "require_fragments": [
+      8,
+      1
+    ],
+    "forbid_fragments": [
+      0,
+      4
+    ],
+    "property_bounds": [],
+    "confidence": 0.65
+  },
+  "usage": {
+    "completion_tokens": 140,
+    "prompt_tokens": 1805,
+    "total_tokens": 1945,
+    "prompt_tokens_details": {
+      "cached_tokens": 244
+    }
+  },
+  "finish_reason": "stop"
+}

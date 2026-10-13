@@ -1,0 +1,30 @@
+{
+  "backend": "llamacpp:qwen3.5-4b:t=0.0:topk=1:seed=0:think=0",
+  "version": "i1",
+  "system": "You are a medicinal chemist starting a hit-to-lead campaign.\n\nNothing has been measured yet. You will be shown a random sample of compounds\nfrom the screening library and must choose which ones to assay first.\n\nThis is the one point in the campaign where chemical knowledge has nothing to\ncompete with: there is no data, so a model fitted to the results cannot help.\nChoose the compounds whose measurements would teach you the most -- covering the\nstructural options in the sample rather than repeating one of them, and\nfavouring chemotypes you believe are plausible for a potent inhibitor.\n\nRespond with JSON only.",
+  "prompt": "A random sample of 40 compounds from the screening library:\n\n  [ 0] Brc1cccc(Nc2ncnc3cc(OCCCN4CCOCC4)c4c(c23)OCCO4)c1\n  [ 1] C#Cc1cccc(Nc2ncnc3cc(OC(C)C)c4c(c23)OCCO4)c1\n  [ 2] C#Cc1cccc(Nc2ncnc3cc(OCCOCC)c(NC(=O)/C=C/CN(C)C)cc23)c1\n  [ 3] C#Cc1cccc(Nc2ncnc3cc4c(cc23)N(CCCN2CCCCC2)C(=O)CO4)c1\n  [ 4] C#Cc1cccc(Nc2ncnc3ccc(-c4cnn(C)c4)cc23)c1\n  [ 5] C/N=N/Nc1ccc2ncnc(Nc3cccc(Br)c3)c2c1\n  [ 6] C=CC(=O)N1CCC[C@H]1C(=O)Nc1cc2c(Nc3ccc(F)c(Cl)c3F)ncnc2cc1OCCOC\n  [ 7] C=CC(=O)Nc1cc2c(Nc3cc(Cl)c(Cl)cc3F)ncnc2cc1OCCNC(C)=O\n  [ 8] C=CC(=O)Nc1cc2c(Nc3ccc(Br)cc3F)ncnc2cc1OCC(=O)NCCN(CC)CC\n  [ 9] C=CC(=O)Nc1cc2c(Nc3ccc(Br)cc3F)ncnc2cc1OCCNC(=O)CCN1CCCCC1\n  [10] C=CC(=O)Nc1cc2c(Nc3ccc(Br)cc3F)ncnc2cc1OCCNC(=O)OC\n  [11] C=CC(=O)Nc1ccc2ncnc(Nc3cccc(Br)c3)c2c1\n  [12] CC(C)NC/C=C/C(=O)Nc1ccc2ncnc3c2c1CCN3c1ccc(OCc2ccccn2)c(Cl)c1\n  [13] CCC(=O)N1CCOc2c1ccc1ncnc(Nc3cccc(C(F)(F)F)c3)c21\n  [14] CCC(=O)Nc1cc2c(Nc3ccc(OCc4ccccn4)cc3)ncnc2cc1OC\n  [15] CCC(=O)Nc1cc2c(Nc3ccc(Oc4ccccc4)cc3)ncnc2cc1OC\n  [16] CN(C)C/C=C/C(=O)N1CCC(Oc2cc3c(Nc4ccc(Cl)c(Cl)c4F)ncnc3cc2O[C@@H]2CCOC2)CC1\n  [17] CN(C)C/C=C/C(=O)Nc1ccc2ncnc(Nc3cccc(I)c3)c2c1\n  [18] CN(C)CCNC(=O)Nc1cc2c(Nc3ccc(F)c(Cl)c3)ncnc2cc1O[C@H]1CCOC1\n  [19] CNC(=O)[C@@H](C)N(C)Cc1cc2c(Nc3cccc(Cl)c3F)ncnc2cc1OC\n  [20] COCCOc1cc2ncnc(Nc3ccc(Cl)c([N+](=O)[O-])c3)c2c2c1OCCO2\n  [21] COc1cc(/C=C/C(=O)Nc2cc3c(Nc4ccc(F)c(Cl)c4)ncnc3cc2O[C@@H]2CCOC2)cc(OC)c1OC\n  [22] COc1cc2c(Nc3cc(O)c(C)cc3F)ncnc2cc1OCC1CCN(C)CC1\n  [23] COc1cc2c(Nc3ccc(Oc4ccc(Cl)cc4)cc3)ncnc2cc1OCC1CCN(C)CC1\n  [24] COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OC(=O)/C=C/n1cc(F)c(=O)[nH]c1=O\n  [25] COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OCCCCCCCCNCc1ccc(-c2cccc(-c3ccccc3)c2C)nc1OC\n  [26] COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OCCNC(C)(C)C\n  [27] COc1cc2ncnc(Nc3ccc(OCc4cccc(F)c4)c(Cl)c3)c2cc1NC(=O)/C=C/CN1C[C@@H]2OCCO[C@@H]2C1\n  [28] COc1cc2ncnc(Nc3ccc(OCc4cccc(F)c4)c(Cl)c3)c2cc1OCCCOP(N)(=O)N(CCCl)CCCl\n  [29] COc1cc2ncnc(Nc3ccc(O[C@H]4CO[C@H]5[C@@H]4OC[C@@H]5O)c(Cl)c3)c2cc1OC\n  [30] COc1cc2ncnc(Nc3cccc(C(F)(F)F)c3)c2cc1OCCCCC(=O)Nc1ccc(S(N)(=O)=O)cc1\n  [31] CS(=O)(=O)CCNCc1ccc(-c2ccc3ncnc(Nc4ccc(OCc5ccccc5)c(C(F)(F)F)c4)c3c2)o1\n  [32] Clc1ccc(CNc2ccc3ncnc(Nc4cccc(Br)c4)c3c2)cc1\n  [33] Clc1cccc(Nc2ncnc3ccc(NCc4ccc(Br)s4)cc23)c1\n  [34] NS(=O)(=O)CCNCc1ccc(-c2ccc3ncnc(Nc4ccc(OCc5cccc(F)c5)c(Cl)c4)c3c2)o1\n  [35] O=C(CBr)OCCn1c(=O)oc2cc3ncnc(Nc4ccc(F)c(Cl)c4)c3cc21\n  [36] O=S(=O)(CCCCNCc1ccc(-c2ccc3ncnc(Nc4ccc(OCc5ccccc5)c(Cl)c4)c3c2)o1)c1ccccc1\n  [37] O=[N+]([O-])c1ccc(F)c(CNc2cc3c(Nc4ccc(F)c(Cl)c4)ncnc3cc2OCCCN2CCOCC2)c1\n  [38] S=C(Nc1ccc(Br)cc1)Nc1ccc2ncnc(Nc3cccc(Br)c3)c2c1\n  [39] [O-][S+]1CCN(Cc2ccc(-c3ccc4ncnc(Nc5ccc(OCc6cccc(F)c6)c(C(F)(F)F)c5)c4c3)o2)CC1\n\nNothing has been measured yet. The objective is pchembl_value (higher is more potent).\nChoose exactly 10 of them to assay first, by index.",
+  "response": {
+    "choices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      12,
+      16,
+      20,
+      29,
+      39
+    ],
+    "reasoning": "1. **Indices 0, 1, 2, 3, 4**: These represent the core scaffold variations (different linkers and heterocycles on the central pyrazolo[3,4-d]pyrimidine core). Assaying these establishes the baseline SAR for the central ring system and the nature of the 'warhead' attached to the left side. Specifically, 0 and 1 test ether vs. ester linkers, 2 tests an amide, 3 tests a tertiary amine, and 4 tests a "
+  },
+  "usage": {
+    "completion_tokens": 187,
+    "prompt_tokens": 1921,
+    "total_tokens": 2108,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "finish_reason": "stop"
+}

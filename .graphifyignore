@@ -1,0 +1,6 @@
+# Index code only. data/ is inputs and LLM response caches (~800 JSON files),
+# results/ is metrics and traces; both drown the code graph.
+data/
+results/
+oracle/
+graphify-out/

@@ -1,0 +1,50 @@
+
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+jak: 904 compounds x 4 targets, budget 300, batch 10, H=50 (1s)
+      JAK1: scaffold split -- 732 of 904 compounds seedable (6 of 357 scaffolds withheld)
+      JAK1: success set = top-10
+    JAK1     done
+      JAK2: scaffold split -- 729 of 904 compounds seedable (9 of 357 scaffolds withheld)
+      JAK2: success set = top-10
+    JAK2     done
+      JAK3: scaffold split -- 863 of 904 compounds seedable (8 of 357 scaffolds withheld)
+      JAK3: success set = top-10
+    JAK3     done
+      TYK2: scaffold split -- 814 of 904 compounds seedable (8 of 357 scaffolds withheld)
+      TYK2: success set = top-10
+    TYK2     done
+    [audit] 576 checks over 32 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.86 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    JAK1                 63.7%   71.2%          +7.5%
+    JAK2                 76.2%   81.2%          +5.0%
+    JAK3                 87.5%   90.0%          +2.5%
+    TYK2                 90.0%   87.5%          -2.5%
+    3/4 targets improve; spread -2.5% to +7.5%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               8.9020       79.4%                
+    mt                8.9731       82.5%   +0.0711+-0.0163
+    pooled            8.9645       82.8%   +0.0624+-0.0233
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.0711 AUC
+      over single-task BO (72% of campaigns better).
+      But pooling matches it -- on this block the campaign gain
+      does not require modelling the task structure.
+
+wrote results\scaf_jak_300.json  (250s total)

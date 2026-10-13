@@ -1,0 +1,315 @@
+{
+  "target": "O60674",
+  "column": "JAK2",
+  "family": "jak",
+  "n_requested": 60,
+  "n_scored": 59,
+  "sequence_length": 309,
+  "cache_key": "boltz2|v1:salt=1:neut=0:stereo=1|affinity_pred_value|2e7c8f77ede4|ds=1|dsa=5|ss=200|ssa=200|scale=1.5|rec=3|g0=0.0|gmin=0.0|mw=0|pot=0|nok=1|msa=4096|sub=1:2048|salt=",
+  "deterministic": true,
+  "rho_boltz_vs_measured": 0.8662526508106299,
+  "rho_gp_oof_vs_measured": 0.40444217248298997,
+  "rho_boltz_vs_gp_residual": 0.7662185856224432,
+  "thresholds": {
+    "prior_mean": 0.37,
+    "aux_task": 0.45
+  },
+  "seconds": 6581.54577755928,
+  "pairs": [
+    {
+      "smiles": "CS(=O)(=O)Nc1cccc(-c2cnc3ccccc3n2)c1",
+      "measured": 4.732828271596986,
+      "boltz2": -1.0397496223449707
+    },
+    {
+      "smiles": "c1nc(-c2cn(CC3CO3)nn2)c2cc[nH]c2n1",
+      "measured": 5.6106566887479215,
+      "boltz2": 0.2142522633075714
+    },
+    {
+      "smiles": "Clc1nc(NCc2ccccn2)c2c(-c3ccccc3)cccc2n1",
+      "measured": 4.749824051916075,
+      "boltz2": -0.9155530333518982
+    },
+    {
+      "smiles": "COc1ccc(NC(=O)Nc2cccc(-c3cnc4ccccc4n3)c2)cc1",
+      "measured": 4.301029995663981,
+      "boltz2": -1.0974500179290771
+    },
+    {
+      "smiles": "[C-]#[N+][C@H]1C[C@H]1C(=O)N1[C@H]2CC[C@@H]1CN(c1ccnc(Nc3cnn(C)c3)n1)C2",
+      "measured": 5.854492828590337,
+      "boltz2": -0.2980169355869293
+    },
+    {
+      "smiles": "CCn1c(C(=O)N(C2CC2)C2CC2)cc2c3c(ncn3C)c(NCCCOC)nc21",
+      "measured": 6.6419983281826,
+      "boltz2": 0.3458646833896637
+    },
+    {
+      "smiles": "CCN(c1ccc(O)cc1CNc1nc(-c2cc(F)c(O)cc2CC(F)(F)F)nc2[nH]nc(C(=O)NC)c12)S(=O)(=O)c1ccccc1",
+      "measured": 6.493494967595128,
+      "boltz2": 0.30132925510406494
+    },
+    {
+      "smiles": "NC(=O)c1cnc(Nc2ccccc2)cc1NCc1ccccc1",
+      "measured": 6.692503962086787,
+      "boltz2": 1.2776997089385986
+    },
+    {
+      "smiles": "COC(=O)C1CCc2[nH]c(-c3c(N[C@H]4CC[C@@H](N)CC4)cc[nH]c3=O)nc2C1",
+      "measured": 6.583873314901496,
+      "boltz2": 0.6895843148231506
+    },
+    {
+      "smiles": "CC1(C)[C@H](Nc2c(C(N)=O)cnn3cccc23)CC[C@@]1(C)N",
+      "measured": 6.552841968657781,
+      "boltz2": 0.7671408653259277
+    },
+    {
+      "smiles": "CCc1cc(O)ccc1-c1cc2[nH]ncc2c(NCCc2ccc(-c3ccccc3)cc2)n1",
+      "measured": 6.73754891026957,
+      "boltz2": 0.6676415205001831
+    },
+    {
+      "smiles": "CCC(C)n1cc(-c2ccn(C)n2)c2[nH]nc(N)c2c1=O",
+      "measured": 6.7447274948966935,
+      "boltz2": 0.7756271362304688
+    },
+    {
+      "smiles": "O=C(OCc1ccccc1)N1CCCC(c2ncn3cnc4[nH]ccc4c23)C1",
+      "measured": 6.886056647693163,
+      "boltz2": 0.5345896482467651
+    },
+    {
+      "smiles": "CCc1cc(O)ccc1-c1cc2[nH]ncc2c(N2CCc3cc(OC)c(OCc4ccccc4)cc3C2)n1",
+      "measured": 6.924453038607469,
+      "boltz2": 0.6559150218963623
+    },
+    {
+      "smiles": "O=C(N[C@@]12CC1CN(c1nc(Nc3cnn(CCO)c3)ncc1Cl)C2)C1CC1",
+      "measured": 6.752026733638193,
+      "boltz2": 0.22917276620864868
+    },
+    {
+      "smiles": "COCC1(NC[C@H]2CC[C@H](c3nnn4cnc5[nH]ccc5c34)CC2)CC1",
+      "measured": 7.0,
+      "boltz2": 0.6853424310684204
+    },
+    {
+      "smiles": "CCn1c(C(=O)N(C2CC2)C2CC2)cc2c3c(ncn3C)c(NC(=O)OCCOC)nc21",
+      "measured": 6.919315998882513,
+      "boltz2": 0.4916937053203583
+    },
+    {
+      "smiles": "O=C(OCc1ccccc1)N1CCC(c2ncn3cnc4[nH]ccc4c23)CC1",
+      "measured": 7.050609993355087,
+      "boltz2": 0.5392535924911499
+    },
+    {
+      "smiles": "Cn1cc(Nc2nccc(N3C[C@@H]4CC[C@H](C3)N4C(=O)[C@@H]3CC3(F)F)n2)cn1",
+      "measured": 7.113509274827518,
+      "boltz2": 0.13882148265838623
+    },
+    {
+      "smiles": "CNC(=O)C(=N)c1c(N)cc(-c2cc(F)c(O)cc2CC(F)(F)F)nc1NCc1nccnc1N(C)S(=O)(=O)c1ccccc1",
+      "measured": 7.0695604052333,
+      "boltz2": 1.177812099456787
+    },
+    {
+      "smiles": "N#CCNC(=O)C[C@H]1CC[C@@H](c2nnn3cnc4[nH]ccc4c23)CC1",
+      "measured": 7.221848749616356,
+      "boltz2": 1.3791837692260742
+    },
+    {
+      "smiles": "N#Cc1ccc(CCNC[C@H]2CC[C@H](c3nnn4cnc5[nH]ccc5c34)CC2)cc1",
+      "measured": 7.154901959985743,
+      "boltz2": 1.1980299949645996
+    },
+    {
+      "smiles": "c1cc2c(ncn3nnc([C@H]4CC[C@H](CNC5CSC5)CC4)c23)[nH]1",
+      "measured": 7.167491087293763,
+      "boltz2": 1.1985617876052856
+    },
+    {
+      "smiles": "c1csc(CN2CCC(c3nnn4cnc5[nH]ccc5c34)CC2)n1",
+      "measured": 7.267606240177031,
+      "boltz2": 1.3223316669464111
+    },
+    {
+      "smiles": "CNS(=O)(=O)c1ccc(-c2cccc3ncc(-c4cc(OC)c(OC)c(OC)c4)nc23)cc1",
+      "measured": 7.376750709602099,
+      "boltz2": 1.5480272769927979
+    },
+    {
+      "smiles": "CCc1cc(O)c(F)cc1-c1nc(N(CCc2ccc(OC)c(OC)c2)Cc2ccccc2N(C)S(C)(=O)=O)c2cn[nH]c2n1",
+      "measured": 7.359518563029578,
+      "boltz2": 1.19057297706604
+    },
+    {
+      "smiles": "Cn1cc(-c2cn3nccc3c(-c3cnn(C4(CC#N)CN(S(C)(=O)=O)C4)c3)n2)cn1",
+      "measured": 7.376750709602099,
+      "boltz2": 0.8937333822250366
+    },
+    {
+      "smiles": "N#Cc1ccc(NC2CCC(c3nnn4cnc5[nH]ccc5c34)CC2)cc1",
+      "measured": 7.376750709602099,
+      "boltz2": 1.0957844257354736
+    },
+    {
+      "smiles": "CNC(=O)c1n[nH]c2cc(-c3cc(F)c(O)cc3CC(F)(F)F)nc(NCc3cc(C)cnc3N(C)S(C)(=O)=O)c12",
+      "measured": 7.31695296176115,
+      "boltz2": 1.123549461364746
+    },
+    {
+      "smiles": "CN(c1ccccc1CNc1nc(-c2cc(F)c(O)cc2C2CC2)cc2[nH]nc(C(N)=O)c12)S(C)(=O)=O",
+      "measured": 7.546681659952962,
+      "boltz2": 1.9223175048828125
+    },
+    {
+      "smiles": "Cc1ccc(N(C)S(C)(=O)=O)c(CNc2nc(-c3cc(F)c(O)cc3CC(F)(F)F)cc(N)c2C(=N)C(N)=O)c1",
+      "measured": 7.567030709125595,
+      "boltz2": 1.1343555450439453
+    },
+    {
+      "smiles": "CN(c1ccccc1CNc1nc(-c2cc(F)c(O)cc2CC(F)(F)F)cc2[nH]nc(C(N)=O)c12)S(=O)(=O)c1cccnc1",
+      "measured": 7.51999305704285,
+      "boltz2": 1.30440092086792
+    },
+    {
+      "smiles": "CNC(=O)c1n[nH]c2cc(-c3cc(F)c(O)cc3CC(F)(F)F)nc(NCc3cc(O)ccc3N(C)S(=O)(=O)c3cccnc3)c12",
+      "measured": 7.482804102050026,
+      "boltz2": 1.3152170181274414
+    },
+    {
+      "smiles": "OC(CNC[C@H]1CC[C@H](c2nnn3cnc4[nH]ccc4c23)CC1)c1ccccc1",
+      "measured": 7.568636235841012,
+      "boltz2": 1.4189965724945068
+    },
+    {
+      "smiles": "Clc1ccc(CNC[C@H]2CC[C@H](c3nnn4cnc5[nH]ccc5c34)CC2)cc1",
+      "measured": 7.508638306165727,
+      "boltz2": 1.3460862636566162
+    },
+    {
+      "smiles": "CN(C)[C@H]1CCN(C(=O)c2ccc3[nH]c4c(C(N)=O)cc(-c5ccc(Cl)c(Cl)c5)cc4c3c2)C1",
+      "measured": 7.681255135243744,
+      "boltz2": 2.4689950942993164
+    },
+    {
+      "smiles": "OC1(C(F)(F)F)CN(C[C@H]2CC[C@H](c3nnn4cnc5[nH]ccc5c34)CC2)C1",
+      "measured": 7.657577319177793,
+      "boltz2": 1.2527111768722534
+    },
+    {
+      "smiles": "CN(c1ccc(O)cc1CNc1nc(-c2cc(F)c(O)cc2CC(F)(F)F)nc2[nH]nc(C(=O)Nc3ccc(NCCO)nc3)c12)S(C)(=O)=O",
+      "measured": 7.640164517660112,
+      "boltz2": 1.593595266342163
+    },
+    {
+      "smiles": "CCc1cc(O)c(F)cc1-c1cc2[nH]nc(-n3cccn3)c2c(NCc2ccccc2N(C)S(C)(=O)=O)n1",
+      "measured": 7.627087997029894,
+      "boltz2": 1.5021836757659912
+    },
+    {
+      "smiles": "N#CCN1CN(C2CCCCC2)c2c(cnc3[nH]ccc23)C1=O",
+      "measured": 7.619788758288394,
+      "boltz2": 0.7689583897590637
+    },
+    {
+      "smiles": "Fc1ccc(CN2CCC(c3nnn4cnc5[nH]ccc5c34)CC2)c(Cl)c1",
+      "measured": 7.698970004336019,
+      "boltz2": 1.517087697982788
+    },
+    {
+      "smiles": "CCc1cc(O)ccc1-c1cc2[nH]ncc2c(NCc2c(C)cccc2N(C)S(C)=O)n1.O",
+      "measured": 7.826813731587726,
+      "boltz2": 1.7954398393630981
+    },
+    {
+      "smiles": "c1cc2c(ncn3nnc(C4CCN(Cc5cncs5)CC4)c23)[nH]1",
+      "measured": 7.886056647693163,
+      "boltz2": 1.5176280736923218
+    },
+    {
+      "smiles": "CCCCN(c1ccccc1CNc1nc(-c2cc(F)c(O)cc2CC)cc(N)c1C=N)S(C)(=O)=O",
+      "measured": 7.777283528852417,
+      "boltz2": 1.8196775913238525
+    },
+    {
+      "smiles": "CN1CN([C@H]2CC[C@H](CNCC(F)(F)F)CC2)c2c(cnc3[nH]ccc23)C1=O",
+      "measured": 7.795880017344075,
+      "boltz2": 1.2927674055099487
+    },
+    {
+      "smiles": "FC[C@H]1CC[C@H](c2nnn3cnc4[nH]ccc4c23)CC1",
+      "measured": 7.853871964321762,
+      "boltz2": 1.8433247804641724
+    },
+    {
+      "smiles": "FC(F)CNC[C@H]1CC[C@H](c2nnn3cnc4[nH]ccc4c23)CC1",
+      "measured": 7.823908740944319,
+      "boltz2": 1.461888313293457
+    },
+    {
+      "smiles": "CCc1cc(O)c(F)cc1-c1cc2[nH]nc(C(=O)NC)c2c(NCc2cc(F)ccc2N(C)S(C)(=O)=O)n1",
+      "measured": 8.036212172654444,
+      "boltz2": 1.9409561157226562
+    },
+    {
+      "smiles": "COCN1CN([C@H]2CC[C@H](CNCC(F)(F)F)CC2)c2c(cnc3[nH]ccc23)C1=O",
+      "measured": 8.0,
+      "boltz2": 0.9306765794754028
+    },
+    {
+      "smiles": "CCc1cc(O)c(F)cc1-c1cc(N)c(C(=N)C(=O)NC)c(NCc2ccccc2N(CC)S(C)(=O)=O)n1",
+      "measured": 7.966576244513051,
+      "boltz2": 2.1555192470550537
+    },
+    {
+      "smiles": "Cc1cc(-c2cnc3cccc(-c4ccc(CN5CCS(=O)(=O)CC5)cc4)c3n2)ccc1C(=O)N1CCN(C)CC1",
+      "measured": 8.148741651280925,
+      "boltz2": 2.7279863357543945
+    },
+    {
+      "smiles": "CCN1CN([C@H]2CC[C@H](CNS(=O)(=O)CC(F)(F)F)CC2)c2c(cnc3[nH]ccc23)C1=O",
+      "measured": 8.193820026016112,
+      "boltz2": 1.5750443935394287
+    },
+    {
+      "smiles": "CCc1cc(O)ccc1-c1cc(N)c(C=N)c(N2CC(C)(O)C2)n1",
+      "measured": 7.995678626217357,
+      "boltz2": 1.6606273651123047
+    },
+    {
+      "smiles": "Cn1cc(-c2ccc(Nc3nn([C@H]4COCC[C@@H]4C#N)cc3C(N)=O)cc2)cn1",
+      "measured": 8.35498269431874,
+      "boltz2": 2.317349433898926
+    },
+    {
+      "smiles": "N#CCC[C@H]1CC[C@H](c2nnn3cnc4[nH]ccc4c23)CC1",
+      "measured": 8.337242168318426,
+      "boltz2": 1.8094569444656372
+    },
+    {
+      "smiles": "Clc1cnc2nc1NCc1cccc(c1)OCCCc1cccc(c1)N2",
+      "measured": 8.721246399047171,
+      "boltz2": 2.161012649536133
+    },
+    {
+      "smiles": "CNC(=O)c1ccc(Nc2nc3cccc(-c4cc(F)c(CN5CCOCC5)c(F)c4)c3o2)cc1C",
+      "measured": 8.301029995663981,
+      "boltz2": 1.6295983791351318
+    },
+    {
+      "smiles": "CN1CN([C@H]2CC[C@H](COCCC#N)CC2)c2c(cnc3[nH]ccc23)C1=O",
+      "measured": 8.721246399047171,
+      "boltz2": 1.6055679321289062
+    },
+    {
+      "smiles": "CN1CN([C@H]2CC[C@H](CNS(=O)(=O)CC(F)(F)F)CC2)c2c(cnc3[nH]ccc23)C1=O",
+      "measured": 8.744727494896694,
+      "boltz2": 2.0557079315185547
+    }
+  ]
+}

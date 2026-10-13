@@ -1,0 +1,95 @@
+{
+  "family": "k06",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 20,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 6.160880548782643,
+  "baseline_auc_sem": 0.01954774096879291,
+  "bad_quantile": null,
+  "n_pool": 335,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.39530163337320845,
+      "delta_sem": 0.021025831715093993,
+      "n": 32,
+      "sem_multiple": 18.800760832182913,
+      "clears_bar": true,
+      "flag": "18.8 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": 0.05714248049830278,
+      "delta_sem": 0.037532996636770184,
+      "n": 32,
+      "sem_multiple": 1.5224598518286614,
+      "clears_bar": false,
+      "flag": "1.5 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.06335628885428235,
+      "delta_sem": 0.03987806553959367,
+      "n": 32,
+      "sem_multiple": 1.5887503066410755,
+      "clears_bar": false,
+      "flag": "1.6 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.019006937914192917,
+      "delta_sem": 0.04328229388181501,
+      "n": 32,
+      "sem_multiple": 0.4391388766522528,
+      "clears_bar": false,
+      "flag": "0.4 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.3319453445189261,
+    "sem": 0.04508154512094257,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.5822666482449232,
+  "rho_eff_mean": 0.5817412118650028,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.375,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.21875
+  },
+  "provenance": {
+    "source": "data/cache/tdc/bindingdb_ic50.csv",
+    "potency": "nanomolar",
+    "blocks_from": "results/cross_family_blocks_bindingdb.json",
+    "seed_pool": "random",
+    "targets": [
+      "CYP3A4",
+      "CYP2C9",
+      "CYP2C19",
+      "CYP2D6"
+    ],
+    "block_csv": "data/bindingdb/block_cyp2c19-cyp2c9-cyp2d6-cyp3a4.csv",
+    "n_block": 1472,
+    "n_pool": 335,
+    "censoring": "pile_frac=0.02",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

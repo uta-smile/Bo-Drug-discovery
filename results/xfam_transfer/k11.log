@@ -1,0 +1,36 @@
+k11: 430 compounds x 4 targets, budget 95, batch 10, H=50 (0s)
+      PRKCG: success set = top-10
+    PRKCG    done
+      RET: success set = top-10
+    RET      done
+      MARK3: success set = top-10
+    MARK3    done
+      CSNK1A1: success set = top-10
+    CSNK1A1  done
+    [audit] 1,280 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.88 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    PRKCG                50.9%   64.4%         +13.4%
+    RET                  72.8%   67.5%          -5.3%
+    MARK3                55.6%   74.4%         +18.8%
+    CSNK1A1              79.7%   74.7%          -5.0%
+    2/4 targets improve; spread -5.3% to +18.8%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl              13.0458       64.8%                
+    mt               13.1520       70.2%   +0.1063+-0.0254
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.1063 AUC
+      over single-task BO (56% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\xfam_transfer\k11.json  (63s total)

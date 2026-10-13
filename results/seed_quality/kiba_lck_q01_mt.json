@@ -1,0 +1,91 @@
+{
+  "family": "kiba_lck",
+  "arm": "mt",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "n_pool": 843,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.6460591343135031,
+      "delta_sem": 0.050061474078377736,
+      "n": 32,
+      "sem_multiple": 12.905315838323371,
+      "clears_bar": true,
+      "flag": "12.9 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.33454634161350877,
+      "delta_sem": 0.0934148303570182,
+      "n": 32,
+      "sem_multiple": 3.5812979623783527,
+      "clears_bar": true,
+      "flag": "3.6 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": -0.07690858119361449,
+      "delta_sem": 0.08745226788670452,
+      "n": 32,
+      "sem_multiple": 0.8794349540854732,
+      "clears_bar": false,
+      "flag": "0.9 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": -0.1205325296888809,
+      "delta_sem": 0.08597855011365983,
+      "n": 32,
+      "sem_multiple": 1.4018906986631228,
+      "clears_bar": false,
+      "flag": "1.4 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.7229677155071177,
+    "sem": 0.10076730791992021,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "aux_quality": 0.1,
+  "rho_eff": 0.03808154642590467,
+  "rho_eff_mean": 0.03673861330765695,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.0,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.09375
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": null,
+    "seed_pool": "random",
+    "targets": [
+      "LCK",
+      "MAPK8",
+      "MAPK9",
+      "GSK3B"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_gsk3b-lck-mapk8-mapk9.csv",
+    "n_block": 843,
+    "n_pool": 843,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "family": "k06",
+  "arm": "mt",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 12.900944294834915,
+  "baseline_auc_sem": 0.1298168077002715,
+  "bad_quantile": null,
+  "n_pool": 430,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.566131046947637,
+      "delta_sem": 0.04930987533353595,
+      "n": 32,
+      "sem_multiple": 11.481088587595918,
+      "clears_bar": true,
+      "flag": "11.5 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.16148096256108224,
+      "delta_sem": 0.060187128992856456,
+      "n": 32,
+      "sem_multiple": 2.6829816484559057,
+      "clears_bar": true,
+      "flag": "2.7 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.03347863213726021,
+      "delta_sem": 0.06594093573330145,
+      "n": 32,
+      "sem_multiple": 0.5077063551640328,
+      "clears_bar": false,
+      "flag": "0.5 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.017492439217911493,
+      "delta_sem": 0.06275629549002121,
+      "n": 32,
+      "sem_multiple": 0.2787360069826451,
+      "clears_bar": false,
+      "flag": "0.3 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.5326524148103768,
+    "sem": 0.0823387564321459,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.06424013398987066,
+  "rho_eff_mean": 0.13690785823895948,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.0625,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.21875
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "FRK",
+      "AKT3",
+      "CSNK1G3",
+      "FLT3"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_akt3-csnk1g3-flt3-frk.csv",
+    "n_block": 430,
+    "n_pool": 430,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

@@ -1,0 +1,37 @@
+k10: 430 compounds x 4 targets, budget 95, batch 10, H=50 (0s)
+      FRK: success set = top-10
+    FRK      done
+      SYK: success set = top-10
+    SYK      done
+      TSSK2: success set = top-10
+    TSSK2    done
+      TSSK1B: success set = top-10
+    TSSK1B   done
+    [audit] 1,536 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.88 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    FRK                  52.2%   48.1%          -4.1%
+    SYK                  40.9%   41.9%          +0.9%
+    TSSK2                30.6%   30.0%          -0.6%
+    TSSK1B               35.9%   35.9%          +0.0%
+    1/4 targets improve; spread -4.1% to +0.9%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl              12.7830       39.9%                
+    mt               12.8007       39.0%   +0.0177+-0.0170
+
+    verdict:
+      not established at this power: +0.0177+-0.0170 AUC, which is 1.0 SEM and
+      the bar here is 3. The point estimate is positive, so this
+      is a cell to re-run with more repeats, not a null.
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\xfam_transfer_excl\k10.json  (64s total)

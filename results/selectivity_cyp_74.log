@@ -1,0 +1,37 @@
+
+[0] censoring filter (values held by >2% of a column)
+    CYP3A4   pile-ups: 5.00 x317, 4.52 x122, 4.30 x90, 5.30 x68, 4.00 x64, 4.70 x62, 4.40 x41, 4.60 x38
+    CYP2D6   pile-ups: 5.00 x399, 4.52 x136, 4.30 x88, 4.00 x79, 4.70 x76, 5.30 x62, 4.40 x57, 4.60 x35
+    CYP2C9   pile-ups: 5.00 x307, 4.52 x119, 5.30 x97, 4.30 x87, 4.70 x67, 4.60 x57, 4.00 x50, 4.40 x41
+    CYP2C19  pile-ups: 5.00 x325, 4.52 x119, 4.30 x101, 4.70 x76, 5.30 x72, 4.00 x50, 4.40 x46, 4.60 x38
+    kept 335 of 1,472 compounds (22.8%)
+cyp: 335 compounds x 4 targets, budget 74 compounds (full panel each), batch 10 (0s)
+    CYP3A4   selectivity range -3.28..+2.00   top-10 overlap with potency top-10: 40%
+             top-10 binding anti-target value 3.70..5.94; shared by 2 compounds (median), 10 (max); 20% sit on a repeated value
+    CYP2D6   selectivity range -3.80..+2.20   top-10 overlap with potency top-10: 20%
+             top-10 binding anti-target value 4.67..6.57; shared by 1 compounds (median), 6 (max); 10% sit on a repeated value
+    CYP2C9   selectivity range -3.80..+1.88   top-10 overlap with potency top-10: 30%
+             top-10 binding anti-target value 4.26..6.89; shared by 1 compounds (median), 5 (max); 20% sit on a repeated value
+    CYP2C19  selectivity range -2.47..+1.71   top-10 overlap with potency top-10: 30%
+             top-10 binding anti-target value 4.69..7.02; shared by 1 compounds (median), 2 (max); 0% sit on a repeated value
+
+    arm             selectivity top-10    vs potency
+    ------------------------------------------------
+    random                       21.6%        -20.0%
+    potency                      41.6%              
+    contrast                     36.9%         -4.7%
+    compose                      38.4%         -3.1%
+
+    compose - contrast: +1.6% +-3.8%  (38% of campaigns)
+    (does modelling the panel and composing beat regressing the contrast?)
+
+    per-target selectivity recall
+    on-target      random    potency   contrast    compose  pot.overlap
+    CYP3A4          22.5%      30.0%      36.2%      36.2%          40%
+    CYP2D6          23.8%      48.7%      35.0%      40.0%          20%
+    CYP2C9          16.2%      50.0%      38.8%      41.2%          30%
+    CYP2C19         23.8%      37.5%      37.5%      36.3%          30%
+    [audit] [selectivity] 256 checks over 128 cells
+            every arm spent exactly the budget, with no compound selected twice
+
+wrote results\selectivity_cyp_74.json  (38s total)

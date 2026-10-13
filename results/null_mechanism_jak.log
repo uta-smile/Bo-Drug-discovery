@@ -1,0 +1,31 @@
+
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+jak: 904 compounds x 4 targets; 100 primary observations, 50 per auxiliary, 24 draws x 4 targets
+    JAK1 done
+    JAK2 done
+    JAK3 done
+    TYK2 done
+
+    rung          rho vs truth    mean sd   EI order vs stl   r selected
+    --------------------------------------------------------------------
+    stl                 0.00e+00   0.00e+00        0.6163    0.6428    1.0000      --
+    r0_all_frozen       1.24e-14   5.07e-14        0.6163    0.6428    1.0000   0.000
+    r0_scale_pooled     1.24e-14   1.25e+01        0.6163    1.2045    0.1809   0.000
+    r0_refit            1.44e+00   4.83e-01        0.5973    0.5582    0.0814   0.000
+    r_fitted            1.86e+00   5.40e-01        0.5825    0.5549    0.0783   0.159
+    real                1.92e+00   4.27e-01        0.6269    0.6357    0.0677   0.596
+
+    verdict:
+      With a diagonal task covariance and every inner
+      hyperparameter pinned, the auxiliary rows drop out of the
+      primary posterior exactly -- mean and uncertainty alike.
+      Releasing only the pooled signal variance moves the
+      uncertainty by up to 1.250e+01 while the
+      mean still moves by 1.243e-14.
+
+wrote results\null_mechanism_jak.json

@@ -1,0 +1,294 @@
+{
+  "seconds": 159.8519914150238,
+  "runner_hash": "3310a34bf9a7a9c52517b6e133ab4cf7083602a55e6fab294024bbc994c0b1f7",
+  "cases": [
+    {
+      "family": "dpp",
+      "target": "DPP4",
+      "repeat": 0,
+      "seconds": 1.6517834663391113
+    },
+    {
+      "family": "cyp",
+      "target": "CYP3A4",
+      "repeat": 0,
+      "seconds": 2.506291627883911
+    },
+    {
+      "family": "mmp",
+      "target": "MMP1",
+      "repeat": 0,
+      "seconds": 1.6731581687927246
+    },
+    {
+      "family": "hdac",
+      "target": "HDAC1",
+      "repeat": 0,
+      "seconds": 3.4914162158966064
+    },
+    {
+      "family": "cyp",
+      "target": "CYP2D6",
+      "repeat": 0,
+      "seconds": 4.495437860488892
+    },
+    {
+      "family": "dpp",
+      "target": "DPP7",
+      "repeat": 0,
+      "seconds": 3.2683279514312744
+    },
+    {
+      "family": "pi3k",
+      "target": "PIK3CA",
+      "repeat": 0,
+      "seconds": 12.085877895355225
+    },
+    {
+      "family": "hdac",
+      "target": "HDAC2",
+      "repeat": 0,
+      "seconds": 5.68232536315918
+    },
+    {
+      "family": "mmp",
+      "target": "MMP2",
+      "repeat": 0,
+      "seconds": 2.6887588500976562
+    },
+    {
+      "family": "pi3k",
+      "target": "PIK3CB",
+      "repeat": 0,
+      "seconds": 15.48996615409851
+    },
+    {
+      "family": "cyp",
+      "target": "CYP2C9",
+      "repeat": 0,
+      "seconds": 3.6274728775024414
+    },
+    {
+      "family": "dpp",
+      "target": "DPP8",
+      "repeat": 0,
+      "seconds": 2.6701173782348633
+    },
+    {
+      "family": "hdac",
+      "target": "HDAC3",
+      "repeat": 0,
+      "seconds": 5.355825424194336
+    },
+    {
+      "family": "jak",
+      "target": "JAK1",
+      "repeat": 0,
+      "seconds": 45.97554135322571
+    },
+    {
+      "family": "mmp",
+      "target": "MMP3",
+      "repeat": 0,
+      "seconds": 2.1177079677581787
+    },
+    {
+      "family": "jak",
+      "target": "JAK2",
+      "repeat": 0,
+      "seconds": 46.921130418777466
+    },
+    {
+      "family": "cyp",
+      "target": "CYP2C19",
+      "repeat": 0,
+      "seconds": 3.4617912769317627
+    },
+    {
+      "family": "dpp",
+      "target": "DPP9",
+      "repeat": 0,
+      "seconds": 2.664745807647705
+    },
+    {
+      "family": "pi3k",
+      "target": "PIK3CD",
+      "repeat": 0,
+      "seconds": 14.252669334411621
+    },
+    {
+      "family": "hdac",
+      "target": "HDAC6",
+      "repeat": 0,
+      "seconds": 5.2104644775390625
+    },
+    {
+      "family": "mmp",
+      "target": "MMP9",
+      "repeat": 0,
+      "seconds": 2.74749755859375
+    },
+    {
+      "family": "jak",
+      "target": "JAK3",
+      "repeat": 0,
+      "seconds": 45.61721730232239
+    },
+    {
+      "family": "cyp",
+      "target": "CYP3A4",
+      "repeat": 1,
+      "seconds": 5.166280031204224
+    },
+    {
+      "family": "dpp",
+      "target": "DPP4",
+      "repeat": 1,
+      "seconds": 3.7055866718292236
+    },
+    {
+      "family": "pi3k",
+      "target": "PIK3CG",
+      "repeat": 0,
+      "seconds": 14.476674795150757
+    },
+    {
+      "family": "hdac",
+      "target": "HDAC1",
+      "repeat": 1,
+      "seconds": 6.114738941192627
+    },
+    {
+      "family": "mmp",
+      "target": "MMP1",
+      "repeat": 1,
+      "seconds": 2.4225146770477295
+    },
+    {
+      "family": "jak",
+      "target": "TYK2",
+      "repeat": 0,
+      "seconds": 38.219159841537476
+    },
+    {
+      "family": "cyp",
+      "target": "CYP2D6",
+      "repeat": 1,
+      "seconds": 5.078094244003296
+    },
+    {
+      "family": "pi3k",
+      "target": "PIK3CA",
+      "repeat": 1,
+      "seconds": 14.830306053161621
+    },
+    {
+      "family": "dpp",
+      "target": "DPP7",
+      "repeat": 1,
+      "seconds": 3.712313413619995
+    },
+    {
+      "family": "mmp",
+      "target": "MMP2",
+      "repeat": 1,
+      "seconds": 2.9965219497680664
+    },
+    {
+      "family": "hdac",
+      "target": "HDAC2",
+      "repeat": 1,
+      "seconds": 5.877825021743774
+    },
+    {
+      "family": "pi3k",
+      "target": "PIK3CB",
+      "repeat": 1,
+      "seconds": 11.627085208892822
+    },
+    {
+      "family": "jak",
+      "target": "JAK1",
+      "repeat": 1,
+      "seconds": 47.91655230522156
+    },
+    {
+      "family": "cyp",
+      "target": "CYP2C9",
+      "repeat": 1,
+      "seconds": 4.482196092605591
+    },
+    {
+      "family": "dpp",
+      "target": "DPP8",
+      "repeat": 1,
+      "seconds": 3.2965798377990723
+    },
+    {
+      "family": "mmp",
+      "target": "MMP3",
+      "repeat": 1,
+      "seconds": 2.833009958267212
+    },
+    {
+      "family": "hdac",
+      "target": "HDAC3",
+      "repeat": 1,
+      "seconds": 5.345824718475342
+    },
+    {
+      "family": "jak",
+      "target": "JAK2",
+      "repeat": 1,
+      "seconds": 46.92969870567322
+    },
+    {
+      "family": "pi3k",
+      "target": "PIK3CD",
+      "repeat": 1,
+      "seconds": 10.20998215675354
+    },
+    {
+      "family": "dpp",
+      "target": "DPP9",
+      "repeat": 1,
+      "seconds": 3.1871676445007324
+    },
+    {
+      "family": "cyp",
+      "target": "CYP2C19",
+      "repeat": 1,
+      "seconds": 4.3149049282073975
+    },
+    {
+      "family": "mmp",
+      "target": "MMP9",
+      "repeat": 1,
+      "seconds": 2.614715337753296
+    },
+    {
+      "family": "hdac",
+      "target": "HDAC6",
+      "repeat": 1,
+      "seconds": 5.157314777374268
+    },
+    {
+      "family": "jak",
+      "target": "JAK3",
+      "repeat": 1,
+      "seconds": 43.98062229156494
+    },
+    {
+      "family": "pi3k",
+      "target": "PIK3CG",
+      "repeat": 1,
+      "seconds": 11.40203595161438
+    },
+    {
+      "family": "jak",
+      "target": "TYK2",
+      "repeat": 1,
+      "seconds": 37.695985317230225
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "family": "jak",
+  "protocol_n_obs": 50,
+  "protocol": {
+    "numerator_model": "fitted multi-task GP (r by exact LML)",
+    "numerator_auxiliary": "randomized (q = 0)",
+    "candidate_set": "not primary-observed and not in history",
+    "scale": "standardized, both models",
+    "per_campaign": false,
+    "seed_offset": 900000
+  },
+  "curve": {
+    "25": {
+      "c": 0.8145426476829347,
+      "sem": 0.020523120886897152,
+      "n": 24
+    },
+    "50": {
+      "c": 0.8067899792779322,
+      "sem": 0.01960677532720647,
+      "n": 24
+    },
+    "100": {
+      "c": 0.858264820781705,
+      "sem": 0.02203204723522539,
+      "n": 24
+    },
+    "150": {
+      "c": 0.984659665702539,
+      "sem": 0.029298785834901774,
+      "n": 24
+    },
+    "200": {
+      "c": 1.0587271571213293,
+      "sem": 0.02254767030292751,
+      "n": 24
+    },
+    "300": {
+      "c": 1.0987595221490891,
+      "sem": 0.013284287553919234,
+      "n": 24
+    }
+  },
+  "direct_comparison": {
+    "jak": {
+      "n": 128,
+      "a_mean": 2.34375,
+      "b_mean": 2.03125,
+      "difference": 0.3125,
+      "sem": 0.8070303478082249,
+      "ci95": [
+        -1.284467417340954,
+        1.909467417340954
+      ],
+      "p": 0.7793272307024575
+    }
+  }
+}

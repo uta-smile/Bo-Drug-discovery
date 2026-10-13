@@ -1,0 +1,95 @@
+{
+  "family": "k08",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 12.664882235216414,
+  "baseline_auc_sem": 0.06747298972382673,
+  "bad_quantile": null,
+  "n_pool": 430,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.3798844769915179,
+      "delta_sem": 0.03467105969358897,
+      "n": 32,
+      "sem_multiple": 10.9568175979854,
+      "clears_bar": true,
+      "flag": "11.0 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.015459036178075758,
+      "delta_sem": 0.057198296839971685,
+      "n": 32,
+      "sem_multiple": 0.2702709177045386,
+      "clears_bar": false,
+      "flag": "0.3 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.014378901724294568,
+      "delta_sem": 0.04594732740698251,
+      "n": 32,
+      "sem_multiple": 0.3129431576494575,
+      "clears_bar": false,
+      "flag": "0.3 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": -0.10038262659302505,
+      "delta_sem": 0.05930002236304765,
+      "n": 32,
+      "sem_multiple": 1.692792390169109,
+      "clears_bar": false,
+      "flag": "1.7 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.3655055752672233,
+    "sem": 0.05756074422834416,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.1182464074159823,
+  "rho_eff_mean": 0.12169850318732214,
+  "rho_eff_n": 77,
+  "top_k_seeded": {
+    "maxmin": 0.59375,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.1875
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "DAPK3",
+      "SRC",
+      "PIM3",
+      "TSSK2"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_dapk3-pim3-src-tssk2.csv",
+    "n_block": 430,
+    "n_pool": 430,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

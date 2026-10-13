@@ -1,0 +1,87 @@
+{
+  "family": "k03",
+  "arm": "mt",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "n_pool": 889,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.303582907622127,
+      "delta_sem": 0.023283510228089034,
+      "n": 32,
+      "sem_multiple": 13.038536915103423,
+      "clears_bar": true,
+      "flag": "13.0 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.05303782895835052,
+      "delta_sem": 0.04680949695673747,
+      "n": 32,
+      "sem_multiple": 1.133057016343701,
+      "clears_bar": false,
+      "flag": "1.1 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.244990118307799,
+      "delta_sem": 0.046204133252752425,
+      "n": 32,
+      "sem_multiple": 5.302342043029336,
+      "clears_bar": true,
+      "flag": "5.3 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.14686350379745555,
+      "delta_sem": 0.037964271265111364,
+      "n": 32,
+      "sem_multiple": 3.868466294845519,
+      "clears_bar": true,
+      "flag": "3.9 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.05859278931432799,
+    "sem": 0.05173918996447112,
+    "best_free": "aux_top",
+    "inert": true
+  },
+  "top_k_seeded": {
+    "maxmin": 0.375,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.21875
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/dense_blocks_kiba.json",
+    "seed_pool": "random",
+    "targets": [
+      "GSK3B",
+      "PIM1",
+      "PRKACA",
+      "DYRK1A"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_dyrk1a-gsk3b-pim1-prkaca.csv",
+    "n_block": 889,
+    "n_pool": 889,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

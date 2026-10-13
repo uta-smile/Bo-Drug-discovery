@@ -1,0 +1,91 @@
+{
+  "family": "kiba_cdk5",
+  "arm": "mt",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "n_pool": 899,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.22633095469745346,
+      "delta_sem": 0.021254709437804185,
+      "n": 32,
+      "sem_multiple": 10.648508527474634,
+      "clears_bar": true,
+      "flag": "10.6 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.04587223199259388,
+      "delta_sem": 0.03883025126308507,
+      "n": 32,
+      "sem_multiple": 1.1813529529283124,
+      "clears_bar": false,
+      "flag": "1.2 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.1685557965031219,
+      "delta_sem": 0.025101640728026123,
+      "n": 32,
+      "sem_multiple": 6.7149314393193595,
+      "clears_bar": true,
+      "flag": "6.7 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.10246242208075018,
+      "delta_sem": 0.03646486240091797,
+      "n": 32,
+      "sem_multiple": 2.809894658430708,
+      "clears_bar": true,
+      "flag": "2.8 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.057775158194331544,
+    "sem": 0.03289156488409121,
+    "best_free": "aux_top",
+    "inert": true
+  },
+  "aux_quality": null,
+  "rho_eff": 0.4834429521573099,
+  "rho_eff_mean": 0.4866342004924242,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.1875,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.15625
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": null,
+    "seed_pool": "random",
+    "targets": [
+      "PIM1",
+      "PRKACA",
+      "CDK5",
+      "DYRK1A"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_cdk5-dyrk1a-pim1-prkaca.csv",
+    "n_block": 899,
+    "n_pool": 899,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

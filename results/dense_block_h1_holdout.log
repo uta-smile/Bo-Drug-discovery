@@ -1,0 +1,46 @@
+﻿block from data\bindingdb\block_jak1-jak2-jak3-tyk2.csv: 1,563 compounds x 4 targets (0s)
+
+[1] the block: 1,563 compounds x 4 targets = 6,252 cells, fully observed
+    JAK1   pIC50 4.30..10.05  median 7.42  sd 1.21
+    JAK2   pIC50 4.26..9.52  median 7.19  sd 0.90
+    JAK3   pIC50 3.82..9.90  median 6.10  sd 0.98
+    TYK2   pIC50 4.30..9.70  median 6.62  sd 0.87
+
+    empirical task correlation (Pearson on the same compounds):
+               JAK1    JAK2    JAK3    TYK2
+    JAK1         --    0.71    0.59    0.42
+    JAK2       0.71      --    0.54    0.62
+    JAK3       0.59    0.54      --    0.24
+    TYK2       0.42    0.62    0.24      --
+    off-diagonal: min +0.24  median +0.57  max +0.71
+
+    pool nearest-neighbour similarity 0.798  (ChEMBL libraries 0.64-0.71, DOCKSTRING 0.38)
+    auxiliary reach ratio 1.00 by construction: the tasks share the molecules.
+
+[3] H1-cold -- primary charged n, family carries H free (10 repeats)
+    n=20 done
+    n=80 done
+
+    Spearman on held-out compounds
+       n   H=0 (stl)       H=25       H=50      H=100      H=200
+    ------------------------------------------------------------
+      20       0.463      0.485      0.492      0.562      0.591
+      80       0.617      0.628      0.637      0.663      0.680
+
+    gain over the single-task GP
+       n              H=25              H=50             H=100             H=200
+    ----------------------------------------------------------------------------
+      20      +0.022+-0.021      +0.029+-0.020      +0.099+-0.017      +0.128+-0.016
+      80      +0.011+-0.009      +0.020+-0.009      +0.046+-0.010      +0.063+-0.009
+
+    control: the same observations with the task structure discarded
+    (r fixed at 1, i.e. pool all four targets into one function)
+       n              H=25              H=50             H=100             H=200
+    ----------------------------------------------------------------------------
+      20      0.400 +0.084      0.395 +0.097      0.425 +0.137      0.450 +0.141
+      80      0.573 +0.055      0.524 +0.113      0.492 +0.170      0.494 +0.186
+    each cell: pooled rho, then (fitted ICM - pooled).
+
+    task correlation selected: median 0.60 (10th 0.40, 90th 0.75)
+
+    verdict:

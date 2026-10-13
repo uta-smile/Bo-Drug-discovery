@@ -1,0 +1,77 @@
+{
+  "source": "data/cache/tdc/bindingdb_ic50.csv",
+  "potency": "nanomolar",
+  "min_per_target": 200,
+  "size": 4,
+  "selection": "random subsets, stratified by raw-block coupling",
+  "bins": [
+    -1.0,
+    0.0,
+    0.1,
+    0.2,
+    0.28,
+    0.4,
+    1.01
+  ],
+  "per_bin": 4,
+  "min_pool": 160,
+  "samples": 150000,
+  "seeded": true,
+  "pile_frac": 0.02,
+  "blocks": [
+    {
+      "n": 300,
+      "uniprot": [
+        "P27487",
+        "Q9UHL4",
+        "Q6V1X1",
+        "Q86TI2"
+      ]
+    },
+    {
+      "n": 229,
+      "uniprot": [
+        "Q92769",
+        "O15379",
+        "Q9BY41",
+        "Q9UBN7"
+      ]
+    },
+    {
+      "n": 172,
+      "uniprot": [
+        "P25774",
+        "P07858",
+        "P07711",
+        "P43235"
+      ]
+    },
+    {
+      "n": 171,
+      "uniprot": [
+        "Q13547",
+        "Q92769",
+        "Q9BY41",
+        "Q969S8"
+      ]
+    },
+    {
+      "n": 248,
+      "uniprot": [
+        "P08253",
+        "P08254",
+        "P03956",
+        "P14780"
+      ]
+    },
+    {
+      "n": 326,
+      "uniprot": [
+        "P08684",
+        "P11712",
+        "P33261",
+        "P10635"
+      ]
+    }
+  ]
+}

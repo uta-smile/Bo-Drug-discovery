@@ -1,0 +1,179 @@
+{
+  "dataset": "data/chembl/egfr_anilinoquinazoline.csv",
+  "library_size": 2103,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "n_init": 10,
+  "k": 10,
+  "acquisitions": [
+    "ei",
+    "ucb",
+    "pi",
+    "greedy",
+    "ts"
+  ],
+  "rows": [
+    {
+      "budget": 50,
+      "policy": "fixed_ei",
+      "auc": 0.6731173449546486,
+      "sem": 0.011236900715073153,
+      "is_best_fixed": false
+    },
+    {
+      "budget": 50,
+      "policy": "fixed_ucb",
+      "auc": 0.6759131306689341,
+      "sem": 0.009917008160926485,
+      "is_best_fixed": false
+    },
+    {
+      "budget": 50,
+      "policy": "fixed_pi",
+      "auc": 0.6809982020975057,
+      "sem": 0.010482273958772216,
+      "is_best_fixed": true
+    },
+    {
+      "budget": 50,
+      "policy": "fixed_greedy",
+      "auc": 0.6733010592403629,
+      "sem": 0.01028515642632205,
+      "is_best_fixed": false
+    },
+    {
+      "budget": 50,
+      "policy": "fixed_ts",
+      "auc": 0.6224402735260771,
+      "sem": 0.0070080106541253444,
+      "is_best_fixed": false
+    },
+    {
+      "budget": 50,
+      "policy": "ceiling (hindsight)",
+      "auc": 0.6827922735260771,
+      "sem": 0.00893004023978321,
+      "delta_vs_best_fixed": 0.0017940714285713533,
+      "p_value": 0.8983173370361328,
+      "cohens_dz": 0.077902710801451
+    },
+    {
+      "budget": 50,
+      "policy": "scripted",
+      "auc": 0.6652627735260772,
+      "sem": 0.010373061230146596,
+      "delta_vs_best_fixed": -0.01573542857142851,
+      "p_value": 0.001689910888671875,
+      "cohens_dz": -0.905820307324496
+    },
+    {
+      "budget": 50,
+      "policy": "random switch",
+      "auc": 0.6752563449546485,
+      "sem": 0.007754486367102479,
+      "delta_vs_best_fixed": -0.005741857142857243,
+      "p_value": 0.49800872802734375,
+      "cohens_dz": -0.2534855850632167
+    },
+    {
+      "budget": 50,
+      "policy": "round-robin",
+      "auc": 0.6764686306689343,
+      "sem": 0.009806100122763218,
+      "delta_vs_best_fixed": -0.004529571428571466,
+      "p_value": 0.47490501403808594,
+      "cohens_dz": -0.20807734363666505
+    },
+    {
+      "budget": 100,
+      "policy": "fixed_ei",
+      "auc": 0.7567281367630383,
+      "sem": 0.011332178034114349,
+      "is_best_fixed": false
+    },
+    {
+      "budget": 100,
+      "policy": "fixed_ucb",
+      "auc": 0.7646816010487527,
+      "sem": 0.008734159169545773,
+      "is_best_fixed": true
+    },
+    {
+      "budget": 100,
+      "policy": "fixed_pi",
+      "auc": 0.7604259224773242,
+      "sem": 0.009616658274103039,
+      "is_best_fixed": false
+    },
+    {
+      "budget": 100,
+      "policy": "fixed_greedy",
+      "auc": 0.7367686010487529,
+      "sem": 0.00846873251208358,
+      "is_best_fixed": false
+    },
+    {
+      "budget": 100,
+      "policy": "fixed_ts",
+      "auc": 0.7140453153344671,
+      "sem": 0.006193009197018352,
+      "is_best_fixed": false
+    },
+    {
+      "budget": 100,
+      "policy": "ceiling (hindsight)",
+      "auc": 0.7489256724773241,
+      "sem": 0.008179667840856386,
+      "delta_vs_best_fixed": -0.0157559285714286,
+      "p_value": 0.005580902099609375,
+      "cohens_dz": -0.6888382262154357
+    },
+    {
+      "budget": 100,
+      "policy": "scripted",
+      "auc": 0.7544962439058956,
+      "sem": 0.010053884504378866,
+      "delta_vs_best_fixed": -0.010185357142857066,
+      "p_value": 0.06372261047363281,
+      "cohens_dz": -0.3658479823764374
+    },
+    {
+      "budget": 100,
+      "policy": "random switch",
+      "auc": 0.7525647796201813,
+      "sem": 0.007448187181244324,
+      "delta_vs_best_fixed": -0.0121168214285714,
+      "p_value": 0.029575347900390625,
+      "cohens_dz": -0.37064857637839943
+    },
+    {
+      "budget": 100,
+      "policy": "round-robin",
+      "auc": 0.7659649224773242,
+      "sem": 0.008064073797131316,
+      "delta_vs_best_fixed": 0.00128332142857146,
+      "p_value": 0.8983173370361328,
+      "cohens_dz": 0.040870772401711386
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "family": "k14",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 12.560551044451646,
+  "baseline_auc_sem": 0.10504733420040684,
+  "bad_quantile": null,
+  "n_pool": 430,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.5469570278350713,
+      "delta_sem": 0.029676155623452057,
+      "n": 32,
+      "sem_multiple": 18.43085859149592,
+      "clears_bar": true,
+      "flag": "18.4 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.13607558825072236,
+      "delta_sem": 0.05405750373474479,
+      "n": 32,
+      "sem_multiple": 2.51723773480982,
+      "clears_bar": true,
+      "flag": "2.5 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.11505218798409539,
+      "delta_sem": 0.05713480816556051,
+      "n": 32,
+      "sem_multiple": 2.013696933237383,
+      "clears_bar": true,
+      "flag": "2.0 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.21395417591397586,
+      "delta_sem": 0.06586119837592264,
+      "n": 32,
+      "sem_multiple": 3.2485618420237046,
+      "clears_bar": true,
+      "flag": "3.2 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.3330028519210954,
+    "sem": 0.0722382977657972,
+    "best_free": "aux_scaffold_nn",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.25395359755946734,
+  "rho_eff_mean": 0.20927492667788208,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.0625,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.3125
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "MAPK13",
+      "PRKCG",
+      "MAP4K2",
+      "NTRK3"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_map4k2-mapk13-ntrk3-prkcg.csv",
+    "n_block": 430,
+    "n_pool": 430,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

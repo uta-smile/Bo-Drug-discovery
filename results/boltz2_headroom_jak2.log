@@ -1,0 +1,29 @@
+
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+jak block: 904 compounds; scoring 60 against measured JAK2 (4.30..8.74 pIC50)
+target O60674: 309 residues
+deterministic: True (gamma_0=0.0)
+
+59/60 ligands scored (6582s, 60 oracle calls)
+
+    quantity                                      Spearman
+    ------------------------------------------------------
+    Boltz-2 affinity vs measured pIC50               0.866
+    Tanimoto GP (out of fold) vs measured            0.404
+    Boltz-2 vs what the GP gets wrong                0.766
+
+    against this project's own thresholds:
+      prior mean (FINDINGS 8)          0.37   CLEARS (0.866)
+      auxiliary task (FINDINGS 32)     0.45   CLEARS (0.866)
+
+    verdict:
+      Clears both. A computed auxiliary is viable on this evidence,
+      which would remove the co-measured-panel requirement that keeps
+      the transfer result off a purchasable catalogue.
+
+wrote results\boltz2_headroom_jak2.json  (6582s total)

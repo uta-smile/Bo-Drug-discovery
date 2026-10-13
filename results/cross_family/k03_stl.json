@@ -1,0 +1,95 @@
+{
+  "family": "k03",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 13.423200511436233,
+  "baseline_auc_sem": 0.14265765480074905,
+  "bad_quantile": null,
+  "n_pool": 431,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.4260184755036405,
+      "delta_sem": 0.019939950618676493,
+      "n": 32,
+      "sem_multiple": 21.36507174218455,
+      "clears_bar": true,
+      "flag": "21.4 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.2219720198500078,
+      "delta_sem": 0.057146975073416026,
+      "n": 32,
+      "sem_multiple": 3.884230435029029,
+      "clears_bar": true,
+      "flag": "3.9 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": -0.13224720347061275,
+      "delta_sem": 0.06580995768853183,
+      "n": 32,
+      "sem_multiple": 2.0095318112270784,
+      "clears_bar": true,
+      "flag": "2.0 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.019366513046799483,
+      "delta_sem": 0.05580031394075263,
+      "n": 32,
+      "sem_multiple": 0.34706817361928033,
+      "clears_bar": false,
+      "flag": "0.3 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.40665196245684104,
+    "sem": 0.05925602641556224,
+    "best_free": "aux_scaffold_nn",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.02313911040407312,
+  "rho_eff_mean": 0.08387524776816786,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.125,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.1875
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "GSK3B",
+      "CSNK2A1",
+      "ITK",
+      "FLT1"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_csnk2a1-flt1-gsk3b-itk.csv",
+    "n_block": 431,
+    "n_pool": 431,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

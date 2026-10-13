@@ -1,0 +1,21 @@
+k09: 430 compounds x 4 targets, budget 95, batch 10, H=50 (0s)
+      MAP4K4: success set = top-10
+    MAP4K4   done
+      IGF1R: success set = top-10
+    IGF1R    done
+      CDK5: success set = top-10
+    CDK5     done
+      PLK3: success set = top-10
+    PLK3     done
+    [audit] 768 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.87 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+    seeding aux_top: pool 30 of 430 (7.0%), 0.0 of the true top-10 inside it -- history was drawn clear of the top-k, so this is 0 by construction
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+    stl              12.9772       49.0%                
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\xfam_seed_excl\k09.json  (1s total)

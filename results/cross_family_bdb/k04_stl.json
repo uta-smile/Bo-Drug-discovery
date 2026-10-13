@@ -1,0 +1,95 @@
+{
+  "family": "k04",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 20,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 7.901398187908816,
+  "baseline_auc_sem": 0.08526744438500775,
+  "bad_quantile": null,
+  "n_pool": 171,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.2782309543322409,
+      "delta_sem": 0.01563382547902705,
+      "n": 32,
+      "sem_multiple": 17.79672893915125,
+      "clears_bar": true,
+      "flag": "17.8 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": 0.11177835147499376,
+      "delta_sem": 0.03226808953781018,
+      "n": 32,
+      "sem_multiple": 3.464052352526707,
+      "clears_bar": true,
+      "flag": "3.5 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.025692221578823893,
+      "delta_sem": 0.027942494700617982,
+      "n": 32,
+      "sem_multiple": 0.919467708738822,
+      "clears_bar": false,
+      "flag": "0.9 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.020719270004980916,
+      "delta_sem": 0.03626703228376926,
+      "n": 32,
+      "sem_multiple": 0.5712976414189119,
+      "clears_bar": false,
+      "flag": "0.6 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.1664526028572471,
+    "sem": 0.035855907484385476,
+    "best_free": "maxmin",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.6270676691729323,
+  "rho_eff_mean": 0.5243335712594605,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 1.3125,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.5
+  },
+  "provenance": {
+    "source": "data/cache/tdc/bindingdb_ic50.csv",
+    "potency": "nanomolar",
+    "blocks_from": "results/cross_family_blocks_bindingdb.json",
+    "seed_pool": "random",
+    "targets": [
+      "HDAC1",
+      "HDAC2",
+      "HDAC8",
+      "HDAC10"
+    ],
+    "block_csv": "data/bindingdb/block_hdac1-hdac10-hdac2-hdac8.csv",
+    "n_block": 221,
+    "n_pool": 171,
+    "censoring": "pile_frac=0.02",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

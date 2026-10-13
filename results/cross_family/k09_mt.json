@@ -1,0 +1,95 @@
+{
+  "family": "k09",
+  "arm": "mt",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 12.697507700650048,
+  "baseline_auc_sem": 0.05726857469443998,
+  "bad_quantile": null,
+  "n_pool": 430,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.45709340978475643,
+      "delta_sem": 0.028782108924193597,
+      "n": 32,
+      "sem_multiple": 15.881164614749057,
+      "clears_bar": true,
+      "flag": "15.9 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.1226617945111812,
+      "delta_sem": 0.051210912768803976,
+      "n": 32,
+      "sem_multiple": 2.3952276551864697,
+      "clears_bar": true,
+      "flag": "2.4 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": -0.02094830809259135,
+      "delta_sem": 0.046376455407753,
+      "n": 32,
+      "sem_multiple": 0.4517013624350711,
+      "clears_bar": false,
+      "flag": "0.5 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.026548557135189277,
+      "delta_sem": 0.051470210572223514,
+      "n": 32,
+      "sem_multiple": 0.5158043233170005,
+      "clears_bar": false,
+      "flag": "0.5 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.43054485264956716,
+    "sem": 0.058971114712825075,
+    "best_free": "aux_scaffold_nn",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.11674949311328198,
+  "rho_eff_mean": 0.09912620952132446,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.0,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.1875
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "MAP4K4",
+      "IGF1R",
+      "CDK5",
+      "PLK3"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_cdk5-igf1r-map4k4-plk3.csv",
+    "n_block": 430,
+    "n_pool": 430,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

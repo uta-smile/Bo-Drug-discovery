@@ -1,0 +1,50 @@
+
+[0] censoring filter (values held by >2% of a column)
+    CYP3A4   pile-ups: 5.00 x317, 4.52 x122, 4.30 x90, 5.30 x68, 4.00 x64, 4.70 x62, 4.40 x41, 4.60 x38
+    CYP2D6   pile-ups: 5.00 x399, 4.52 x136, 4.30 x88, 4.00 x79, 4.70 x76, 5.30 x62, 4.40 x57, 4.60 x35
+    CYP2C9   pile-ups: 5.00 x307, 4.52 x119, 5.30 x97, 4.30 x87, 4.70 x67, 4.60 x57, 4.00 x50, 4.40 x41
+    CYP2C19  pile-ups: 5.00 x325, 4.52 x119, 4.30 x101, 4.70 x76, 5.30 x72, 4.00 x50, 4.40 x46, 4.60 x38
+    kept 335 of 1,472 compounds (22.8%)
+cyp: 335 compounds x 4 targets, budget 74, batch 10, H=50 (0s)
+      CYP3A4: scaffold split -- 314 of 335 compounds seedable (10 of 260 scaffolds withheld)
+      CYP3A4: success set = top-10
+    CYP3A4   done
+      CYP2D6: scaffold split -- 319 of 335 compounds seedable (8 of 260 scaffolds withheld)
+      CYP2D6: success set = top-10
+    CYP2D6   done
+      CYP2C9: scaffold split -- 319 of 335 compounds seedable (9 of 260 scaffolds withheld)
+      CYP2C9: success set = top-10
+    CYP2C9   done
+      CYP2C19: scaffold split -- 317 of 335 compounds seedable (9 of 260 scaffolds withheld)
+      CYP2C19: success set = top-10
+    CYP2C19  done
+    [audit] 576 checks over 32 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.96 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    CYP3A4               33.8%   55.0%         +21.3%
+    CYP2D6               35.0%   55.0%         +20.0%
+    CYP2C9               45.0%   53.8%          +8.7%
+    CYP2C19              51.2%   51.2%          +0.0%
+    3/4 targets improve; spread +0.0% to +21.3%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               6.2459       41.2%                
+    mt                6.3891       53.8%   +0.1432+-0.0309
+    pooled            6.3932       59.4%   +0.1472+-0.0318
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.1432 AUC
+      over single-task BO (78% of campaigns better).
+      But pooling matches it -- on this block the campaign gain
+      does not require modelling the task structure.
+
+wrote results\scaf_cyp_74.json  (17s total)

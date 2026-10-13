@@ -1,0 +1,95 @@
+{
+  "family": "k05",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 20,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 12.44666845341538,
+  "baseline_auc_sem": 0.10944610435005635,
+  "bad_quantile": null,
+  "n_pool": 430,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.2781097535420702,
+      "delta_sem": 0.012245331242791526,
+      "n": 32,
+      "sem_multiple": 22.711492896999857,
+      "clears_bar": true,
+      "flag": "22.7 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.10629652695496988,
+      "delta_sem": 0.026954272581918615,
+      "n": 32,
+      "sem_multiple": 3.943587297038593,
+      "clears_bar": true,
+      "flag": "3.9 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": -0.08972083616307003,
+      "delta_sem": 0.03475590555241724,
+      "n": 32,
+      "sem_multiple": 2.5814558630261333,
+      "clears_bar": true,
+      "flag": "2.6 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": -0.0041692701163432155,
+      "delta_sem": 0.031775031772798334,
+      "n": 32,
+      "sem_multiple": 0.1312121462585729,
+      "clears_bar": false,
+      "flag": "0.1 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.2822790236584134,
+    "sem": 0.03405291149678732,
+    "best_free": "aux_scaffold_nn",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.11333825589326044,
+  "rho_eff_mean": 0.1107902758455431,
+  "rho_eff_n": 64,
+  "top_k_seeded": {
+    "maxmin": 0.03125,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.15625
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "PHKG2",
+      "TYRO3",
+      "SRMS",
+      "CLK4"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_clk4-phkg2-srms-tyro3.csv",
+    "n_block": 430,
+    "n_pool": 430,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

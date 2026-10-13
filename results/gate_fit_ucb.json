@@ -1,0 +1,75 @@
+{
+  "data": "results/selective_headroom_ucb.json",
+  "n_targets": 411,
+  "target": "pays",
+  "features": [
+    "conf.entropy",
+    "conf.margin",
+    "conf.n_pred_top_in_pick",
+    "conf.pred_lift",
+    "conf.top1_score",
+    "lib.n",
+    "lib.log_n",
+    "part.n_nonempty",
+    "part.pick_size",
+    "part.pick_frac",
+    "part.size_gini",
+    "part.size_max_frac",
+    "score.std",
+    "score.max",
+    "score.range",
+    "score.n_positive",
+    "score.top2_sum"
+  ],
+  "base_rate": 0.3357664233576642,
+  "commit_always": -0.02424385421963267,
+  "ceiling": 0.010034890646380976,
+  "oof_auroc": 0.5822317778839518,
+  "oof_value": -0.001254626669176801,
+  "oof_coverage": 0.0681265206812652,
+  "null": {
+    "auroc_mean": 0.4925145989276424,
+    "auroc_p": 0.015,
+    "value_mean": -0.001664159510138842,
+    "value_p": 0.29
+  },
+  "certified": {
+    "n_tune": 82,
+    "n_test": 329,
+    "tau": 0.5989220198566623,
+    "coverage": 0.2127659574468085,
+    "value": -0.004021105519553957,
+    "lcb": -0.006546795359302514,
+    "deploy": false
+  },
+  "random_gate": -0.0016669690568305992,
+  "curve": [
+    {
+      "n": 100,
+      "auroc": 0.5302075417850557,
+      "value": -0.0028354954604097988
+    },
+    {
+      "n": 200,
+      "auroc": 0.5567761203035259,
+      "value": -0.0012559167302134372
+    },
+    {
+      "n": 300,
+      "auroc": 0.5629552583045141,
+      "value": -0.0013069332706684533
+    },
+    {
+      "n": 411,
+      "auroc": 0.5721651536868928,
+      "value": -0.0009789423431093803
+    }
+  ],
+  "criteria": {
+    "auroc > 0.60 and p < 0.05": false,
+    "policy value > 0 and beats null": false,
+    "certified LCB > 0": false,
+    "beats matched-coverage random gate": false
+  },
+  "useful": false
+}

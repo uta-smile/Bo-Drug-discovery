@@ -1,0 +1,54 @@
+{
+  "family": "jak",
+  "history": 50,
+  "history_cluster": 0.0,
+  "reach": 0.8604842985033734,
+  "history_excludes_top": true,
+  "budget": 600,
+  "batch": 10,
+  "k": 10,
+  "acquisition": "ei",
+  "repeats": 8,
+  "n_pool": 904,
+  "arms": {
+    "stl": {
+      "auc_mean": 9.107753519414706,
+      "auc_sem": 0.042819342083414105,
+      "recall_mean": 0.9781249999999999,
+      "delta_vs_stl": 0.0,
+      "delta_sem": 0.0,
+      "frac_better": 0.0
+    },
+    "mt": {
+      "auc_mean": 9.144905226267827,
+      "auc_sem": 0.04576033668497284,
+      "recall_mean": 0.98125,
+      "delta_vs_stl": 0.037151706853121635,
+      "delta_sem": 0.011100162581765393,
+      "frac_better": 0.75
+    }
+  },
+  "per_target": {
+    "JAK1": {
+      "stl_recall": 0.9875,
+      "mt_recall": 0.9875,
+      "delta": 0.0
+    },
+    "JAK2": {
+      "stl_recall": 1.0,
+      "mt_recall": 1.0,
+      "delta": 0.0
+    },
+    "JAK3": {
+      "stl_recall": 0.925,
+      "mt_recall": 0.9375,
+      "delta": 0.012499999999999956
+    },
+    "TYK2": {
+      "stl_recall": 1.0,
+      "mt_recall": 1.0,
+      "delta": 0.0
+    }
+  },
+  "targets_improving": 1
+}

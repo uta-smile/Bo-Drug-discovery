@@ -1,0 +1,37 @@
+
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+jak: 904 compounds x 4 targets, budget 200 compounds (full panel each), batch 10 (1s)
+    JAK1     selectivity range -5.00..+2.45   top-10 overlap with potency top-10: 0%
+             top-10 binding anti-target value 5.08..7.28; shared by 1 compounds (median), 4 (max); 0% sit on a repeated value
+    JAK2     selectivity range -5.00..+2.15   top-10 overlap with potency top-10: 0%
+             top-10 binding anti-target value 5.39..7.22; shared by 2 compounds (median), 6 (max); 0% sit on a repeated value
+    JAK3     selectivity range -3.49..+5.00   top-10 overlap with potency top-10: 40%
+             top-10 binding anti-target value 4.30..7.28; shared by 1 compounds (median), 15 (max); 10% sit on a repeated value
+    TYK2     selectivity range -5.00..+1.87   top-10 overlap with potency top-10: 0%
+             top-10 binding anti-target value 5.77..7.82; shared by 2 compounds (median), 5 (max); 0% sit on a repeated value
+
+    arm             selectivity top-10    vs potency
+    ------------------------------------------------
+    random                       21.9%        -34.1%
+    potency                      55.9%              
+    contrast                     95.6%        +39.7%
+    compose                      93.4%        +37.5%
+
+    compose - contrast: -2.2% +-1.6%  (22% of campaigns)
+    (does modelling the panel and composing beat regressing the contrast?)
+
+    per-target selectivity recall
+    on-target      random    potency   contrast    compose  pot.overlap
+    JAK1            20.0%      43.8%      98.8%      98.8%           0%
+    JAK2            22.5%      27.5%      95.0%      96.2%           0%
+    JAK3            23.8%      68.8%      96.2%      85.0%          40%
+    TYK2            21.3%      83.8%      92.5%      93.8%           0%
+    [audit] [selectivity] 256 checks over 128 cells
+            every arm spent exactly the budget, with no compound selected twice
+
+wrote results\selectivity_jak_200.json  (1249s total)

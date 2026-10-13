@@ -1,0 +1,233 @@
+{
+ "labelled": {
+  "k01": {
+   "targets": [
+    "PRKD3",
+    "PRKCG",
+    "PRKCZ",
+    "PRKCD"
+   ],
+   "n_raw": 904,
+   "n_clean": 263,
+   "runnable": true,
+   "coverage_at_H50": 0.5928853754940712,
+   "median_rho": 0.9908262699089667,
+   "aux_rho": {
+    "PRKD3": 0.9897011207308829,
+    "PRKCG": 0.9920427182128838,
+    "PRKCZ": 0.9845865424466168,
+    "PRKCD": 0.9914623402005088
+   }
+  },
+  "k02": {
+   "targets": [
+    "PIM1",
+    "PRKACA",
+    "CDK5",
+    "DYRK1A"
+   ],
+   "n_raw": 899,
+   "n_clean": 59,
+   "runnable": false,
+   "coverage_at_H50": 3.061224489795918,
+   "median_rho": 0.7812809202108499,
+   "aux_rho": {
+    "PIM1": 0.761453546965142,
+    "PRKACA": 0.7869125116488022,
+    "CDK5": 0.7817723042438735,
+    "DYRK1A": 0.7811156379729111
+   }
+  },
+  "k03": {
+   "targets": [
+    "GSK3B",
+    "PIM1",
+    "PRKACA",
+    "DYRK1A"
+   ],
+   "n_raw": 889,
+   "n_clean": 56,
+   "runnable": false,
+   "coverage_at_H50": 3.260869565217391,
+   "median_rho": 0.7628422274139834,
+   "aux_rho": {
+    "GSK3B": 0.742986411378019,
+    "PIM1": 0.7530318402218116,
+    "PRKACA": 0.7989892067409038,
+    "DYRK1A": 0.8122323043606955
+   }
+  },
+  "k04": {
+   "targets": [
+    "GSK3B",
+    "PAK4",
+    "PIM1",
+    "CDK5"
+   ],
+   "n_raw": 889,
+   "n_clean": 32,
+   "runnable": false,
+   "coverage_at_H50": 6.818181818181818,
+   "median_rho": 0.8257646729742483,
+   "aux_rho": {
+    "GSK3B": 0.820686306080368,
+    "PAK4": 0.8335018376642974,
+    "PIM1": 0.8384927632786514,
+    "CDK5": 0.817162763943493
+   }
+  },
+  "k05": {
+   "targets": [
+    "ROCK1",
+    "PIM1",
+    "PRKACA",
+    "CDK5"
+   ],
+   "n_raw": 887,
+   "n_clean": 34,
+   "runnable": false,
+   "coverage_at_H50": 6.25,
+   "median_rho": 0.8168799346428416,
+   "aux_rho": {
+    "ROCK1": 0.856734438976655,
+    "PIM1": 0.7760361125798175,
+    "PRKACA": 0.8343390489352959,
+    "CDK5": 0.7484373378671704
+   }
+  },
+  "k06": {
+   "targets": [
+    "GSK3B",
+    "PAK4",
+    "PIM1",
+    "RPS6KA3"
+   ],
+   "n_raw": 877,
+   "n_clean": 37,
+   "runnable": false,
+   "coverage_at_H50": 5.555555555555555,
+   "median_rho": 0.8513969089080852,
+   "aux_rho": {
+    "GSK3B": 0.8783092406781505,
+    "PAK4": 0.8552070513534992,
+    "PIM1": 0.8456978699471883,
+    "RPS6KA3": 0.868363042013348
+   }
+  },
+  "k07": {
+   "targets": [
+    "GSK3B",
+    "PIM1",
+    "GSK3A",
+    "RPS6KA3"
+   ],
+   "n_raw": 864,
+   "n_clean": 52,
+   "runnable": false,
+   "coverage_at_H50": 3.5714285714285716,
+   "median_rho": 0.8330107637364885,
+   "aux_rho": {
+    "GSK3B": 0.8806100780980787,
+    "PIM1": 0.8085733109561654,
+    "GSK3A": 0.8401973533536601,
+    "RPS6KA3": 0.8431909200190276
+   }
+  },
+  "k08": {
+   "targets": [
+    "PAK4",
+    "FGFR1",
+    "RPS6KA3",
+    "NTRK2"
+   ],
+   "n_raw": 862,
+   "n_clean": 47,
+   "runnable": false,
+   "coverage_at_H50": 4.054054054054054,
+   "median_rho": 0.7599512219625547,
+   "aux_rho": {
+    "PAK4": 0.7912376522005452,
+    "FGFR1": 0.7624261864388342,
+    "RPS6KA3": 0.6708041698426198,
+    "NTRK2": 0.8025144655000891
+   }
+  },
+  "k09": {
+   "targets": [
+    "FGFR1",
+    "PRKACA",
+    "KDR",
+    "RPS6KA3"
+   ],
+   "n_raw": 852,
+   "n_clean": 68,
+   "runnable": false,
+   "coverage_at_H50": 2.586206896551724,
+   "median_rho": 0.7783586384428627,
+   "aux_rho": {
+    "FGFR1": 0.8027149433559776,
+    "PRKACA": 0.7511230019424041,
+    "KDR": 0.8239162888844499,
+    "RPS6KA3": 0.787501921666085
+   }
+  },
+  "k10": {
+   "targets": [
+    "LCK",
+    "MAPK8",
+    "MAPK9",
+    "GSK3B"
+   ],
+   "n_raw": 843,
+   "n_clean": 32,
+   "runnable": false,
+   "coverage_at_H50": 6.818181818181818,
+   "median_rho": 0.4816217872516674,
+   "aux_rho": {
+    "LCK": 0.5021109048621081,
+    "MAPK8": 0.5602233655117935,
+    "MAPK9": 0.6237662054903682,
+    "GSK3B": 0.42905193173696365
+   }
+  },
+  "k11": {
+   "targets": [
+    "CSF1R",
+    "FGFR1",
+    "PRKACA",
+    "KDR"
+   ],
+   "n_raw": 842,
+   "n_clean": 99,
+   "runnable": false,
+   "coverage_at_H50": 1.6853932584269662,
+   "median_rho": 0.8078141079365138,
+   "aux_rho": {
+    "CSF1R": 0.7934944054912393,
+    "FGFR1": 0.8123871947614053,
+    "PRKACA": 0.7562441670163897,
+    "KDR": 0.8307087449170704
+   }
+  },
+  "k12": {
+   "targets": [
+    "ROCK1",
+    "CHEK1",
+    "NEK2",
+    "CDK5"
+   ],
+   "n_raw": 839,
+   "n_clean": 25,
+   "runnable": false,
+   "coverage_at_H50": 10.0,
+   "median_rho": 0.7146718037261094,
+   "aux_rho": {
+    "ROCK1": 0.7391972732300528,
+    "CHEK1": 0.6939662669396364,
+    "NEK2": 0.695653479839585,
+    "CDK5": 0.7370392617066965
+   }
+  }
+ },
+ "source": "data\\cache\\tdc\\kiba_score.csv"
+}

@@ -1,0 +1,39 @@
+{
+  "backend": "llamacpp:qwen3.5-4b:t=0.0:topk=1:seed=0:think=0",
+  "version": "v1",
+  "system": "You are steering a Bayesian optimisation campaign over a fixed library of\nmolecules. You do not choose molecules. You choose how the next candidate is\nscored, and nothing else.\n\nEach round you are shown the state of the Gaussian Process surrogate and the\ncampaign's budget. Pick the acquisition function for this round.\n\nAvailable:\n  ei        expected improvement -- balanced; xi widens it toward exploration\n  ucb       upper confidence bound -- explicit exploration; beta sets the width\n  pi        probability of improvement -- conservative, exploits hard\n  greedy    posterior mean only -- pure exploitation, learns nothing\n  ts        Thompson sampling -- one draw from the posterior; exploration\n            that respects correlations\n\nGuidance:\n- A rising `rounds since improve` means the current strategy has stopped paying.\n- `posterior sd` collapsing towards zero means the surrogate believes it has\n  seen everything worth seeing. It may be wrong, and it cannot tell you so.\n- A large `GP noise ratio` late in a run means the representation cannot\n  separate compounds the assay separates. No acquisition function repairs that.\n- Exploration only pays if there is budget left to exploit what it finds.\n\nRespond with JSON only.\n",
+  "prompt": "round 80  calls 820/1000  observed 820  candidates 2000\nlibrary explored      0.33%\nbest observed         0.9459\nrounds since improve  40\nposterior mean        max 0.8828  mean 0.7436\nposterior sd          max 0.0857  mean 0.0769\nGP noise ratio (eta)  0.0001\nGP log marg lik       -1050\nacquisition in use    ei\n\nChoose the acquisition function for the next round.",
+  "response": {
+    "acquisition": "ucb",
+    "xi": 2.0,
+    "beta": 2.0,
+    "rationale": "The campaign has stopped improving for 40 rounds, and the posterior standard deviation is collapsing (0.0769), indicating the surrogate is overconfident and failing to explore the remaining high-value regions. The current EI strategy is purely exploitative and cannot recover. UCB with an explicit exploration parameter (beta) is required to break the stagnation and probe the unexplored library space before the budget runs out."
+  },
+  "usage": {
+    "completion_tokens": 128,
+    "prompt_tokens": 415,
+    "total_tokens": 543,
+    "prompt_tokens_details": {
+      "cached_tokens": 259
+    }
+  },
+  "diagnostics": {
+    "round_index": 80,
+    "calls_spent": 820,
+    "budget": 1000,
+    "n_observed": 820,
+    "n_candidates": 2000,
+    "library_size": 249455,
+    "best_observed": 0.9459281842727156,
+    "rounds_since_improvement": 40,
+    "mu_max": 0.8828255807372476,
+    "mu_mean": 0.7435769799096958,
+    "sd_max": 0.085672371472666,
+    "sd_mean": 0.07687603442096125,
+    "gp_eta": 0.0001,
+    "gp_lml": -1050.3743152188101,
+    "acquisition": "ei",
+    "fraction_explored": 0.00329,
+    "budget_remaining": 180
+  }
+}

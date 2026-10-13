@@ -1,0 +1,30 @@
+{
+  "backend": "llamacpp:qwen3.5-4b:t=0.0:topk=1:seed=0:think=0",
+  "version": "i1",
+  "system": "You are a medicinal chemist starting a hit-to-lead campaign.\n\nNothing has been measured yet. You will be shown a random sample of compounds\nfrom the screening library and must choose which ones to assay first.\n\nThis is the one point in the campaign where chemical knowledge has nothing to\ncompete with: there is no data, so a model fitted to the results cannot help.\nChoose the compounds whose measurements would teach you the most -- covering the\nstructural options in the sample rather than repeating one of them, and\nfavouring chemotypes you believe are plausible for a potent inhibitor.\n\nRespond with JSON only.",
+  "prompt": "A random sample of 40 compounds from the screening library:\n\n  [ 0] Brc1cccc(Nc2ncnc3cc4c(cc23)OCCSCCO4)c1\n  [ 1] Brc1cccc(Nc2ncnc3ccc4[nH]cnc4c23)c1\n  [ 2] C#Cc1cccc(Nc2ncnc3cc(OC)c(OCCCCCC(=O)NO)cc23)c1\n  [ 3] C=C(CN1CCOCC1)C(=O)N1CC(Oc2cc3c(Nc4ccc(F)c(Cl)c4F)ncnc3cc2OC)C1\n  [ 4] C=CC(=O)N1CCC(Oc2cc3c(Nc4cccc5cnn(C)c45)ncnc3cc2OC)C1\n  [ 5] C=CC(=O)Nc1cc2c(Nc3ccc(Br)cc3F)ncnc2cc1OC1CCN(C(C)=O)C1\n  [ 6] CCC(=O)Nc1cc2c(Nc3ccc(Oc4ccccc4)cc3)ncnc2cc1OC\n  [ 7] CCCCCCOc1cc2c(Nc3ccc(F)c(Cl)c3)ncnc2cc1OC\n  [ 8] CCCOc1cc2ncnc(Nc3ccc(NC(=O)OCC)c(C)c3)c2cc1OC\n  [ 9] CCNc1ccc2c(Nc3cccc(Br)c3)ncnc2c1\n  [10] CCOc1cc2ncnc(Nc3ccc(OCC4CC4)c(Cl)c3)c2cc1NC(=O)/C(F)=C/CN(C)C\n  [11] CN(CCCl)CCN/N=N/c1ccc2ncnc(Nc3cccc(Cl)c3)c2c1\n  [12] CNC(=S)Nc1ccc2ncnc(Nc3cccc(Br)c3)c2c1\n  [13] COCCn1c(=O)oc2cc3ncnc(Nc4ccc(OC)cc4)c3cc21\n  [14] COc1cc2c(Nc3ccc(-c4nc5ccccc5s4)cc3C)ncnc2cc1OCCCN1CCN(C)CC1\n  [15] COc1cc2ncnc(Nc3ccc(-c4nc5ccccc5s4)c(O)c3)c2cc1OC\n  [16] COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OCCCN1CC2(C1)CS(=O)(=O)C2\n  [17] COc1cc2ncnc(Nc3ccc(OCCn4ccnc4[N+](=O)[O-])c(Cl)c3)c2cc1OCCCN1CCOCC1\n  [18] COc1cc2ncnc(Nc3cccc(Br)c3)c2cc1N\n  [19] COc1cc2ncnc(Nc3cccc(NC(=O)Nc4cccc(C)c4)c3)c2cc1OCCCN1CCOCC1\n  [20] COc1cc2ncnc(Nc3ccccc3Br)c2cc1OC\n  [21] COc1cc2ncnc3c2cc1OCCOCCOc1cc(ccc1Cl)N3\n  [22] CS(=O)(=O)CCNCc1ccc(-c2ccc3ncnc(Nc4ccc(F)c(Cl)c4)c3c2)o1\n  [23] CS(=O)(=O)CCNCc1ccc(-c2ccc3ncnc(Nc4ccc(OCc5cccc(Br)c5)cc4)c3c2)o1\n  [24] Cc1cc(Nc2ncnc3cc(O)c(NC(=O)/C=C/[C@H]4CCCN4C)cc23)ccc1Oc1ccn2ncnc2c1\n  [25] Cc1cccc(Nc2ncnc3cc4c(cc23)N(CCCN2CCOCC2)C(=O)CO4)c1\n  [26] Clc1cc(Nc2ncnc3cccc(OC4CCOCC4)c23)ccc1OCc1ccccn1\n  [27] Fc1cccc(Nc2ncnc3cc(OCCCN4CCOCC4)c4c(c23)OCCO4)c1\n  [28] Nc1ccc2ncnc(Nc3ccc4[nH]ncc4c3)c2c1\n  [29] Nc1ccc2ncnc(Nc3cccc4ccccc34)c2c1\n  [30] O=C(CBr)OCCn1c(=O)oc2cc3ncnc(Nc4ccc(N5CCCCC5)c(Cl)c4)c3cc21\n  [31] O=C(CCCCCn1cc(-c2ccc3ncnc(Nc4ccc(OCc5cccc(F)c5)c(Cl)c4)c3c2)nn1)NO\n  [32] O=C(CCCCCn1cc(-c2ccc3ncnc(Nc4ccc(OCc5nccs5)c(Cl)c4)c3c2)nn1)NO\n  [33] O=C(CCCOc1cc2ncnc(Nc3cccc(C(F)(F)F)c3)c2c2c1OCCO2)NO\n  [34] O=C(CCl)OCCn1c(=O)oc2cc3ncnc(Nc4ccc(N5CCOCC5)c(Cl)c4)c3cc21\n  [35] O=C(Nc1ccc2ncnc(Nc3cccc(Br)c3)c2c1)C1COc2ccccc2O1\n  [36] O=C1COc2cc3ncnc(Nc4cccc(Br)c4)c3cc2N1CCCN1CCOCC1\n  [37] O=S(=O)(NCc1ccc(-c2ccc3ncnc(Nc4ccc(OCc5cccc(F)c5)c(Cl)c4)c3c2)o1)C(F)(F)F\n  [38] O=c1oc2cc3ncnc(Nc4ccc5[nH]ncc5c4)c3cc2n1CCCN1CCOCC1\n  [39] OCC#Cc1ccc2ncnc(Nc3ccc(F)c(Cl)c3)c2c1\n\nNothing has been measured yet. The objective is pchembl_value (higher is more potent).\nChoose exactly 10 of them to assay first, by index.",
+  "response": {
+    "choices": [
+      3,
+      14,
+      16,
+      18,
+      20,
+      22,
+      29,
+      35,
+      36,
+      39
+    ],
+    "reasoning": "1. **Core Scaffold Diversity**: The library contains two distinct core scaffolds: pyrazolo[3,4-d]pyrimidines (indices 0-39, mostly) and a few distinct heterocycles. I selected compounds representing the most common core variations to establish the baseline SAR for the primary scaffold. \n2. **Substituent Space Coverage**: \n   - **Index 18 & 20**: Represent the simplest unsubstituted or mono-substit"
+  },
+  "usage": {
+    "completion_tokens": 181,
+    "prompt_tokens": 1727,
+    "total_tokens": 1908,
+    "prompt_tokens_details": {
+      "cached_tokens": 133
+    }
+  },
+  "finish_reason": "stop"
+}

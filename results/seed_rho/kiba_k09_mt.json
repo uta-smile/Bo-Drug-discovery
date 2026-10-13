@@ -1,0 +1,87 @@
+{
+  "family": "k09",
+  "arm": "mt",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "n_pool": 852,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.4480595431660401,
+      "delta_sem": 0.02673421045160662,
+      "n": 32,
+      "sem_multiple": 16.759782151678,
+      "clears_bar": true,
+      "flag": "16.8 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.15583771701108723,
+      "delta_sem": 0.046967136086206084,
+      "n": 32,
+      "sem_multiple": 3.318016170393146,
+      "clears_bar": true,
+      "flag": "3.3 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.1792331538346129,
+      "delta_sem": 0.053263662848924476,
+      "n": 32,
+      "sem_multiple": 3.365017429292925,
+      "clears_bar": true,
+      "flag": "3.4 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.14199896749269708,
+      "delta_sem": 0.06978202094250273,
+      "n": 32,
+      "sem_multiple": 2.034893308832341,
+      "clears_bar": true,
+      "flag": "2.0 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.26882638933142716,
+    "sem": 0.05959644107289201,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "top_k_seeded": {
+    "maxmin": 0.03125,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.25
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/dense_blocks_kiba.json",
+    "seed_pool": "random",
+    "targets": [
+      "FGFR1",
+      "PRKACA",
+      "KDR",
+      "RPS6KA3"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_fgfr1-kdr-prkaca-rps6ka3.csv",
+    "n_block": 852,
+    "n_pool": 852,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

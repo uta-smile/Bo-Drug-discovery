@@ -1,0 +1,36 @@
+{
+  "family": "jak",
+  "history": 50,
+  "budget": 60,
+  "batch": 5,
+  "k": 10,
+  "acquisition": "ei",
+  "repeats": 15,
+  "n_pool": 904,
+  "arms": {
+    "stl": {
+      "auc_mean": 8.15631994429029,
+      "auc_sem": 0.050496562120523274,
+      "recall_mean": 0.27166666666666667,
+      "delta_vs_stl": 0.0,
+      "delta_sem": 0.0,
+      "frac_better": 0.0
+    },
+    "mt": {
+      "auc_mean": 8.240183098484303,
+      "auc_sem": 0.05481547967233994,
+      "recall_mean": 0.30833333333333335,
+      "delta_vs_stl": 0.08386315419401284,
+      "delta_sem": 0.022690237501831478,
+      "frac_better": 0.7333333333333333
+    },
+    "pooled": {
+      "auc_mean": 8.198553309674379,
+      "auc_sem": 0.05647111284206038,
+      "recall_mean": 0.3116666666666667,
+      "delta_vs_stl": 0.04223336538408583,
+      "delta_sem": 0.0264479906850697,
+      "frac_better": 0.6
+    }
+  }
+}

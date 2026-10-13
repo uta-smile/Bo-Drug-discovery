@@ -1,0 +1,15 @@
+[permol] loading BindingDB...
+[permol] 606 targets, 429,086 pairs
+[permol] train 150,000 pairs / 486 targets | test 81,118 pairs / 120 targets
+[permol] protein embeddings in 0s
+[permol] features (150000, 2528) in 51s
+[permol] ridge solved in 3s
+
+held-out targets: 120
+  per-molecule model rho vs true pIC50 : +0.224 (median +0.227)
+
+chooser                   top-1   coverage
+------------------------------------------
+per-molecule model        0.142      0.267
+largest region            0.250      0.378
+random                    0.100

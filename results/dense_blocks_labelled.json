@@ -1,0 +1,114 @@
+{
+ "labelled": [
+  {
+   "family": "jak",
+   "targets": [
+    "JAK1",
+    "JAK2",
+    "JAK3",
+    "TYK2"
+   ],
+   "raw": 1563,
+   "clean": 904
+  },
+  {
+   "family": "cyp",
+   "targets": [
+    "CYP3A4",
+    "CYP2D6",
+    "CYP2C9",
+    "CYP2C19"
+   ],
+   "raw": 1472,
+   "clean": 335
+  },
+  {
+   "family": "pi3k",
+   "targets": [
+    "PIK3CA",
+    "PIK3CB",
+    "PIK3CD",
+    "PIK3CG"
+   ],
+   "raw": 1039,
+   "clean": 590
+  },
+  {
+   "family": "dpp",
+   "targets": [
+    "DPP4",
+    "DPP7",
+    "DPP8",
+    "DPP9"
+   ],
+   "raw": 698,
+   "clean": 300
+  },
+  {
+   "family": "abc",
+   "targets": [
+    "ABCB11",
+    "ABCC2",
+    "ABCC3",
+    "ABCC4"
+   ],
+   "raw": 578,
+   "clean": 11
+  },
+  {
+   "family": "hdac",
+   "targets": [
+    "HDAC1",
+    "HDAC2",
+    "HDAC3",
+    "HDAC6"
+   ],
+   "raw": 560,
+   "clean": 378
+  },
+  {
+   "family": "fgfr",
+   "targets": [
+    "FGFR1",
+    "FGFR2",
+    "FGFR3",
+    "FGFR4"
+   ],
+   "raw": 486,
+   "clean": 158
+  },
+  {
+   "family": "mmp",
+   "targets": [
+    "MMP1",
+    "MMP2",
+    "MMP3",
+    "MMP9"
+   ],
+   "raw": 464,
+   "clean": 248
+  },
+  {
+   "family": "sstr",
+   "targets": [
+    "SSTR1",
+    "SSTR2",
+    "SSTR4",
+    "SSTR5"
+   ],
+   "raw": 413,
+   "clean": 92
+  },
+  {
+   "family": "cathepsin",
+   "targets": [
+    "CTSB",
+    "CTSK",
+    "CTSL",
+    "CTSS"
+   ],
+   "raw": 345,
+   "clean": 167
+  }
+ ]
+}

@@ -1,0 +1,2258 @@
+[
+  {
+    "round": 0,
+    "seed": 0,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a terminal alkyne and a methoxy group, likely acting as a bioisostere for the observed high-potency alkynyl-methoxy motifs.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[16] terminal alkyne",
+      "require[2] methoxy"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX2]#[CH]",
+        "[OX2][CH3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 0,
+    "n_observations": 25,
+    "hypothesis": "The top 10 compounds (pchembl > 9.0) all share a specific scaffold: a terminal alkyne attached to a pyridine ring, which is part of a larger fused bicyclic system containing a phenol and an amide linkage to a complex side chain. Compounds lacking this specific alkyne-pyridine-bicyclic motif drop significantly in potency (below 8.5).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[16] terminal alkyne",
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX2]#[CH]",
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 0,
+    "n_observations": 40,
+    "hypothesis": "The top 10 compounds (pchembl > 9.0) are dominated by two distinct structural motifs: a Michael acceptor (acrylamide) at the N-terminus or a terminal alkyne at the N-terminus, both attached to a pyridine ring which is linked to the central pyrazolo[3,4-d]pyrimidine core. Compounds lacking these specific N-terminal electrophilic/hydrophobic handles (e.g., simple amides, sulfones, or those with only methoxy groups) show a steep drop in potency below 8.5. The most potent hits (9.8, 9.59, 9.31) all contain either the Michael acceptor [3] or the terminal alkyne [16].",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[16] terminal alkyne"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[CX2]#[CH]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 0,
+    "n_observations": 55,
+    "hypothesis": "The most potent compounds in this series appear to rely on a specific covalent warhead (Michael acceptor/acrylamide) attached to a pyrazolo[3,4-d]pyrimidine core, rather than the non-covalent binding modes seen in the lower potency analogs. The top hits (9.80, 9.59, 9.31) all contain the acrylamide motif, while the non-covalent binders (e.g., sulfone, simple amides, or those lacking the specific core substitution) drop significantly in potency (below 9.0).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 0,
+    "n_observations": 70,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a terminal alkyne moiety attached to a pyridine ring within the core scaffold, which appears to be a critical pharmacophore for activity. Compounds lacking this feature drop significantly in potency (e.g., from ~9.3 to ~8.9 or lower).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[16] terminal alkyne"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX2]#[CH]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 0,
+    "n_observations": 85,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a terminal alkyne moiety attached to the pyridine ring, which appears to be a critical pharmacophore for activity. Compounds lacking this feature drop significantly in potency (e.g., from ~9.8 down to ~6.0). While the 'secondary amide' and 'fluorine' substructures are common, they are present in the low-potency outliers and do not distinguish the top performers as effectively as the alkyne. Therefore, we should constrain the library to retain only compounds containing the terminal alkyne to explore the high-potency region without losing the best hits.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[16] terminal alkyne"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX2]#[CH]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 1,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates strongly with the presence of a Michael acceptor (acrylamide) moiety, which appears in the top 3 most potent compounds (8.38, 7.87, 7.55) and is absent in the least potent ones. The remaining high-potency compounds likely rely on specific scaffold features that are less common, but the acrylamide is the most consistent driver of activity in this series.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 1,
+    "n_observations": 25,
+    "hypothesis": "The top 10 compounds (pchembl > 8.8) all share a specific structural motif: a terminal alkyne (C#C) attached to a phenyl ring, which is ortho-substituted with an amine linking to the pyrimidine core. Compounds lacking this alkyne-phenyl-amine arrangement drop significantly in potency (below 8.2).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[16] terminal alkyne"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX2]#[CH]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 1,
+    "n_observations": 40,
+    "hypothesis": "The top 4 compounds (pchembl > 9.2) all share a terminal alkyne moiety (C#C-), whereas the next tier of compounds drops significantly in potency and lacks this feature. The remaining high-potency hits (9.05-9.19) also contain this group, while the lower potency compounds (below 8.5) generally lack it or have it in a different context. Enforcing the presence of the terminal alkyne should narrow the library to the most potent region without excluding the best hits.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[16] terminal alkyne"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX2]#[CH]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 1,
+    "n_observations": 55,
+    "hypothesis": "The top potencies (9.49\u20139.29) are exclusively associated with the terminal alkyne motif (C#C) attached to the pyridine ring, whereas the next tier of activity (9.16\u20138.22) contains various ether linkages or other heterocycles but lacks the alkyne. Compounds with lower activity (<8.0) generally lack this specific alkyne-substituted pyridine arrangement or contain different core scaffolds. The data strongly suggests the terminal alkyne is a critical pharmacophore for high affinity in this series.",
+    "confidence": 0.92,
+    "chosen": [
+      "require[16] terminal alkyne"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX2]#[CH]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 1,
+    "n_observations": 70,
+    "hypothesis": "The top 10 compounds (pchembl > 9.0) all contain a terminal alkyne (C#C) attached to the aromatic core or the linker, whereas compounds lacking this feature drop rapidly in potency (below 8.5). The presence of the alkyne appears critical for binding affinity in this series.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[16] terminal alkyne"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX2]#[CH]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 1,
+    "n_observations": 85,
+    "hypothesis": "Potency correlates strongly with the presence of a terminal alkyne (C#C) attached to the aromatic core, which appears in the top 4 most potent compounds (9.49, 9.29, 9.29, 9.27) and is absent from the significantly less potent tail of the series (pchembl < 8.0). Compounds lacking this feature generally drop below 8.0 pchembl.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[16] terminal alkyne"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX2]#[CH]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 2,
+    "n_observations": 10,
+    "hypothesis": "The top 4 compounds share a specific fused bicyclic aromatic core (specifically a phenyl-pyrimidine or similar fused system) attached to the pyrimidine core, whereas the lower potency compounds lack this feature or have a different substitution pattern. Compounds 1, 2, 3, and 4 all contain a fused bicyclic aromatic system (entries [6], [18], [20], [23] respectively), while compounds 5-10 do not. This suggests the fused ring is critical for potency.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 2,
+    "n_observations": 25,
+    "hypothesis": "The most potent compounds in this series appear to share a specific scaffold involving a fused bicyclic aromatic system (likely a tetrahydroisoquinoline or similar fused ring) attached to the pyrazolo[3,4-d]pyrimidine core, rather than the simple phenyl or heteroaryl linkers seen in the lower potency hits. Compounds with pchembl > 8.0 often feature this fused ring or specific ether linkages to it, while those with pchembl < 7.5 lack this feature or have different substitution patterns on the core.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 2,
+    "n_observations": 40,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific scaffold where a bromophenyl group is attached to a tetrahydro-imidazole or similar fused bicyclic system containing a secondary amine, rather than simple phenyl or heteroaryl linkers. Compounds with the 'fused bicyclic aromatic' motif (e.g., the top hit 11.00 and second hit 10.60) show significantly higher potency than those with simple phenyl rings or other heterocycles. The top hits also share a secondary amide or similar amine linkage, but the scaffold difference is the primary driver. We should prioritize the fused bicyclic aromatic substructure while retaining the secondary amide to ensure the core pharmacophore is present.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic",
+      "require[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1",
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 2,
+    "n_observations": 55,
+    "hypothesis": "The most potent compounds in this series appear to share a specific scaffold involving a secondary amide linkage to a pyrazolo[1,5-a]pyrimidine core, often substituted with a bromophenyl group. Compounds with higher pchembl values (e.g., >9.0) consistently feature the secondary amide motif (e.g., entries 11.00, 10.60, 9.54, 9.47, 9.36, 9.07, 9.04, 8.99, 8.96, 8.92, 8.91, 8.88, 8.63, 8.43, 8.39, 8.32, 8.29, 8.25). In contrast, compounds lacking this specific amide connectivity or having different core linkages (like tertiary amides, esters, or ether linkages) drop significantly in potency (below 8.0). While the 'secondary amide' descriptor [0] is broad, it captures the majority of the high-potency hits. Narrowing to this feature while excluding the very low potency outliers (which often lack the specific substitution pattern on the amide nitrogen or the core) is the most logical next step. However, since [0] matches 56.5% of the library, we need to ensure we don't keep too much. Looking closely, the top hits all have the secondary amide. The next best distinct feature is the bromophenyl group, but that is also common in lower potency compounds. The most robust filter is the secondary amide itself, perhaps combined with the exclusion of the specific low-potency motifs if a more specific substructure existed, but given the menu, the secondary amide is the primary driver. Let's refine: The top hits are all secondary amides. The lowest hits are often tertiary amides or lack the amide entirely. Constraint: Secondary amide.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 2,
+    "n_observations": 70,
+    "hypothesis": "The most potent compounds in this series appear to share a specific acrylamide warhead (Michael acceptor) attached to the core scaffold, as evidenced by the cluster of high-potency hits (pchembl > 9.0) containing this motif (e.g., entries 3, 4, 5, 6, 9, 10, 17, 25). Compounds lacking this feature generally show significantly lower activity (pchembl < 8.0). While the secondary amide is ubiquitous, it is not the differentiating factor for potency. Therefore, we should constrain the library to explore only the substructures containing the Michael acceptor.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 2,
+    "n_observations": 85,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a Michael acceptor (acrylamide) moiety attached to the amide nitrogen or directly to the aromatic core, which likely facilitates covalent binding or specific conformational locking. Compounds lacking this feature (e.g., simple amides, esters, or ureas) generally show significantly lower potency (< 7.0).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 3,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a specific ether linkage on the pyrazolo-pyridine core, specifically the oxetane-containing motif found in the most potent analogs (8.75 and 8.37), while excluding the sulfone and simple methoxy variants which show significantly lower activity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[18] c1ccc(Nc2ncnc3cc(O[C@H]4CCOC4)ccc23)cc1",
+      "require[2] methoxy",
+      "forbid[19] sulfone"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "c1ccc(Nc2ncnc3cc(O[C@H]4CCOC4)ccc23)cc1",
+        "[OX2][CH3]"
+      ],
+      "forbid": [
+        "[SX4](=[OX1])(=[OX1])([#6])[#6]"
+      ]
+    }
+  },
+  {
+    "round": 15,
+    "seed": 3,
+    "n_observations": 25,
+    "hypothesis": "The top 4 compounds share a specific scaffold where the acrylamide Michael acceptor is conjugated to a pyrazolo[3,4-d]pyrimidine core, which is further substituted by a 4-fluoro-2-chlorophenyl group and a dimethylamine-containing alkene tail. Compounds lacking this specific core substitution pattern or the acrylamide motif show significantly lower potency (drop from ~9.8 to <8.0).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[10] c1ccncc1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "c1ccncc1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 3,
+    "n_observations": 40,
+    "hypothesis": "The data shows a clear potency cliff between compounds containing a specific fused bicyclic aromatic substructure (pchembl ~8.5-8.6) and those lacking it (pchembl <8.0). Compounds with the fused ring system (e.g., entries 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27) consistently outperform the rest of the series, which includes many potent analogs but also a large drop-off in activity. The top hits all share this feature, while the lowest potency compounds lack it entirely. This suggests the fused bicyclic aromatic system is critical for binding affinity or metabolic stability in this series.",
+    "confidence": 0.9,
+    "chosen": [
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 3,
+    "n_observations": 55,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acrylamide Michael acceptor motif conjugated to the core scaffold, whereas less potent analogs often lack this specific arrangement or possess different amide linkages. The top hits [9.80, 9.40, 9.15, 9.12] all contain the `C/C=C/C(=O)N` or `NC(=O)/C=C/` pattern attached directly to the central pyrazolo-pyridine core via a nitrogen atom, facilitating covalent binding. Compounds with lower potency (e.g., 8.90, 8.87, 8.65) either have the acrylamide in a different position, lack the specific nitrogen linkage, or have altered side chains that disrupt the reactive geometry. Therefore, we should constrain the library to retain only those compounds containing the specific acrylamide substructure that matches the high-potency hits.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 3,
+    "n_observations": 70,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific scaffold where the acrylamide Michael acceptor is conjugated to a pyrazolo[3,4-d]pyrimidine core, which is further substituted with a fluorine and chlorine on the phenyl ring and a specific ether linkage to a cyclic amine (morpholine or similar). Compounds lacking the 'michael acceptor' or the 'fluorine' drop significantly in potency (e.g., the 8.99 compound lacks the acrylamide and drops to ~9.0, while the 7.35 compound lacks both and drops further). The top hits all contain the Michael acceptor and a fluorine atom. Restricting to these two features should retain the high-potency cluster while reducing the library size by roughly 30-40%.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 3,
+    "n_observations": 85,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acyclic acrylamide motif (Michael acceptor) attached to the pyrazolo-pyridine core, whereas compounds with cyclic amides, esters, or different linkers drop significantly in potency (pchembl < 7.0). The top hits also share a common fluorine-substituted phenyl ring, but the acrylamide constraint is the primary driver of the high potency ceiling observed in the top 10% of the data.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 4,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a Michael acceptor (acrylamide) at the N-terminus, which likely facilitates covalent binding or specific conformational locking, as evidenced by the two highest potency compounds (8.90 and 8.89) containing this feature while the rest of the series drops significantly in activity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 4,
+    "n_observations": 25,
+    "hypothesis": "The top potencies (9.80) are exclusively associated with the acrylamide Michael acceptor motif (C=C-C(=O)-N), while the next tier (9.12) also contains it. Compounds lacking this electrophilic trap drop significantly in potency (below 8.80). The secondary amide is ubiquitous but does not distinguish the top tier from the middle tier. Therefore, the most potent compounds likely require the Michael acceptor to drive covalent binding or conformational restriction.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 4,
+    "n_observations": 40,
+    "hypothesis": "The top 40% of compounds (pchembl > 9.0) all share a specific acrylamide motif where the nitrogen is substituted with a dimethyl group or a tertiary amine, and the carbonyl is attached to a vinyl group (Michael acceptor). Compounds with secondary amides (R-NH-CO-CH=CH2) or different amine substitutions on the acrylamide nitrogen drop significantly in potency (e.g., 9.06 vs 9.09). The most potent hits (9.80) specifically feature the N,N-dimethyl acrylamide. Therefore, we should constrain the library to compounds containing the Michael acceptor (acrylamide) but excluding those with a secondary amide or specific non-dimethyl amine substitutions on the nitrogen, focusing on the N,N-dimethyl or similar tertiary amine variants which appear to be the 'sweet spot' for potency in this series.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[0] secondary amide",
+      "forbid[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": [
+        "[NX3][CX3](=[OX1])"
+      ]
+    }
+  },
+  {
+    "round": 45,
+    "seed": 4,
+    "n_observations": 55,
+    "hypothesis": "The most potent compounds (pchembl > 9.0) consistently feature a specific acrylamide Michael acceptor motif (C=C-C(=O)-N) attached to the core scaffold, whereas less potent analogs often lack this or have it in a different orientation (e.g., N-acrylamide vs acrylamide-N). The top hits all contain the 'michael acceptor (acrylamide)' substructure, while the bottom half of the list contains many compounds without it or with alternative linkers. Enforcing this substructure should retain the high-potency cluster while filtering out the inactive analogs.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 4,
+    "n_observations": 70,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acrylamide warhead (Michael acceptor) attached to a nitrogen atom that is part of a fused bicyclic or complex heterocyclic system, rather than a simple acyclic amide or a different linkage. Compounds with the 'secondary amide' descriptor alone but lacking the specific acrylamide motif or the fused ring system drop significantly in potency (e.g., the 9.52 compound has a different scaffold, while many 7.0-8.0 compounds have acrylamides but lack the fused ring or have poor linkages). The top hits share a 'michael acceptor (acrylamide)' and a 'fused bicyclic aromatic' (or complex fused heterocycle) feature. Requiring both ensures we keep the high-potency scaffolds while filtering out the lower potency analogs that have only one of these features or a different connectivity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 4,
+    "n_observations": 85,
+    "hypothesis": "The top potencies (9.80, 9.52, 9.49) are exclusively associated with the Michael acceptor (acrylamide) motif [3]. Compounds lacking this feature drop significantly in potency (e.g., 9.27, 9.16, 9.12). While the fluorine [1] and methoxy [2] groups are present in many high-potency hits, they are also found in lower-potency analogs, whereas the acrylamide is a strict requirement for the highest activity observed. Enforcing this constraint will reduce the library to ~32% of compounds, focusing the campaign on the most promising SAR region without excluding the best hits.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 5,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a methoxy group and a fluorine atom, which are both present in the top 3 most potent compounds (11.00, 9.29, 8.80) and absent in the least potent ones. The top hit (11.00) has both, the second (9.29) has both, and the third (8.80) has both. Compounds lacking either or both drop significantly in potency. We should restrict the library to compounds containing both features.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[2] methoxy",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[OX2][CH3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 5,
+    "n_observations": 25,
+    "hypothesis": "Potency correlates strongly with the presence of a Michael acceptor (acrylamide) moiety, which appears in the top 4 most potent compounds (pchembl > 8.5) and is absent in the majority of lower potency hits. The top hit (11.00) and second hit (9.29) both contain this feature, while the third hit (8.80) lacks it but has a similar scaffold; however, the drop-off in potency for compounds without this group suggests it is a critical pharmacophore for high affinity in this series.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 5,
+    "n_observations": 40,
+    "hypothesis": "The top 4 compounds (pchembl > 9.6) and the next tier (pchembl 8.8-9.2) all share a specific acrylamide linker motif connecting the amine tail to the aniline core. Compounds lacking this specific Michael acceptor (acrylamide) functionality drop significantly in potency (below 8.8). While the library contains many other amides, the specific conjugated system appears critical for the observed activity profile.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 5,
+    "n_observations": 55,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a Michael acceptor (acrylamide) moiety attached to the core scaffold, which likely facilitates covalent binding or specific conformational locking. Compounds lacking this feature (e.g., simple amides, esters, or non-reactive analogs) drop significantly in potency (pchembl < 8.5).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 5,
+    "n_observations": 70,
+    "hypothesis": "The data shows a clear potency cliff between compounds with a Michael acceptor (acrylamide) and those without. The top 10 compounds (pchembl > 9.0) all contain the acrylamide motif, while the bottom half of the list lacks it. Compounds with the acrylamide range from ~9.0 to 11.0, whereas those without drop significantly below 9.0. This suggests the Michael acceptor is a critical pharmacophore for high affinity in this series.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 5,
+    "n_observations": 85,
+    "hypothesis": "The top potencies (pchembl > 9.0) are exclusively associated with the Michael acceptor (acrylamide) motif, which is absent in the lower potency tail of the series. Compounds lacking this electrophilic handle show a sharp drop in activity.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 6,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a fluorine atom on the aryl ring, which appears in the top 3 most potent compounds (9.19, 8.15, 7.56) and is absent in the least potent ones. Compounds lacking fluorine show a sharp drop in activity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 6,
+    "n_observations": 25,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific scaffold where a fluorophenyl ring is attached to a pyrimidine core via an amine linker, often with a secondary amide tail. Compounds lacking the secondary amide motif (e.g., the highly potent 9.92 and 9.57) or those with alternative linkers (e.g., the 8.92 acrylamide) show reduced potency. The top hits share a specific substitution pattern on the pyrimidine that correlates with high affinity, which is best captured by the 'secondary amide' descriptor combined with the presence of the fluorine atom found in the top hits. Requiring the secondary amide and fluorine narrows the library to ~30% while retaining the highest potency compounds. Further refinement could target the specific fused bicyclic aromatic system present in the top hits, but the amide/fluorine combination is the most robust initial filter.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[0] secondary amide",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[NX3][CX3](=[OX1])",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 6,
+    "n_observations": 40,
+    "hypothesis": "The top 10 compounds (pchembl > 10.1) share a specific scaffold where the pyridine ring is fused to a benzene ring, creating a bicyclic system that is further substituted with a methoxy group and a specific amide linkage. Compounds with this fused bicyclic aromatic core (substructure [6]) and a methoxy group (substructure [2]) consistently show high potency (>10.0), whereas compounds lacking this core (e.g., the acrylamide series or simple anilines) drop significantly in activity (<9.0).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic",
+      "require[2] methoxy"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1",
+        "[OX2][CH3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 6,
+    "n_observations": 55,
+    "hypothesis": "The top 10 compounds (pchembl > 10.1) all share a specific scaffold where the pyridine ring is fused to a benzene ring, creating a bicyclic aromatic system (specifically a quinoline or isoquinoline derivative), which is attached to the central pyrimidine-pyrazine core via a nitrogen linker. Compounds with this fused bicyclic aromatic motif (e.g., compounds 1, 2, 3, 4, 5, 6, 7, 8, 9, 10) show significantly higher potency (10.1\u201310.5) compared to those with linear or simple heterocyclic linkers (e.g., compound 11 at 9.92, compound 12 at 9.80). The drop in potency correlates with the loss of this fused aromatic system.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 6,
+    "n_observations": 70,
+    "hypothesis": "The top 10 compounds (pchembl > 10.1) all share a specific scaffold where the pyridine ring is fused to a benzene ring, creating a bicyclic system that is further substituted with a methoxy group and an amide linkage to a piperidine derivative. Compounds with this fused bicyclic aromatic core (e.g., 10.54, 10.48, 10.42) are significantly more potent than those with linear pyridine or other heterocyclic arrangements (e.g., 9.92, 9.80, 9.74). The linear analogs drop off sharply below 10.0.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic",
+      "require[2] methoxy"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1",
+        "[OX2][CH3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 6,
+    "n_observations": 85,
+    "hypothesis": "The top 10 compounds (pchembl > 10.4) all share a specific bicyclic scaffold containing a fused ring system (specifically a piperidine fused to a benzene ring, often represented as C1CCNCC1 or similar fused architectures) attached to the pyrimidine core via an amide or similar linkage. Compounds with this scaffold (e.g., indices 4, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207) are significantly more potent than those lacking it (e.g., the acrylamide series or simple aniline derivatives). The most potent compounds (10.54, 10.48, 10.42) contain a fused bicyclic aromatic system (index 6) or a specific fused piperidine-benzene motif (indices 4, 5).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 7,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a specific ether linkage connecting the pyrazole core to a flexible alkyl chain, which appears to be a key pharmacophore for the top hits (pchembl > 8.0). Compounds lacking this specific ether motif show a sharp drop in activity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[8] c1ccc(COc2ccc(Nc3ncnc4ccccc34)cc2)cc1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "c1ccc(COc2ccc(Nc3ncnc4ccccc34)cc2)cc1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 7,
+    "n_observations": 25,
+    "hypothesis": "The top 8 compounds share a specific scaffold where a pyridine ring (or similar heteroaromatic) is linked via an ether to a phenyl ring, which is then attached to the core imidazo[1,2-a]pyridine system. Specifically, the top hits contain a 'c1ccncc1' (pyridine) or 'c1cocn1' (oxadiazole) moiety connected to the core, whereas the lower potency compounds often lack this specific linker arrangement or contain different linkers like simple alkyl chains or sulfones. The most potent compounds (9.31, 8.52, 8.45) all feature a distinct heteroaromatic linker attached to the core phenyl ring. Compounds with pchembl < 8.0 often lack this specific linker or have it in a different configuration (e.g., direct attachment or different heterocycle).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[10] c1ccncc1",
+      "require[21] c1cocn1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "c1ccncc1",
+        "c1cocn1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 7,
+    "n_observations": 40,
+    "hypothesis": "The top 10 compounds (pchembl > 8.5) all share a specific scaffold where the pyridine ring is attached via an ether linkage to a phenyl ring bearing a fluorine and a chlorine, which is then connected to the core via an amine or ether bridge. Specifically, the high potency correlates with the presence of the 'methoxy' group on the core (substructure [2]) combined with the 'fluorine' substituent on the distal aromatic ring (substructure [1]). Compounds lacking the methoxy group on the core (e.g., the acrylamide derivatives or the sulfone analogs) drop significantly in potency (pchembl < 8.0). Furthermore, the most potent compounds (9.52, 9.31, 9.16) all contain the methoxy group and a fluorine atom on the distal ring, whereas the lowest potency compounds often lack one or both of these features or possess reactive Michael acceptors which may reduce affinity or increase off-target effects. Therefore, we should constrain the library to retain the methoxy group on the core scaffold and the fluorine atom on the distal aromatic ring.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[2] methoxy",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[OX2][CH3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 7,
+    "n_observations": 55,
+    "hypothesis": "The top 10 compounds (pchembl > 10.15) all share a specific scaffold where the pyridine nitrogen is part of a fused bicyclic system (specifically a pyrido[2,3-d]pyrimidine or similar fused core) rather than being a simple mononucleotide or separate ring. Compounds with this fused core (e.g., indices 1, 2, 4, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55) show significantly higher potency (>9.0) compared to those with simple pyridine/pyrimidine rings or other heterocycles (pchembl < 8.5). The fused bicyclic aromatic substructure [6] matches 215 compounds (10.3%), which is a reasonable fraction to explore while retaining the high-potency region.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 7,
+    "error": "JSONDecodeError: Unterminated string starting at: line 2 column 17 (char 18)"
+  },
+  {
+    "round": 75,
+    "seed": 7,
+    "n_observations": 85,
+    "hypothesis": "The top 10 compounds (pchembl > 10.1) share a specific scaffold where the aniline nitrogen is attached to a bicyclic system containing a fused pyrrolo[2,3-d]pyrimidine core (specifically the pattern c1ccncc1 fused to the central ring), whereas the lower potency compounds (pchembl < 9.5) either lack this specific fused bicyclic arrangement or possess a different linker geometry (like the acrylamide Michael acceptor). The high potency correlates with the presence of the fused bicyclic aromatic system (index 6) combined with the specific nitrogen linkage found in the top hits, while excluding the Michael acceptor (index 3) which appears in the drop-off region.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic",
+      "require[3] michael acceptor (acrylamide)",
+      "forbid[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1",
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ]
+    }
+  },
+  {
+    "round": 0,
+    "seed": 8,
+    "n_observations": 10,
+    "hypothesis": "The most potent compounds in this series (pchembl > 8.0) consistently feature a Michael acceptor (acrylamide) moiety attached to the aniline nitrogen, which likely facilitates covalent binding or specific conformational locking. Compounds lacking this feature (e.g., simple amides, esters, or ureas) show significantly lower potency (pchembl < 7.5).",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 8,
+    "n_observations": 25,
+    "hypothesis": "The top potencies (9.80) are shared by compounds containing a specific acyclic amide linkage (Michael acceptor) and a specific fused bicyclic aromatic core (pyrazolo[3,4-d]pyrimidine fused to a phenyl ring). Compounds lacking the fused bicyclic core (e.g., the 9.12 compound) or lacking the specific acrylamide motif show significantly reduced activity. The 9.09 compound retains the core but lacks the acrylamide, suggesting the acrylamide is critical for potency when the core is present. Therefore, we should constrain the library to require both the fused bicyclic aromatic system and the acrylamide functionality.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic",
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1",
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 8,
+    "error": "JSONDecodeError: Unterminated string starting at: line 2 column 17 (char 18)"
+  },
+  {
+    "round": 45,
+    "seed": 8,
+    "n_observations": 55,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acrylamide Michael acceptor motif conjugated to the pyrazolo[3,4-d]pyrimidine core, while lacking the bulky cyclic amine side chains found in the lower potency analogs. The top hits share the 'michael acceptor (acrylamide)' substructure and the 'secondary amide' linkage, but the lower potency compounds often introduce complex cyclic amines (like piperidine or pyrrolidine rings) or alter the aromatic system significantly. To narrow the library to the most promising region without excluding the best hits, we should enforce the presence of the Michael acceptor and the secondary amide, which covers the vast majority of high-potency compounds.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 8,
+    "n_observations": 70,
+    "hypothesis": "The top potencies (9.89, 9.80, 9.80) all share a specific acrylamide motif where the nitrogen of the amide is attached to a tertiary carbon (N(C)(C)), and the acrylamide double bond is conjugated directly to the pyridine ring system. Compounds with secondary amides (N-H) or different acrylamide linkages drop significantly in potency (below 9.4). The most potent hits also consistently feature a fluorine atom on the distal aromatic ring, though this is common to the series, the specific acrylamide geometry is the primary driver of the >9.8 activity ceiling.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 8,
+    "n_observations": 85,
+    "hypothesis": "The top 10 compounds (pchembl > 9.8) all share a specific acrylamide motif where the nitrogen of the amide is attached to a tertiary amine (dimethyl or similar) and the carbonyl is part of an acrylamide (Michael acceptor). Compounds with this motif range from 9.89 down to 9.27. Compounds lacking this specific acrylamide-tertiary amine linkage drop significantly in potency (below 9.0). While 'michael acceptor' alone matches 32% of the library, the specific structural arrangement seen in the hits is the key driver. We should constrain to the Michael acceptor substructure to retain the high-potency region while filtering out the lower potency analogs that have other functional groups or different linkages.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 9,
+    "n_observations": 10,
+    "hypothesis": "The most potent compounds in this series appear to share a specific scaffold involving a fused bicyclic aromatic system (likely a pyrazolo[3,4-d]pyrimidine or similar core) linked to an acrylamide Michael acceptor, as evidenced by the high potency of the top hits (8.44, 7.58, 6.94) which contain both features, while lower potency compounds lack one or both. The top hit (8.44) contains a fused bicyclic aromatic system and a Michael acceptor. The second hit (7.58) lacks the fused bicyclic system but has the Michael acceptor. The third hit (6.94) lacks the Michael acceptor but has the fused bicyclic system. However, the drop in potency is significant when either feature is removed or when the scaffold changes to simple monocycles. The most potent compounds seem to require the fused bicyclic aromatic core combined with the Michael acceptor functionality to achieve high affinity. Therefore, we should constrain the library to compounds containing both the fused bicyclic aromatic system and the Michael acceptor.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic",
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1",
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 9,
+    "n_observations": 25,
+    "hypothesis": "The top 9 compounds all contain a Michael acceptor (acrylamide) moiety, which correlates with the highest pchembl values (8.04\u20139.04). Compounds lacking this feature drop significantly in potency (below 8.0). While the secondary amide is ubiquitous, it is not the differentiating factor for potency. Therefore, the most promising region to explore is the subset of compounds retaining the Michael acceptor.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 9,
+    "n_observations": 40,
+    "hypothesis": "The top 10 compounds (pchembl > 9.0) all contain the acrylamide Michael acceptor (substructure [3]) and the fluorine atom (substructure [1]). Compounds lacking the Michael acceptor drop significantly in potency (e.g., the sulfone and sulfone-ether analogs are ~8.0-8.9, while the best are >9.0). The fluorine is present in all top hits. While the best hits also contain the secondary amide ([0]), many lower potency hits (7.0-8.9) also have it, so it is less discriminatory than the Michael acceptor. The most potent compounds specifically feature the acrylamide conjugated to the aniline nitrogen.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 9,
+    "n_observations": 55,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acrylamide warhead (Michael acceptor) conjugated to a pyrazolo[3,4-d]pyrimidine core, which is further substituted with a fluorine atom on the phenyl ring. Compounds lacking the acrylamide or the specific fused bicyclic aromatic system show a sharp drop in potency (below 9.0).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 9,
+    "n_observations": 70,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acyclic amide linkage (Michael acceptor) connecting the core scaffold to a dimethylamine or similar basic amine tail, rather than cyclic amides, esters, or simple alkyl chains. Compounds with the acrylamide motif [3] and the dimethylamine tail [4] or [5] show the highest activity, while those with cyclic amides [0], esters [11], or simple alkyl chains drop significantly in potency.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[4] C1CCNCC1",
+      "forbid[0] secondary amide",
+      "forbid[11] ester"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "C1CCNCC1"
+      ],
+      "forbid": [
+        "[NX3][CX3](=[OX1])",
+        "[CX3](=O)[OX2][#6]"
+      ]
+    }
+  },
+  {
+    "round": 75,
+    "seed": 9,
+    "n_observations": 85,
+    "hypothesis": "The top 10 compounds (pchembl > 9.0) all share a specific acrylamide motif (Michael acceptor) conjugated to the aniline nitrogen, whereas the drop-off in potency occurs in compounds lacking this specific arrangement or having different amide linkages. Compounds with the standard secondary amide [0] but without the specific acrylamide conjugation [3] show significantly lower activity (e.g., 6.96, 6.83).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 10,
+    "n_observations": 10,
+    "hypothesis": "The most potent compounds in this series (pchembl > 7.0) consistently feature a specific acrylamide Michael acceptor motif (C=CC(=O)N-) attached to the core scaffold, which is absent in the lower potency analogues (e.g., the compound with pchembl 5.36 lacks this feature, while the top hits possess it). This structural element likely drives covalent binding or essential conformational alignment.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 10,
+    "n_observations": 25,
+    "hypothesis": "The top 4 compounds (pchembl > 8.9) all share a specific acrylamide Michael acceptor motif (C=C-C(=O)-N) attached to the central pyrazolo[3,4-d]pyrimidine core, whereas the lower potency compounds either lack this specific arrangement or possess different amide linkages and ring systems. The high potency correlates with the presence of the 'michael acceptor (acrylamide)' substructure in this specific context.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 10,
+    "n_observations": 40,
+    "hypothesis": "The most potent compounds (pchembl > 9.0) consistently feature a specific acrylamide Michael acceptor motif where the nitrogen is substituted with a dimethyl group or an isopropyl group, rather than a simple alkyl chain or a cyclic amine. Compounds with the 'secondary amide' descriptor but lacking this specific N-substitution (e.g., those with simple alkyl chains like propyl or cyclic amines like pyrrolidine/piperidine) show a sharp drop in potency (pchembl < 8.5). Therefore, we should constrain the library to retain only the Michael acceptors with the specific N-dimethyl or N-isopropyl substitution pattern observed in the top hits.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[0] secondary amide",
+      "forbid[4] C1CCNCC1",
+      "forbid[5] C1CNCCC1",
+      "forbid[12] C1CCNC1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": [
+        "C1CCNCC1",
+        "C1CNCCC1",
+        "C1CCNC1"
+      ]
+    }
+  },
+  {
+    "round": 45,
+    "seed": 10,
+    "n_observations": 55,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acrylamide warhead (Michael acceptor) conjugated to a pyrazolo[3,4-d]pyrimidine core, which is further substituted with a fluorine atom on the aromatic ring. Compounds lacking the acrylamide or the fluorine substitution show a significant drop in potency (pchembl < 8.0).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 10,
+    "n_observations": 70,
+    "hypothesis": "The top 10 compounds (9.89\u20139.29) all share a specific acrylamide motif where the nitrogen of the amide is substituted with a dimethylamino group (N(C)C) and the alpha-carbon of the acrylamide is part of a propenyl chain (C=C/C=O), rather than being a simple acrylamide or having a different substitution pattern. Compounds with lower potency often lack this specific N,N-dimethyl substitution on the amide nitrogen or have a different acrylamide geometry (e.g., terminal alkyne or simple acrylamide without the specific chain length).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 10,
+    "n_observations": 85,
+    "hypothesis": "The data shows a clear potency cliff between compounds with a Michael acceptor (acrylamide) and those without. The top 10 compounds (pchembl > 9.8) all contain the acrylamide substructure, while the lowest potency compounds (pchembl < 7.0) lack it. Compounds with the acrylamide feature range from ~9.8 down to ~6.0, suggesting it is a critical pharmacophore for high affinity, whereas compounds lacking it generally fall below 7.5. Enforcing the presence of this substructure will retain the most potent hits and exclude the majority of the low-potency tail.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 11,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a specific scaffold motif found in the top 4 most potent compounds (pchembl > 8.0), which appears to be a piperidine-based acrylamide conjugate. Compounds lacking this specific arrangement show a sharp drop in activity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[4] C1CCNCC1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "C1CCNCC1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 11,
+    "n_observations": 25,
+    "hypothesis": "The top 10 compounds (9.94 to 8.92) all share a specific scaffold: a piperidine ring (C1CCC...) attached to an acrylamide group (C=CC(=O)N) which is linked to the core pyrazolo-pyridine system via an ether oxygen. Compounds lacking this specific 'piperidine-acrylamide-ether' linkage drop significantly in potency (e.g., the terminal alkyne analog at 9.30, the sulfone analog at 9.09, and the complex amine analogs below 8.0). The most potent hits specifically utilize the [9] C1COCCN1 substructure (morpholine-like ring in the linker) or the [3] michael acceptor (acrylamide) combined with the piperidine core. However, the single strongest hit (9.94) and the top tier (9.62, 9.47, 9.39) all contain the [3] michael acceptor and the [9] C1COCCN1 ring (or the [4] C1CCNCC1 piperidine variant). To maximize the chance of finding better analogs while keeping the library size reasonable (~10-15%), we should constrain for the Michael acceptor and the specific ring system found in the top hits.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[9] C1COCCN1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "C1COCCN1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 11,
+    "n_observations": 40,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific scaffold where an acrylamide Michael acceptor is linked to a morpholine ring via an amide bond, while the core bicyclic system retains a fluorine atom and a specific nitrogen substitution pattern. Compounds lacking the Michael acceptor or the morpholine ring show a significant drop in potency (pchembl < 8.5).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[9] C1COCCN1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "C1COCCN1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 11,
+    "n_observations": 55,
+    "hypothesis": "The top potencies (9.94, 9.62, 9.52, 9.47, 9.39) are dominated by compounds containing a specific fused bicyclic aromatic core (the tricyclic system with the oxetane side chain) and a fluorine atom. Compounds lacking this core (e.g., the terminal alkyne or simple phenyl analogs) drop significantly in potency (below 9.0). While fluorine is present in many high-potency compounds, the fused bicyclic motif is the primary structural determinant for the >9.0 pchembl range in this series.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 11,
+    "n_observations": 70,
+    "hypothesis": "The top potencies (9.94, 9.62, 9.52, 9.47, 9.39) all share a specific scaffold: a secondary amide where the nitrogen is attached to a morpholine ring (C1COCCN1), and the carbonyl is part of an acrylamide (michael acceptor). Compounds lacking the morpholine ring drop significantly in potency (e.g., 8.91, 8.78, 8.70), and those lacking the acrylamide also show reduced activity compared to the top hits. While fluorine is common, it is not the primary driver of the top tier as seen in the 9.94 vs 9.62 comparison where the core scaffold differs. The most restrictive and predictive filter is the combination of the morpholine ring and the acrylamide functionality.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[9] C1COCCN1",
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "C1COCCN1",
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 11,
+    "n_observations": 85,
+    "hypothesis": "The top potencies (9.94 - 9.62) are exclusively associated with the acrylamide Michael acceptor motif (C=CC(=O)N...), while the next tier (9.09 - 8.54) includes some Michael acceptors but also non-Michael acceptors. Compounds without the Michael acceptor drop significantly below 9.0. The most potent compounds also consistently feature a fluorine atom, but the Michael acceptor is the primary driver of the >9.0 activity ceiling.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 12,
+    "n_observations": 10,
+    "hypothesis": "The top 3 compounds share a specific Michael acceptor (acrylamide) motif at the N-terminus (or attached to the amine) which correlates with the highest potency (9.05, 8.40, 8.22). Compounds lacking this feature drop significantly in potency (below 7.75). The remaining compounds with lower potency likely lack this specific electrophilic trap or have different substitution patterns on the core that reduce binding affinity. We should prioritize compounds containing this acrylamide functionality.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 12,
+    "n_observations": 25,
+    "hypothesis": "The top 9 compounds all share a specific acrylamide warhead (Michael acceptor) conjugated to the core scaffold, whereas the drop-off in potency occurs when this specific linkage is altered or removed. Compounds with the acrylamide motif (e.g., 9.15, 9.12, 9.09, 9.09, 9.06) are significantly more potent than those with simple amides or other linkers (e.g., 8.46, 8.45, 8.40).",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 12,
+    "n_observations": 40,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acrylamide Michael acceptor motif where the nitrogen is part of a piperidine or piperazine ring (N1CCC(...)CC1 or N1CCN(...)C1), rather than being an exocyclic amide or part of a different scaffold. Compounds with this specific ring-integrated acrylamide show activity >9.0, while those with exocyclic acrylamides or different amide linkages drop significantly below 9.0.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[4] C1CCNCC1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "C1CCNCC1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 12,
+    "n_observations": 55,
+    "hypothesis": "The top 10 compounds (pchembl > 9.0) all share a specific scaffold where the acrylamide Michael acceptor is attached to a piperidine ring (C1CCNCC1), which is in turn linked to a complex fused aromatic system containing a specific phenol-amine motif. Compounds with the acrylamide attached to other rings (like cyclohexane or pyridine) or lacking the specific piperidine linker show a sharp drop in potency (pchembl < 9.0).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[4] C1CCNCC1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "C1CCNCC1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 12,
+    "n_observations": 70,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific core scaffold where a piperidine ring (C1CCNCC1) is linked via an amide bond to an acrylamide moiety (michael acceptor), which is further connected to a complex fused aromatic system containing a fluorine atom. Compounds lacking the piperidine ring or the acrylamide functionality drop significantly in potency (e.g., below 9.0). Therefore, the library should be narrowed to compounds containing both the piperidine ring and the acrylamide functionality, while ensuring the presence of a fluorine atom on the aromatic system.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[4] C1CCNCC1",
+      "require[3] michael acceptor (acrylamide)",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "C1CCNCC1",
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 12,
+    "n_observations": 85,
+    "hypothesis": "The top potencies (9.0+) are exclusively associated with the specific fused bicyclic aromatic core containing the methoxy-substituted pyridine and the specific linker arrangement found in the top hits (e.g., compounds 1-5). Compounds lacking this specific core (indices 6-10) drop significantly in potency (below 9.0). While the 'secondary amide' and 'fluorine' substructures are common, they are too broad and present in the low-potency tail. The 'fused bicyclic aromatic' substructure (index 6) captures the unique scaffold of the best compounds while excluding the majority of the library that fails to reach high potency.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 13,
+    "n_observations": 10,
+    "hypothesis": "The data suggests that the Michael acceptor (acrylamide) moiety is critical for high potency, as the top 4 compounds (pchembl > 8.4) all contain it, while the next tier drops significantly. Compounds lacking this feature generally fall below 7.5. We should prioritize exploring the subset of the library containing this reactive group.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 13,
+    "n_observations": 25,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acyclic acrylamide Michael acceptor motif (C=C-C(=O)-N) rather than cyclic amides or other linkers. Compounds with cyclic amides (e.g., [4], [5], [12], [13], [14], [15]) or terminal alkynes show significantly lower potency (pchembl < 8.5). Additionally, the high-potency hits share a specific aromatic substitution pattern on the distal ring involving a methoxy group and a chlorine, often linked via an ether to a pyridine or similar heteroaromatic system, whereas compounds lacking this specific distal arrangement (e.g., those with sulfones, simple fluorines, or different ring fusions) drop in potency below 8.0.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[8] c1ccc(COc2ccc(Nc3ncnc4ccccc34)cc2)cc1",
+      "forbid[19] sulfone",
+      "forbid[16] terminal alkyne"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "all_of",
+      "parts": [
+        {
+          "kind": "substructure",
+          "require": [
+            "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+            "c1ccc(COc2ccc(Nc3ncnc4ccccc34)cc2)cc1"
+          ],
+          "forbid": [
+            "[SX4](=[OX1])(=[OX1])([#6])[#6]",
+            "[CX2]#[CH]"
+          ]
+        },
+        {
+          "kind": "property",
+          "bounds": {
+            "mw": [
+              300,
+              600
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "round": 30,
+    "seed": 13,
+    "n_observations": 40,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acyclic acrylamide Michael acceptor motif (C=C-C(=O)N) rather than cyclic variants or other amide types. Compounds with cyclic amides (e.g., [4], [5], [12], [13], [14], [15]) or terminal alkynes show significantly lower potency. Additionally, the presence of a fluorine atom appears to correlate with higher potency compared to non-fluorinated analogs in the lower range.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 13,
+    "error": "JSONDecodeError: Unterminated string starting at: line 2 column 17 (char 18)"
+  },
+  {
+    "round": 60,
+    "seed": 13,
+    "n_observations": 70,
+    "hypothesis": "The most potent compounds in this series (pchembl > 10.0) consistently feature a specific acrylamide warhead (Michael acceptor) conjugated to the core scaffold, whereas less potent analogs lack this electrophilic handle or possess different linkers. The top hits (10.54, 10.48, 10.42, 10.41) all contain the 'michael acceptor (acrylamide)' substructure, while the drop-off to ~9.5 and below correlates with the absence of this specific motif or the presence of alternative, less reactive linkers.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 13,
+    "n_observations": 85,
+    "hypothesis": "The top 10 compounds (pchembl > 10.4) all contain a secondary amide linkage connecting the alkyl chain to the bicyclic core, whereas the drop-off to pchembl ~9.6 occurs with quaternary ammonium salts and the drop to pchembl ~7.1 occurs with other amide variations or lack of specific connectivity. The secondary amide appears to be the critical pharmacophore for high affinity in this series.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 14,
+    "n_observations": 10,
+    "hypothesis": "The top 4 compounds (pchembl > 8.4) share a specific acrylamide Michael acceptor motif at the C-terminus (or equivalent position) which appears to be critical for potency, while the lower potency compounds lack this feature or have different terminal groups. The top compounds also consistently feature a fluorine atom on the aniline ring, which is present in the top 3 but missing in the top 4; however, the Michael acceptor is the more distinct and potent-driving feature separating the top tier from the rest. We should prioritize compounds containing the Michael acceptor.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 14,
+    "n_observations": 25,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acrylamide warhead conjugated to a tetrahydroisoquinoline (THIQ) core, whereas analogues with saturated amides, different ring systems, or alternative linkers show significantly reduced potency (pchembl < 8.5). The data suggests that the Michael acceptor is essential for activity, and the specific geometry provided by the THIQ scaffold (present in compounds 1, 2, 3, 4, 5, 6, 7, 8, 9, 10) is superior to other aromatic or aliphatic arrangements.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[4] C1CCNCC1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "C1CCNCC1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 14,
+    "n_observations": 40,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acrylamide warhead conjugated to a piperidine or similar saturated nitrogen ring, rather than the acyclic amides or other linkers seen in the lower potency tail. Specifically, the top hits share a 'michael acceptor (acrylamide)' substructure combined with a saturated heterocyclic amine (like the piperidine ring found in the top 3 hits). The lower potency compounds often lack the acrylamide (e.g., compound 8.92, 8.90) or have different amide linkages. To narrow the library to the most promising region while retaining the best hits, we should constrain for the presence of the Michael acceptor and a saturated nitrogen ring system.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[4] C1CCNCC1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "C1CCNCC1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 14,
+    "n_observations": 55,
+    "hypothesis": "The top potencies (10.01, 9.94, 9.81, 9.80, 9.62) all share a specific scaffold: a secondary amide where the nitrogen is part of a piperidine ring (C1CCNCC1) and the carbonyl is attached to an acrylamide chain (Michael acceptor). Compounds lacking either the piperidine ring or the acrylamide drop significantly in potency (e.g., the imidazoline analogs drop to ~9.0, and the pyridine analogs drop to ~8.9). The most potent hits also consistently feature a fluorine atom, but the scaffold constraint is more critical for the >9.5 range.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[4] C1CCNCC1",
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "C1CCNCC1",
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 14,
+    "n_observations": 70,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acrylamide warhead conjugated to a pyrazolo[3,4-d]pyrimidine core, often with a fluorine-substituted aniline moiety. Compounds lacking the acrylamide Michael acceptor (e.g., the secondary amide analogs or those with different linkers) drop significantly in potency (pchembl < 9.0). The fluorine substitution is also highly prevalent in the top hits, but the acrylamide is the primary driver of the high-affinity binding mode observed in the top 10% of the dataset.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 14,
+    "n_observations": 85,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific fused bicyclic aromatic core containing a fluorine atom and a specific substitution pattern on the pyridine ring, while lacking the secondary amide linkage found in the lower potency analogs. The top hits share a scaffold where the acrylamide is attached to a bicyclic system (likely a pyrido[2,3-d]pyrimidine or similar fused system) rather than a simple piperidine or piperazine, and this core almost exclusively contains a fluorine substituent. Compounds with the secondary amide [0] drop significantly in potency (mostly < 9.5), suggesting the amide is not the optimal linkage for this series. The fused bicyclic aromatic [6] combined with fluorine [1] captures the high-potency region while excluding the majority of the library.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic",
+      "require[1] fluorine",
+      "forbid[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1",
+        "[F]"
+      ],
+      "forbid": [
+        "[NX3][CX3](=[OX1])"
+      ]
+    }
+  },
+  {
+    "round": 0,
+    "seed": 15,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates strongly with the presence of a methoxy group and a fluorine atom, which are present in the top 4 most potent compounds (9.11, 9.03, 9.02, 8.05). Compounds lacking these features drop significantly in activity (e.g., 7.60, 7.57, 7.39). The top hit (9.11) also contains a specific ether linkage (OCCOCC) but this is less universal than the halogen/methoxy pattern. We should prioritize compounds containing both methoxy and fluorine to capture the high-potency cluster while excluding the lower-potency analogs that lack one or both.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[2] methoxy",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[OX2][CH3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 15,
+    "n_observations": 25,
+    "hypothesis": "The top 9 compounds all share a specific acrylamide Michael acceptor motif (alpha,beta-unsaturated amide) attached to the central pyrazolo-pyrimidine core, which appears to be critical for potency. Compounds lacking this feature drop significantly in activity (e.g., the sulfone and thioamide analogs are ~7.5-7.6, while the acrylamides are >8.5).",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 15,
+    "n_observations": 40,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a terminal acrylamide moiety (Michael acceptor) conjugated to the amide nitrogen, which likely facilitates covalent binding or specific conformational locking. Compounds lacking this feature (e.g., those with simple alkyl chains, esters, or sulfones) show a significant drop in potency (pchembl < 8.0).",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 15,
+    "n_observations": 55,
+    "hypothesis": "The top 10 compounds (pchembl > 9.0) all contain the acrylamide Michael acceptor motif (CN(C)C/C=C/C(=O)N...), which is likely the key covalent warhead driving potency. Compounds lacking this feature drop significantly in activity (e.g., the thioamide analog at 7.57, the sulfone at 5.92, and the simple amide at 6.44). While the fluorine and secondary amide are present in many high and low potency compounds, the Michael acceptor is the strongest discriminator. We should constrain the library to retain only compounds with this warhead to focus on the most promising region.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 15,
+    "n_observations": 70,
+    "hypothesis": "The top 10 compounds (9.89 to 9.09) all share a specific acrylamide warhead (Michael acceptor) conjugated to the core scaffold. Compounds lacking this feature (e.g., the thioamide at 7.60, the sulfone at 5.92, or the simple amides/ethers below 7.0) show a significant drop in potency. The high potency correlates with the presence of the C=C-C(=O)-N motif.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 15,
+    "n_observations": 85,
+    "hypothesis": "The top potencies (9.89, 9.80, 9.80) share a specific scaffold where the acrylamide linker is attached to a pyrazolo[3,4-d]pyrimidine core that is further substituted with a specific ether linkage to a fused bicyclic system (specifically a morpholine fused to a benzene ring, or similar C1COCCN1 type motif). Compounds with the acrylamide but lacking this specific fused bicyclic ether tail drop significantly in potency (e.g., 9.66, 9.43, 9.29). Compounds lacking the acrylamide entirely are much weaker (7.05, 6.97). Therefore, the most potent region requires both the Michael acceptor and the specific fused bicyclic ether substructure.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 16,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a specific fluorinated aryl group and a secondary amide linkage, suggesting these are key pharmacophores for high affinity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[1] fluorine",
+      "require[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[F]",
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 16,
+    "n_observations": 25,
+    "hypothesis": "The top 10 compounds (pchembl > 9.8) all contain the acrylamide Michael acceptor motif (CN(C)C/C=C/C(=O)N...), which is absent in the next tier of compounds (pchembl ~8.5-8.9). This suggests covalent binding or specific Michael addition is critical for high potency in this series.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 16,
+    "n_observations": 40,
+    "hypothesis": "The top hits (pchembl > 10.0) all contain the acrylamide Michael acceptor motif (C=CC(=O)N-), which appears to be essential for potency in this series. Compounds lacking this feature drop significantly in activity (e.g., the methoxy compound at 10.35 vs the acrylamide analogs at 9.80-10.42). While the fluorine substructure is common, it is not strictly required for the highest activities (see compound 10.42 which lacks fluorine but has the acrylamide). Therefore, the most restrictive and predictive filter is the presence of the Michael acceptor.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 16,
+    "n_observations": 55,
+    "hypothesis": "The top hits (pchembl > 9.5) consistently feature a specific acrylamide Michael acceptor motif (C=CC(=O)N...) attached to the core scaffold, whereas lower potency compounds often lack this or have it modified into a non-reactive amide or other linkage. The secondary amide constraint alone is too broad (56.5%), and the fluorine constraint is also too broad (52.0%). Selecting the 'michael acceptor (acrylamide)' substructure isolates the high-potency cluster while retaining a manageable portion of the library for further optimization.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 16,
+    "n_observations": 70,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.5) consistently feature a specific acyclic acrylamide linker (Michael acceptor) attached to a piperidine or piperazine ring, which is then linked to a fused bicyclic aromatic system containing a specific ether bridge. Compounds lacking the acrylamide motif (e.g., those with secondary amides or different linkers) drop significantly in potency (pchembl < 9.0). Furthermore, the specific fused bicyclic scaffold with the ether bridge appears in the top hits, whereas other bicyclic variants or simple aromatic rings are less potent.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 16,
+    "n_observations": 85,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.5) consistently feature a specific acyclic acrylamide linker (Michael acceptor) attached to a piperidine or piperazine ring, while the most inactive compounds lack this specific linker arrangement or contain different heterocyclic cores. The top hits share a scaffold where an acrylamide group is conjugated to a nitrogen-containing ring (often piperidine/piperazine) which is further linked to the core. Compounds with the 'secondary amide' descriptor alone are too broad (56.5%) and include many weak analogs. The 'michael acceptor (acrylamide)' descriptor (32.2%) captures the key reactive/structural motif of the high-potency hits (e.g., compounds 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 17,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates strongly with the presence of a fluorine atom and a Michael acceptor (acrylamide) moiety. The top 3 compounds contain both features, while the next tier (pchembl 8.0-8.5) contains fluorine but lacks the acrylamide, suggesting the acrylamide is the critical driver for high potency (>8.5) when combined with fluorination.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[1] fluorine",
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[F]",
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 17,
+    "n_observations": 25,
+    "hypothesis": "The top 4 compounds (pchembl > 9.6) and the next tier (pchembl 8.9-8.8) all share a specific acrylamide motif where the nitrogen of the amide is tertiary, substituted with a dimethyl group and an alkyl chain (specifically N(C)(C)C/C=C/C(=O)-). Compounds lacking this specific tertiary amide substitution (e.g., secondary amides or different N-substituents) drop significantly in potency (pchembl < 8.9).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 17,
+    "n_observations": 40,
+    "hypothesis": "The top potencies (9.80, 9.66) are exclusively associated with the [michael acceptor (acrylamide)] substructure (index 3). Compounds lacking this feature drop significantly in potency (below 9.12). While the fluorine substructure (index 1) is common in the top hits, it is also present in many lower-potency analogs, making it a less specific discriminator than the Michael acceptor. Therefore, enforcing the presence of the Michael acceptor will retain the most potent compounds while filtering out the majority of the library.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 17,
+    "n_observations": 55,
+    "hypothesis": "The top 10 compounds (pchembl > 9.6) all share a specific acrylamide linkage where the nitrogen is attached to a tertiary amine group (dimethylamino or similar) and the carbonyl is part of an amide conjugated to the core. Specifically, the top hits contain the motif `CN(C)C/C=C/C(=O)Nc...` or `CN(C)CCCNC(=O)...`. Compounds with simple secondary amides (like `CC(C)NC...`) or different acrylamide linkages drop significantly in potency (below 9.1). The most potent compounds also consistently feature a fluorine atom on the distal aromatic ring, though the primary driver of the >9.5 potency jump appears to be the specific tertiary amine-acrylamide scaffold.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 17,
+    "n_observations": 70,
+    "hypothesis": "The top potencies (9.80, 9.66) are exclusively associated with the acrylamide Michael acceptor motif (C=C-C(=O)-N), whereas compounds lacking this feature drop significantly in potency (below 9.40). While the fluorine substructure is common in high-potency hits, it is also present in lower-potency analogs and is not the sole discriminator. The most robust structural feature defining the high-potency cluster is the presence of the acrylamide moiety.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 17,
+    "n_observations": 85,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acrylamide warhead (Michael acceptor) conjugated to the core scaffold, whereas less potent analogs often lack this specific linkage or possess different amide geometries. The top hits all contain the 'michael acceptor (acrylamide)' substructure, while the drop-off in potency correlates with the absence of this specific reactive moiety or the presence of alternative amide linkages (like esters or simple amides without the acrylamide tail).",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 18,
+    "n_observations": 10,
+    "hypothesis": "The top 4 compounds share a specific acyclic amide linkage (Michael acceptor/acrylamide) attached to the core, while the next tier (compounds 5-7) uses a saturated alkyl amide. Compounds 8-10 lack this amide functionality entirely and show significantly lower potency. The presence of the electron-deficient alkene conjugated to the amide nitrogen appears critical for potency in this series.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 15,
+    "seed": 18,
+    "n_observations": 25,
+    "hypothesis": "The data shows a clear potency cliff between pchembl 9.89 and 8.84. Compounds with the acrylamide Michael acceptor (pchembl > 9.0) are significantly more potent than those lacking it (pchembl < 8.8). The top hits all contain the specific acrylamide motif, while the drop-off occurs when this is replaced by other amides or esters. Therefore, the most potent region of the library is defined by the presence of this specific reactive group.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 30,
+    "seed": 18,
+    "n_observations": 40,
+    "hypothesis": "The data shows a clear potency cliff between pchembl 9.89 and 8.97. Compounds with the acrylamide Michael acceptor (the 'C=C-C(=O)-N' motif) consistently achieve high potency (>9.0), whereas compounds lacking this feature (e.g., the terminal alkyne at 8.97, the sulfone at 6.09, or the nitro compound at 6.00) drop significantly in activity. The top hits all contain the specific acrylamide substructure found in entries [3].",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 18,
+    "n_observations": 55,
+    "hypothesis": "The most potent compounds in this series (pchembl > 9.0) consistently feature a specific acyclic acrylamide motif (Michael acceptor) attached to the pyrazolo-pyridine core, whereas compounds with cyclic amides, sulfonamides, or alternative linkers drop significantly in potency. The top hits share the pattern `C=CC(=O)Nc1cc2c(Nc3ccc(F)c(Cl)c3)ncnc2cc1...` or similar acyclic arrangements, while the best compounds also retain the 3,5-difluoro-4-chlorophenyl group on the pyrazolo-pyridine, though the primary driver of the potency cliff appears to be the acyclic Michael acceptor versus other amide types.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 18,
+    "n_observations": 70,
+    "hypothesis": "The top potencies (9.89, 9.80, 9.80) all share a specific acyclic amide linkage pattern: a dimethylacrylamide group (N(C)(C)C/C=C/C(=O)) attached to the core. Compounds with this motif are significantly more potent than those with other amide linkages (e.g., C=CC(=O)N, which drops to ~9.43) or non-amide linkages (e.g., esters, sulfonamides, which drop below 7.0). While the 'michael acceptor' substructure [3] covers the acrylamide, it is too broad (32.2%) and includes the less potent acrylamide variants. The specific dimethyl substitution on the acrylamide nitrogen appears critical for the high affinity observed in the top hits.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 18,
+    "n_observations": 85,
+    "hypothesis": "The top potencies (9.89-9.80) are exclusively associated with the acrylamide Michael acceptor (C=C-C(=O)-N) and the specific fused bicyclic aromatic core (c1cc2c(Nc3ccc(F)c(Cl)c3)ncnc2cc1). Compounds lacking the Michael acceptor drop significantly in potency (e.g., 9.41, 9.12, 7.58), and those lacking the specific fused core also show reduced activity. The library is 56% matched by the amide, but only 32% by the acrylamide. To maximize the chance of finding higher potency analogs while keeping a reasonable library size (~32%), we should constrain for the Michael acceptor.",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 19,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates strongly with the presence of a fluorine atom and a secondary amide, while excluding compounds with terminal alkynes or specific ether linkages that appear in low-potency outliers.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[1] fluorine",
+      "require[0] secondary amide",
+      "forbid[16] terminal alkyne"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[F]",
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": [
+        "[CX2]#[CH]"
+      ]
+    }
+  },
+  {
+    "round": 15,
+    "seed": 19,
+    "error": "JSONDecodeError: Unterminated string starting at: line 2 column 17 (char 18)"
+  },
+  {
+    "round": 30,
+    "seed": 19,
+    "n_observations": 40,
+    "hypothesis": "The top 10 compounds (pchembl > 10.1) all contain a secondary amide (N-C(=O)-C) linking the central pyrazole core to a bulky, often cyclic, amine side chain. Compounds lacking this feature (e.g., the ether-linked ones at pchembl ~8.8 or the simple amine at 7.70) drop significantly in potency. The high potency correlates with the presence of this specific amide linkage and a substantial hydrophobic group attached to the nitrogen.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 45,
+    "seed": 19,
+    "n_observations": 55,
+    "hypothesis": "The top 10 compounds (pchembl > 10.10) all contain a secondary amide (N-C(=O)-C) linking the central pyrazole core to a side chain, whereas the drop-off to pchembl < 9.0 occurs in compounds lacking this specific amide linkage or having different connectivity. The most potent hits (10.54, 10.48, 10.42) specifically feature a piperidine or piperazine ring attached via this amide. While many compounds have fluorine, the amide motif appears to be the critical determinant for high potency in this congeneric series.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 60,
+    "seed": 19,
+    "n_observations": 70,
+    "hypothesis": "The top 10 compounds (pchembl > 10.1) share a specific scaffold: a bicyclic system containing a fused pyrrolo[2,3-d]pyrimidine core linked to an aniline bearing a 3-chloro-4-fluorophenyl group, with a specific amide linkage to a piperidine or similar ring. Compounds with the 'michael acceptor' (acrylamide) moiety (e.g., compounds 9, 10, 11, 12, 13, 14) drop significantly in potency (pchembl ~9.6-9.8), suggesting the acrylamide is detrimental or that the rigid bicyclic scaffold is required for binding. The most potent compounds (10.54, 10.48, 10.42) all contain the 'fused bicyclic aromatic' substructure (specifically the tricyclic system formed by the pyrrolo-pyrimidine fused to the aniline ring in the top hits, or at least the specific bicyclic arrangement present in the top 4). The 'michael acceptor' is present in the top 4 but the drop-off suggests we should focus on the rigid bicyclic core which is present in the highest potency hits and excludes the flexible acrylamide analogs which are less potent. However, looking closer, the top 4 have the 'fused bicyclic aromatic' (substructure 6) which matches the tricyclic system in the top hits. The 'michael acceptor' is present in the top 4 but also in the 9.6 range. The key differentiator between the top 4 and the rest seems to be the presence of the specific fused bicyclic core (substructure 6) which is absent in the 9.6 range compounds (which have different ring systems like pyridines or simple phenyls). Let's re-evaluate. Top 4: 10.54, 10.48, 10.42, 10.41. All have the 'fused bicyclic aromatic' (substructure 6). The next tier (9.66) has different cores (pyridines). The 9.80 compound has a different core. The 10.15 compound has the fused core but lower potency, likely due to the Cl,Cl,F substitution vs Cl,F. So the primary driver is the fused bicyclic core. We should constrain to this core to explore the library space around the best hits.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 75,
+    "seed": 19,
+    "n_observations": 85,
+    "hypothesis": "The most potent compounds in this series (pchembl > 10.0) consistently feature a specific bicyclic scaffold containing a fused aromatic system and a specific nitrogen linkage pattern, while the lower potency compounds (< 8.0) often lack this specific bicyclic core or possess alternative heterocyclic linkages (like the terminal alkyne or simple amides seen in the tail). The top hits share a 'fused bicyclic aromatic' motif combined with a specific 'michael acceptor' or 'ester' functionality in the side chain, but the primary discriminator separating the top tier from the rest appears to be the presence of the fused bicyclic aromatic core versus the open-chain or simple heterocyclic alternatives found in the weaker compounds.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic",
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1",
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  }
+]

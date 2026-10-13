@@ -1,0 +1,92 @@
+﻿loading data\dockstring\dockstring-dataset.tsv ...
+loaded 260,148 rows, 260,053 complete, pool 2,000, 1s
+fingerprints + gram in 1s
+
+[A] transfer headroom  (21 primary targets, aux=LCK+SRC+ABL1, pool=2000, 20 repeats)
+    budget is measured in cells; the arms below all spend the same number.
+    ABL1      fp_inf 0.652  aux_inf 0.838   best reachable -0.047+-0.014
+    AKT1      fp_inf 0.789  aux_inf 0.930   best reachable -0.194+-0.028
+    AKT2      fp_inf 0.749  aux_inf 0.889   best reachable -0.149+-0.022
+    CDK2      fp_inf 0.786  aux_inf 0.935   best reachable -0.119+-0.022
+    CSF1R     fp_inf 0.727  aux_inf 0.835   best reachable -0.118+-0.011
+    EGFR      fp_inf 0.761  aux_inf 0.913   best reachable -0.164+-0.017
+    FGFR1     fp_inf 0.666  aux_inf 0.824   best reachable -0.092+-0.018
+    IGF1R     fp_inf 0.671  aux_inf 0.812   best reachable -0.138+-0.020
+    JAK2      fp_inf 0.729  aux_inf 0.896   best reachable -0.151+-0.025
+    KDR       fp_inf 0.633  aux_inf 0.861   best reachable -0.118+-0.016
+    KIT       fp_inf 0.750  aux_inf 0.892   best reachable -0.142+-0.020
+    LCK       fp_inf 0.795  aux_inf 0.918   best reachable -0.124+-0.019
+    MAP2K1    fp_inf 0.834  aux_inf 0.929   best reachable -0.159+-0.025
+    MAPK1     fp_inf 0.718  aux_inf 0.891   best reachable -0.120+-0.022
+    MAPK14    fp_inf 0.666  aux_inf 0.846   best reachable -0.121+-0.024
+    MAPKAPK2  fp_inf 0.750  aux_inf 0.909   best reachable -0.153+-0.025
+    MET       fp_inf 0.634  aux_inf 0.854   best reachable -0.121+-0.019
+    PLK1      fp_inf 0.787  aux_inf 0.899   best reachable -0.172+-0.015
+    PTK2      fp_inf 0.699  aux_inf 0.866   best reachable -0.132+-0.020
+    ROCK1     fp_inf 0.787  aux_inf 0.930   best reachable -0.161+-0.021
+    SRC       fp_inf 0.755  aux_inf 0.900   best reachable -0.115+-0.017
+
+     cells  mols      stl    mt_gp  mt_spread    mt_eq  mt_free    headroom(mt_gp)   ceiling@n
+    -----------------------------------------------------------------------------------------
+         5     1    0.131      n/a        n/a      n/a    0.579                n/a      +0.449
+        10     2    0.194    0.077      0.120    0.068    0.745       -0.117+-0.025      +0.551
+        20     5    0.273    0.135      0.204    0.128    0.772       -0.138+-0.007      +0.499
+        30     7    0.326    0.165      0.255    0.162    0.777       -0.161+-0.007      +0.451
+        50    12    0.406    0.228      0.345    0.220    0.781       -0.177+-0.006      +0.375
+        80    20    0.471    0.282      0.415    0.270    0.784       -0.189+-0.006      +0.313
+
+    task correlation the ICM arm selected by marginal likelihood: 0.97 .. 0.97
+
+    ceilings with budget removed (mean over targets):
+      fp_inf  0.730   a Tanimoto GP on 80% of the pool
+      aux_inf 0.884   ridge from the other 57 targets, out-of-fold
+      gap     +0.154   what cross-target structure is worth
+                     once neither side is budget-limited
+
+    verdict:
+      ceiling at budget: +0.551   (free exact auxiliary labels)
+      multi-task GP, blocked  : -0.117+-0.025  (best, at 10 cells, 2 molecules)
+      multi-task GP, spread   : -0.055   (no molecule measured twice)
+      two-stage ridge         : -0.127
+      H1 fails at equal cost: the better design still loses 0.055 at its
+      best budget (80 cells), 0/21 targets improving. The
+      free-label ceiling above is large, so the cross-target structure
+      is real; what fails is converting it once the auxiliary cells
+      are paid for out of the same budget. Any later multi-task result
+      that does not hold cells fixed is measuring that substitution,
+      not transfer.
+      (blocked design, worst budget: -0.189 at 80 cells)
+
+[B] joint vs separated  (objective=jak2_potency, targets=JAK2+LCK, 20 repeats, 1345 molecules admitted)
+    free-descriptor floor: ranking by QED alone scores rho 0.000 with zero assays
+
+    Spearman over all held-out rows
+       n    qed_only       joint   joint_qed   separated
+    ----------------------------------------------------
+       5       0.000       0.066       0.066       0.058
+      10       0.000       0.158       0.158       0.172
+      20       0.000       0.179       0.179       0.201
+      30       0.000       0.212       0.212       0.234
+      50       0.000       0.275       0.275       0.293
+      80       0.000       0.325       0.325       0.352
+
+    top-50 recall -- the thing a campaign is actually buying
+       n    qed_only       joint   joint_qed   separated    sep - joint_qed
+    -----------------------------------------------------------------------
+       5       4.0%        4.6%        4.6%        4.9%         +0.3%+-0.7% 
+      10       4.0%        6.5%        6.5%        7.4%         +0.9%+-0.5% 
+      20       3.9%        6.8%        6.8%        6.9%         +0.1%+-0.5% 
+      30       4.0%        9.4%        9.4%        9.5%         +0.1%+-0.8% 
+      50       3.8%        9.9%        9.9%        9.1%         -0.8%+-0.9% 
+      80       3.7%       11.6%       11.6%       11.9%         +0.3%+-0.9% 
+
+    verdict:
+      this objective has no free term, so the 4.0% floor is chance
+      (50 of 1345 admitted molecules) and `joint_qed` is `joint`.
+      Everything above the floor was paid for.
+      best assayed arm: 11.9% recall, +7.9% over the floor.
+      separated vs joint_qed: +0.9%+-0.5% at n=10 -- no separation. Once both
+      arms are given the free term, a per-target surrogate has to
+      justify itself on allocation rather than on accuracy.
+
+wrote results\transfer_headroom_potency.json  (36s total)

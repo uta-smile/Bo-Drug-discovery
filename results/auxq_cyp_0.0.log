@@ -1,0 +1,49 @@
+
+[0] censoring filter (values held by >2% of a column)
+    CYP3A4   pile-ups: 5.00 x317, 4.52 x122, 4.30 x90, 5.30 x68, 4.00 x64, 4.70 x62, 4.40 x41, 4.60 x38
+    CYP2D6   pile-ups: 5.00 x399, 4.52 x136, 4.30 x88, 4.00 x79, 4.70 x76, 5.30 x62, 4.40 x57, 4.60 x35
+    CYP2C9   pile-ups: 5.00 x307, 4.52 x119, 5.30 x97, 4.30 x87, 4.70 x67, 4.60 x57, 4.00 x50, 4.40 x41
+    CYP2C19  pile-ups: 5.00 x325, 4.52 x119, 4.30 x101, 4.70 x76, 5.30 x72, 4.00 x50, 4.40 x46, 4.60 x38
+    kept 335 of 1,472 compounds (22.8%)
+cyp: 335 compounds x 4 targets, budget 111, batch 10, H=50 (0s)
+      CYP3A4: success set = top-10
+    CYP3A4   done
+      CYP2D6: success set = top-10
+    CYP2D6   done
+      CYP2C9: success set = top-10
+    CYP2C9   done
+      CYP2C19: success set = top-10
+    CYP2C19  done
+
+    [audit] 32 target x repeat cells, 3 arms each
+    [audit] all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.96 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    auxiliary quality: requested 0, achieved Spearman -0.006 (-0.122..0.122 over 96 draws)
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    CYP3A4               55.0%   58.7%          +3.7%
+    CYP2D6               50.0%   48.8%          -1.3%
+    CYP2C9               63.7%   62.5%          -1.2%
+    CYP2C19              63.8%   68.8%          +5.0%
+    2/4 targets improve; spread -1.3% to +5.0%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               6.5319       58.1%                
+    mt                6.5205       59.7%   -0.0114+-0.0291
+    pooled            6.4621       72.8%   -0.0698+-0.0476
+
+    verdict:
+      no campaign gain: -0.0114+-0.0291 AUC. The regression improvement in
+      sections 18-19 does not convert into finding the top faster.
+      That is the section 4 pattern again: an offline proxy moving
+      without the campaign outcome moving.
+
+wrote results\auxq_cyp_0.0.json  (24s total)

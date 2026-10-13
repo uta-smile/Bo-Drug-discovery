@@ -1,0 +1,91 @@
+{
+  "family": "kiba_cdk5",
+  "arm": "mt",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "n_pool": 899,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.41788558362636236,
+      "delta_sem": 0.032193002457667014,
+      "n": 32,
+      "sem_multiple": 12.980634042316225,
+      "clears_bar": true,
+      "flag": "13.0 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.16410900910167386,
+      "delta_sem": 0.06495804770248388,
+      "n": 32,
+      "sem_multiple": 2.526384565209133,
+      "clears_bar": true,
+      "flag": "2.5 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.14283689162090552,
+      "delta_sem": 0.04769019687717511,
+      "n": 32,
+      "sem_multiple": 2.995099642569694,
+      "clears_bar": true,
+      "flag": "3.0 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.12687549111533597,
+      "delta_sem": 0.0781227246430038,
+      "n": 32,
+      "sem_multiple": 1.624053586137925,
+      "clears_bar": false,
+      "flag": "1.6 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.27504869200545684,
+    "sem": 0.057539067470919934,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "aux_quality": 0.3,
+  "rho_eff": 0.1318368859887285,
+  "rho_eff_mean": 0.12673201942800444,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.1875,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.09375
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": null,
+    "seed_pool": "random",
+    "targets": [
+      "PIM1",
+      "PRKACA",
+      "CDK5",
+      "DYRK1A"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_cdk5-dyrk1a-pim1-prkaca.csv",
+    "n_block": 899,
+    "n_pool": 899,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

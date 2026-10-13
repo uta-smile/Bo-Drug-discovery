@@ -1,0 +1,78 @@
+﻿loading data\dockstring\dockstring-dataset.tsv ...
+loaded 260,148 rows in 1s
+
+[1] provenance
+    rows                260,148   (notebook: 260,148)
+    targets             58       (expected 58)
+    missing cells       339
+    matrix density      99.9978%
+    docking score range -16.3 .. 107.4
+    QED range           0.008 .. 0.948
+    -> MATCHES the notebook
+
+[2] GP accuracy vs observations  (objective=jak2, pool=3000, 30 repeats)
+    fingerprints + gram in 1s
+    pool similarity: mean Tanimoto 0.121, median 0.117, frac > 0.3: 0.229%
+
+     n_obs   DOCKSTRING   ChEMBL (s10)    delta
+    -------------------------------------------
+         5     0.088+-0.014        0.186   -0.098
+        10     0.122+-0.013        0.299   -0.177
+        15     0.183+-0.009        0.355   -0.172
+        20     0.232+-0.010        0.405   -0.173
+        30     0.259+-0.011        0.462   -0.203
+        50     0.327+-0.011        0.496   -0.169
+        80     0.406+-0.007        0.542   -0.136
+
+    mean |delta| = 0.161; 0/7 points within 0.05+3SEM of the ChEMBL curve
+
+[2b] is the DOCKSTRING pool just more diverse?
+    egfr_anilinoquinazoline      n= 1500  mean 0.299  median 0.283  >0.3 41.04%
+    jak2_all                     n= 1500  mean 0.164  median 0.144  >0.3  5.24%
+    cdk2_all                     n= 1500  mean 0.134  median 0.120  >0.3  2.39%
+    vegfr2_all                   n= 1500  mean 0.145  median 0.133  >0.3  2.32%
+    DOCKSTRING (uniform)         n= 3000  mean 0.121  median 0.117
+    -> a lower mean here is the honest explanation for a lower GP curve;
+       it makes section 10's numbers library-specific, not universal.
+
+[3] cross-target correlation  (n=20000 ligands, all 58 targets)
+    all 1,653 target pairs : min -0.26  median +0.70  max +0.89
+    21 kinases only      : min +0.48  median +0.75  max +0.89
+    JAK2 vs LCK (objective): +0.80
+    PPAR A/D/G pairwise    : +0.73 +0.73 +0.78
+    -> transfer is exploitable only if this is strictly between 0 and 1
+
+[4] objective structure and the free-descriptor control (full 260k)
+
+    jak2       range -12.79 .. 1.30   median -4.01   top-1000 cut -0.16
+      sd(QED term) 2.01  vs  sd(docking term) 0.76   ratio 2.65x
+      rho(objective, QED term)     = +0.929   <- free
+      rho(objective, docking term) = +0.200   <- assayed
+      rho(objective, -JAK2  ) = +0.007
+      rho(objective, -LCK   ) = -0.150
+      top-1000 recall, QED-only ranking (zero assays) : 19.2%
+      top-1000 recall, docking-only ranking           : 3.8%
+
+    jak2_only  range -4.29 .. 10.46   median 4.43   top-1000 cut 8.27
+      sd(QED term) 2.01  vs  sd(docking term) 0.97   ratio 2.07x
+      rho(objective, QED term)     = +0.879   <- free
+      rho(objective, docking term) = +0.165   <- assayed
+      rho(objective, -JAK2  ) = +0.165
+      top-1000 recall, QED-only ranking (zero assays) : 11.0%
+      top-1000 recall, docking-only ranking           : 3.3%
+
+    ppar       range -4.55 .. 8.91   median 4.01   top-1000 cut 7.76
+      sd(QED term) 2.01  vs  sd(docking term) 1.00   ratio 2.02x
+      rho(objective, QED term)     = +0.872   <- free
+      rho(objective, docking term) = +0.148   <- assayed
+      rho(objective, -PPARA ) = +0.101
+      rho(objective, -PPARD ) = +0.008
+      rho(objective, -PPARG ) = +0.066
+      top-1000 recall, QED-only ranking (zero assays) : 18.3%
+      top-1000 recall, docking-only ranking           : 0.3%
+
+    -> the objectives rank mostly by QED (rho +0.93), but the top-1000 does not:
+       the best free ranking recovers 19.2% of it. Report every
+       top-k number against that floor, not against zero.
+
+wrote results\dockstring_audit.json  (6s total)

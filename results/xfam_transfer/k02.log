@@ -1,0 +1,38 @@
+k02: 428 compounds x 4 targets, budget 95, batch 10, H=50 (0s)
+      EGFR: success set = top-10
+    EGFR     done
+      GSK3B: success set = top-10
+    GSK3B    done
+      NEK2: success set = top-10
+    NEK2     done
+      PBK: success set = top-10
+    PBK      done
+    [audit] 1,280 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.87 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    EGFR                 60.6%   58.4%          -2.2%
+    GSK3B                51.9%   47.5%          -4.4%
+    NEK2                 58.1%   55.0%          -3.1%
+    PBK                  35.9%   40.0%          +4.1%
+    1/4 targets improve; spread -4.4% to +4.1%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl              12.7298       51.6%                
+    mt               12.7225       50.2%   -0.0073+-0.0127
+
+    verdict:
+      no campaign gain: -0.0073+-0.0127 AUC. The regression improvement in
+      sections 18-19 does not convert into finding the top faster.
+      That is the section 4 pattern again: an offline proxy moving
+      without the campaign outcome moving.
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\xfam_transfer\k02.json  (63s total)

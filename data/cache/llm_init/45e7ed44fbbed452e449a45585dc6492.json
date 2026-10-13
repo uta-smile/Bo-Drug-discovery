@@ -1,0 +1,30 @@
+{
+  "backend": "llamacpp:qwen3.5-4b:t=0.0:topk=1:seed=0:think=0",
+  "version": "i1",
+  "system": "You are a medicinal chemist starting a hit-to-lead campaign.\n\nNothing has been measured yet. You will be shown a random sample of compounds\nfrom the screening library and must choose which ones to assay first.\n\nThis is the one point in the campaign where chemical knowledge has nothing to\ncompete with: there is no data, so a model fitted to the results cannot help.\nChoose the compounds whose measurements would teach you the most -- covering the\nstructural options in the sample rather than repeating one of them, and\nfavouring chemotypes you believe are plausible for a potent inhibitor.\n\nRespond with JSON only.",
+  "prompt": "A random sample of 40 compounds from the screening library:\n\n  [ 0] C#Cc1cccc(Nc2ncnc3cc(OC)c(OCCCCn4ccnc4[N+](=O)[O-])cc23)c1\n  [ 1] C#Cc1cccc(Nc2ncnc3cc(OCCOC(=O)C(C)c4ccc(CC(C)C)cc4)c(OCCOC)cc23)c1\n  [ 2] C#Cc1cccc(Nc2ncnc3cc(O[C@H]4CCOC4)c(OC4CCN(C(=O)C=C)CC4)cc23)c1\n  [ 3] C=CC(=O)N1CCC(Oc2cc3c(Nc4cccc(-c5cnco5)c4)ncnc3cc2OC)C1\n  [ 4] C=CC(=O)Nc1cc2c(Nc3ccc(Br)c(Cl)c3F)ncnc2cc1OC[C@H](C)NC(=O)CN(C)C\n  [ 5] C=CC(=O)Nc1cc2c(Nc3ccc(Br)cc3F)ncnc2cc1OCCNC(=O)CC\n  [ 6] C=CC(=O)Nc1cc2c(Nc3ccc(Br)cc3F)ncnc2cc1OCCNC(=O)CO\n  [ 7] C=CC(=O)Nc1cc2c(Nc3ccc(Br)cc3F)ncnc2cc1OCCNS(C)(=O)=O\n  [ 8] C=CC(=O)Nc1ccc2ncnc(Nc3ccc(S(=O)(=O)Nc4nccs4)cc3)c2c1\n  [ 9] C=CCN(C)CC#CC(=O)Nc1ccc2ncnc(Nc3cccc(Br)c3)c2c1\n  [10] CC(C)(C)c1ccc(Nc2ncnc3cc4oc(=O)n(CCOC(=O)CBr)c4cc23)cc1\n  [11] CCNC(=O)Nc1ccc2ncnc(Nc3ccc(OCc4ccccn4)c(Cl)c3)c2c1\n  [12] CCOC(=O)CCCn1c(=O)oc2cc3ncnc(Nc4ccc(OC(C)C)cc4)c3cc21\n  [13] CCOc1cc2ncnc(Nc3cccc(I)c3)c2cc1OCC\n  [14] CN(C)C/C=C/C(=O)N1CCC(Oc2cc3c(Nc4ccc(Cl)c(Cl)c4F)ncnc3cc2O[C@H]2CCOC2)CC1\n  [15] CN(C)C/C=C/C(=O)N1CCOc2c1ccc1ncnc(Nc3ccc(Oc4nccs4)cc3)c21\n  [16] CN(C)C/C=C/C(=O)Nc1cc2c(Nc3ccc(F)c(Cl)c3)ncnc2cc1OCC1C2COCC21\n  [17] CN(C)C/C=C/C(=O)Nc1ccc2ncnc3c2c1CCN3c1cccc(Cl)c1F\n  [18] CN1CCC2(CC1)CN(c1ccc3ncnc(Nc4cccc(Cl)c4F)c3c1)C(=O)O2\n  [19] CNC(=O)[C@H]1CCCN1Cc1cc2c(Nc3cccc(Cl)c3F)ncnc2cc1OC\n  [20] COCC(=O)NC/C=C/c1ccc2ncnc(Nc3ccc(Oc4cc5nncn5cn4)c(C)c3)c2c1\n  [21] COCCN(C)C/C=C/C(=O)N1CCOc2c1ccc1ncnc(Nc3ccc(Oc4ccn5ncnc5c4)c(Cl)c3)c21\n  [22] COCCOc1cc2ncnc(Nc3ccc4c(cnn4Cc4ccccc4)c3)c2cc1NC(=O)/C=C/CN1CCN(C)CC1\n  [23] COc1cc2c(Nc3ccc(F)c(Cl)c3)ncnc2cc1OCCCCCn1ccnc1[N+](=O)[O-]\n  [24] COc1cc2c(Nc3ccc(Oc4cccc(F)c4)c(Cl)c3)ncnc2cc1OCC1CCN(C)CC1\n  [25] COc1cc2ncnc(Nc3cc(NC(=O)c4cccc(N(C)C)c4)ccc3Cl)c2cc1OC\n  [26] COc1cc2ncnc(Nc3ccc(Cl)c(Cl)c3F)c2cc1N1CC2(CCN(C)CC2)OC1=O\n  [27] COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OCCCCNCc1ccc(-c2cccc(-c3ccccc3)c2C)nc1OC\n  [28] COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OCCCN1CC(OC)C1\n  [29] COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OCCNC(C)(C)C\n  [30] COc1cc2ncnc(Nc3ccccc3Br)c2cc1OC\n  [31] Cc1ccc(Oc2ccc(Nc3ncnc4ccc(-c5cn(CCCCCCC(=O)NO)nn5)cc34)cc2C)cn1\n  [32] Cn1cnc2cc3c(Nc4cccc(Br)c4)ncnc3cc21\n  [33] Fc1c(Nc2ncnc3cc4c(cc23)OCCO4)cccc1C(F)(F)F\n  [34] NS(=O)(=O)c1ccc(CCNC(=S)Nc2ccc3ncnc(Nc4cccc(C(F)(F)F)c4)c3c2)cc1\n  [35] Nc1ccccc1NC(=O)/C=C/c1cccc(-c2ccc3ncnc(Nc4ccc(OCc5cccc(F)c5)c(Cl)c4)c3c2)c1\n  [36] O=C(C#CCN1CCOCC1)Nc1ccc2ncnc(Nc3ccc(F)c(Cl)c3)c2c1\n  [37] O=C(Nc1cccc(Nc2ncnc3cc(OCCCN4CCN(CCO)CC4)ccc23)c1)Nc1ccc(Cl)c(C(F)(F)F)c1\n  [38] O=[N+]([O-])c1ccc2c(Nc3cccc(F)c3)ncnc2c1\n  [39] [O-][S+]1CCN(Cc2ccc(-c3ccc4ncnc(Nc5ccc(OCc6ccccc6)c(F)c5)c4c3)o2)CC1\n\nNothing has been measured yet. The objective is pchembl_value (higher is more potent).\nChoose exactly 10 of them to assay first, by index.",
+  "response": {
+    "choices": [
+      0,
+      3,
+      8,
+      11,
+      14,
+      23,
+      30,
+      34,
+      36,
+      39
+    ],
+    "reasoning": "1. **Compound 0**: Represents the simplest scaffold with a pyridine-N-oxide and nitro group. Essential to establish the baseline activity of the 'pyridine-N-oxide' motif and the unsubstituted phenyl ring. \n2. **Compound 3**: Introduces the acrylamide linker and a chlorinated/brominated phenyl ring. This is a critical structural variation to test the effect of the amide linker vs. the ether linkers"
+  },
+  "usage": {
+    "completion_tokens": 178,
+    "prompt_tokens": 1895,
+    "total_tokens": 2073,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "finish_reason": "stop"
+}

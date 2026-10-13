@@ -1,0 +1,30 @@
+
+[0] censoring filter (values held by >2% of a column)
+    CYP3A4   pile-ups: 5.00 x317, 4.52 x122, 4.30 x90, 5.30 x68, 4.00 x64, 4.70 x62, 4.40 x41, 4.60 x38
+    CYP2D6   pile-ups: 5.00 x399, 4.52 x136, 4.30 x88, 4.00 x79, 4.70 x76, 5.30 x62, 4.40 x57, 4.60 x35
+    CYP2C9   pile-ups: 5.00 x307, 4.52 x119, 5.30 x97, 4.30 x87, 4.70 x67, 4.60 x57, 4.00 x50, 4.40 x41
+    CYP2C19  pile-ups: 5.00 x325, 4.52 x119, 4.30 x101, 4.70 x76, 5.30 x72, 4.00 x50, 4.40 x46, 4.60 x38
+    kept 335 of 1,472 compounds (22.8%)
+cyp: 335 compounds x 4 targets, budget 111, batch 10, H=50 (0s)
+      CYP3A4: success set = top-10
+    CYP3A4   done
+      CYP2D6: success set = top-10
+    CYP2D6   done
+      CYP2C9: success set = top-10
+    CYP2C9   done
+      CYP2C19: success set = top-10
+    CYP2C19  done
+    [audit] 1,280 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.95 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    auxiliary quality: requested 0.0, achieved Spearman -0.002 (-0.144..0.139 over 384 draws)
+    stl               6.5407       61.5%                
+    stl_avoid         6.5238       56.2%   -0.0170+-0.0126
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\avoidcal_cyp_h50_uniform_w0.2274.json  (3s total)

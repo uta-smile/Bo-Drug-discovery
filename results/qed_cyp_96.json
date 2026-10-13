@@ -1,0 +1,54 @@
+{
+  "family": "cyp",
+  "history": 20,
+  "history_cluster": 0.0,
+  "reach": 0.7989528367784012,
+  "history_excludes_top": true,
+  "budget": 96,
+  "batch": 10,
+  "k": 10,
+  "acquisition": "ei",
+  "repeats": 8,
+  "n_pool": 192,
+  "arms": {
+    "stl": {
+      "auc_mean": 6.405764649242014,
+      "auc_sem": 0.04263793024865443,
+      "recall_mean": 0.66875,
+      "delta_vs_stl": 0.0,
+      "delta_sem": 0.0,
+      "frac_better": 0.0
+    },
+    "mt": {
+      "auc_mean": 6.472239089693606,
+      "auc_sem": 0.037481213298853254,
+      "recall_mean": 0.7625,
+      "delta_vs_stl": 0.0664744404515919,
+      "delta_sem": 0.024962052819253407,
+      "frac_better": 0.59375
+    }
+  },
+  "per_target": {
+    "CYP3A4": {
+      "stl_recall": 0.47500000000000003,
+      "mt_recall": 0.6125,
+      "delta": 0.1375
+    },
+    "CYP2D6": {
+      "stl_recall": 0.75,
+      "mt_recall": 0.725,
+      "delta": -0.025000000000000022
+    },
+    "CYP2C9": {
+      "stl_recall": 0.6875,
+      "mt_recall": 0.775,
+      "delta": 0.08750000000000002
+    },
+    "CYP2C19": {
+      "stl_recall": 0.7625000000000001,
+      "mt_recall": 0.9375,
+      "delta": 0.17499999999999993
+    }
+  },
+  "targets_improving": 3
+}

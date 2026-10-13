@@ -1,0 +1,27 @@
+dataset      data/chembl/egfr_all.csv
+library      9041 compounds (heavy atoms 10-55), pchembl_value in [4.00, 11.00], median 7.02
+budget       50 unique calls   seeds 20   n_init 10
+arms         random, bo_ei, llm_only, bo_random_select, bo_llm_select
+
+  random                   AUC 0.5667 best 9.779 (0.6s / 20 seeds)
+  bo_ei                    AUC 0.6424 best 9.678 (19.7s / 20 seeds)
+  llm_only                 AUC 0.5872 best 9.622 (1263.0s / 20 seeds)
+  bo_random_select         AUC 0.6389 best 9.724 (7.6s / 20 seeds)
+  bo_llm_select            AUC 0.6530 best 9.785 (1267.2s / 20 seeds)
+
+arm                                     AUC       best pIC50   regret   top1%
+------------------------------------------------------------------------------
+random                     0.5667 +/- 0.0113     9.779 +/- 0.141    1.221   0.009
+bo_ei                      0.6424 +/- 0.0147     9.678 +/- 0.122    1.322   0.044
+llm_only                   0.5872 +/- 0.0088     9.622 +/- 0.099    1.379   0.007
+bo_random_select           0.6389 +/- 0.0172     9.724 +/- 0.114    1.275   0.050
+bo_llm_select              0.6530 +/- 0.0135     9.785 +/- 0.108    1.215   0.047
+
+paired vs bo_ei (Wilcoxon signed-rank on per-seed AUC, n=20)
+------------------------------------------------------------------------------
+random                   dAUC -0.0757  dz -1.76  p 0.0000  ***
+llm_only                 dAUC -0.0552  dz -1.24  p 0.0000  ***
+bo_random_select         dAUC -0.0035  dz -0.14  p 0.6742  ns
+bo_llm_select            dAUC +0.0106  dz +0.51  p 0.0153  *
+
+wrote results\chembl203_ladder_b50/  (2566.2s)

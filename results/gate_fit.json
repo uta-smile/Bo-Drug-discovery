@@ -1,0 +1,80 @@
+{
+  "data": "results/selective_headroom_pool.json",
+  "n_targets": 411,
+  "target": "pays",
+  "features": [
+    "conf.entropy",
+    "conf.margin",
+    "conf.n_pred_top_in_pick",
+    "conf.pred_lift",
+    "conf.top1_score",
+    "lib.n",
+    "lib.log_n",
+    "part.n_nonempty",
+    "part.pick_size",
+    "part.pick_frac",
+    "part.size_gini",
+    "part.size_max_frac",
+    "score.std",
+    "score.max",
+    "score.range",
+    "score.n_positive",
+    "score.top2_sum"
+  ],
+  "base_rate": 0.35766423357664234,
+  "commit_always": -0.02660678692279693,
+  "ceiling": 0.010717994906510899,
+  "oof_auroc": 0.5896464646464646,
+  "oof_value": -0.0009432177636709191,
+  "oof_coverage": 0.07785888077858881,
+  "null": {
+    "auroc_mean": 0.4951887497423212,
+    "auroc_p": 0.005,
+    "value_mean": -0.0017674046399519022,
+    "value_p": 0.14
+  },
+  "certified": {
+    "n_tune": 82,
+    "n_test": 329,
+    "tau": 0.6361255867663805,
+    "coverage": 0.22796352583586627,
+    "value": -0.003421107281486572,
+    "lcb": -0.005990568594669551,
+    "deploy": false
+  },
+  "random_gate": -0.0020751442417810276,
+  "curve": [
+    {
+      "n": 50,
+      "auroc": 0.49206066339247406,
+      "value": -0.0034147137926226895
+    },
+    {
+      "n": 100,
+      "auroc": 0.5548565345983629,
+      "value": -0.001443203966253573
+    },
+    {
+      "n": 200,
+      "auroc": 0.5324044414904618,
+      "value": -0.0015803421797072124
+    },
+    {
+      "n": 300,
+      "auroc": 0.5723186326298942,
+      "value": -0.0008884563416033322
+    },
+    {
+      "n": 411,
+      "auroc": 0.5779478458049886,
+      "value": -0.0006897023240836837
+    }
+  ],
+  "criteria": {
+    "auroc > 0.60 and p < 0.05": false,
+    "policy value > 0 and beats null": false,
+    "certified LCB > 0": false,
+    "beats matched-coverage random gate": false
+  },
+  "useful": false
+}

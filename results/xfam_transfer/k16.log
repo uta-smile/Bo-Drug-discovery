@@ -1,0 +1,36 @@
+k16: 431 compounds x 4 targets, budget 95, batch 10, H=50 (0s)
+      MAP4K4: success set = top-10
+    MAP4K4   done
+      RET: success set = top-10
+    RET      done
+      FGFR1: success set = top-10
+    FGFR1    done
+      SRC: success set = top-10
+    SRC      done
+    [audit] 1,280 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.88 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    MAP4K4               33.8%   24.1%          -9.7%
+    RET                  59.4%   65.9%          +6.6%
+    FGFR1                65.0%   79.1%         +14.1%
+    SRC                  53.8%   77.5%         +23.7%
+    3/4 targets improve; spread -9.7% to +23.7%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl              13.4562       53.0%                
+    mt               13.7031       61.6%   +0.2469+-0.0225
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.2469 AUC
+      over single-task BO (91% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\xfam_transfer\k16.json  (64s total)

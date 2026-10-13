@@ -1,0 +1,96 @@
+{
+  "dataset": "data/chembl/cruzipain.csv",
+  "library_size": 504,
+  "seeds": 200,
+  "method": "kmeans",
+  "diagnostics": [
+    {
+      "k": 10,
+      "concentration": {
+        "n_clusters": 10,
+        "n_top": 5,
+        "best_cluster": 9,
+        "best_lift": 22.400000000000002,
+        "coverage_best": 0.8,
+        "clusters_for_half_the_top": 1
+      },
+      "coherence": {
+        "within": 0.1631824925783125,
+        "between": 0.1153177666982334,
+        "separation": 0.04786472588007909,
+        "size_min": 14,
+        "size_median": 22,
+        "size_max": 220,
+        "n_singletons": 0
+      }
+    }
+  ],
+  "rows": [
+    {
+      "k": 10,
+      "budget": 30,
+      "arm": "bo_whole",
+      "auc": 0.5926092337924953,
+      "sem": 0.007759763247395184,
+      "top1pct_recall": 0.28200000000000003,
+      "delta_vs_whole": null,
+      "p_value": null,
+      "cohens_dz": null
+    },
+    {
+      "k": 10,
+      "budget": 30,
+      "arm": "bo_random_cluster",
+      "auc": 0.437104786611324,
+      "sem": 0.004574559461178002,
+      "top1pct_recall": 0.019000000000000003,
+      "delta_vs_whole": -0.1555044471811713,
+      "p_value": 2.4674720958820153e-34,
+      "cohens_dz": -2.2769007940187294
+    },
+    {
+      "k": 10,
+      "budget": 30,
+      "arm": "bo_largest_cluster",
+      "auc": 0.42718452114881716,
+      "sem": 0.004660685725682561,
+      "top1pct_recall": 0.012,
+      "delta_vs_whole": -0.16542471264367814,
+      "p_value": 5.353723064523957e-34,
+      "cohens_dz": -2.0196002213395916
+    },
+    {
+      "k": 10,
+      "budget": 30,
+      "arm": "bo_densest_cluster",
+      "auc": 0.6536350411269233,
+      "sem": 0.0034714409651686487,
+      "top1pct_recall": 0.804,
+      "delta_vs_whole": 0.06102580733442797,
+      "p_value": 4.106603511756134e-34,
+      "cohens_dz": 0.8218552229812115
+    },
+    {
+      "k": 10,
+      "budget": 30,
+      "arm": "bo_ucb_cluster",
+      "auc": 0.5937634894027854,
+      "sem": 0.003834635405182366,
+      "top1pct_recall": 0.402,
+      "delta_vs_whole": 0.0011542556102901447,
+      "p_value": 0.08315937982124792,
+      "cohens_dz": 0.015134824844181098
+    },
+    {
+      "k": 10,
+      "budget": 30,
+      "arm": "bo_best_cluster",
+      "auc": 0.6536350411269233,
+      "sem": 0.0034714409651686487,
+      "top1pct_recall": 0.804,
+      "delta_vs_whole": 0.06102580733442797,
+      "p_value": 4.106603511756134e-34,
+      "cohens_dz": 0.8218552229812115
+    }
+  ]
+}

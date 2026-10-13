@@ -1,0 +1,95 @@
+{
+  "family": "k02",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 12.4183454551287,
+  "baseline_auc_sem": 0.1042020710570793,
+  "bad_quantile": null,
+  "n_pool": 428,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.4524678470912306,
+      "delta_sem": 0.028338057481567522,
+      "n": 32,
+      "sem_multiple": 15.966791209508209,
+      "clears_bar": true,
+      "flag": "16.0 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.11443223750875092,
+      "delta_sem": 0.0483276776258556,
+      "n": 32,
+      "sem_multiple": 2.3678406066739894,
+      "clears_bar": true,
+      "flag": "2.4 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": -0.018057077930769938,
+      "delta_sem": 0.051203390869057654,
+      "n": 32,
+      "sem_multiple": 0.352653947800982,
+      "clears_bar": false,
+      "flag": "0.4 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": -0.057654892176985606,
+      "delta_sem": 0.04832120533272216,
+      "n": 32,
+      "sem_multiple": 1.1931592306109726,
+      "clears_bar": false,
+      "flag": "1.2 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.47052492502200055,
+    "sem": 0.0585220705231635,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.03644710026480807,
+  "rho_eff_mean": 0.06555689929836771,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.1875,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.15625
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "EGFR",
+      "GSK3B",
+      "NEK2",
+      "PBK"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_egfr-gsk3b-nek2-pbk.csv",
+    "n_block": 428,
+    "n_pool": 428,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

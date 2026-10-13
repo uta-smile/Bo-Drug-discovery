@@ -1,0 +1,38 @@
+k08: 430 compounds x 4 targets, budget 95, batch 10, H=50 (0s)
+      DAPK3: success set = top-10
+    DAPK3    done
+      SRC: success set = top-10
+    SRC      done
+      PIM3: success set = top-10
+    PIM3     done
+      TSSK2: success set = top-10
+    TSSK2    done
+    [audit] 1,280 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.88 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    DAPK3                38.8%   42.8%          +4.1%
+    SRC                  67.8%   63.7%          -4.1%
+    PIM3                 49.1%   47.5%          -1.6%
+    TSSK2                43.4%   47.5%          +4.1%
+    2/4 targets improve; spread -4.1% to +4.1%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl              12.9476       49.8%                
+    mt               12.9424       50.4%   -0.0051+-0.0167
+
+    verdict:
+      no campaign gain: -0.0051+-0.0167 AUC. The regression improvement in
+      sections 18-19 does not convert into finding the top faster.
+      That is the section 4 pattern again: an offline proxy moving
+      without the campaign outcome moving.
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\xfam_transfer\k08.json  (64s total)

@@ -1,0 +1,38 @@
+﻿
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+
+[0c] random subsample to 566 compounds (size control for --qed-min)
+jak: 566 compounds x 4 targets, budget 187, batch 10, H=50 (0s)
+    JAK1     done
+    JAK2     done
+    JAK3     done
+    TYK2     done
+
+    history reach ratio 0.90 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    JAK1                 57.5%   70.0%         +12.5%
+    JAK2                 58.7%   58.7%          +0.0%
+    JAK3                 76.2%   73.8%          -2.5%
+    TYK2                 85.0%   85.0%          +0.0%
+    1/4 targets improve; spread -2.5% to +12.5%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               8.6543       69.4%                
+    mt                8.7261       71.9%   +0.0718+-0.0183
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.0718 AUC
+      over single-task BO (69% of campaigns better).
+
+wrote results\sub_jak_187.json  (54s total)

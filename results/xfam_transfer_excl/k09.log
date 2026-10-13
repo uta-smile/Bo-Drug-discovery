@@ -1,0 +1,35 @@
+k09: 430 compounds x 4 targets, budget 95, batch 10, H=50 (0s)
+      MAP4K4: success set = top-10
+    MAP4K4   done
+      IGF1R: success set = top-10
+    IGF1R    done
+      CDK5: success set = top-10
+    CDK5     done
+      PLK3: success set = top-10
+    PLK3     done
+    [audit] 1,536 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.87 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    MAP4K4               51.9%   52.8%          +0.9%
+    IGF1R                65.0%   66.9%          +1.9%
+    CDK5                 40.9%   48.4%          +7.5%
+    PLK3                 43.1%   46.2%          +3.1%
+    4/4 targets improve; spread +0.9% to +7.5%
+    -> unanimous: the self-check is informative on this panel.
+    stl              12.9676       50.2%                
+    mt               13.0074       53.6%   +0.0398+-0.0158
+
+    verdict:
+      not established at this power: +0.0398+-0.0158 AUC, which is 2.5 SEM and
+      the bar here is 3. The point estimate is positive, so this
+      is a cell to re-run with more repeats, not a null.
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\xfam_transfer_excl\k09.json  (63s total)

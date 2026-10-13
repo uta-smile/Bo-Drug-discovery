@@ -1,0 +1,23 @@
+{
+  "target_chembl_id": "CHEMBL2971",
+  "standard_type": "IC50",
+  "assay_type": "B",
+  "selection": "whole-target",
+  "core": null,
+  "scaffolds": [],
+  "generic_scaffold": false,
+  "n_compounds": 9143,
+  "value_column": "pchembl_value",
+  "value_units": "pChEMBL (-log10 M); higher is more potent",
+  "max_sem": 0.5,
+  "max_replicate_spread": null,
+  "assay_chembl_id": null,
+  "document_chembl_id": null,
+  "aggregation": "median of ChEMBL pchembl_value across retained measurements",
+  "value_min": 3.84,
+  "value_max": 10.97,
+  "value_median": 7.26,
+  "standardizer": "v1:salt=1:neut=0:stereo=1",
+  "built": "2026-09-26 14:28:57",
+  "source": "ChEMBL REST API"
+}

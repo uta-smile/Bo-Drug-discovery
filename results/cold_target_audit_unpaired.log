@@ -1,0 +1,40 @@
+﻿loading data\dockstring\dockstring-dataset.tsv ...
+loaded 260,148 rows, 260,053 complete, pool 2,000, 1s
+fingerprints + gram in 1s
+
+[C] cold target with historical auxiliaries  (4 targets, aux=LCK+SRC+ABL1, 10 repeats)
+    H is free -- already-collected data, not budget. Contrast check A.
+    pairing: evaluation set varies with H, primary training rows drawn independently per H
+    auxiliary region: same  (same chemical space as the primary, as DOCKSTRING gives it)
+    JAK2      done
+    CDK2      done
+    EGFR      done
+    MET       done
+
+    Spearman on held-out rows, mean over 4 targets
+       n   H=0 (stl)        H=5       H=10       H=25       H=50      H=100      H=200
+    ----------------------------------------------------------------------------------
+      10       0.180      0.273      0.316      0.436      0.515      0.578      0.632
+      20       0.281      0.322      0.368      0.439      0.518      0.583      0.627
+      80       0.470      0.484      0.496      0.539      0.574      0.607      0.642
+
+    gain over the single-task GP (+ = joint modelling helps)
+       n               H=5              H=10              H=25              H=50             H=100             H=200
+    ----------------------------------------------------------------------------------------------------------------
+      10      +0.093+-0.014      +0.137+-0.014      +0.256+-0.010      +0.336+-0.011      +0.399+-0.018      +0.453+-0.015
+      20      +0.041+-0.016      +0.086+-0.018      +0.157+-0.023      +0.237+-0.022      +0.302+-0.022      +0.346+-0.022
+      80      +0.014+-0.002      +0.026+-0.012      +0.070+-0.005      +0.104+-0.007      +0.137+-0.010      +0.172+-0.011
+
+    verdict:
+      n=10  breaks even at H=5 per auxiliary; best +0.453 at H=200 (4/4 targets).
+      n=20  breaks even at H=10 per auxiliary; best +0.346 at H=200 (4/4 targets).
+      n=80  breaks even at H=5 per auxiliary; best +0.172 at H=200 (4/4 targets).
+      Transfer pays when the auxiliary data already exists and is not
+      charged to the campaign. That is the H1 worth testing, and it is
+      a different claim from the one check A rejects.
+    [audit] [C] 5,056 checks over 840 cells
+    [audit] 2 PROBLEM(S):
+      - [C] evaluation rows: differs across arms in 120 of 120 cells -- the comparison is not paired
+      - [C] primary training rows: differs across arms in 120 of 120 cells -- the comparison is not paired
+
+wrote results\cold_target_audit_unpaired.json  (147s total)

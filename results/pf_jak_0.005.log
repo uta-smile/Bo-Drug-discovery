@@ -1,0 +1,44 @@
+
+[0] censoring filter (values held by >0% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33, 7.26 x20, 7.96 x15, 4.30 x15, 8.30 x15, 7.89 x15, 7.72 x14, 7.77 x13, 7.68 x12, 7.92 x12, 8.46 x12, 8.27 x12, 7.80 x11, 8.48 x11, 8.47 x11, 8.49 x10, 7.54 x10, 7.82 x10, 8.77 x10, 8.70 x10, 7.66 x10, 8.00 x10, 8.28 x9, 8.54 x9, 8.40 x9, 8.72 x9, 8.37 x9, 8.22 x9, 7.74 x9, 9.00 x8, 8.68 x8, 7.60 x8, 7.00 x8, 7.62 x8, 8.57 x8, 8.39 x8, 8.89 x8
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44, 6.00 x25, 8.00 x17, 6.96 x14, 7.49 x13, 6.82 x12, 7.82 x12, 7.80 x12, 7.89 x11, 6.77 x10, 7.92 x10, 7.85 x10, 6.89 x10, 7.51 x10, 7.00 x10, 8.30 x10, 6.72 x10, 7.77 x9, 4.30 x9, 7.62 x9, 6.70 x9, 7.52 x9, 7.74 x8, 7.64 x8, 7.57 x8, 6.92 x8, 5.26 x8, 7.96 x8, 7.68 x8, 7.72 x8, 7.54 x8, 7.70 x8, 7.46 x8
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187, 7.26 x14, 4.30 x12, 8.26 x10, 6.55 x10, 6.30 x8, 6.77 x8, 6.66 x8
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46, 6.82 x18, 6.96 x18, 4.30 x15, 6.85 x13, 6.51 x12, 6.70 x11, 7.49 x10, 6.48 x10, 6.80 x10, 6.92 x9, 6.74 x9, 6.89 x9, 6.68 x9, 6.43 x9, 7.00 x9, 7.15 x8, 8.00 x8, 6.77 x8, 7.21 x8, 6.49 x8, 6.54 x8
+    kept 417 of 1,563 compounds (26.7%)
+jak: 417 compounds x 4 targets, budget 92, batch 10, H=50 (0s)
+      JAK1: success set = top-10
+    JAK1     done
+      JAK2: success set = top-10
+    JAK2     done
+      JAK3: success set = top-10
+    JAK3     done
+      TYK2: success set = top-10
+    TYK2     done
+    [audit] 576 checks over 32 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.94 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    JAK1                 32.5%   48.8%         +16.3%
+    JAK2                 41.2%   63.7%         +22.5%
+    JAK3                 50.0%   68.8%         +18.8%
+    TYK2                 77.5%   81.2%          +3.7%
+    4/4 targets improve; spread +3.7% to +22.5%
+    -> unanimous: the self-check is informative on this panel.
+    stl               8.4898       50.3%                
+    mt                8.5847       65.6%   +0.0950+-0.0235
+    pooled            8.5239       60.6%   +0.0341+-0.0356
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.0950 AUC
+      over single-task BO (69% of campaigns better).
+      But pooling matches it -- on this block the campaign gain
+      does not require modelling the task structure.
+
+wrote results\pf_jak_0.005.json  (19s total)

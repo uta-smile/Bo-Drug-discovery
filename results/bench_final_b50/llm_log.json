@@ -1,0 +1,386 @@
+[
+  {
+    "round": 0,
+    "seed": 0,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a terminal alkyne and a methoxy group, likely acting as a bioisostere for the observed high-potency alkynyl-methoxy motifs.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[16] terminal alkyne",
+      "require[2] methoxy"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX2]#[CH]",
+        "[OX2][CH3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 1,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates strongly with the presence of a Michael acceptor (acrylamide) moiety, which appears in the top 3 most potent compounds (8.38, 7.87, 7.55) and is absent in the least potent ones. The remaining high-potency compounds likely rely on specific scaffold features that are less common, but the acrylamide is the most consistent driver of activity in this series.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 2,
+    "n_observations": 10,
+    "hypothesis": "The top 4 compounds share a specific fused bicyclic aromatic core (specifically a phenyl-pyrimidine or similar fused system) attached to the pyrimidine core, whereas the lower potency compounds lack this feature or have a different substitution pattern. Compounds 1, 2, 3, and 4 all contain a fused bicyclic aromatic system (entries [6], [18], [20], [23] respectively), while compounds 5-10 do not. This suggests the fused ring is critical for potency.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 3,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a specific ether linkage on the pyrazolo-pyridine core, specifically the oxetane-containing motif found in the most potent analogs (8.75 and 8.37), while excluding the sulfone and simple methoxy variants which show significantly lower activity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[18] c1ccc(Nc2ncnc3cc(O[C@H]4CCOC4)ccc23)cc1",
+      "require[2] methoxy",
+      "forbid[19] sulfone"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "c1ccc(Nc2ncnc3cc(O[C@H]4CCOC4)ccc23)cc1",
+        "[OX2][CH3]"
+      ],
+      "forbid": [
+        "[SX4](=[OX1])(=[OX1])([#6])[#6]"
+      ]
+    }
+  },
+  {
+    "round": 0,
+    "seed": 4,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a Michael acceptor (acrylamide) at the N-terminus, which likely facilitates covalent binding or specific conformational locking, as evidenced by the two highest potency compounds (8.90 and 8.89) containing this feature while the rest of the series drops significantly in activity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 5,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a methoxy group and a fluorine atom, which are both present in the top 3 most potent compounds (11.00, 9.29, 8.80) and absent in the least potent ones. The top hit (11.00) has both, the second (9.29) has both, and the third (8.80) has both. Compounds lacking either or both drop significantly in potency. We should restrict the library to compounds containing both features.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[2] methoxy",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[OX2][CH3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 6,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a fluorine atom on the aryl ring, which appears in the top 3 most potent compounds (9.19, 8.15, 7.56) and is absent in the least potent ones. Compounds lacking fluorine show a sharp drop in activity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 7,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a specific ether linkage connecting the pyrazole core to a flexible alkyl chain, which appears to be a key pharmacophore for the top hits (pchembl > 8.0). Compounds lacking this specific ether motif show a sharp drop in activity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[8] c1ccc(COc2ccc(Nc3ncnc4ccccc34)cc2)cc1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "c1ccc(COc2ccc(Nc3ncnc4ccccc34)cc2)cc1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 8,
+    "n_observations": 10,
+    "hypothesis": "The most potent compounds in this series (pchembl > 8.0) consistently feature a Michael acceptor (acrylamide) moiety attached to the aniline nitrogen, which likely facilitates covalent binding or specific conformational locking. Compounds lacking this feature (e.g., simple amides, esters, or ureas) show significantly lower potency (pchembl < 7.5).",
+    "confidence": 0.95,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 9,
+    "n_observations": 10,
+    "hypothesis": "The most potent compounds in this series appear to share a specific scaffold involving a fused bicyclic aromatic system (likely a pyrazolo[3,4-d]pyrimidine or similar core) linked to an acrylamide Michael acceptor, as evidenced by the high potency of the top hits (8.44, 7.58, 6.94) which contain both features, while lower potency compounds lack one or both. The top hit (8.44) contains a fused bicyclic aromatic system and a Michael acceptor. The second hit (7.58) lacks the fused bicyclic system but has the Michael acceptor. The third hit (6.94) lacks the Michael acceptor but has the fused bicyclic system. However, the drop in potency is significant when either feature is removed or when the scaffold changes to simple monocycles. The most potent compounds seem to require the fused bicyclic aromatic core combined with the Michael acceptor functionality to achieve high affinity. Therefore, we should constrain the library to compounds containing both the fused bicyclic aromatic system and the Michael acceptor.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[6] fused bicyclic aromatic",
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[a]1[a][a]2[a][a][a][a][a]2[a]1",
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 10,
+    "n_observations": 10,
+    "hypothesis": "The most potent compounds in this series (pchembl > 7.0) consistently feature a specific acrylamide Michael acceptor motif (C=CC(=O)N-) attached to the core scaffold, which is absent in the lower potency analogues (e.g., the compound with pchembl 5.36 lacks this feature, while the top hits possess it). This structural element likely drives covalent binding or essential conformational alignment.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 11,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a specific scaffold motif found in the top 4 most potent compounds (pchembl > 8.0), which appears to be a piperidine-based acrylamide conjugate. Compounds lacking this specific arrangement show a sharp drop in activity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)",
+      "require[4] C1CCNCC1"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]",
+        "C1CCNCC1"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 12,
+    "n_observations": 10,
+    "hypothesis": "The top 3 compounds share a specific Michael acceptor (acrylamide) motif at the N-terminus (or attached to the amine) which correlates with the highest potency (9.05, 8.40, 8.22). Compounds lacking this feature drop significantly in potency (below 7.75). The remaining compounds with lower potency likely lack this specific electrophilic trap or have different substitution patterns on the core that reduce binding affinity. We should prioritize compounds containing this acrylamide functionality.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 13,
+    "n_observations": 10,
+    "hypothesis": "The data suggests that the Michael acceptor (acrylamide) moiety is critical for high potency, as the top 4 compounds (pchembl > 8.4) all contain it, while the next tier drops significantly. Compounds lacking this feature generally fall below 7.5. We should prioritize exploring the subset of the library containing this reactive group.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 14,
+    "n_observations": 10,
+    "hypothesis": "The top 4 compounds (pchembl > 8.4) share a specific acrylamide Michael acceptor motif at the C-terminus (or equivalent position) which appears to be critical for potency, while the lower potency compounds lack this feature or have different terminal groups. The top compounds also consistently feature a fluorine atom on the aniline ring, which is present in the top 3 but missing in the top 4; however, the Michael acceptor is the more distinct and potent-driving feature separating the top tier from the rest. We should prioritize compounds containing the Michael acceptor.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 15,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates strongly with the presence of a methoxy group and a fluorine atom, which are present in the top 4 most potent compounds (9.11, 9.03, 9.02, 8.05). Compounds lacking these features drop significantly in activity (e.g., 7.60, 7.57, 7.39). The top hit (9.11) also contains a specific ether linkage (OCCOCC) but this is less universal than the halogen/methoxy pattern. We should prioritize compounds containing both methoxy and fluorine to capture the high-potency cluster while excluding the lower-potency analogs that lack one or both.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[2] methoxy",
+      "require[1] fluorine"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[OX2][CH3]",
+        "[F]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 16,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates with the presence of a specific fluorinated aryl group and a secondary amide linkage, suggesting these are key pharmacophores for high affinity.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[1] fluorine",
+      "require[0] secondary amide"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[F]",
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 17,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates strongly with the presence of a fluorine atom and a Michael acceptor (acrylamide) moiety. The top 3 compounds contain both features, while the next tier (pchembl 8.0-8.5) contains fluorine but lacks the acrylamide, suggesting the acrylamide is the critical driver for high potency (>8.5) when combined with fluorination.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[1] fluorine",
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[F]",
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 18,
+    "n_observations": 10,
+    "hypothesis": "The top 4 compounds share a specific acyclic amide linkage (Michael acceptor/acrylamide) attached to the core, while the next tier (compounds 5-7) uses a saturated alkyl amide. Compounds 8-10 lack this amide functionality entirely and show significantly lower potency. The presence of the electron-deficient alkene conjugated to the amide nitrogen appears critical for potency in this series.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[3] michael acceptor (acrylamide)"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[CX3]=[CX3][CX3](=[OX1])[NX3]"
+      ],
+      "forbid": []
+    }
+  },
+  {
+    "round": 0,
+    "seed": 19,
+    "n_observations": 10,
+    "hypothesis": "Potency correlates strongly with the presence of a fluorine atom and a secondary amide, while excluding compounds with terminal alkynes or specific ether linkages that appear in low-potency outliers.",
+    "confidence": 0.85,
+    "chosen": [
+      "require[1] fluorine",
+      "require[0] secondary amide",
+      "forbid[16] terminal alkyne"
+    ],
+    "dropped": [],
+    "constraint": {
+      "kind": "substructure",
+      "require": [
+        "[F]",
+        "[NX3][CX3](=[OX1])"
+      ],
+      "forbid": [
+        "[CX2]#[CH]"
+      ]
+    }
+  }
+]

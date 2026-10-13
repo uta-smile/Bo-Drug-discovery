@@ -1,0 +1,91 @@
+{
+  "family": "kiba_cdk5",
+  "arm": "mt",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "n_pool": 899,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.42995508689685347,
+      "delta_sem": 0.03181239444940588,
+      "n": 32,
+      "sem_multiple": 13.51533244630956,
+      "clears_bar": true,
+      "flag": "13.5 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.22134194649402666,
+      "delta_sem": 0.06905752315647758,
+      "n": 32,
+      "sem_multiple": 3.2051822361553213,
+      "clears_bar": true,
+      "flag": "3.2 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.14313213711748746,
+      "delta_sem": 0.048643072253630786,
+      "n": 32,
+      "sem_multiple": 2.942497882764876,
+      "clears_bar": true,
+      "flag": "2.9 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.05456733344798642,
+      "delta_sem": 0.07962264275389415,
+      "n": 32,
+      "sem_multiple": 0.6853243193226924,
+      "clears_bar": false,
+      "flag": "0.7 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.286822949779366,
+    "sem": 0.05812208632591001,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "aux_quality": 0.2,
+  "rho_eff": 0.0819256851311835,
+  "rho_eff_mean": 0.08711583722562267,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.1875,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.03125
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": null,
+    "seed_pool": "random",
+    "targets": [
+      "PIM1",
+      "PRKACA",
+      "CDK5",
+      "DYRK1A"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_cdk5-dyrk1a-pim1-prkaca.csv",
+    "n_block": 899,
+    "n_pool": 899,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

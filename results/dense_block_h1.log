@@ -1,0 +1,63 @@
+﻿block from data\bindingdb\block_jak1-jak2-jak3-tyk2.csv: 1,563 compounds x 4 targets (0s)
+
+[1] the block: 1,563 compounds x 4 targets = 6,252 cells, fully observed
+    JAK1   pIC50 4.30..10.05  median 7.42  sd 1.21
+    JAK2   pIC50 4.26..9.52  median 7.19  sd 0.90
+    JAK3   pIC50 3.82..9.90  median 6.10  sd 0.98
+    TYK2   pIC50 4.30..9.70  median 6.62  sd 0.87
+
+    empirical task correlation (Pearson on the same compounds):
+               JAK1    JAK2    JAK3    TYK2
+    JAK1         --    0.71    0.59    0.42
+    JAK2       0.71      --    0.54    0.62
+    JAK3       0.59    0.54      --    0.24
+    TYK2       0.42    0.62    0.24      --
+    off-diagonal: min +0.24  median +0.57  max +0.71
+
+    pool nearest-neighbour similarity 0.798  (ChEMBL libraries 0.64-0.71, DOCKSTRING 0.38)
+    auxiliary reach ratio 1.00 by construction: the tasks share the molecules.
+
+[3] H1-cold -- primary charged n, family carries H free (10 repeats)
+    n=10 done
+    n=20 done
+    n=40 done
+    n=80 done
+
+    Spearman on held-out compounds
+       n   H=0 (stl)        H=5       H=10       H=25       H=50      H=100      H=200
+    ----------------------------------------------------------------------------------
+      10       0.329      0.368      0.366      0.396      0.469      0.505      0.533
+      20       0.442      0.451      0.455      0.490      0.542      0.575      0.593
+      40       0.550      0.562      0.531      0.570      0.599      0.615      0.639
+      80       0.630      0.630      0.626      0.641      0.646      0.667      0.687
+
+    gain over the single-task GP
+       n               H=5              H=10              H=25              H=50             H=100             H=200
+    ----------------------------------------------------------------------------------------------------------------
+      10      +0.039+-0.034      +0.038+-0.033      +0.067+-0.036      +0.140+-0.033      +0.176+-0.030      +0.204+-0.029
+      20      +0.009+-0.024      +0.013+-0.021      +0.048+-0.019      +0.101+-0.018      +0.133+-0.016      +0.151+-0.017
+      40      +0.012+-0.012      -0.019+-0.013      +0.020+-0.015      +0.050+-0.013      +0.065+-0.011      +0.089+-0.013
+      80      -0.001+-0.009      -0.004+-0.009      +0.011+-0.008      +0.016+-0.009      +0.037+-0.008      +0.057+-0.008
+
+    control: the same observations with the task structure discarded
+    (r fixed at 1, i.e. pool all four targets into one function)
+       n               H=5              H=10              H=25              H=50             H=100             H=200
+    ----------------------------------------------------------------------------------------------------------------
+      10      0.342 +0.026      0.352 +0.015      0.378 +0.018      0.401 +0.068      0.411 +0.094      0.447 +0.086
+      20      0.414 +0.038      0.411 +0.044      0.399 +0.092      0.409 +0.134      0.452 +0.123      0.447 +0.146
+      40      0.538 +0.023      0.492 +0.039      0.478 +0.091      0.476 +0.123      0.462 +0.152      0.469 +0.169
+      80      0.618 +0.012      0.602 +0.025      0.571 +0.070      0.538 +0.108      0.519 +0.148      0.512 +0.175
+        pooled   fitted-popooled   fitted-popooled   fitted-popooled   fitted-popooled   fitted-popooled   fitted-po
+
+    task correlation selected: median 0.60 (10th 0.20, 90th 0.99)
+
+    verdict:
+      n=10  breaks even at H=50; best +0.204 at H=200 (88% of runs positive).
+      n=20  breaks even at H=50; best +0.151 at H=200 (95% of runs positive).
+      n=40  breaks even at H=50; best +0.089 at H=200 (90% of runs positive).
+      n=80  breaks even at H=100; best +0.057 at H=200 (90% of runs positive).
+      H1-cold HOLDS on measured data, at every budget, on a block
+      where chemical reach cannot be the explanation. This is the
+      first support for any form of H1 outside docking scores.
+
+wrote results\dense_block_h1.json  (206s total)

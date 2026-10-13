@@ -1,0 +1,43 @@
+
+[0] censoring filter (values held by >10% of a column)
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    kept 982 of 1,563 compounds (62.8%)
+jak: 982 compounds x 4 targets, budget 216, batch 10, H=50 (1s)
+      JAK1: success set = top-10
+    JAK1     done
+      JAK2: success set = top-10
+    JAK2     done
+      JAK3: success set = top-10
+    JAK3     done
+      TYK2: success set = top-10
+    TYK2     done
+    [audit] 576 checks over 32 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.85 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    JAK1                 45.0%   62.5%         +17.5%
+    JAK2                 62.5%   66.2%          +3.7%
+    JAK3                 66.2%   58.7%          -7.5%
+    TYK2                 91.3%   91.3%          +0.0%
+    2/4 targets improve; spread -7.5% to +17.5%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               8.7468       66.3%                
+    mt                8.8332       69.7%   +0.0864+-0.0241
+    pooled            8.8134       69.7%   +0.0666+-0.0307
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.0864 AUC
+      over single-task BO (78% of campaigns better).
+      But pooling matches it -- on this block the campaign gain
+      does not require modelling the task structure.
+
+wrote results\pf_jak_0.10.json  (93s total)

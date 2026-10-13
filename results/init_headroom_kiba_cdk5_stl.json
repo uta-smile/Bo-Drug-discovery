@@ -1,0 +1,87 @@
+{
+  "family": "kiba_cdk5",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "n_pool": 899,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.5226917864653615,
+      "delta_sem": 0.027245832644591548,
+      "n": 32,
+      "sem_multiple": 19.18428382364445,
+      "clears_bar": true,
+      "flag": "19.2 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.25918040840863604,
+      "delta_sem": 0.07412242311481683,
+      "n": 32,
+      "sem_multiple": 3.4966532058343724,
+      "clears_bar": true,
+      "flag": "3.5 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.3471836149526524,
+      "delta_sem": 0.053997465167572804,
+      "n": 32,
+      "sem_multiple": 6.429628018189772,
+      "clears_bar": true,
+      "flag": "6.4 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.26493334690976045,
+      "delta_sem": 0.06742158929173758,
+      "n": 32,
+      "sem_multiple": 3.9295031412471855,
+      "clears_bar": true,
+      "flag": "3.9 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.17550817151270914,
+    "sem": 0.06048191168457168,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "top_k_seeded": {
+    "maxmin": 0.1875,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.15625
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": null,
+    "seed_pool": "random",
+    "targets": [
+      "PIM1",
+      "PRKACA",
+      "CDK5",
+      "DYRK1A"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_cdk5-dyrk1a-pim1-prkaca.csv",
+    "n_block": 899,
+    "n_pool": 899,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

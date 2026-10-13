@@ -1,0 +1,87 @@
+{
+  "family": "k04",
+  "arm": "mt",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 50,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "n_pool": 889,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.3865444438367848,
+      "delta_sem": 0.033063172475187454,
+      "n": 32,
+      "sem_multiple": 11.691087542396922,
+      "clears_bar": true,
+      "flag": "11.7 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": 0.037196227078337085,
+      "delta_sem": 0.045874966525669,
+      "n": 32,
+      "sem_multiple": 0.8108175306792695,
+      "clears_bar": false,
+      "flag": "0.8 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": 0.21888663941758751,
+      "delta_sem": 0.0567274938800333,
+      "n": 32,
+      "sem_multiple": 3.858563536765552,
+      "clears_bar": true,
+      "flag": "3.9 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.2468660962458839,
+      "delta_sem": 0.056598527513976156,
+      "n": 32,
+      "sem_multiple": 4.361705279080344,
+      "clears_bar": true,
+      "flag": "4.4 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.13967834759090092,
+    "sem": 0.06554820127871022,
+    "best_free": "aux_scaffold_nn",
+    "inert": false
+  },
+  "top_k_seeded": {
+    "maxmin": 0.21875,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.28125
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/dense_blocks_kiba.json",
+    "seed_pool": "random",
+    "targets": [
+      "GSK3B",
+      "PAK4",
+      "PIM1",
+      "CDK5"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_cdk5-gsk3b-pak4-pim1.csv",
+    "n_block": 889,
+    "n_pool": 889,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

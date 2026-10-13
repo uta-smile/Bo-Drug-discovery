@@ -1,0 +1,46 @@
+
+[0] censoring filter (values held by >1% of a column)
+    CYP3A4   pile-ups: 5.00 x317, 4.52 x122, 4.30 x90, 5.30 x68, 4.00 x64, 4.70 x62, 4.40 x41, 4.60 x38, 5.15 x19, 6.00 x18, 5.12 x16
+    CYP2D6   pile-ups: 5.00 x399, 4.52 x136, 4.30 x88, 4.00 x79, 4.70 x76, 5.30 x62, 4.40 x57, 4.60 x35, 6.00 x17
+    CYP2C9   pile-ups: 5.00 x307, 4.52 x119, 5.30 x97, 4.30 x87, 4.70 x67, 4.60 x57, 4.00 x50, 4.40 x41, 5.52 x19, 4.77 x19, 6.00 x16, 5.12 x15
+    CYP2C19  pile-ups: 5.00 x325, 4.52 x119, 4.30 x101, 4.70 x76, 5.30 x72, 4.00 x50, 4.40 x46, 4.60 x38, 5.12 x19, 4.77 x18, 6.00 x17
+    kept 285 of 1,472 compounds (19.4%)
+cyp: 285 compounds x 4 targets, budget 63, batch 10, H=50 (0s)
+      CYP3A4: success set = top-10
+    CYP3A4   done
+      CYP2D6: success set = top-10
+    CYP2D6   done
+      CYP2C9: success set = top-10
+    CYP2C9   done
+      CYP2C19: success set = top-10
+    CYP2C19  done
+    [audit] 576 checks over 32 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 1.02 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    CYP3A4               20.0%   51.2%         +31.2%
+    CYP2D6               43.8%   41.2%          -2.5%
+    CYP2C9               33.8%   52.5%         +18.8%
+    CYP2C19              57.5%   52.5%          -5.0%
+    2/4 targets improve; spread -5.0% to +31.2%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               6.1226       38.8%                
+    mt                6.2524       49.4%   +0.1298+-0.0414
+    pooled            6.2715       57.8%   +0.1489+-0.0444
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.1298 AUC
+      over single-task BO (72% of campaigns better).
+      But pooling matches it -- on this block the campaign gain
+      does not require modelling the task structure.
+
+wrote results\pf_cyp_0.01.json  (12s total)

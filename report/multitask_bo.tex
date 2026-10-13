@@ -1,0 +1,1513 @@
+% ===========================================================================
+% multitask_bo.tex -- the running technical report.
+%
+% This document keeps every experiment in the order it was run, including the
+% ones that failed and the two conclusions the null control reversed. It is
+% deliberately NOT reorganised: the order is part of the evidence, because
+% several claims here are only interpretable next to the check that came after
+% them.
+%
+% The same work rewritten for a reader who has not followed the project --
+% abstract, introduction, related work, overview, method, setup, results,
+% discussion, conclusion -- is report/paper.tex. That document also carries the
+% later KIBA material (history-seeded initial designs, the coupling ladder, the
+% bad-start comparison) which is not in this one.
+% ===========================================================================
+
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{caption}
+
+\captionsetup{font=small}
+\newcommand{\stl}{\textsc{stl}}
+\newcommand{\mt}{\textsc{mt}}
+\newcommand{\pooled}{\textsc{pooled}}
+\newcommand{\simarm}{\textsc{sim}}
+\newcommand{\rnd}{\textsc{rand}}
+
+\title{When Does Sharing Data Between Related Targets Help\\
+       Machine-Guided Compound Selection?}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+Testing compounds is expensive, so programmes test a few at a time and use a
+model to choose the next few. A new protein target starts with no data, while
+related targets often have years of it, so sharing data between them is an
+obvious thing to try. We ran that comparison carefully on two measured protein
+panels and found that the usual way of running it can produce a gain that is not
+there.
+
+\paragraph{The check.} Give the sharing model an extra data column that is
+\textbf{pure noise}. It carries no information, so any systematic gain cannot be information
+transfer. It produced
+up to $\mathbf{+14.7}$ points of extra recovery of the best compounds. The predicted values do not explain the gain: the model correctly judges the
+noise column to be weakly related and its predictions get slightly worse. The cause is not the extra data as such. The model's signal scale is estimated
+across all columns at once, and a weak between-target correlation can be fitted
+from a finite sample, so adding an uninformative column changes how much
+uncertainty the model reports even when its predictions are unchanged to
+fourteen decimal places. Expected improvement reads that uncertainty, and
+therefore picks different compounds. This check reversed two of our own
+conclusions, one of which had already passed five other checks.
+
+\paragraph{It depends on the picking rule.} Of the three rules we tried, only
+expected improvement lets a noise column \emph{gain} recovery. Under the other two the null effect was neutral or negative rather than
+spuriously positive. Both directions are distortions of a comparison that should
+show no systematic informational benefit; only a positive one manufactures
+apparent transfer. The
+real effect behaves the same way: on one panel, sharing data is worth $+7.2$
+points under one rule, $+16.2$ under another, and nothing at all under a third.
+No two rules agree on both panels about whether sharing helps.
+
+\paragraph{What is actually worth doing.} Interpreted against the matched null-auxiliary control,
+sharing data between targets is worth $+7$ to $+14$ points on these two
+panels, when the old data was already paid for and was measured on the same
+compounds. The gains were largest and most consistent around $22$--$33\%$
+library coverage. In one campaign-matching calculation, roughly five historical
+measurements on related targets were needed to replace one measurement on the
+target of interest, so the result is most attractive when that data already
+exists. By
+contrast, simply changing \emph{which number the model predicts} --- a
+selectivity score instead of raw potency --- is worth $+39.7$ points at the same
+cost on the same data, with no sharing at all. The choice of what to optimise produced one of the largest effects we measured.
+
+We also list eight things we expected to be true that were not, and two data
+problems in widely used public benchmarks. Everything here is measured by
+replaying published data; no compound was made or tested for this work.
+\end{abstract}
+
+\section{Motivation}
+
+A campaign against a new target begins with no data on it, a library of
+available compounds, and a budget of a few hundred assays. BO fits that: fit a
+surrogate to what is measured, pick the next batch by an acquisition function,
+repeat. Targets rarely arrive alone --- a kinase programme usually holds years
+of assay data on related kinases --- so modelling them jointly is an obvious
+thing to try, and multi-task Gaussian processes are the obvious way to try it.
+
+Evaluating that idea requires comparing two surrogates under a fixed
+acquisition function, and this is where the problem lies. Expected improvement
+reads the model's prediction \emph{and} the model's uncertainty, and that
+uncertainty is not invariant to the auxiliary dataset. The signal scale is
+estimated across all columns at once, so adding columns moves it in either
+direction, and a weak between-target correlation can be fitted from a finite
+sample. A variance-sensitive selection rule then behaves differently for
+reasons unrelated to what the model has learned. On our
+panels that effect alone is worth up to $14.7$ recall points --- larger than the
+transfer effect being measured.
+
+The control that detects this is cheap: give the multi-task arm an auxiliary
+that is pure noise and test whether it ties the single-task arm. On our
+panels it does not always tie, which is the result. We did not find it
+in the multi-task molecular BO literature, we did not run it ourselves for most
+of this project, and running it reversed two of our conclusions. We therefore
+report it first (\S\ref{sec:null}) and interpret every later effect size
+against the matched null-auxiliary control.
+
+With the control in place, the benchmark still has a positive result, but not
+the one we set out to find. Objective specification produced one of the
+largest effects we measured, and in the selectivity experiment it mattered more
+than joint versus single-target modelling. We organise the remainder around the decisions a campaign
+makes, each with what it is worth and what it costs.
+
+\section{Related work}
+\label{sec:related}
+
+\paragraph{Retrospective evaluation is the norm.} Chaudhry et al.~\cite{chaudhry2026practical} benchmark
+foundation-model-driven BO across 61 regression tasks spanning proteins, DNA,
+RNA and small molecules, entirely on established retrospective benchmarks. Dang
+et al.\ (CheapVS) screen a 100{,}000-molecule library with a docking oracle and
+validate by recovering known drugs --- 16/37 for EGFR and 37/58 for DRD2 ---
+rather than by new measurement. We adopt the same frame and state its limits
+explicitly (\S\ref{sec:limitations}).
+
+\paragraph{Prospective work sets the calibration.} Where campaigns do reach the
+bench, the reported quantity is hit-rate enrichment rather than top-$k$ recall.
+ChemScreener~\cite{chemscreener2026} raised a WDR5 hit rate from $0.49\%$ (primary HTS) to $5.91\%$ over
+five iterative HTRF rounds; a structure-based deep-learning pipeline with an
+automated lab~\cite{irak1_2024} recovered $23.8\%$ of IRAK1 hits within the top $1\%$ of ranked
+compounds; BATCHIE~\cite{batchie2023} performs Bayesian active learning for combination screens on
+cell lines. Our single-task arm recovers $27$--$38\%$ of the top-10 on panels of
+a few hundred compounds, which is not the same metric and not a comparable
+number: our libraries are enriched in actives by construction.
+
+\paragraph{The surrogate is moving away from GPs.} Chaudhry et al.~\cite{chaudhry2026practical} find GP
+surrogates consistently outperformed by neural alternatives with Thompson
+sampling, particularly MLP ensembles and variational Bayesian last layers, and
+report that smaller batch sizes reach peak performance faster and recover more
+elite candidates at equal total budget. We use an exact GP with EI throughout,
+which bounds the scope of our surrogate comparisons; \S\ref{sec:null} reports
+the noise control under Thompson sampling as well as EI, because the
+confound originates in the surrogate's uncertainty calibration and manifests
+through the acquisition, so its size depends on the interaction between the
+two.
+
+\paragraph{Objective specification over model choice.} CheapVS~\cite{dang2025cheapvs} obtains its
+efficiency by eliciting chemist preferences over trade-offs among affinity,
+molecular weight, lipophilicity and ADMET properties --- roughly 2{,}200
+pairwise comparisons and about ten hours of expert time per experiment --- not
+by a better surrogate. Our \S\ref{sec:selectivity} reaches the same conclusion
+with a fixed contrast that requires no human input, and we regard the agreement
+between the two as the stronger evidence.
+
+\paragraph{Leakage in affinity predictors.} Reported accuracies of co-folding
+affinity models on public benchmarks are contested~\cite{boltz2_prereview,leakage2026}: their training corpora
+overlap the public binding databases these benchmarks are drawn from, and
+splitting by protein-sequence identity is insufficient because homologous
+targets retain correlated binding profiles. We therefore do not evaluate such a
+model here (\S\ref{sec:next}).
+
+\section{Setup}
+
+Let $\mathcal{M}$ be a fixed library of $N$ existing compounds and
+$\mathcal{T} = \{t_0, \ldots, t_{T-1}\}$ a set of protein targets, with $t_0$
+the \emph{primary} target we wish to optimise. The oracle $y(m, t)$ returns a
+measured potency (pIC$_{50}$, higher is better).
+
+\paragraph{Budget is counted in cells.} A \emph{cell} is one
+$(\text{compound}, \text{target})$ measurement. This accounting is not
+incidental. A single-task campaign spends all $n$ cells on $t_0$; a multi-task
+campaign that measures every target on each compound affords only $n/T$
+compounds. Comparing the two at equal \emph{compounds} rather than equal cells
+hands the multi-task arm more data and makes any result it produces
+unfalsifiable. Several apparently positive multi-task results in our own early
+runs disappeared once this was enforced.
+
+\paragraph{Two hypotheses, not one.}
+\begin{description}[leftmargin=2em,style=nextline]
+  \item[budget-splitting] Given a fresh budget of $n$ cells, spreading them across
+    $t_0$ and its relatives beats spending all $n$ on $t_0$.
+  \item[borrowed-history] Given $n$ cells on $t_0$ \emph{plus} $H$ pre-existing
+    observations per relative that cost this campaign nothing, joint modelling
+    beats single-task modelling on $t_0$.
+\end{description}
+These differ in who paid for the auxiliary data. They have opposite answers.
+
+\subsection{Data}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lrrl}
+\toprule
+Dataset & Compounds & Targets & Label \\
+\midrule
+DOCKSTRING            & 260{,}148 & 58 & AutoDock Vina score (simulated) \\
+ChEMBL, separate libraries & 3{,}970  & 4 & pIC$_{50}$ (measured) \\
+BindingDB JAK block   & 1{,}563 $\to$ 904 & 4 & pIC$_{50}$ (measured, co-measured) \\
+BindingDB CYP block   & 1{,}472 $\to$ 335 & 4 & pIC$_{50}$ (measured, co-measured) \\
+\bottomrule
+\end{tabular}
+\caption{Datasets. Arrows denote the compound count after the censoring filter
+of \S\ref{sec:data-quality}. The ChEMBL libraries are per-target and share
+$0.1$--$1.7\%$ of their compounds pairwise; the BindingDB blocks are fully
+observed selectivity panels.}
+\label{tab:data}
+\end{table}
+
+DOCKSTRING is dense by construction and lets us ask questions that measured data
+cannot, at the cost of labels that are predicted rather than measured. The
+ChEMBL libraries represent the common situation of separate, independently
+assembled per-target datasets. The BindingDB blocks are \emph{selectivity
+panels}: the same compounds measured against every member of a protein family,
+which removes chemical-overlap confounds by construction.
+
+Empirical cross-target correlations, measured on shared compounds, are
+$+0.24$ to $+0.71$ (median $+0.57$) for the JAK block and $+0.43$ to $+0.68$
+(median $+0.54$) for the CYP block --- strictly inside the range where transfer
+is supposed to pay.
+
+\paragraph{Two problems in the source data.}
+\label{sec:data-quality}
+
+These affect anyone using the same sources and are reported so they are not
+rediscovered.
+
+\paragraph{The published DOCKSTRING objectives are dominated by a free
+descriptor.} Both objectives of Kubincov\'a \& Mobley carry a
+$-10\,(1 - \mathrm{QED})$ term. QED is computed from the SMILES: it costs
+nothing and is known for the whole library before any assay. That term has
+$2.0$--$2.7\times$ the spread of the entire docking component, and
+$\rho(\text{objective}, \text{QED term}) = +0.93$, while
+$\rho(\text{objective}, -\text{JAK2}) = +0.007$. Ranking by QED alone, with zero
+assays, recovers $48.1\%$ of the top-50; the best arm given 80 assays reaches
+$50.6\%$. Any top-$k$ number on these objectives must be reported against that
+floor. We therefore define potency variants with drug-likeness as a library
+admission filter ($\mathrm{QED} \ge 0.5$) rather than a score term, which
+reduces the free share from $95\%$ to $33\%$.
+
+\paragraph{The BindingDB CYP block is $77\%$ censored.} $21$--$27\%$ of each CYP
+column is exactly pIC$_{50} = 5.00$, with further spikes at $4.52$, $4.30$,
+$5.30$, $4.00$ --- the fixed doses $10$, $30$, $50$, $5$, $100\,\mu$M of a
+screening panel, stored as if they were potencies. $40.3\%$ of CYP compounds
+carry the identical value on all four targets (JAK: $3.5\%$). This inflates
+cross-target correlation, rails the fitted task correlation to 1, makes naive
+pooling appear optimal, and turns ``transfer'' into the copying of a constant.
+We filter compounds touching any value held by $>2\%$ of a column; $22.8\%$ of
+the CYP block and $57.8\%$ of the JAK block survive. All measured results below
+use the filtered blocks.
+
+\subsection{Methods}
+
+\paragraph{Surrogate.} Exact Gaussian process regression with a Tanimoto kernel
+over 2048-bit ECFP4 fingerprints. Hyperparameters (signal variance, noise ratio)
+are chosen by the model's own fit score over a fixed grid with an analytic
+inner solve, so fits are deterministic given a seed.
+
+\paragraph{The sharing model.} One kernel over compounds, scaled by a
+between-target correlation $r$:
+\[
+  k\big((m, a), (m', b)\big) \;=\; k_{\mathrm{Tanimoto}}(m, m')\; B[a, b],
+  \qquad
+  B \;=\; (1 - r)\,I + r\,\mathbf{1}\mathbf{1}^{\!\top},
+\]
+with $r$ selected by the model's own fit score over a grid that includes both
+endpoints. Targets are $z$-scored per task. $r = 0$ recovers independent
+single-task GPs exactly; $r = 1$ is naive pooling. Each task carries its own
+compound index, so blocked designs (all targets on the same compounds) and
+spread designs (each target on its own compounds) use identical machinery.
+
+\paragraph{Arms.}
+\begin{description}[leftmargin=2em,style=nextline,itemsep=0.2em]
+  \item[\rnd] Uniformly random selection. The floor.
+  \item[\simarm] Similarity search: rank the library by maximum Tanimoto
+    similarity to the most potent compounds known so far, from history and
+    measurements alike. This is what a medicinal chemist does without a model,
+    uses exactly the information \mt{} uses, and costs nothing.
+  \item[\stl] Single-task Tanimoto GP + acquisition. Standard BO.
+  \item[\pooled] The sharing model with $r$ forced to 1: the same observations
+    with the task structure discarded. Separates ``modelling the task structure
+    helped'' from ``more rows helped''.
+  \item[\mt] The sharing model with $r$ fitted from the data. The method under test.
+\end{description}
+
+\paragraph{Controls on the comparison itself.} Two, both added after the
+results below were first drafted and both of which changed them.
+
+\begin{description}[leftmargin=2em,style=nextline,itemsep=0.25em]
+  \item[Null-information auxiliary.] Each auxiliary column is replaced by a
+    surrogate variable with controlled rank correlation $\rho$ to its own
+    true values, mixing the $z$-scored column with independent noise. The
+    primary target, the history \emph{indices} and the success set are
+    untouched; only what the multi-task arm is \emph{told} about its relatives
+    degrades. $\rho = 1$ reproduces the measured panel exactly (verified: the
+    stored numbers are recovered to all printed digits), and $\rho = 0$ is the
+    noise control. A fresh null column is drawn for each (target, repeat,
+    auxiliary), giving 96 independent null realisations across the 32 campaigns
+    in each reported configuration rather than reusing one. Their achieved
+    correlations span $-0.12$ to $+0.12$ about zero.
+  \item[Variance-free acquisition.] Expected improvement reads mean and
+    variance. Ranking on the model's prediction alone (\texttt{greedy}) removes the
+    variance channel, so an arm difference that survives it cannot be an
+    artefact of variance calibration. \texttt{greedy} is a worse optimiser in
+    absolute terms and we use it as a diagnostic, not as a proposed method.
+\end{description}
+
+\paragraph{Campaign protocol.} Identical initial design ($n_{\text{init}} = 10$),
+budget, batch size and acquisition (expected improvement) across arms; only the
+surrogate differs. Historical auxiliary observations are fixed before the
+campaign and never grow --- they are history, not budget. Metrics: top-$k$
+recall ($k = 10$) and AUC of the top-$k$ trace. Reported over $8$--$15$ repeats
+$\times$ 4 held-out targets.
+
+\subsection{Statistical analysis}
+\label{sec:stats}
+
+\paragraph{Unit of replication.} A cell is one (held-out target, repeat)
+campaign. Each block has four held-out targets and we run eight repeats per
+target, so a cell count of 32 is \emph{eight repeats nested within four
+targets}, not 32 independent replicates. Repeats differ only in the random
+draws --- the initial design and the free history --- so they are algorithmic,
+not biological. Targets are the higher-level unit and there are four of them.
+
+\paragraph{Pairing.} Arms within a (target, repeat) share the initial design and
+the free history by construction, verified at runtime (\S\ref{sec:repro}).
+Comparisons between arms are therefore paired at the campaign level and we use a
+paired $t$-test on the per-campaign difference. Comparisons between
+\emph{configurations} that do not share draws --- a random against a
+scaffold-split seed, one library size against another --- are unpaired and use
+Welch's $t$-test.
+
+\paragraph{What these $p$-values do and do not establish.} Campaign-level
+tests quantify algorithmic variability --- sensitivity to the randomised initial
+design and history draw --- \emph{conditional on the four targets evaluated}.
+They are not population-level inference over unseen protein targets. Eight seeds
+on JAK1 do not make JAK1 eight targets. Generalisation across targets is
+assessed descriptively, through the four held-out-target effects and their sign
+consistency, because each block contains only four targets and no test can
+manufacture a larger biological $n$ from that.
+
+Accordingly we give the four target-level mean effects for every headline
+result rather than only a ``4/4 up'' count:
+
+\begin{center}\small
+\begin{tabular}{llrrrr}
+\toprule
+Result & & \multicolumn{4}{c}{per-target effect (recall points)} \\
+\midrule
+Sharing, JAK $22\%$   & & $+11.2$ & $+8.8$  & $+3.8$  & $+2.5$ \\
+Sharing, JAK $33\%$   & & $+15.0$ & $+7.5$  & $+5.0$  & $+1.2$ \\
+Sharing, CYP $22\%$   & & $+8.8$  & $+17.5$ & $+15.0$ & $+16.2$ \\
+Sharing, CYP $33\%$   & & $+11.3$ & $+12.5$ & $+5.0$  & $+18.7$ \\
+Objective choice, JAK & & $+55.0$ & $+67.5$ & $+27.5$ & $+8.8$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The spreads are wide --- $+1.2$ to $+15.0$ within one JAK cell, $+8.8$ to
+$+67.5$ for the objective result --- and that spread, not the pooled mean, is
+what a practitioner facing a single target should read.
+
+\paragraph{What we report.} The estimator is the mean per-campaign difference in
+top-10 recall, in percentage points, with its standard error over the 32 cells.
+We give $p$-values because reviewers expect them, but the quantity we ask the
+reader to weigh is the effect size and its spread, and we report per-target
+outcomes alongside every pooled figure. At four targets, a pooled mean can hide
+opposite signs: in one budget cell one target gained 15 points while another
+lost 15, pooling to a meaningless $+3.7\%$.
+
+\paragraph{Multiplicity.} We make many comparisons --- two blocks, four targets
+each, several budgets, three acquisition functions, several history
+compositions, and a range of auxiliary qualities --- and we do \emph{not} apply
+a family-wise correction. We therefore do not treat any single $p$ near $0.05$
+as establishing a result. The claims we advance are the ones that hold with a
+large effect across both blocks, or that reverse a conclusion, and we mark
+borderline values as such rather than counting them as positive. Readers should
+treat $p = 0.037$ in Table~\ref{tab:acqnull} as suggestive within a large
+comparison set, not as a standalone finding; the claim it supports rests on the
+$+14.7$ point effect on the other block.
+
+\section{The noise control}
+\label{sec:null}
+
+We report this first because every later effect size is interpreted against the matched null-auxiliary control, and
+because it reversed two conclusions that had passed every other check we
+applied.
+
+Every arm comparison above asks whether a surrogate given auxiliary data beats
+one that is not. The control that makes this answerable is to give the
+multi-task arm an auxiliary carrying no information and test whether it ties. We
+found no multi-task molecular BO result that runs it.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{llrrr}
+\toprule
+Block & Arm & $\rho = 0$ (no information) & $\rho = 1$ (measured) & Not transfer \\
+\midrule
+JAK & \mt{} $-$ \stl{}     & $+2.8$ \ ($p = 0.037$) & $+7.2$  & ${\sim}39\%$ \\
+CYP & \mt{} $-$ \stl{}     & $+1.6$ \ (n.s.)        & $+11.9$ & ${\sim}13\%$ \\
+CYP & \pooled{} $-$ \stl{} & $\mathbf{+14.7}$ \ ($p < 0.001$) & $+20.9$ & $\mathbf{{\sim}70\%}$ \\
+\bottomrule
+\end{tabular}
+\caption{Top-10 recall points at $33\%$ of the library, top-10 withheld from
+history, 32 campaigns per cell, expected improvement. A pure-noise auxiliary
+carries no information, so any gain in the $\rho = 0$ column is not transfer.}
+\label{tab:null}
+\end{table}
+
+\paragraph{The posterior mean does not explain it.} On the JAK block with 100 primary
+and 150 auxiliary observations, the model's own fit score selects $r = 0.621$ on
+measured auxiliaries and $r = 0.083$ on noise, and the noise posterior is worse
+than single-task (rank correlation $0.715$ against $0.733$). The posterior degrades
+while the campaign improves, so the gain does not come through the posterior
+mean.
+
+\paragraph{Where it becomes a different decision.} Mean predictive standard deviation is
+$0.671$ (\stl{}), $0.644$ (\mt{}) and $0.561$ (\pooled{}). EI trades mean
+against uncertainty, and adding auxiliary columns re-estimates the uncertainty
+scale whether or not they are informative. On these blocks
+that helps, and it is indistinguishable from transfer in the output. Ranking on
+the model's prediction alone removes the channel:
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{llrrr}
+\toprule
+Block & Acquisition & $\rho$ & \mt{} $-$ \stl{} & \pooled{} $-$ \stl{} \\
+\midrule
+JAK & EI     & 0 & $+2.8$ \ ($p=0.037$) & $+1.9$ \ (n.s.) \\
+JAK & EI     & 1 & $+7.2$ \ ($p<0.001$) & $+6.2$ \ ($p<0.001$) \\
+JAK & greedy & 0 & $+3.1$ \ (\textbf{n.s.}) & $+7.5$ \ (n.s.) \\
+JAK & greedy & 1 & $\mathbf{+16.2}$ \ ($p=0.008$) & $+4.7$ \ (n.s.) \\
+\midrule
+CYP & EI     & 0 & $+1.6$ \ (n.s.) & $\mathbf{+14.7}$ \ ($p<0.001$) \\
+CYP & EI     & 1 & $+11.9$ \ ($p<0.001$) & $+20.9$ \ ($p<0.001$) \\
+CYP & greedy & 0 & $-2.5$ \ (n.s.) & $\mathbf{-20.6}$ \ ($p=0.001$) \\
+CYP & greedy & 1 & $+4.4$ \ (n.s.) & $\mathbf{-7.5}$ \ ($p=0.081$) \\
+\bottomrule
+\end{tabular}
+\caption{The same comparisons with and without the variance channel.}
+\label{tab:greedy}
+\end{table}
+
+\paragraph{Where the effect actually enters.} Our first explanation was that
+extra kernel rows compress the model's uncertainty whether or not they are
+informative. That is wrong in both direction and mechanism, and the correct
+account is sharper.
+
+With $r = 0$ the task covariance is the identity, the joint kernel is block
+diagonal, and the auxiliary rows cannot touch the primary task at all --- not
+its predictions and not its uncertainty. That is a mathematical statement, and
+the first rung below confirms it numerically. But the signal variance is not a
+free parameter: it is profiled out of the likelihood as
+\[
+  \hat{s} \;=\; \frac{1}{n}\,z^{\top}\!\left(K + \eta I\right)^{-1} z ,
+\]
+and for a joint fit both $z$ and $n$ run over \emph{every} task. $\hat{s}$ is
+therefore a pooled quantity, and the predictive uncertainty
+$\sigma = \sqrt{v\,\hat{s}}$ inherits it. Auxiliary rows change the primary
+task's uncertainty through this one channel even when they are uncorrelated
+with it.
+
+We release one control at a time to confirm that this is the only channel.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lrrrrr}
+\toprule
+Rung & $\max_i|\Delta\mu_i|$ & $\max_i|\Delta\sigma_i|$ & mean $\sigma$
+     & EI order vs \stl{} & $r$ \\
+\midrule
+\multicolumn{6}{l}{\emph{JAK}, single-task mean $\sigma = 0.6428$} \\
+$r=0$, all pinned        & $1.2\!\times\!10^{-14}$ & $5.1\!\times\!10^{-14}$ & $0.6428$ & $1.000$ & $0.000$ \\
+$r=0$, scale pooled      & $1.2\!\times\!10^{-14}$ & $\mathbf{12.5}$          & $1.2045$ & $\mathbf{0.181}$ & $0.000$ \\
+$r=0$, scale and $\eta$  & $1.44$                  & $0.48$                   & $0.5582$ & $0.081$ & $0.000$ \\
+$r$ fitted, noise aux.\  & $1.86$                  & $0.54$                   & $0.5549$ & $0.078$ & $0.159$ \\
+$r$ fitted, real aux.\   & $1.92$                  & $0.43$                   & $0.6357$ & $0.068$ & $0.596$ \\
+\midrule
+\multicolumn{6}{l}{\emph{CYP}, single-task mean $\sigma = 0.6292$} \\
+$r=0$, all pinned        & $5.3\!\times\!10^{-15}$ & $9.4\!\times\!10^{-15}$ & $0.6292$ & $1.000$ & $0.000$ \\
+$r=0$, scale pooled      & $5.3\!\times\!10^{-15}$ & $\mathbf{5.31}$          & $0.7602$ & $\mathbf{0.842}$ & $0.000$ \\
+$r=0$, scale and $\eta$  & $1.11$                  & $0.41$                   & $0.5215$ & $0.254$ & $0.000$ \\
+$r$ fitted, noise aux.\  & $1.11$                  & $0.41$                   & $0.5194$ & $0.197$ & $0.151$ \\
+$r$ fitted, real aux.\   & $1.88$                  & $0.49$                   & $0.5902$ & $0.094$ & $0.809$ \\
+\bottomrule
+\end{tabular}
+\caption{Releasing one control at a time against the single-task fit. 24 draws
+$\times$ 4 held-out targets, 100 primary observations, 50 per auxiliary. Rows
+2--4 use auxiliary columns of pure noise. $\Delta$ is against the single-task
+posterior on the same draw.}
+\label{tab:mechanism}
+\end{table}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.25em]
+  \item \textbf{The auxiliary rows are exactly inert when nothing is allowed to
+    respond to them.} With $r = 0$ and the signal variance, noise ratio and
+    normalisation all pinned to the single-task fit, predictions and uncertainty
+    agree to machine precision ($10^{-14}$) and the acquisition ordering is
+    unchanged. The block-diagonal argument holds, as it must.
+  \item \textbf{Releasing the pooled signal variance alone changes the
+    uncertainty, and that alone changes the decisions.} The predictions stay
+    identical to $10^{-14}$, the uncertainty moves by up to $12.5$, and the
+    expected-improvement ordering agreement falls to $0.181$ on JAK. Nothing
+    about the model's estimate of the objective has changed; only the scale on
+    which it reports its own uncertainty.
+  \item \textbf{Finite-sample correlation is a second, smaller channel.} With
+    $r$ free the fit selects $r = 0.159$ (JAK) and $0.151$ (CYP) on columns that
+    are pure noise, and the predictions then degrade. Real auxiliaries move it
+    the other way at $r = 0.596$ and $0.809$.
+\end{enumerate}
+
+The attribution confound is therefore specific and checkable: \emph{auxiliary
+rows cannot affect the primary model when its parameterisation is held fixed;
+the confound enters when the pooled scale estimate and the task correlation are
+allowed to respond to the auxiliary dataset.} The acquisition function is where
+that difference becomes a different decision, not where it originates.
+
+\paragraph{The sign of the artefact depends on the acquisition.} Greedy removes
+the variance channel entirely. Thompson sampling keeps it but uses it
+differently: it draws $\mu + \sigma\varepsilon$, so a compressed $\sigma$ reduces
+exploration noise rather than sharpening a mean/variance trade-off. Running the
+noise control under all three separates them.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{llrrr}
+\toprule
+Block & Acquisition & \stl{} & \mt{} $-$ \stl{} & \pooled{} $-$ \stl{} \\
+\midrule
+JAK & EI     & $76.2\%$ & $\mathbf{+2.8}$ \ ($p=0.037$) & $+1.9$ \ (n.s.) \\
+JAK & greedy & $51.6\%$ & $+3.1$ \ (n.s.) & $+7.5$ \ (n.s.) \\
+JAK & TS     & $78.4\%$ & $-3.4$ \ (n.s.) & $\mathbf{-8.1}$ \ ($p=0.001$) \\
+\midrule
+CYP & EI     & $58.1\%$ & $+1.6$ \ (n.s.) & $\mathbf{+14.7}$ \ ($p<0.001$) \\
+CYP & greedy & $55.9\%$ & $-2.5$ \ (n.s.) & $\mathbf{-20.6}$ \ ($p=0.001$) \\
+CYP & TS     & $48.8\%$ & $-1.2$ \ (n.s.) & $-0.9$ \ (n.s.) \\
+\bottomrule
+\end{tabular}
+\caption{The noise control ($\rho = 0$) under three acquisition
+functions. A noise auxiliary carries nothing, so every entry should be zero.
+32 campaigns per cell.}
+\label{tab:acqnull}
+\end{table}
+
+\textbf{Among the three acquisition functions we tested, expected improvement
+was the only one showing a clear positive null-auxiliary deviation} ($+2.8$ on JAK, $+14.7$ for
+\pooled{} on CYP). Under greedy and Thompson sampling the significant deviations
+are negative --- a useless auxiliary degrades the posterior, and those
+acquisitions register the degradation. Both directions are distortions of a
+comparison that should read zero, but only EI manufactured apparent transfer in these
+experiments, and only EI turned a null result into a positive one here.
+
+\paragraph{The transfer effect is itself acquisition-dependent.} Measured with
+the real panel ($\rho = 1$), \mt{} $-$ \stl{} is:
+
+\begin{center}\small
+\begin{tabular}{lrrr}
+\toprule
+Block & EI & greedy & TS \\
+\midrule
+JAK & $+7.2$ \ ($p<0.001$) & $+16.2$ \ ($p=0.008$) & $+0.6$ \ (n.s.) \\
+CYP & $+11.9$ \ ($p<0.001$) & $+4.4$ \ (n.s.) & $+13.8$ \ ($p=0.003$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{On JAK the gain does not survive Thompson sampling} ($+0.6$, $p=0.86$),
+having been $+7.2$ under EI and $+16.2$ under greedy. On CYP it survives TS
+($+13.8$) but not greedy ($+4.4$, n.s.). No two acquisitions agree on both
+blocks about whether joint modelling helps.
+
+We take this as the strongest statement the data supports: \emph{multi-task
+transfer is not a property of the surrogate that a benchmark can measure once.}
+It is a property of the surrogate, the acquisition function and the panel
+together, and a result reported under one acquisition should not be assumed to
+hold under another. The noise control is what makes this visible ---
+without it, the EI column alone reads as a clean positive on both blocks.
+
+Three conclusions follow.
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.25em]
+  \item \textbf{The null-information gain is an attribution confound.} Under greedy it is
+    not significant on either block ($p = 0.51$, $0.57$): we detect no positive
+    null-auxiliary advantage once the variance channel is removed. With 32 campaigns
+    per cell that is a failure to detect a departure, not a demonstration of
+    equivalence; we did not pre-specify an equivalence margin.
+  \item \textbf{Naive pooling does not beat the fitted model.} Under greedy,
+    \pooled{} on CYP is worse than single-task ($-20.6$ with noise, $-7.5$ with
+    the measured panel). An earlier draft concluded the opposite from the EI
+    column alone. \pooled{} reported the smallest uncertainty and therefore the
+    most exploitative acquisition; it did not use the auxiliary data better.
+  \item \textbf{Transfer is real and larger than the EI column suggests.} On JAK
+    under greedy, \mt{} gains $+16.2$ points with the measured panel against
+    $+3.1$ with noise --- same surrogate, same budget, same history indices,
+    only the auxiliary values differ. This is our cleanest evidence that the
+    effect is information transfer rather than bookkeeping.
+\end{enumerate}
+
+
+\section{Which number should the model predict?}
+
+One of the largest effects we measure, and the only one requiring no new
+machinery. A
+campaign returns whatever scalar it was asked to maximise.
+
+\label{sec:selectivity}
+
+Sections above optimise one potency column. Programmes more often fail on
+off-target activity than on potency, so we optimise the contrast
+$y_{\text{sel}}(m) = \mathrm{pIC}_{50}(m, t_0) - \max_{j \neq 0}
+\mathrm{pIC}_{50}(m, t_j)$ on the same blocks.
+
+Every arm observes the full panel on any compound it selects, which is what
+selectivity profiling is. Budget is counted in compounds, so no arm sees more
+measurements than another.
+
+\paragraph{Selectivity is a different search.} The selectivity and potency
+top-10 sets are disjoint on JAK1, JAK2 and TYK2 ($0\%$ overlap) and share $40\%$
+on JAK3. Optimising potency does not approximate optimising selectivity.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lrr}
+\toprule
+Arm & JAK ($B = 200$) & CYP ($B = 74$) \\
+\midrule
+\rnd{}                                   & $21.9\%$ & $21.6\%$ \\
+potency (optimise on-target, score selectivity) & $55.9\%$ & $41.6\%$ \\
+\textbf{contrast} (single-task GP on $y_{\text{sel}}$) & $\mathbf{95.6\%}$ & $36.9\%$ \\
+compose (one sharing model per target, then combine)  & $93.4\%$ & $38.4\%$ \\
+\bottomrule
+\end{tabular}
+\caption{Top-10 \emph{selectivity} recall at $22\%$ of library, 32 campaigns per
+cell. Modelling selectivity beats optimising potency by $+39.7$ points on JAK
+($p < 10^{-4}$); on CYP no arm separates.}
+\label{tab:selectivity}
+\end{table}
+
+Two results, pointing opposite ways.
+
+\textbf{Objective specification produced the largest effect in this
+experiment}: $+39.7$
+points on JAK for changing which scalar is regressed, at identical cost on
+identical data.
+
+\textbf{The multi-task surrogate does not earn its place even here.} Selectivity
+is where a joint model should have a structural advantage: it models
+every task and can express a between-task contrast, which a single-task model
+cannot. It ties instead ($-2.2$ and $+1.6$ points, both n.s.). \texttt{compose}
+carries four times the rows, and \S\ref{sec:null} shows those extra rows
+\emph{flatter} an arm under EI, so the null holds against a favourable bias.
+
+On CYP no arm separates from potency, the same family split that runs through
+the report.
+
+\paragraph{Is the target set real, or the assay's reporting floor?} A difference
+objective amplifies censoring: if an anti-target value is a reporting floor,
+$y(\text{on}) - \max(\text{off})$ is large for a reason unrelated to
+selectivity. Our censoring filter removes values held by $>2\%$ of a column, but
+a floor just under that threshold survives. We therefore inspect the winners
+directly. Across both blocks the binding anti-target values of the top-10 span
+$3.70$--$7.82$ --- the real dynamic range --- and are shared by a median of
+1--2 compounds, so the optimisation target is genuine chemistry. One
+contaminated compound was found and is reported rather than removed (panel
+$[4.7, 4.7, 9.7, 4.7]$: three identical values are the signature of ``inactive
+at the screening dose''), sitting in JAK3's top-10. CYP3A4 shows $20\%$ of its
+top-10 on repeated values and CYP is the more censored block, which is a second
+reason to read its null cautiously.
+
+\section{Is a model worth fitting at all?}
+
+Whether a surrogate is worth fitting at all. The comparison that settles it is
+against similarity search, not against random.
+
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Block & \rnd{} & \simarm{} & \stl{} & \mt{} \\
+\midrule
+JAK & 6.0\% & 10.5--13.5\% & 27.2\% & \textbf{27.0--32.8\%} \\
+CYP & 17.3\% & 25.3--28.7\% & 38.0\% & \textbf{36.2--40.7\%} \\
+\bottomrule
+\end{tabular}
+\caption{Top-10 recall at a 60-assay budget, top-10 withheld from history.
+Ranges span five history compositions.}
+\label{tab:baselines}
+\end{table}
+
+Similarity search is \emph{worse than plain single-task BO} on both blocks, by
+$13.7$ points on JAK at its best history composition. Since it uses exactly the
+information the multi-task arm uses
+and costs nothing to run, this is the comparison that establishes the modelling
+earns its place.
+
+\section{Should related targets share a model?}
+\label{sec:joint}
+
+Two questions with opposite answers, routinely stated as one.
+
+\subsection{Splitting a fresh budget across targets does not work}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{llrr}
+\toprule
+Dataset & Design & Best $\Delta\rho$ vs \stl{} & Targets improving \\
+\midrule
+DOCKSTRING (21 kinases) & spread  & $-0.056$ & 0 / 21 \\
+DOCKSTRING (21 kinases) & blocked & $-0.189$ & 0 / 21 \\
+JAK block (measured)    & spread  & $-0.127 \pm 0.014$ & --- \\
+CYP block (measured)    & spread  & $-0.045 \pm 0.008$ & --- \\
+\bottomrule
+\end{tabular}
+\caption{budget-splitting at equal cells. Negative everywhere, on simulated and measured
+data alike.}
+\label{tab:h1split}
+\end{table}
+
+At equal cell budget, spreading assays across coupled targets is consistently
+\emph{worse} than concentrating them. This is not a weak-model result: the
+model's own fit score selects near-maximal task correlation, and a non-deployable
+ceiling arm given the auxiliary columns for free gains $+0.31$ to $+0.55$. The
+structure is real; paying for it out of the same budget is what fails.
+
+The mechanism is visible in the gap between designs. Measuring a second target
+on the \emph{same} compound is nearly a duplicate reading when tasks are
+strongly coupled; measuring it on a \emph{different} compound buys coverage of
+new chemistry and recovers most of the loss ($-0.189 \to -0.056$). But even the
+better design loses: an auxiliary cell is worth slightly less than a primary
+one.
+
+\subsection{Borrowing old data on relatives does work, on one kind of panel}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lrrr}
+\toprule
+Dataset & $n = 10$ & $n = 20$ & $n = 40$ \\
+\midrule
+DOCKSTRING (simulated)                 & $+0.310$ & $+0.233$ & --- \\
+ChEMBL, separate libraries (measured)  & $+0.001$ & $-0.020$ & --- \\
+JAK block (measured, co-measured)      & $+0.101$ & $+0.086$ & $+0.049$ \\
+CYP block (measured, co-measured)      & $+0.256$ & $+0.181$ & $+0.117$ \\
+\bottomrule
+\end{tabular}
+\caption{borrowed-history: $\Delta$ rank correlation over single-task, with $H = 50$ free
+historical observations per relative --- one $H$ for every row, so the rows are
+comparable. Nothing in the ChEMBL row clears three standard errors
+($\pm 0.022$, $\pm 0.011$). The DOCKSTRING and ChEMBL rows are paired runs
+(\texttt{-{}-c-paired -{}-c-holdout 0.4}, \texttt{-{}-paired -{}-holdout 0.4});
+an earlier version of this table mixed $H = 200$ for those two rows with
+$H = 50$ for the blocks, and read a budget of $n = 80$ into the $n = 40$
+column. Dashes are budgets the corresponding grid did not run.}
+\label{tab:h1cold}
+\end{table}
+
+At matched $n$ and $H$ the DOCKSTRING effect is $+0.310$ against $+0.256$
+(CYP) and $+0.101$ (JAK) --- between $1.2\times$ and $3\times$ the measured one,
+which is why the simulated result cannot be quoted on its own: docking scores
+across pockets are nearly one function (fitted $r = 1.00$ at every budget)
+because generic ligand size and lipophilicity drive much of the variance.
+Measured panels sit at $r \approx 0.6$ and still show a gain.
+
+The ChEMBL null is important and unexplained. Those four targets are separate
+kinase \emph{families} with disjoint libraries; the blocks are single families
+with shared compounds. We tested chemical overlap as the explanation and
+falsified it (\S\ref{sec:falsified}). \textbf{Why transfer fails across
+separately assembled libraries remains open}, and is the most important loose
+end in this work.
+
+\subsection{What the old data is worth, in assays}
+
+A single-task campaign at budget 90 reaches $37.7\%$ recall; the multi-task
+campaign at budget 60 with $H = 50$ per relative reaches $37.3\%$. So $150$ free
+auxiliary assays buy what $30$ primary assays buy: in this one campaign-matching calculation, roughly five historical auxiliary
+measurements were needed to replace one primary measurement. This is consistent with budget-splitting's
+rejection --- the same fact in campaign units --- and it means the result
+depends on the history being already paid for. A paper quoting the recall ratio
+without this invites a reviewer to derive it.
+
+\section{How much of the library to test}
+
+Below a floor the method costs recall; above a ceiling single-task BO has
+already found everything.
+
+\subsection{The budget range where it helps}
+\label{sec:window}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{rrrrcrrc}
+\toprule
+& \multicolumn{3}{c}{JAK block ($N = 904$)} & &
+  \multicolumn{3}{c}{CYP block ($N = 335$)} \\
+\cmidrule(lr){2-4}\cmidrule(lr){6-8}
+\% library & \stl{} & \mt{} & $\Delta$ (targets up) & &
+             \stl{} & \mt{} & $\Delta$ (targets up) \\
+\midrule
+11\% & 40.0\% & 46.6\% & $+6.6$ \ (2/4) & & 17.5\% & 18.1\% & $+0.6$ \ (2/4) \\
+\textbf{22\%} & 68.8\% & 75.3\% & $\mathbf{+6.6}$ \ \textbf{(4/4)} & &
+  37.8\% & 52.2\% & $\mathbf{+14.4}$ \ \textbf{(4/4)} \\
+\textbf{33\%} & 76.2\% & 83.4\% & $\mathbf{+7.2}$ \ \textbf{(4/4)} & &
+  58.1\% & 70.0\% & $\mathbf{+11.9}$ \ \textbf{(4/4)} \\
+50\% & 92.8\% & 94.1\% & $+1.2$ \ (2/4) & & 78.1\% & 87.5\% & $+9.4$ \ (4/4) \\
+66\% & 97.8\% & 98.1\% & $+0.3$ \ (1/4) & & 89.1\% & 94.1\% & $+5.0$ \ (3/4) \\
+\bottomrule
+\end{tabular}
+\caption{Top-10 recall against fraction of the library screened. Batch 10,
+8 repeats, primary top-10 withheld from history. ``Targets up'' counts how many
+of the four held-out targets individually improved.}
+\label{tab:window}
+\end{table}
+
+Table~\ref{tab:window} is the central practical result and it replicates across
+two protein families on the library-fraction axis:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.2em]
+  \item \textbf{Below ${\sim}5\%$ the method costs you.} At a 20-assay budget
+    the gain is $-0.7$ (JAK) and $-4.3$ (CYP) recall points.
+  \item \textbf{At $22$--$33\%$ it is both effective and reliable}, $+6.6$ to
+    $+14.4$ points, with \emph{all four} held-out targets improving on both
+    blocks.
+  \item \textbf{Beyond $50\%$ it decays} as the single-task baseline saturates
+    (JAK \stl{} reaches $92.8\%$); there is nothing left to win.
+\end{enumerate}
+
+Point 2 matters more than the effect size. At small budgets the per-target
+outcome is a lottery: at a 60-assay JAK budget, one target gained 15 recall
+points and another lost 15, pooling to a meaningless ``$+3.7\%$''. A
+practitioner screening one cold target gets one draw, not an average. The
+unanimity at $22$--$33\%$ is what makes a leave-one-target-out self-check
+(\S\ref{sec:guidance}) able to license a decision about an unmeasured target.
+
+\subsection{A share of the library, or a number of assays?}
+\label{sec:scaling}
+
+Whether the window is a fraction or an assay count decides whether the method is
+usable: screening a third of a catalogue of millions is impossible, spending
+$300$ assays is routine. We varied library size and absolute budget
+independently on the JAK block ($N \in \{904, 600, 400\}$ by random subsample,
+budget $\in \{100, 150, 200, 300\}$), giving matched-fraction pairs that differ
+in budget and matched-budget columns that differ in fraction.
+
+A first pass held $H = 50$ per relative and appeared to show absolute budget
+governing ($R^2 = 0.30$ against $0.18$). That was an artefact of the design:
+with $H$ fixed, shrinking the library raises the history's coverage of it from
+$17\%$ to $38\%$, favouring the cells that also have the highest budget
+fraction. Holding coverage at $16.6\%$ reverses the ranking.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lrr}
+\toprule
+Predictor of \mt{} $-$ \stl{} & $R^2$, $H$ absolute & $R^2$, coverage held fixed \\
+\midrule
+Fraction of library screened & $0.18$ & $\mathbf{0.47}$ \\
+Absolute assay count         & $0.30$ & $0.16$ \\
+Single-task headroom $(1 - \text{recall})$ & $0.31$ & $0.43$ \\
+\bottomrule
+\end{tabular}
+\caption{12 cells, 32 campaigns each. Controlling history coverage swaps the
+two candidate invariants.}
+\label{tab:scaling}
+\end{table}
+
+With coverage controlled, matched-fraction pairs agree (differences $-5.0$,
+$-0.9$, $+0.9$, $+3.1$ points, none significant) and fraction is the better
+predictor. The window is a fraction, not an assay count, and the history must be
+a fraction too: both scale with library size, so a deployment must satisfy both.
+Fraction and headroom are near-collinear ($0.47$ against $0.43$) and we cannot
+separate them.
+
+$R^2 = 0.47$ on 12 cells with $2.5$-point standard errors leaves most of the
+variance unexplained, and the uncontrolled analysis pointed the other way.
+Resolving the window's edges would need about four times the repeats.
+
+\subsection{Starting away from the answer}
+\label{sec:scaffold}
+
+A random initial design can seed a campaign with a direct analogue of the
+answer. On these panels that is a live concern: the true top-10 spans only
+$6$--$9$ distinct core scaffolds out of $357$ in the JAK block, so the
+compounds being searched for are concentrated in a few congeneric series.
+
+The virtual-screening literature handles this with a scaffold split of the
+train/test partition. A campaign has no fixed training set --- it chooses one
+--- so we apply the same rule to the \emph{initial design}: the seed compounds
+are drawn only from scaffolds absent from the true top-$k$, and the campaign may
+then select anything. It must therefore cross scaffolds to succeed, which is the
+retrospective analogue of screening a catalogue in which one holds no series.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lrrrrrr}
+\toprule
+ & & \multicolumn{2}{c}{random seed} & \multicolumn{2}{c}{scaffold-split seed} & \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Block & \% lib & \stl{} & $\Delta$ (up) & \stl{} & $\Delta$ (up) & $p$ \\
+\midrule
+JAK & $22\%$ & $68.8\%$ & $+6.6$ (4/4) & $68.4\%$ & $+5.9$ (3/4) & $0.84$ \\
+JAK & $33\%$ & $76.2\%$ & $+7.2$ (4/4) & $79.4\%$ & $+3.1$ (3/4) & $0.14$ \\
+CYP & $22\%$ & $37.8\%$ & $+14.4$ (4/4) & $41.2\%$ & $+12.5$ (3/4) & $0.69$ \\
+CYP & $33\%$ & $58.1\%$ & $+11.9$ (4/4) & $62.8\%$ & $+9.4$ (3/4) & $0.57$ \\
+\bottomrule
+\end{tabular}
+\caption{Top-10 recall with the initial design drawn at random, and restricted
+to scaffolds absent from the true top-10. 32 campaigns per cell; $p$ compares
+the two $\Delta$ distributions.}
+\label{tab:scaffold}
+\end{table}
+
+The effect size survives. \mt{} still beats \stl{} in all four cells, the gain
+shrinks in all four, and no shrinkage is significant ($p = 0.14$ to $0.84$).
+The largest drop, $+7.2 \to +3.1$ on JAK at $33\%$, is also the cell where the
+single-task baseline rises most ($76.2 \to 79.4\%$), so most of it is the
+baseline improving rather than the multi-task arm degrading.
+
+\textbf{Unanimity does not survive.} Every cell falls from $4/4$ held-out
+targets improving to $3/4$. That is the property \S\ref{sec:window} identifies
+as the reason the operating window is usable at all: a leave-one-target-out
+self-check can only license a decision about an unmeasured target if its answer
+does not depend on which target was held out. Under a scaffold-split seed it
+does, in all four cells we tested.
+
+We therefore weaken the claim. The multi-task gain is not an artefact of seeding
+the campaign with analogues of the answer --- that was the concern a scaffold
+split tests, and it is not supported. But the unanimity that made the window a
+recommendation rather than an average is contingent on a random seed, and a
+practitioner holding no series against the target is in the $3/4$ regime, not
+the $4/4$ one.
+
+One property of these panels explains why the split bites at all: the true
+top-10 spans only $6$--$9$ core scaffolds out of $357$ in the JAK
+block. Withholding those scaffolds removes $4$--$19\%$ of the library from the
+seed pool. On a library with less series structure the split would be closer to
+a no-op, and on a catalogue it would be stricter.
+
+\section{Where to put the other requirements}
+
+Where a cheap descriptor enters the loop matters more than which descriptor it
+is.
+
+\label{sec:filter}
+
+Sections above optimise raw potency, so nothing prevents the method selecting a
+compound that binds but is undevelopable. Adding a drug-likeness \emph{term} is
+not the repair --- that is what ruins the published DOCKSTRING objectives
+(\S\ref{sec:data-quality}). Applied as a library \emph{admission filter}
+($\mathrm{QED} \ge 0.5$) the score stays entirely assayed and the zero-assay
+floor stays at chance.
+
+The filter is unbiased with respect to potency: retention of each target's
+top-10 (4--8 of 10) tracks the overall $63\%$ rate, and the top-10's mean QED
+($0.51$--$0.64$) matches the library's ($0.54$). JAK at $33\%$ of the library:
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lrrc}
+\toprule
+Variant & $N$ & $\Delta$recall & Targets improving \\
+\midrule
+Full clean block           & 904 & $+7.2$ & \textbf{4/4} \\
+$\mathrm{QED} \ge 0.5$     & 566 & $+6.9$ & 3/4 \\
+Random cut (size control)  & 566 & $+2.5$ & 1/4 \\
+\bottomrule
+\end{tabular}
+\caption{The drug-like subset preserves the effect; a random cut of equal size
+does not. The loss of unanimity is a library-size effect, not the filter.}
+\label{tab:qed}
+\end{table}
+
+We recommend keeping the filter: it costs ${\sim}0.3$ recall points, removes the
+objection that the method ignores developability, and never enters the score.
+Note that \textbf{the unanimity result of Table~\ref{tab:window} is demonstrated
+at $N \approx 900$}; it should not be assumed to hold at arbitrary library size.
+
+\paragraph{Why not drug-likeness as a second objective?} We implemented that
+too --- a standard multi-objective rule over (potency, drug-likeness), reweighted each round
+per round, Pareto-front recall as the metric --- expecting a Pareto treatment to
+avoid the single-score failure of \S\ref{sec:data-quality}. It does not. A
+\emph{free} continuous objective puts part of the front on sale: the maximum-QED
+compound is non-dominated by construction, so ranking by QED alone and measuring
+nothing recovers $20$--$50\%$ of the front. The fronts are also tiny (2--10
+compounds of 335--904, so one compound is $10$--$50\%$ of the metric) and
+unrepresentative (median QED on the front $0.72$--$0.91$ against a library
+median of $0.54$--$0.58$). At budget 100 on JAK, the zero-assay \textsc{qed-only}
+arm reaches $50.0\%$ front recall against \mt{}'s $50.0\%$ and \stl{}'s $51.7\%$.
+
+The distinction that matters is \emph{what each construction changes}: a score
+term changes the score, a Pareto objective changes the success set, and a filter
+changes only which compounds are eligible. Only the last leaves the objective
+fully assayed and the zero-assay floor at chance.
+
+\paragraph{Where a free descriptor belongs.} A fourth option is to optimise
+potency over the whole library and apply drug-likeness only when scoring, since
+QED is free for any SMILES. It is not obviously worse: a potent but
+undevelopable compound still teaches the surrogate about the SAR, which a
+pre-filter discards. We compared all of them at \emph{identical success set}
+(top-10 potency among the 566 drug-like) and \emph{identical absolute budget};
+only where the budget may be spent, and what the free history covers, differ.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{rlrrr}
+\toprule
+Budget & Design & \stl{} & \mt{} & $\Delta$recall \\
+\midrule
+62  & post-hoc: search all 904            & 19.4\% & 14.7\% & $-4.7$ \\
+    & pre-filter: library cut to 566      & 27.5\% & 31.9\% & $+4.4$ \\
+    & \textbf{restricted: spend 566, history 904} & 27.5\% & \textbf{37.5\%} & $\mathbf{+10.0}$ \\
+\midrule
+125 & post-hoc                            & 42.2\% & 45.3\% & $+3.1$ \\
+    & pre-filter                          & 52.5\% & 58.4\% & $+5.9$ \\
+    & \textbf{restricted}                 & 52.5\% & \textbf{59.7\%} & $+7.2$ \\
+\midrule
+187 & post-hoc                            & 51.9\% & 57.5\% & $+5.6$ \\
+    & \textbf{pre-filter}                 & 66.6\% & \textbf{73.4\%} & $+6.9$ \\
+    & restricted                          & 66.6\% & 70.0\% & $+3.4$ \\
+\bottomrule
+\end{tabular}
+\caption{Post-hoc scoring costs $13$--$17$ recall points: ${\sim}37\%$ of the
+library cannot count as a success, so ${\sim}37\%$ of the budget buys compounds
+that will be discarded. Confining the \emph{budget} while letting the free
+history span the whole library is best at the budgets where the method matters;
+at 187 the two converge within the noise of 8 repeats. That \stl{} is identical
+under \textsc{pre-filter} and \textsc{restricted} ($27.5/52.5/66.6$) is the
+implementation check --- single-task uses no history, so the two must coincide
+for it.}
+\label{tab:where}
+\end{table}
+
+\begin{quote}
+\textbf{General lesson.} A free descriptor has four possible roles and they are
+not interchangeable. As a term in the score it dominates the ranking
+(\S\ref{sec:data-quality}, 93\%). As a Pareto objective it owns a region of the
+front and gives away part of the answer (20--50\% of a 2--10 compound front).
+Applied only when scoring, it wastes the budget it should have steered.
+\textbf{A free quantity should constrain what you pay for, and nothing else.}
+Correspondingly, any multi-objective molecular BO benchmark should report what a
+zero-assay ranking on each free objective recovers, and treat that as its floor.
+\end{quote}
+
+\subsection{Sensitivity to the censoring threshold}
+\label{sec:pilefrac}
+
+Our censoring filter drops any compound holding a value that more than $2\%$ of
+a column shares. It does a great deal of work --- $57.8\%$ of the JAK block and
+$22.8\%$ of the CYP block survive it --- and $2\%$ is a heuristic. We sweep it,
+holding the budget at $22\%$ of whatever library survives so that every row sits
+at the same point of the coverage window.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+Block & threshold & $N$ & budget & \stl{} & \mt{} & $\Delta$ & targets up \\
+\midrule
+JAK & $0.5\%$ & $417$ & $92$  & $50.3\%$ & $65.6\%$ & $+15.3^{*}$ & 4/4 \\
+JAK & $1\%$   & $871$ & $192$ & $65.9\%$ & $72.8\%$ & $+6.9^{*}$  & 2/4 \\
+JAK & $2\%$   & $904$ & $199$ & $68.8\%$ & $75.3\%$ & $+6.6^{*}$  & 4/4 \\
+JAK & $3\%$   & $919$ & $202$ & $66.6\%$ & $67.8\%$ & $+1.2$      & 3/4 \\
+JAK & $5\%$   & $927$ & $204$ & $64.1\%$ & $70.3\%$ & $+6.2^{*}$  & 3/4 \\
+JAK & $10\%$  & $982$ & $216$ & $66.2\%$ & $69.7\%$ & $+3.4$      & 2/4 \\
+\midrule
+CYP & $0.5\%$ & $201$   & $44$  & $36.2\%$ & $49.7\%$ & $+13.4^{*}$ & 2/4 \\
+CYP & $1\%$   & $285$   & $63$  & $38.8\%$ & $49.4\%$ & $+10.6^{*}$ & 2/4 \\
+CYP & $2\%$   & $335$   & $74$  & $37.8\%$ & $52.2\%$ & $+14.4^{*}$ & 4/4 \\
+CYP & $3\%$   & $350$   & $77$  & $39.7\%$ & $47.2\%$ & $+7.5$      & 4/4 \\
+CYP & $5\%$   & $526$   & $116$ & $48.8\%$ & $61.9\%$ & $+13.1^{*}$ & 4/4 \\
+CYP & $10\%$  & $1{,}036$ & $228$ & $66.9\%$ & $72.5\%$ & $+5.6$    & 3/4 \\
+\bottomrule
+\end{tabular}
+\caption{Censoring-threshold sensitivity, budget held at $22\%$ of the surviving
+library. 32 campaigns per cell; $^{*}$ marks $p<0.05$ on a paired test, with the
+multiplicity caveat of \S\ref{sec:stats}.}
+\label{tab:pilefrac}
+\end{table}
+
+\textbf{The sign is robust: \mt{} is ahead in all twelve cells.} The magnitude
+is not. On JAK it ranges from $+1.2$ to $+15.3$, and eight of twelve cells reach
+$p<0.05$ while four do not.
+
+The most informative comparison is between adjacent thresholds. From $1\%$ to
+$5\%$ the JAK library changes by $6\%$ in size ($871$ to $927$) and the budget by
+$12$ compounds, yet the measured gain moves $+6.9$, $+6.6$, $+1.2$, $+6.2$.
+
+These are \emph{different datasets}, not repeated runs of one: compounds enter
+and leave, the budget shifts, and the success set can change with them. The
+roughly five-point spread is therefore a measure of sensitivity to an analysis
+choice, not an estimate of campaign-seed variability. What makes it worth
+reporting is that it \emph{exceeds} the within-configuration Monte Carlo
+standard error of $\pm 2.5$ points: for effects of this size, how the data are
+filtered matters at least as much as which seeds are drawn.
+
+We use this as a heuristic robustness scale rather than a statistical error
+estimate. Effects below roughly five points in this report --- including some we
+mark significant --- should be read as provisional until shown stable across
+analysis choices, not merely across seeds.
+
+Two further observations. The aggressive $0.5\%$ threshold produces the largest
+gains on both panels ($+15.3$, $+13.4$) on the smallest libraries, consistent
+with \S\ref{sec:scaling}: coverage is held fixed but the absolute budget falls
+to $92$ and $44$. And at $10\%$ the filter barely filters --- $982$ of $1{,}563$
+on JAK and $1{,}036$ of $1{,}472$ on CYP --- so censored values are substantially
+back in the library, and the gain is smallest and not significant on either
+panel. That is the direction the filter was introduced to correct, and it
+supports keeping a filter without pinning the exact threshold.
+
+\section{Things we expected that turned out false}
+\label{sec:falsified}
+
+We report these because each was a plausible mechanism that a reader might
+otherwise propose, and because the effort spent excluding them is part of what
+the positive result rests on.
+
+\begin{description}[leftmargin=2em,style=nextline,itemsep=0.35em]
+  \item[A full task-covariance matrix should beat one shared $r$.]
+    Motivated by the JAK family being unevenly coupled ($0.24$ to $0.71$) where
+    CYP is uniform ($0.52$ to $0.74$). We fitted a free correlation matrix by
+    coordinate ascent on the exact likelihood with PSD rejection. It \emph{loses}
+    on both blocks ($-0.003$ to $-0.029$), largest where there is most data to
+    overfit. The fitted matrix does recover the heterogeneity (spread $0.49$ vs
+    empirical $0.47$); six correlations estimated from 10--40 primary
+    observations simply cost more in variance than uneven coupling costs in
+    bias. \textbf{One shared $r$ is the right amount of structure at these
+    budgets.}
+  \item[Chemical overlap should explain the ChEMBL null.]
+    Real per-target libraries reach only $0.53$ of the primary's own
+    nearest-neighbour similarity, against $1.0$ for a co-measured block, which
+    made overlap the natural explanation. We made it a controlled variable and
+    swept it. The campaign gain is \emph{flat} from reach $0.96$ to $0.44$
+    ($+0.084 \to +0.077$ on JAK, SEM $0.023$) --- and $0.44$ is \emph{below} the
+    real-library value. Overlap is not the mechanism.
+  \item[The regression gain should predict the campaign gain.]
+    The rank correlation gain shrinks with budget ($+0.20$ at $n=10$ to $+0.06$ at
+    $n=80$), suggesting an early-campaign effect. The campaign gain does the
+    opposite: negative at 20 assays, peaking at $22$--$33\%$ of the library. A
+    regression curve does not predict the campaign curve, even in sign.
+  \item[Coupling heterogeneity should explain when fitting $r$ beats pooling.]
+    \pooled{} loses badly on JAK and ties on CYP, and heterogeneity predicted
+    this. But it also predicted the free-$B$ result, which failed, and under the
+    stricter control (top-10 withheld) the JAK/CYP split does not survive.
+    The mechanism is withdrawn; \S\ref{sec:null} supplies a different one.
+  \item[Naive pooling should outperform the fitted joint modelling.]
+    \emph{This was our own conclusion in an earlier draft}, from EI columns in
+    which \pooled{} beat \mt{} on CYP by up to $9.1$ points at $p = 0.0004$. It
+    is wrong. \pooled{} reports the smallest uncertainty of the three
+    arms, which makes EI most exploitative; under a variance-free acquisition it
+    is \emph{worse} than single-task on CYP. We had run the pooling control that
+    standing practice asks for, but had not asked whether the control was
+    comparable on the axis the acquisition actually reads. It was not.
+  \item[Absolute assay count should govern the operating window.]
+    Supported at $R^2 = 0.30$ against $0.18$ for library fraction --- until the
+    history's coverage of the library was held fixed, at which point the two
+    swap ($0.16$ against $0.47$). See \S\ref{sec:scaling}.
+  \item[The gain should come from seeding the campaign near the answer.]
+    The top-10 of these panels sits in $6$--$9$ scaffolds out of $357$, so a
+    random initial design can hand a campaign a direct analogue of what it is
+    looking for. Restricting the seed to scaffolds absent from the top-10
+    (\S\ref{sec:scaffold}) shrinks the gain in all four cells and in none of
+    them significantly ($p = 0.14$ to $0.84$). The effect is not an artefact of
+    the seed. What the split does remove is the \emph{unanimity}, which falls
+    from $4/4$ to $3/4$ held-out targets in every cell.
+  \item[A computed auxiliary should substitute for a measured panel.]
+    The natural route to deployment, since it would remove the
+    co-measured-panel requirement. Degrading the auxiliary columns to a
+    controlled rank correlation $\rho$ against their own values puts the threshold at
+    $\rho \approx 0.45$--$0.6$, above the $0.2$--$0.4$ that docking scores reach
+    against measured pIC$_{50}$. We therefore did not build a docking cache.
+    The threshold is provisional: it was measured under EI, against the
+    contaminated baseline of \S\ref{sec:null}, which inflates the low-$\rho$ end
+    and so makes the threshold look lower than it is.
+\end{description}
+
+\section{What each choice is worth}
+\label{sec:worth}
+
+Effect sizes of five campaign decisions, in top-10 recall points at a $22\%$
+library budget. The rows are not a ranking: two are panel-dependent and one is
+negative on a panel, as the text explains.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{llrl}
+\toprule
+Decision & Choice that pays & Worth & Conditions \\
+\midrule
+What to regress & the contrast you actually want & $\mathbf{+40}$ &
+  none --- same data, same cost \\
+Fit a surrogate & GP + EI over similarity search & $+42$ / $-3$ &
+  panel-dependent; verify \\
+Model jointly & only with free co-measured history & $+7$ to $+14$ &
+  three conditions, all required \\
+Budget & $22$--$33\%$ of the library & --- &
+  below ${\sim}5\%$ it is negative \\
+Secondary criteria & admission filter, not score term & $+13$ to $+17$ &
+  vs.\ post-hoc scoring \\
+\bottomrule
+\end{tabular}
+\caption{The choice of what to optimise produced one of the largest effects we measured.}
+\label{tab:worth}
+\end{table}
+
+Two entries are panel-dependent, and the ordering should not be read as a
+ranking. Fitting a model at all is worth $+42$ points on JAK and $-3$ on CYP,
+where similarity search ties single-target BO --- a larger maximum than the
+objective-choice row, on one panel, and a negative one on the other. Only the
+data-sharing arm beats the model-free heuristic on both panels. Joint modelling
+requires all three of its conditions at once --- history already paid for,
+co-measured on the same compounds, and a library small enough that $22$--$33\%$
+is affordable --- and fails when the quantity of interest is already computable
+from data in hand.
+
+Figures in the joint-modelling row should be read against the
+\emph{real-versus-null auxiliary contrast} of \S\ref{sec:null}: the difference
+between an arm given measured auxiliary columns and the same arm given noise
+columns, with everything else held fixed. We do not subtract the two and call
+the remainder ``the transfer effect'' --- that would assume the informational
+and uncertainty-scale effects add, and they may interact. The contrast isolates
+the consequence of changing the auxiliary labels from uninformative to measured,
+which requires no such assumption.
+
+\section{Limits, and what we would run next}
+\label{sec:limitations}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item \textbf{Retrospective.} Every ``assay'' is a lookup from a published
+    table. No compound was synthesised or prospectively tested.
+  \item \textbf{Single objective.} We optimise one potency column. Real
+    programmes optimise potency, selectivity, solubility and metabolic stability
+    jointly, and fail on the latter three. Our one attempt at a published
+    composite objective found it $93\%$ determined by a free descriptor.
+  \item \textbf{Two blocks, eight targets.} Both are co-measured panels from one
+    source.
+  \item \textbf{Fixed library.} The method selects from compounds that already
+    exist; it does not design or generate.
+  \item \textbf{Transfer failed in our separately assembled cross-family
+    ChEMBL setting and the cause remains unresolved.} We have excluded chemical
+    overlap, but that setting differs from the successful panels in several
+    respects at once (\S\ref{sec:guidance}), so we cannot attribute the failure
+    to any one of them.
+  \item \textbf{Batch size is a confound across sweeps.} Batch 5 and batch 10
+    runs are not directly comparable; comparisons are valid within a sweep only.
+  \item \textbf{Arm comparisons are acquisition-dependent.} \S\ref{sec:null}
+    shows that the measured transfer effect changes sign-of-significance across
+    EI, greedy and Thompson sampling, and that a null auxiliary gains recall
+    under EI alone. Every effect size here should be read against its matched
+    $\rho = 0$ control \emph{under the same acquisition}. A variance-calibrated
+    acquisition would be the correct fix and is not implemented.
+  \item \textbf{One surrogate family.} We use an exact GP with a Tanimoto
+    kernel. Recent cross-domain work reports neural surrogates with Thompson
+    sampling outperforming GPs across 61 tasks, and our Thompson-sampling
+    results suggest the interaction between surrogate capacity and acquisition
+    is where the remaining uncertainty lies.
+  \item \textbf{Unanimity is demonstrated at $N \approx 900$ and $N \approx
+    335$.} A random cut of the JAK block to $566$ compounds reduces the gain from
+    $+7.2$ to $+2.5$ and unanimity from $4/4$ to $1/4$. The window is a claim
+    about these blocks at these sizes.
+  \item \textbf{Our effects are sensitive to analysis choices, not only to
+    seeds.} Four nearby censoring thresholds on JAK give gains of $+6.9$,
+    $+6.6$, $+1.2$ and $+6.2$ (\S\ref{sec:pilefrac}). Those are different
+    datasets rather than repeated runs, so the roughly five-point spread
+    measures sensitivity to an analysis choice --- and it exceeds the
+    $\pm 2.5$ point Monte Carlo standard error within a configuration. We use
+    five points as a heuristic robustness scale, not a statistical error
+    estimate: effects below it should be read as provisional until shown
+    stable across analysis choices, not merely across seeds.
+  \item \textbf{Two conclusions reversed under a control run after the fact},
+    and in both cases the uncontrolled reading was the confident one. We regard
+    the remaining conclusions as provisional to the same degree and state which
+    control each is waiting on.
+  \item \textbf{Unanimity is contingent on the initial design.} It holds $4/4$
+    with a random seed and $3/4$ with a scaffold-split seed, in every cell we
+    tested (\S\ref{sec:scaffold}). The window remains a positive-expectation
+    recommendation; it is not a per-target guarantee.
+  \item \textbf{Scaffold splitting is applied to the initial design only.} We do
+    not scaffold-split a train/test partition, because a campaign has no fixed
+    training set. A benchmark that reports a regression $\rho$ on these panels
+    should do so.
+\end{itemize}
+
+\section{What to do with this}
+\label{sec:guidance}
+
+For a library of known compounds not yet assayed. The first item produced the largest effect in our selectivity experiment and
+needs no data sharing at all.
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.2em]
+  \item \textbf{Regress the objective you actually want.} If you want selective
+    compounds, regress the selectivity contrast, not potency: $+40$ recall
+    points on JAK at identical cost (\S\ref{sec:selectivity}), and the potency
+    and selectivity top-10 sets are disjoint on three of four targets. A plain
+    single-task GP on the contrast is sufficient --- the joint model
+    adds nothing here.
+  \item \textbf{Audit a contrast objective for censoring before trusting it.}
+    A difference amplifies reporting floors; inspect the binding anti-target
+    values of your top-$k$ and confirm they are not piled on a limit of
+    detection.
+\end{enumerate}
+
+For the multi-task transfer result specifically:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.2em]
+  \item \textbf{On these panels the gains were largest and most consistent
+    around $22$--$33\%$ library coverage.} We have two blocks and eight
+    targets, and \S\ref{sec:scaling} resolves the window's edges only weakly
+    ($R^2 = 0.47$ on 12 cells), so this is where our measurements peaked rather
+    than an estimated constant. Below ${\sim}11\%$ the
+    per-target outcome is a lottery and lower still it hurts; beyond $50\%$
+    single-task BO already finds almost everything. The invariant is the
+    \emph{fraction}, not the assay count (\S\ref{sec:scaling}), which is what
+    restricts this to focused libraries of hundreds to low thousands rather than
+    catalogue-scale screening.
+  \item \textbf{Expect to need history on a comparable fraction.} Our runs hold
+    free history on ${\sim}17\%$ of the library, and the benefit does not
+    survive holding $H$ fixed while the library grows. Both quantities scale.
+  \item \textbf{Use only history you already own.} Auxiliary assays are worth
+    roughly one fifth of a primary measurement in our campaign-matching
+    calculation. These results do not justify acquiring auxiliary assays solely
+    for this purpose. A computed
+    substitute would need rank correlation ${\gtrsim}0.45$ against the auxiliary it
+    replaces, above what docking reaches.
+  \item \textbf{Fit the task correlation; do not pool.} Naive pooling looks
+    competitive under EI for a reason unrelated to the auxiliary data
+    (\S\ref{sec:null}) and is worse than single-task once that is removed.
+  \item \textbf{Evidence of benefit here is limited to the co-measured
+    within-family panels.} Our separately assembled per-target libraries showed
+    none, but the two settings differ in co-measurement, family relatedness,
+    source, assay context and library assembly at once, so we have not isolated
+    co-measurement as a necessary condition.
+  \item \textbf{Do not substitute similarity search} --- it is worse than plain
+    single-task BO.
+  \item \textbf{Expect $3/4$, not $4/4$, if you hold no series against the
+    target.} Unanimity across held-out targets is measured with a random
+    initial design; under a scaffold-split seed one of four targets fails in
+    every cell we tested.
+  \item \textbf{Run the leave-one-target-out self-check first.} Hold out each
+    target you already have, use the rest as history, and confirm multi-task
+    beats single-task on all of them at your intended budget. The check is only
+    informative in the $22$--$33\%$ window, where we observe unanimity; at
+    smaller budgets it gives a different answer depending on which target is
+    held out.
+\end{enumerate}
+
+\subsection{A baseline set for anyone repeating this}
+
+We propose the following as the minimum comparison set for any multi-task
+molecular BO result, because each of them changed a conclusion of ours at least
+once:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.2em]
+  \item \textbf{Random selection} --- the floor.
+  \item \textbf{Similarity search} to known actives --- the free, model-free
+    alternative a chemist would actually use.
+  \item \textbf{Single-task GP BO at equal \emph{cell} budget} --- not equal
+    compounds.
+  \item \textbf{Single-task GP BO at a \emph{higher} budget}, to report the
+    exchange rate between auxiliary and primary assays.
+  \item \textbf{Pooled multi-task} ($r = 1$), to separate task modelling from
+    extra rows --- and compared on an axis the acquisition does not distort;
+    see the next item.
+  \item \textbf{A noise auxiliary} ($\rho = 0$): the multi-task arm
+    given auxiliary columns that are pure noise. It should show no systematic advantage in expectation. This is the only check we found that separates information transfer
+    from acquisition calibration, it costs one extra run, and it invalidated a
+    conclusion of ours that five other controls had passed. We regard it as the
+    single most important item on this list.
+  \item \textbf{A free-descriptor floor} for any composite objective, and a
+    censoring screen for any dense block. For a multi-objective benchmark, report
+    what a zero-assay ranking on each \emph{free} objective recovers of the
+    Pareto front, and the front's size --- a front of ten compounds cannot
+    resolve a method.
+\end{enumerate}
+
+Results should be reported per held-out target, not only pooled, with the spread
+stated; and with the budget expressed as a fraction of library size. Effect
+sizes should be reported alongside their matched null-auxiliary control under
+the same acquisition.
+
+\subsection{What we would run next}
+\label{sec:next}
+
+Objective variants come first because they require no additional surrogate
+machinery and produced a large effect in the JAK selectivity experiment; the
+prospective experiment comes last because it changes the category of the work.
+
+\paragraph{Objectives a programme actually specifies.}
+
+\S\ref{sec:selectivity} tests one selectivity objective, a margin against the
+worst off-target. Real projects specify other shapes, each a small change to the
+same loop:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item a selectivity \emph{window}: a threshold rather than a margin, so
+    additional selectivity past the requirement earns nothing;
+  \item a \emph{weighted} anti-target panel, because off-targets differ in how
+    much they matter;
+  \item potency \emph{under a selectivity constraint}, which is the actual
+    go/no-go shape --- and which combines with the admission-filter result of
+    \S\ref{sec:filter} rather than competing with it.
+\end{itemize}
+
+On the evidence of Table~\ref{tab:worth} these should matter more than further
+work on the surrogate.
+
+\paragraph{Escaping the retrospective frame.}
+
+Every assay here is a lookup from a table of existing values, on libraries
+assembled because the compounds were worth testing. The method never sees the
+table --- the runtime audit enforces that --- but the libraries are enriched in
+actives, so absolute recall will not transfer to a purchasable catalogue.
+
+\paragraph{A blinded time-split} is the cheapest attack: history before a
+deposit-date cutoff, evaluation after it. We note for anyone attempting it that
+it is \emph{not} runnable from the data as we cached it --- our ChEMBL extracts
+carry no deposit date and our fetcher never requested one. The re-pull is a few
+hours and the experiment is free thereafter.
+
+\paragraph{A compute oracle is the decisive step.} The limitations above share
+a cause: precomputed values, so the library is finite, enriched and already
+known. A structure-based affinity predictor removes all three. The candidate set
+becomes any purchasable compound, values are computed on demand, and no value
+exists until the campaign pays for it. It is also where the window of
+\S\ref{sec:scaling} --- a \emph{fraction} of the library --- meets a library
+whose size the experimenter chooses.
+
+The oracle interface is agnostic to whether a value is looked up or computed,
+so a co-folding affinity predictor can be substituted directly. We do not report
+such an evaluation here: published affinity predictors are trained on the same
+public binding data these panels are drawn from, and the resulting train--test
+leakage makes their accuracy on public benchmarks uninterpretable. Evaluating
+one would require a temporal or scaffold holdout constructed against that
+model's training set.
+
+\paragraph{Wet-lab validation} remains the only thing that changes the
+category of the result: one cold target with a family panel, a few hundred
+assays split between arms, and a threshold-hit metric.
+
+\paragraph{Methodological gaps we are leaving open.}
+
+\begin{description}[leftmargin=2em,style=nextline,itemsep=0.3em]
+  \item[A variance-calibrated acquisition.] Arms whose model uncertainty
+    differ in scale are not comparable under EI (\S\ref{sec:null}), and our
+    diagnostic --- ranking on the mean alone --- is a worse optimiser than the
+    setting practitioners use. Calibrating variance across arms would let the
+    effect sizes be stated at the operating point rather than at a diagnostic
+    one, and would settle the auxiliary-quality threshold.
+  \item[Why cross-family transfer fails.] Chemical overlap is excluded. Target
+    relatedness is the surviving candidate and is untested.
+  \item[A predictor of the per-target outcome.] Unanimity at $22$--$33\%$ makes
+    the method usable, but nothing predicts \emph{which} targets gain most.
+\end{description}
+
+\section*{Reproducibility}
+\label{sec:repro}
+
+All results come from deterministic, seeded runs --- the same command twice
+gives byte-identical output.
+
+All five campaign and regression instruments take \texttt{--audit}, which checks
+at runtime the invariants the comparisons rest on: that arms start from the same
+initial design and see the same history, that each spends exactly its budget
+with no repeated pick, that no selection escapes an eligibility restriction,
+that no top-$k$ compound leaks into the history when it is meant to be
+withheld, and that no auxiliary column is the primary target's own values.
+Every configuration behind a number in this report passes, and each run records
+its own audit verdict inside its output file, so a table can be checked for
+provenance without the terminal that produced it. The checks were validated by
+deliberate injection --- perturbing one arm's RNG, adding training rows to the
+evaluation set, and inflating a history draw by one row all produced the
+expected failures --- because a check that has never fired is not evidence.
+
+The audit also found a defect it was written to find. The two instruments behind
+the cold-target results redrew the primary's train/test split for every value of
+$H$, so the $H = 0$ control and the arms differenced against it were fitted on
+different rows and scored on different rows, in every cell. The gain remains
+unbiased, but the comparison was never paired. Re-run paired, the positive
+result holds with effect sizes reduced in 15 of 18 cells, and the negative
+result on separately assembled libraries holds with its standard errors reduced
+by ${\sim}40\%$ --- a null measured on a tighter instrument than the one that
+first reported it.
+
+Key scripts:
+\texttt{dockstring\_audit.py} (dataset provenance and the QED finding),
+\texttt{transfer\_headroom.py} (budget-splitting, ceilings),
+\texttt{cold\_target\_chembl.py} (borrowed-history on separate libraries),
+\texttt{dense\_block\_h1.py} (dense blocks, censoring filter, free $B$),
+\texttt{dense\_block\_campaign.py} (campaigns, baselines, budget and reach
+sweeps). Detailed logs, including the intermediate results and corrections that
+led to the conclusions above --- including the two conclusions that reversed
+under a later control --- are in \texttt{results/FINDINGS.md} (\S\S14--32).
+
+ibliographystyle{plain}
+ibliography{refs}
+
+% The citations below were never resolvable: this document cited seven
+% keys and declared no bibliography, so every one would have compiled to
+% a '[?]'. refs.bib carries all of them.
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}

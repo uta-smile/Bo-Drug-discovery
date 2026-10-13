@@ -1,0 +1,65 @@
+﻿block from data\bindingdb\block_cyp2c19-cyp2c9-cyp2d6-cyp3a4.csv: 1,472 compounds x 4 targets (0s)
+
+[0] censoring filter (values held by >2% of a column)
+    CYP3A4   pile-ups: 5.00 x317, 4.52 x122, 4.30 x90, 5.30 x68, 4.00 x64, 4.70 x62, 4.40 x41, 4.60 x38
+    CYP2D6   pile-ups: 5.00 x399, 4.52 x136, 4.30 x88, 4.00 x79, 4.70 x76, 5.30 x62, 4.40 x57, 4.60 x35
+    CYP2C9   pile-ups: 5.00 x307, 4.52 x119, 5.30 x97, 4.30 x87, 4.70 x67, 4.60 x57, 4.00 x50, 4.40 x41
+    CYP2C19  pile-ups: 5.00 x325, 4.52 x119, 4.30 x101, 4.70 x76, 5.30 x72, 4.00 x50, 4.40 x46, 4.60 x38
+    kept 335 of 1,472 compounds (22.8%)
+
+[1] the block: 335 compounds x 4 targets = 1,340 cells, fully observed
+    CYP3A4 pIC50 3.40..7.40  median 5.10  sd 0.76
+    CYP2D6 pIC50 2.00..8.26  median 4.98  sd 0.88
+    CYP2C9 pIC50 2.00..7.70  median 5.10  sd 0.85
+    CYP2C19 pIC50 3.52..8.15  median 5.10  sd 0.80
+
+    empirical task correlation (Pearson on the same compounds):
+             CYP3A4  CYP2D6  CYP2C9 CYP2C19
+    CYP3A4       --    0.52    0.60    0.62
+    CYP2D6     0.52      --    0.55    0.63
+    CYP2C9     0.60    0.55      --    0.74
+    CYP2C19    0.62    0.63    0.74      --
+    off-diagonal: min +0.52  median +0.61  max +0.74
+
+    pool nearest-neighbour similarity 0.577  (ChEMBL libraries 0.64-0.71, DOCKSTRING 0.38)
+    auxiliary reach ratio 1.00 by construction: the tasks share the molecules.
+
+[3] H1-cold -- primary charged n, family carries H free (10 repeats)
+    n=10 done
+    n=20 done
+    n=40 done
+
+    Spearman on held-out compounds
+       n   H=0 (stl)        H=5       H=10       H=25       H=50
+    ------------------------------------------------------------
+      10       0.159      0.188      0.259      0.339      0.416
+      20       0.238      0.293      0.306      0.394      0.419
+      40       0.342      0.321      0.387      0.426      0.459
+
+    gain over the single-task GP
+       n               H=5              H=10              H=25              H=50
+    ----------------------------------------------------------------------------
+      10      +0.028+-0.022      +0.100+-0.025      +0.179+-0.023      +0.256+-0.017
+      20      +0.054+-0.023      +0.068+-0.022      +0.155+-0.023      +0.181+-0.021
+      40      -0.021+-0.018      +0.046+-0.019      +0.084+-0.022      +0.117+-0.020
+
+    control: the same observations with the task structure discarded
+    (r fixed at 1, i.e. pool all four targets into one function)
+       n               H=5              H=10              H=25              H=50
+    ----------------------------------------------------------------------------
+      10      0.206 -0.018      0.262 -0.003      0.350 -0.011      0.416 -0.001
+      20      0.301 -0.008      0.313 -0.007      0.394 +0.000      0.425 -0.006
+      40      0.321 +0.001      0.385 +0.002      0.426 -0.000      0.461 -0.003
+    each cell: pooled rho, then (fitted ICM - pooled).
+
+    task correlation selected: median 1.00 (10th 0.40, 90th 1.00)
+
+    verdict:
+      n=10  breaks even at H=10; best +0.256 at H=50 (100% of runs positive).
+      n=20  breaks even at H=10; best +0.181 at H=50 (98% of runs positive).
+      n=40  breaks even at H=25; best +0.117 at H=50 (80% of runs positive).
+      H1-cold HOLDS on measured data, at every budget, on a block
+      where chemical reach cannot be the explanation. This is the
+      first support for any form of H1 outside docking scores.
+
+wrote results\dense_block_h1_cyp_clean.json  (9s total)

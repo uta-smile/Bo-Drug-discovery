@@ -1,0 +1,4451 @@
+{
+  "dataset": "data\\dockstring\\dockstring-dataset.tsv",
+  "pool": 2000,
+  "seed": 0,
+  "transfer": {
+    "targets": [
+      "ABL1",
+      "AKT1",
+      "AKT2",
+      "CDK2",
+      "CSF1R",
+      "EGFR",
+      "FGFR1",
+      "IGF1R",
+      "JAK2",
+      "KDR",
+      "KIT",
+      "LCK",
+      "MAP2K1",
+      "MAPK1",
+      "MAPK14",
+      "MAPKAPK2",
+      "MET",
+      "PLK1",
+      "PTK2",
+      "ROCK1",
+      "SRC"
+    ],
+    "aux_targets": [
+      "LCK",
+      "SRC",
+      "ABL1"
+    ],
+    "n_repeats": 20,
+    "n_aux_max": 3,
+    "per_target": {
+      "ABL1": {
+        "fp_inf": 0.6517727694163294,
+        "aux_inf": 0.8376338859020038,
+        "n_aux": 2,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.0580004882829512,
+              "sem": 0.01943651611722499
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.33443594155680384,
+              "sem": 0.08886437420293827
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.2764354532738526,
+            "ceiling_at_n_sem": 0.07794232204470662
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 3,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.14701663448612226,
+              "sem": 0.017623162482276754
+            },
+            "mt_eq": {
+              "mean": 0.05694783938941643,
+              "sem": 0.019185798620889014
+            },
+            "mt_gp": {
+              "mean": 0.0796908601007312,
+              "sem": 0.014866090359824483
+            },
+            "mt_spread": {
+              "mean": 0.08911314178891792,
+              "sem": 0.017083053628534496
+            },
+            "mt_free": {
+              "mean": 0.5728855467382045,
+              "sem": 0.004451794407498124
+            },
+            "headroom": -0.06732577438539106,
+            "headroom_sem": 0.022063214213395594,
+            "headroom_spread": -0.05790349269720433,
+            "headroom_spread_sem": 0.01773606544026351,
+            "headroom_2stage": -0.09006879509670582,
+            "headroom_2stage_sem": 0.023766765044674013,
+            "ceiling_at_n": 0.4258689122520821,
+            "ceiling_at_n_sem": 0.018974617121181456
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 6,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.1611475565864532,
+              "sem": 0.01666219840009491
+            },
+            "mt_eq": {
+              "mean": 0.09389085300200051,
+              "sem": 0.016549330866344966
+            },
+            "mt_gp": {
+              "mean": 0.11493973837662863,
+              "sem": 0.014930129478247749
+            },
+            "mt_spread": {
+              "mean": 0.14758365962771955,
+              "sem": 0.01628567227024653
+            },
+            "mt_free": {
+              "mean": 0.5800657852776062,
+              "sem": 0.0037367317020167022
+            },
+            "headroom": -0.04620781820982457,
+            "headroom_sem": 0.014355936872699294,
+            "headroom_spread": -0.013563896958733612,
+            "headroom_spread_sem": 0.015756084126903262,
+            "headroom_2stage": -0.06725670358445265,
+            "headroom_2stage_sem": 0.021372000618547937,
+            "ceiling_at_n": 0.4189182286911529,
+            "ceiling_at_n_sem": 0.01822984884501589
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 10,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.2508160397058433,
+              "sem": 0.014814652064164291
+            },
+            "mt_eq": {
+              "mean": 0.15709036152142813,
+              "sem": 0.016787848968845644
+            },
+            "mt_gp": {
+              "mean": 0.16588278926802472,
+              "sem": 0.015860763808196326
+            },
+            "mt_spread": {
+              "mean": 0.21802858631430705,
+              "sem": 0.020168860078019966
+            },
+            "mt_free": {
+              "mean": 0.5767074177500922,
+              "sem": 0.0074409540562965235
+            },
+            "headroom": -0.08493325043781862,
+            "headroom_sem": 0.014080276556215104,
+            "headroom_spread": -0.03278745339153633,
+            "headroom_spread_sem": 0.013593103421527478,
+            "headroom_2stage": -0.09372567818441524,
+            "headroom_2stage_sem": 0.01620343977517885,
+            "ceiling_at_n": 0.3258913780442489,
+            "ceiling_at_n_sem": 0.016588408922631616
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 16,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3081701801649114,
+              "sem": 0.011055676187202835
+            },
+            "mt_eq": {
+              "mean": 0.19352964951736767,
+              "sem": 0.020865085303703613
+            },
+            "mt_gp": {
+              "mean": 0.2042556387092938,
+              "sem": 0.02148885748999295
+            },
+            "mt_spread": {
+              "mean": 0.28199252934999064,
+              "sem": 0.012185821600701889
+            },
+            "mt_free": {
+              "mean": 0.5832505212907865,
+              "sem": 0.0018325497609175843
+            },
+            "headroom": -0.10391454145561767,
+            "headroom_sem": 0.017669976510981674,
+            "headroom_spread": -0.026177650814920787,
+            "headroom_spread_sem": 0.009307431609528787,
+            "headroom_2stage": -0.11464053064754376,
+            "headroom_2stage_sem": 0.018552366098235608,
+            "ceiling_at_n": 0.275080341125875,
+            "ceiling_at_n_sem": 0.011983934902346786
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 26,
+            "rho_picked_median": 0.96,
+            "stl": {
+              "mean": 0.37596195532137977,
+              "sem": 0.007489811843897143
+            },
+            "mt_eq": {
+              "mean": 0.23700801779115643,
+              "sem": 0.009344820640402537
+            },
+            "mt_gp": {
+              "mean": 0.24885548570134822,
+              "sem": 0.013873001271065175
+            },
+            "mt_spread": {
+              "mean": 0.3315425571390405,
+              "sem": 0.01155819985793255
+            },
+            "mt_free": {
+              "mean": 0.5874026347187226,
+              "sem": 0.0009870529941074736
+            },
+            "headroom": -0.12710646962003158,
+            "headroom_sem": 0.011625276433232714,
+            "headroom_spread": -0.04441939818233927,
+            "headroom_spread_sem": 0.008283157445865984,
+            "headroom_2stage": -0.13895393753022336,
+            "headroom_2stage_sem": 0.010725711716855501,
+            "ceiling_at_n": 0.21144067939734273,
+            "ceiling_at_n_sem": 0.007895886662469398
+          }
+        }
+      },
+      "AKT1": {
+        "fp_inf": 0.7885231469648996,
+        "aux_inf": 0.92990494540176,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.12338897839368079,
+              "sem": 0.020315213935928497
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.5475501052249758,
+              "sem": 0.06256149823243173
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.42416112683129514,
+            "ceiling_at_n_sem": 0.0593927498166934
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.21871119307522902,
+              "sem": 0.022657242740393223
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.7312166235555024,
+              "sem": 0.030977915169809786
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5125054304802734,
+            "ceiling_at_n_sem": 0.0432383006950415
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.2639214066205451,
+              "sem": 0.0187421211334872
+            },
+            "mt_eq": {
+              "mean": 0.06396829189514766,
+              "sem": 0.019150569446978905
+            },
+            "mt_gp": {
+              "mean": 0.06989176490397307,
+              "sem": 0.017961844080250686
+            },
+            "mt_spread": {
+              "mean": 0.16369178105909016,
+              "sem": 0.023116995761145762
+            },
+            "mt_free": {
+              "mean": 0.8005192743457282,
+              "sem": 0.0024326829221191304
+            },
+            "headroom": -0.19402964171657205,
+            "headroom_sem": 0.027655271388184372,
+            "headroom_spread": -0.10022962556145495,
+            "headroom_spread_sem": 0.023212310855198738,
+            "headroom_2stage": -0.19995311472539745,
+            "headroom_2stage_sem": 0.028855380144209655,
+            "ceiling_at_n": 0.5365978677251831,
+            "ceiling_at_n_sem": 0.01892614895281137
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.35190907729442467,
+              "sem": 0.014892439847377037
+            },
+            "mt_eq": {
+              "mean": 0.11428994900087346,
+              "sem": 0.016130486350123017
+            },
+            "mt_gp": {
+              "mean": 0.11552513011283723,
+              "sem": 0.016529012237480503
+            },
+            "mt_spread": {
+              "mean": 0.27209487104590074,
+              "sem": 0.01697987960389455
+            },
+            "mt_free": {
+              "mean": 0.808415112346925,
+              "sem": 0.0018764559516172947
+            },
+            "headroom": -0.23638394718158745,
+            "headroom_sem": 0.016332132769114133,
+            "headroom_spread": -0.07981420624852398,
+            "headroom_spread_sem": 0.01582564358805668,
+            "headroom_2stage": -0.2376191282935512,
+            "headroom_2stage_sem": 0.017944515036306997,
+            "ceiling_at_n": 0.4565060350525002,
+            "ceiling_at_n_sem": 0.015079893915310923
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4269268531897712,
+              "sem": 0.0122531715680225
+            },
+            "mt_eq": {
+              "mean": 0.17459908080000724,
+              "sem": 0.016240750873872115
+            },
+            "mt_gp": {
+              "mean": 0.18677778776149903,
+              "sem": 0.01682431232544593
+            },
+            "mt_spread": {
+              "mean": 0.3304937569321882,
+              "sem": 0.015221262093290359
+            },
+            "mt_free": {
+              "mean": 0.8072093131804353,
+              "sem": 0.002300713879364151
+            },
+            "headroom": -0.24014906542827213,
+            "headroom_sem": 0.01838787440547003,
+            "headroom_spread": -0.09643309625758302,
+            "headroom_spread_sem": 0.01678664612697291,
+            "headroom_2stage": -0.25232777238976395,
+            "headroom_2stage_sem": 0.0183195565253667,
+            "ceiling_at_n": 0.3802824599906641,
+            "ceiling_at_n_sem": 0.01167302723189654
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.5339081117684238,
+              "sem": 0.008777653625970803
+            },
+            "mt_eq": {
+              "mean": 0.30353267803138023,
+              "sem": 0.013360568721682436
+            },
+            "mt_gp": {
+              "mean": 0.3051546965006836,
+              "sem": 0.013581754799339466
+            },
+            "mt_spread": {
+              "mean": 0.441409933218058,
+              "sem": 0.009845715988941219
+            },
+            "mt_free": {
+              "mean": 0.8127112866432256,
+              "sem": 0.0013408850971393903
+            },
+            "headroom": -0.22875341526774023,
+            "headroom_sem": 0.01236935242761092,
+            "headroom_spread": -0.0924981785503658,
+            "headroom_spread_sem": 0.007005797716888905,
+            "headroom_2stage": -0.23037543373704356,
+            "headroom_2stage_sem": 0.013225403963735902,
+            "ceiling_at_n": 0.2788031748748018,
+            "ceiling_at_n_sem": 0.008985126667138655
+          }
+        }
+      },
+      "AKT2": {
+        "fp_inf": 0.7493313550188719,
+        "aux_inf": 0.8891408952386213,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.15793921469276578,
+              "sem": 0.017113250899674644
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6197170944777874,
+              "sem": 0.06619152796982958
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.46177787978502166,
+            "ceiling_at_n_sem": 0.06779939418918998
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.2052666261342233,
+              "sem": 0.025506904384864006
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.7996633516075489,
+              "sem": 0.0040271233701716595
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5943967254733256,
+            "ceiling_at_n_sem": 0.025592521471921197
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.25781850917448,
+              "sem": 0.020721264234475234
+            },
+            "mt_eq": {
+              "mean": 0.08648940196717908,
+              "sem": 0.02128076820251913
+            },
+            "mt_gp": {
+              "mean": 0.110569556138752,
+              "sem": 0.021952210574523012
+            },
+            "mt_spread": {
+              "mean": 0.16853624488372285,
+              "sem": 0.024993003348785854
+            },
+            "mt_free": {
+              "mean": 0.809450843717257,
+              "sem": 0.0021372312858984723
+            },
+            "headroom": -0.14724895303572796,
+            "headroom_sem": 0.021753404340607994,
+            "headroom_spread": -0.0892822642907571,
+            "headroom_spread_sem": 0.018108195882747646,
+            "headroom_2stage": -0.17132910720730093,
+            "headroom_2stage_sem": 0.020586130812166217,
+            "ceiling_at_n": 0.5516323345427769,
+            "ceiling_at_n_sem": 0.021188322223857872
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.36066731361063936,
+              "sem": 0.01507825577332167
+            },
+            "mt_eq": {
+              "mean": 0.1602677419076417,
+              "sem": 0.01719698584403782
+            },
+            "mt_gp": {
+              "mean": 0.176249584477858,
+              "sem": 0.017236325658348414
+            },
+            "mt_spread": {
+              "mean": 0.2789061304133792,
+              "sem": 0.015576281272270358
+            },
+            "mt_free": {
+              "mean": 0.8068558729064094,
+              "sem": 0.003728509647455227
+            },
+            "headroom": -0.1844177291327813,
+            "headroom_sem": 0.013870946322847213,
+            "headroom_spread": -0.08176118319726015,
+            "headroom_spread_sem": 0.008762163404755276,
+            "headroom_2stage": -0.20039957170299766,
+            "headroom_2stage_sem": 0.013508557063579608,
+            "ceiling_at_n": 0.4461885592957701,
+            "ceiling_at_n_sem": 0.01622466018673087
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4195223902624223,
+              "sem": 0.010541980564598973
+            },
+            "mt_eq": {
+              "mean": 0.2437265514411573,
+              "sem": 0.01615348866404181
+            },
+            "mt_gp": {
+              "mean": 0.24659363865460548,
+              "sem": 0.01497909070392587
+            },
+            "mt_spread": {
+              "mean": 0.3664022108685062,
+              "sem": 0.013148651993543953
+            },
+            "mt_free": {
+              "mean": 0.8135367661669065,
+              "sem": 0.003145191349771493
+            },
+            "headroom": -0.1729287516078167,
+            "headroom_sem": 0.013782023876115851,
+            "headroom_spread": -0.05312017939391598,
+            "headroom_spread_sem": 0.010645898526640682,
+            "headroom_2stage": -0.17579583882126495,
+            "headroom_2stage_sem": 0.015835149269429895,
+            "ceiling_at_n": 0.39401437590448424,
+            "ceiling_at_n_sem": 0.010704073869597359
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.5029871932831613,
+              "sem": 0.009399435239894295
+            },
+            "mt_eq": {
+              "mean": 0.2642462318989947,
+              "sem": 0.01548852459644519
+            },
+            "mt_gp": {
+              "mean": 0.273747671970685,
+              "sem": 0.014894678829943714
+            },
+            "mt_spread": {
+              "mean": 0.4572457510029829,
+              "sem": 0.0130337407204636
+            },
+            "mt_free": {
+              "mean": 0.8160707570656772,
+              "sem": 0.0010106880980919484
+            },
+            "headroom": -0.22923952131247635,
+            "headroom_sem": 0.018372760670406798,
+            "headroom_spread": -0.045741442280178415,
+            "headroom_spread_sem": 0.007787947550511286,
+            "headroom_2stage": -0.23874096138416667,
+            "headroom_2stage_sem": 0.01968031373255891,
+            "ceiling_at_n": 0.3130835637825159,
+            "ceiling_at_n_sem": 0.009248114197875901
+          }
+        }
+      },
+      "CDK2": {
+        "fp_inf": 0.785654474905155,
+        "aux_inf": 0.9347964421119653,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.125578474162664,
+              "sem": 0.020746448683952565
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.5014298471836485,
+              "sem": 0.10456939863701337
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.3758513730209845,
+            "ceiling_at_n_sem": 0.1068761361604126
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.19023595000594773,
+              "sem": 0.02704041670903556
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.8045208761835314,
+              "sem": 0.007309387944389938
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.6142849261775836,
+            "ceiling_at_n_sem": 0.02664933189357921
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.29637890411802364,
+              "sem": 0.013397894057294347
+            },
+            "mt_eq": {
+              "mean": 0.16112580911207625,
+              "sem": 0.02687356538099451
+            },
+            "mt_gp": {
+              "mean": 0.18036969400134858,
+              "sem": 0.02340806340895064
+            },
+            "mt_spread": {
+              "mean": 0.22524165266834814,
+              "sem": 0.022172581503016875
+            },
+            "mt_free": {
+              "mean": 0.8188440430274813,
+              "sem": 0.0062897293883352285
+            },
+            "headroom": -0.11600921011667505,
+            "headroom_sem": 0.022539414713805103,
+            "headroom_spread": -0.0711372514496755,
+            "headroom_spread_sem": 0.016596178251756074,
+            "headroom_2stage": -0.1352530950059474,
+            "headroom_2stage_sem": 0.025572714464666857,
+            "ceiling_at_n": 0.5224651389094576,
+            "ceiling_at_n_sem": 0.013667157982521046
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.36405314034127423,
+              "sem": 0.013944412951335167
+            },
+            "mt_eq": {
+              "mean": 0.19706924469337495,
+              "sem": 0.019526711012336252
+            },
+            "mt_gp": {
+              "mean": 0.19673514445094703,
+              "sem": 0.01912368353440467
+            },
+            "mt_spread": {
+              "mean": 0.2896831496473674,
+              "sem": 0.014401393388222251
+            },
+            "mt_free": {
+              "mean": 0.8239963985026864,
+              "sem": 0.002668601853659192
+            },
+            "headroom": -0.1673179958903272,
+            "headroom_sem": 0.023157023592107386,
+            "headroom_spread": -0.07436999069390675,
+            "headroom_spread_sem": 0.014833706405689723,
+            "headroom_2stage": -0.1669838956478993,
+            "headroom_2stage_sem": 0.023484062081602634,
+            "ceiling_at_n": 0.45994325816141207,
+            "ceiling_at_n_sem": 0.013024156739192726
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.44665869768294053,
+              "sem": 0.00984496429726185
+            },
+            "mt_eq": {
+              "mean": 0.25882650620682485,
+              "sem": 0.015457899841899735
+            },
+            "mt_gp": {
+              "mean": 0.2593912178178222,
+              "sem": 0.016279237096227826
+            },
+            "mt_spread": {
+              "mean": 0.4016976723634035,
+              "sem": 0.010812849254236846
+            },
+            "mt_free": {
+              "mean": 0.828310010630166,
+              "sem": 0.002581076549101948
+            },
+            "headroom": -0.18726747986511844,
+            "headroom_sem": 0.016311129696661462,
+            "headroom_spread": -0.04496102531953714,
+            "headroom_spread_sem": 0.011740328610932447,
+            "headroom_2stage": -0.1878321914761158,
+            "headroom_2stage_sem": 0.015816691957804812,
+            "ceiling_at_n": 0.3816513129472253,
+            "ceiling_at_n_sem": 0.010547370950141053
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.5053255748582639,
+              "sem": 0.006764653563770496
+            },
+            "mt_eq": {
+              "mean": 0.2668180741873919,
+              "sem": 0.021565961215570993
+            },
+            "mt_gp": {
+              "mean": 0.2796981890342262,
+              "sem": 0.020929520042597374
+            },
+            "mt_spread": {
+              "mean": 0.4589167894529472,
+              "sem": 0.011716517719239669
+            },
+            "mt_free": {
+              "mean": 0.828657615696082,
+              "sem": 0.002053542149544781
+            },
+            "headroom": -0.22562738582403763,
+            "headroom_sem": 0.020348845672650776,
+            "headroom_spread": -0.046408785405316635,
+            "headroom_spread_sem": 0.00952029000819945,
+            "headroom_2stage": -0.23850750067087206,
+            "headroom_2stage_sem": 0.021375091768878494,
+            "ceiling_at_n": 0.3233320408378181,
+            "ceiling_at_n_sem": 0.0066079693860023585
+          }
+        }
+      },
+      "CSF1R": {
+        "fp_inf": 0.7273655541326236,
+        "aux_inf": 0.834887278196398,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.12864185268893438,
+              "sem": 0.025317902125603937
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.4552064375003792,
+              "sem": 0.0881103007377803
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.32656458481144485,
+            "ceiling_at_n_sem": 0.08190886199248107
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.21088728251904287,
+              "sem": 0.020982077993534652
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.7164713205723781,
+              "sem": 0.016472670573196888
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.505584038053335,
+            "ceiling_at_n_sem": 0.025590960953421442
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.304466336883829,
+              "sem": 0.016999942872061326
+            },
+            "mt_eq": {
+              "mean": 0.19208976935344219,
+              "sem": 0.023916831181595048
+            },
+            "mt_gp": {
+              "mean": 0.18438487063560755,
+              "sem": 0.022445571231431784
+            },
+            "mt_spread": {
+              "mean": 0.24006867410232177,
+              "sem": 0.022028244971024322
+            },
+            "mt_free": {
+              "mean": 0.7477162623714104,
+              "sem": 0.0027873011838635705
+            },
+            "headroom": -0.12008146624822143,
+            "headroom_sem": 0.011141730373743147,
+            "headroom_spread": -0.0643976627815072,
+            "headroom_spread_sem": 0.016874738893943274,
+            "headroom_2stage": -0.11237656753038683,
+            "headroom_2stage_sem": 0.012643922111905993,
+            "ceiling_at_n": 0.44324992548758146,
+            "ceiling_at_n_sem": 0.015696067643650027
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.31571546547056667,
+              "sem": 0.015624929901732976
+            },
+            "mt_eq": {
+              "mean": 0.14887117569155864,
+              "sem": 0.0222282020212993
+            },
+            "mt_gp": {
+              "mean": 0.1543894041303479,
+              "sem": 0.022681870918003416
+            },
+            "mt_spread": {
+              "mean": 0.25976040727313787,
+              "sem": 0.02779940030962623
+            },
+            "mt_free": {
+              "mean": 0.7504316458711355,
+              "sem": 0.0023701599286111
+            },
+            "headroom": -0.1613260613402188,
+            "headroom_sem": 0.026709319159270176,
+            "headroom_spread": -0.05595505819742881,
+            "headroom_spread_sem": 0.019470503613189718,
+            "headroom_2stage": -0.1668442897790081,
+            "headroom_2stage_sem": 0.024653387303275303,
+            "ceiling_at_n": 0.43471618040056886,
+            "ceiling_at_n_sem": 0.0150750333236597
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4055553754449587,
+              "sem": 0.009467141593478518
+            },
+            "mt_eq": {
+              "mean": 0.2506006715950694,
+              "sem": 0.017050763483201992
+            },
+            "mt_gp": {
+              "mean": 0.2501836743759212,
+              "sem": 0.018280478422215096
+            },
+            "mt_spread": {
+              "mean": 0.3368841613946668,
+              "sem": 0.014824074551290978
+            },
+            "mt_free": {
+              "mean": 0.7519850297948659,
+              "sem": 0.0017679694459609182
+            },
+            "headroom": -0.15537170106903742,
+            "headroom_sem": 0.016308459472832323,
+            "headroom_spread": -0.06867121405029183,
+            "headroom_spread_sem": 0.014901759056408776,
+            "headroom_2stage": -0.1549547038498892,
+            "headroom_2stage_sem": 0.01617262806729624,
+            "ceiling_at_n": 0.3464296543499072,
+            "ceiling_at_n_sem": 0.010100370127795057
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4598359331530101,
+              "sem": 0.007980519588362767
+            },
+            "mt_eq": {
+              "mean": 0.27603250666851575,
+              "sem": 0.017716880951110642
+            },
+            "mt_gp": {
+              "mean": 0.29479576314621403,
+              "sem": 0.016973110333641333
+            },
+            "mt_spread": {
+              "mean": 0.4190840869199562,
+              "sem": 0.013497911697571977
+            },
+            "mt_free": {
+              "mean": 0.7534214009613134,
+              "sem": 0.0021887396076268567
+            },
+            "headroom": -0.1650401700067961,
+            "headroom_sem": 0.01733287482120408,
+            "headroom_spread": -0.040751846233053966,
+            "headroom_spread_sem": 0.010633090684394378,
+            "headroom_2stage": -0.18380342648449438,
+            "headroom_2stage_sem": 0.017550888331619368,
+            "ceiling_at_n": 0.29358546780830314,
+            "ceiling_at_n_sem": 0.008270539417107153
+          }
+        }
+      },
+      "EGFR": {
+        "fp_inf": 0.7607145840651407,
+        "aux_inf": 0.9126824360857557,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.14662625538705765,
+              "sem": 0.021030382598142622
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6982022557416488,
+              "sem": 0.03858738372801595
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5515760003545913,
+            "ceiling_at_n_sem": 0.04415726549551436
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.15478740853471706,
+              "sem": 0.022712020528304906
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.7920923796493667,
+              "sem": 0.008240358119965095
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.6373049711146497,
+            "ceiling_at_n_sem": 0.02603747561825183
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.2792573330133693,
+              "sem": 0.020906570342163977
+            },
+            "mt_eq": {
+              "mean": 0.1089564540895607,
+              "sem": 0.02166879814540207
+            },
+            "mt_gp": {
+              "mean": 0.11332301211348146,
+              "sem": 0.021927932177241042
+            },
+            "mt_spread": {
+              "mean": 0.21084070026468477,
+              "sem": 0.019327282293261274
+            },
+            "mt_free": {
+              "mean": 0.8099176635053672,
+              "sem": 0.007346920904725697
+            },
+            "headroom": -0.16593432089988788,
+            "headroom_sem": 0.017390907996260453,
+            "headroom_spread": -0.06841663274868452,
+            "headroom_spread_sem": 0.016829264053121552,
+            "headroom_2stage": -0.17030087892380863,
+            "headroom_2stage_sem": 0.01787124921323134,
+            "ceiling_at_n": 0.5306603304919978,
+            "ceiling_at_n_sem": 0.020549397122496312
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3517721884520488,
+              "sem": 0.010787370782335026
+            },
+            "mt_eq": {
+              "mean": 0.15510768431178362,
+              "sem": 0.02489867979786342
+            },
+            "mt_gp": {
+              "mean": 0.1650744546739916,
+              "sem": 0.024266850787107476
+            },
+            "mt_spread": {
+              "mean": 0.2796336270688091,
+              "sem": 0.02048304350071251
+            },
+            "mt_free": {
+              "mean": 0.8204022836470019,
+              "sem": 0.0013177592936419473
+            },
+            "headroom": -0.18669773377805715,
+            "headroom_sem": 0.022673091466632746,
+            "headroom_spread": -0.07213856138323956,
+            "headroom_spread_sem": 0.02043849779183573,
+            "headroom_2stage": -0.1966645041402651,
+            "headroom_2stage_sem": 0.02351635370502168,
+            "ceiling_at_n": 0.4686300951949531,
+            "ceiling_at_n_sem": 0.011373885715697554
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4077511815471486,
+              "sem": 0.011077761865370492
+            },
+            "mt_eq": {
+              "mean": 0.1965595301111948,
+              "sem": 0.022877385939050848
+            },
+            "mt_gp": {
+              "mean": 0.20223625463982012,
+              "sem": 0.023689067917392486
+            },
+            "mt_spread": {
+              "mean": 0.32838422283607016,
+              "sem": 0.020199281802779183
+            },
+            "mt_free": {
+              "mean": 0.8195013002411328,
+              "sem": 0.0017170528691810368
+            },
+            "headroom": -0.2055149269073285,
+            "headroom_sem": 0.023154090309143782,
+            "headroom_spread": -0.0793669587110785,
+            "headroom_spread_sem": 0.021881673282650577,
+            "headroom_2stage": -0.2111916514359538,
+            "headroom_2stage_sem": 0.022568072058505768,
+            "ceiling_at_n": 0.4117501186939842,
+            "ceiling_at_n_sem": 0.011386010651839801
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.488984431557996,
+              "sem": 0.00775673508164763
+            },
+            "mt_eq": {
+              "mean": 0.30132717981266977,
+              "sem": 0.01445170671801375
+            },
+            "mt_gp": {
+              "mean": 0.30188581285933636,
+              "sem": 0.01362486453845322
+            },
+            "mt_spread": {
+              "mean": 0.44135767117740266,
+              "sem": 0.010047762333255338
+            },
+            "mt_free": {
+              "mean": 0.8204916180202643,
+              "sem": 0.0007370303582325848
+            },
+            "headroom": -0.1870986186986596,
+            "headroom_sem": 0.014931732283229918,
+            "headroom_spread": -0.04762676038059333,
+            "headroom_spread_sem": 0.005413318796575924,
+            "headroom_2stage": -0.18765725174532624,
+            "headroom_2stage_sem": 0.015478385948077685,
+            "ceiling_at_n": 0.3315071864622683,
+            "ceiling_at_n_sem": 0.007875455137899267
+          }
+        }
+      },
+      "FGFR1": {
+        "fp_inf": 0.6663606894782362,
+        "aux_inf": 0.8243015400268286,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.08817576687783907,
+              "sem": 0.01743496421151096
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.47452290881243264,
+              "sem": 0.07816402204749945
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.38634714193459374,
+            "ceiling_at_n_sem": 0.08325463592313694
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.11258503571029148,
+              "sem": 0.01577728664089078
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6829306114054574,
+              "sem": 0.021983025317458337
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5703455756951659,
+            "ceiling_at_n_sem": 0.024655037275737115
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.21642643720630556,
+              "sem": 0.015905964699943227
+            },
+            "mt_eq": {
+              "mean": 0.12279103300797697,
+              "sem": 0.016159250853104254
+            },
+            "mt_gp": {
+              "mean": 0.12373361609966076,
+              "sem": 0.014391511889573381
+            },
+            "mt_spread": {
+              "mean": 0.1529210239243336,
+              "sem": 0.01856303702884736
+            },
+            "mt_free": {
+              "mean": 0.7178123949360359,
+              "sem": 0.0032348956087389852
+            },
+            "headroom": -0.09269282110664476,
+            "headroom_sem": 0.018196334510423816,
+            "headroom_spread": -0.06350541328197191,
+            "headroom_spread_sem": 0.016456318596401016,
+            "headroom_2stage": -0.09363540419832853,
+            "headroom_2stage_sem": 0.019660479584674664,
+            "ceiling_at_n": 0.5013859577297303,
+            "ceiling_at_n_sem": 0.01725489072382537
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.23559709073444868,
+              "sem": 0.013370005378762062
+            },
+            "mt_eq": {
+              "mean": 0.09846630151908942,
+              "sem": 0.013069507749481608
+            },
+            "mt_gp": {
+              "mean": 0.09173983933223705,
+              "sem": 0.01582275724005927
+            },
+            "mt_spread": {
+              "mean": 0.17520191684725078,
+              "sem": 0.015909531114106566
+            },
+            "mt_free": {
+              "mean": 0.7184300661609846,
+              "sem": 0.005304859368581489
+            },
+            "headroom": -0.14385725140221162,
+            "headroom_sem": 0.012662414883471378,
+            "headroom_spread": -0.060395173887197895,
+            "headroom_spread_sem": 0.012374739240564136,
+            "headroom_2stage": -0.13713078921535923,
+            "headroom_2stage_sem": 0.01184049200298222,
+            "ceiling_at_n": 0.48283297542653597,
+            "ceiling_at_n_sem": 0.013092697030561961
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3405701796864545,
+              "sem": 0.011963691858944706
+            },
+            "mt_eq": {
+              "mean": 0.14068031927309804,
+              "sem": 0.015353282176771536
+            },
+            "mt_gp": {
+              "mean": 0.16056060803344424,
+              "sem": 0.014719008928235978
+            },
+            "mt_spread": {
+              "mean": 0.2757796313349335,
+              "sem": 0.012165884996197038
+            },
+            "mt_free": {
+              "mean": 0.7296516158763917,
+              "sem": 0.00204158406703046
+            },
+            "headroom": -0.18000957165301026,
+            "headroom_sem": 0.012177990558189002,
+            "headroom_spread": -0.06479054835152101,
+            "headroom_spread_sem": 0.01200969825557094,
+            "headroom_2stage": -0.1998898604133565,
+            "headroom_2stage_sem": 0.013689760318021445,
+            "ceiling_at_n": 0.38908143618993724,
+            "ceiling_at_n_sem": 0.012323172981138377
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3760530486551189,
+              "sem": 0.00630778959233902
+            },
+            "mt_eq": {
+              "mean": 0.19183793953176037,
+              "sem": 0.015133074208335416
+            },
+            "mt_gp": {
+              "mean": 0.2066541723725658,
+              "sem": 0.013072623619666856
+            },
+            "mt_spread": {
+              "mean": 0.31422472078598374,
+              "sem": 0.008389681896195798
+            },
+            "mt_free": {
+              "mean": 0.7307167743791453,
+              "sem": 0.0012857472072903941
+            },
+            "headroom": -0.16939887628255307,
+            "headroom_sem": 0.013843337406557965,
+            "headroom_spread": -0.061828327869135113,
+            "headroom_spread_sem": 0.007141419922783637,
+            "headroom_2stage": -0.18421510912335853,
+            "headroom_2stage_sem": 0.015499417477480043,
+            "ceiling_at_n": 0.35466372572402627,
+            "ceiling_at_n_sem": 0.006309678436456655
+          }
+        }
+      },
+      "IGF1R": {
+        "fp_inf": 0.6712575138404042,
+        "aux_inf": 0.8123551935384585,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.12594145770298576,
+              "sem": 0.022134250547627514
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.4571360798843663,
+              "sem": 0.07909770417254881
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.33119462218138046,
+            "ceiling_at_n_sem": 0.07769029650214404
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.21437655800103972,
+              "sem": 0.020241757555419786
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6919934827584682,
+              "sem": 0.02253963909283439
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.4776169247574285,
+            "ceiling_at_n_sem": 0.029327619601889936
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.2907566698074111,
+              "sem": 0.013394693852088958
+            },
+            "mt_eq": {
+              "mean": 0.16536319993236634,
+              "sem": 0.02350394367676357
+            },
+            "mt_gp": {
+              "mean": 0.14939727104026868,
+              "sem": 0.022398350405614005
+            },
+            "mt_spread": {
+              "mean": 0.25285548643075073,
+              "sem": 0.017236936138776575
+            },
+            "mt_free": {
+              "mean": 0.7107380717919665,
+              "sem": 0.00849664536503846
+            },
+            "headroom": -0.14135939876714243,
+            "headroom_sem": 0.019714751764122643,
+            "headroom_spread": -0.03790118337666032,
+            "headroom_spread_sem": 0.010313503036774562,
+            "headroom_2stage": -0.12539346987504477,
+            "headroom_2stage_sem": 0.020257333329097106,
+            "ceiling_at_n": 0.41998140198455536,
+            "ceiling_at_n_sem": 0.017170727882332554
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3306164358334921,
+              "sem": 0.011601509923860383
+            },
+            "mt_eq": {
+              "mean": 0.14075678811531173,
+              "sem": 0.020368318105852226
+            },
+            "mt_gp": {
+              "mean": 0.15546010878510777,
+              "sem": 0.018385948831284738
+            },
+            "mt_spread": {
+              "mean": 0.24199526370800056,
+              "sem": 0.01988833920823406
+            },
+            "mt_free": {
+              "mean": 0.728019872224671,
+              "sem": 0.00296980457977961
+            },
+            "headroom": -0.17515632704838438,
+            "headroom_sem": 0.01580173743341153,
+            "headroom_spread": -0.08862117212549162,
+            "headroom_spread_sem": 0.016842653620118997,
+            "headroom_2stage": -0.18985964771818037,
+            "headroom_2stage_sem": 0.018180828758879178,
+            "ceiling_at_n": 0.3974034363911788,
+            "ceiling_at_n_sem": 0.011809770825727432
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.41397256967277374,
+              "sem": 0.013305499235647214
+            },
+            "mt_eq": {
+              "mean": 0.20360248302603004,
+              "sem": 0.018201429877279907
+            },
+            "mt_gp": {
+              "mean": 0.22196223572889395,
+              "sem": 0.016129624332743998
+            },
+            "mt_spread": {
+              "mean": 0.3599262488400875,
+              "sem": 0.011924022487150776
+            },
+            "mt_free": {
+              "mean": 0.7330532727585262,
+              "sem": 0.00251066969274755
+            },
+            "headroom": -0.19201033394387984,
+            "headroom_sem": 0.014794096212329761,
+            "headroom_spread": -0.05404632083268625,
+            "headroom_spread_sem": 0.012380764361515195,
+            "headroom_2stage": -0.21037008664674373,
+            "headroom_2stage_sem": 0.015736545658382763,
+            "ceiling_at_n": 0.31908070308575237,
+            "ceiling_at_n_sem": 0.013509085244434896
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4479536512558394,
+              "sem": 0.008341174041864297
+            },
+            "mt_eq": {
+              "mean": 0.263651800609931,
+              "sem": 0.014445250673719877
+            },
+            "mt_gp": {
+              "mean": 0.2714227186995063,
+              "sem": 0.014334617395253265
+            },
+            "mt_spread": {
+              "mean": 0.39769377959861313,
+              "sem": 0.011202072648331852
+            },
+            "mt_free": {
+              "mean": 0.7333497853127403,
+              "sem": 0.0020332494232692105
+            },
+            "headroom": -0.17653093255633315,
+            "headroom_sem": 0.015210666826530836,
+            "headroom_spread": -0.050259871657226354,
+            "headroom_spread_sem": 0.011031277680744056,
+            "headroom_2stage": -0.1843018506459084,
+            "headroom_2stage_sem": 0.01624687465077388,
+            "ceiling_at_n": 0.28539613405690073,
+            "ceiling_at_n_sem": 0.00945609747535712
+          }
+        }
+      },
+      "JAK2": {
+        "fp_inf": 0.7288084760838566,
+        "aux_inf": 0.8960142258199221,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.16922592981594786,
+              "sem": 0.026494936725103325
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.5637472187666415,
+              "sem": 0.08251315128081671
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.3945212889506937,
+            "ceiling_at_n_sem": 0.08580056726741123
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.23850214997607488,
+              "sem": 0.01928524184315508
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.7475990569534605,
+              "sem": 0.02636749463651422
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5090969069773859,
+            "ceiling_at_n_sem": 0.027161680020030197
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3271324085711562,
+              "sem": 0.013781641778215914
+            },
+            "mt_eq": {
+              "mean": 0.16801722030410193,
+              "sem": 0.020736943358260103
+            },
+            "mt_gp": {
+              "mean": 0.17509061929369657,
+              "sem": 0.021279179146957525
+            },
+            "mt_spread": {
+              "mean": 0.23031391945744345,
+              "sem": 0.019912149638826572
+            },
+            "mt_free": {
+              "mean": 0.7970373862057278,
+              "sem": 0.006198086543536595
+            },
+            "headroom": -0.1520417892774598,
+            "headroom_sem": 0.025280199064366612,
+            "headroom_spread": -0.09681848911371278,
+            "headroom_spread_sem": 0.01940941883568443,
+            "headroom_2stage": -0.15911518826705434,
+            "headroom_2stage_sem": 0.02483129894833483,
+            "ceiling_at_n": 0.4699049776345716,
+            "ceiling_at_n_sem": 0.016830808952620888
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.35525399328278595,
+              "sem": 0.016351590916785574
+            },
+            "mt_eq": {
+              "mean": 0.15273130104953642,
+              "sem": 0.01890829770221919
+            },
+            "mt_gp": {
+              "mean": 0.147856688460925,
+              "sem": 0.021320932591413183
+            },
+            "mt_spread": {
+              "mean": 0.2749952850046061,
+              "sem": 0.018805209880837
+            },
+            "mt_free": {
+              "mean": 0.8022355131035065,
+              "sem": 0.0036825135691569214
+            },
+            "headroom": -0.20739730482186092,
+            "headroom_sem": 0.021650428449420042,
+            "headroom_spread": -0.08025870827817978,
+            "headroom_spread_sem": 0.014883089850976909,
+            "headroom_2stage": -0.20252269223324953,
+            "headroom_2stage_sem": 0.020019493408665785,
+            "ceiling_at_n": 0.4469815198207206,
+            "ceiling_at_n_sem": 0.01795914198032297
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.46930925813788943,
+              "sem": 0.008873915371686992
+            },
+            "mt_eq": {
+              "mean": 0.28312463753308753,
+              "sem": 0.02210924885852581
+            },
+            "mt_gp": {
+              "mean": 0.28496789083514074,
+              "sem": 0.022738155158319208
+            },
+            "mt_spread": {
+              "mean": 0.39271761091748875,
+              "sem": 0.01347013197822306
+            },
+            "mt_free": {
+              "mean": 0.8074817242207116,
+              "sem": 0.0022655469248836885
+            },
+            "headroom": -0.18434136730274867,
+            "headroom_sem": 0.024315024007258986,
+            "headroom_spread": -0.07659164722040063,
+            "headroom_spread_sem": 0.009959930244409033,
+            "headroom_2stage": -0.1861846206048019,
+            "headroom_2stage_sem": 0.024096273419952043,
+            "ceiling_at_n": 0.33817246608282214,
+            "ceiling_at_n_sem": 0.009448052109597937
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.5090389664692124,
+              "sem": 0.008583110726131956
+            },
+            "mt_eq": {
+              "mean": 0.3196765179669535,
+              "sem": 0.015007110281608227
+            },
+            "mt_gp": {
+              "mean": 0.33036987386989347,
+              "sem": 0.015020075662289663
+            },
+            "mt_spread": {
+              "mean": 0.47117898999289787,
+              "sem": 0.008296782913120677
+            },
+            "mt_free": {
+              "mean": 0.8097198158900918,
+              "sem": 0.0014446383577172452
+            },
+            "headroom": -0.1786690925993189,
+            "headroom_sem": 0.018053050244846273,
+            "headroom_spread": -0.03785997647631452,
+            "headroom_spread_sem": 0.006264430231916856,
+            "headroom_2stage": -0.18936244850225886,
+            "headroom_2stage_sem": 0.01849200030082463,
+            "ceiling_at_n": 0.3006808494208794,
+            "ceiling_at_n_sem": 0.008889519084760761
+          }
+        }
+      },
+      "KDR": {
+        "fp_inf": 0.6327475228874352,
+        "aux_inf": 0.8607344328716408,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.07472537195514259,
+              "sem": 0.017791051508578164
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.31972729980465037,
+              "sem": 0.09343117070255429
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.24500192784950778,
+            "ceiling_at_n_sem": 0.08835997910298318
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.15968156230157843,
+              "sem": 0.01655483753423434
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6064807873998415,
+              "sem": 0.015522228037342408
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.446799225098263,
+            "ceiling_at_n_sem": 0.018686072229550734
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.21629826564092441,
+              "sem": 0.014064125357130692
+            },
+            "mt_eq": {
+              "mean": 0.10462089878736953,
+              "sem": 0.012993538202137977
+            },
+            "mt_gp": {
+              "mean": 0.09435626385747563,
+              "sem": 0.014774400764109881
+            },
+            "mt_spread": {
+              "mean": 0.12324515946945092,
+              "sem": 0.014228251375916896
+            },
+            "mt_free": {
+              "mean": 0.6480038786142726,
+              "sem": 0.007064771516009206
+            },
+            "headroom": -0.1219420017834488,
+            "headroom_sem": 0.01564980628694576,
+            "headroom_spread": -0.09305310617147353,
+            "headroom_spread_sem": 0.015034127363786627,
+            "headroom_2stage": -0.11167736685355492,
+            "headroom_2stage_sem": 0.013553428146723065,
+            "ceiling_at_n": 0.4317056129733482,
+            "ceiling_at_n_sem": 0.017193851922776227
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.24321639253083144,
+              "sem": 0.009275528554171138
+            },
+            "mt_eq": {
+              "mean": 0.09724855192451684,
+              "sem": 0.021161488841482064
+            },
+            "mt_gp": {
+              "mean": 0.09598731117338287,
+              "sem": 0.01919493508104932
+            },
+            "mt_spread": {
+              "mean": 0.14771740222837165,
+              "sem": 0.013437446330832546
+            },
+            "mt_free": {
+              "mean": 0.6557588445950002,
+              "sem": 0.005179946006064638
+            },
+            "headroom": -0.14722908135744864,
+            "headroom_sem": 0.019949087741591032,
+            "headroom_spread": -0.09549899030245983,
+            "headroom_spread_sem": 0.01577849645216154,
+            "headroom_2stage": -0.14596784060631468,
+            "headroom_2stage_sem": 0.021048386260430322,
+            "ceiling_at_n": 0.4125424520641687,
+            "ceiling_at_n_sem": 0.011692538679617588
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.30305209683347734,
+              "sem": 0.009294138497161623
+            },
+            "mt_eq": {
+              "mean": 0.1314009993664045,
+              "sem": 0.018777769377471616
+            },
+            "mt_gp": {
+              "mean": 0.14565562709814056,
+              "sem": 0.01779815602165805
+            },
+            "mt_spread": {
+              "mean": 0.2178023813420315,
+              "sem": 0.01258366029298841
+            },
+            "mt_free": {
+              "mean": 0.6657794133247492,
+              "sem": 0.0033001794710883015
+            },
+            "headroom": -0.1573964697353368,
+            "headroom_sem": 0.019857400744178026,
+            "headroom_spread": -0.0852497154914458,
+            "headroom_spread_sem": 0.01044497692289418,
+            "headroom_2stage": -0.1716510974670728,
+            "headroom_2stage_sem": 0.019371657815814843,
+            "ceiling_at_n": 0.3627273164912719,
+            "ceiling_at_n_sem": 0.009331533477799157
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.34521986876711774,
+              "sem": 0.009430368525815157
+            },
+            "mt_eq": {
+              "mean": 0.13804144348574604,
+              "sem": 0.012815939339312833
+            },
+            "mt_gp": {
+              "mean": 0.16378111232972514,
+              "sem": 0.014134060234010969
+            },
+            "mt_spread": {
+              "mean": 0.25982060498108306,
+              "sem": 0.013874614174528876
+            },
+            "mt_free": {
+              "mean": 0.6754751634721936,
+              "sem": 0.0015742265404500668
+            },
+            "headroom": -0.1814387564373926,
+            "headroom_sem": 0.011350040682471297,
+            "headroom_spread": -0.08539926378603471,
+            "headroom_spread_sem": 0.01035629813301658,
+            "headroom_2stage": -0.20717842528137181,
+            "headroom_2stage_sem": 0.011399994005276758,
+            "ceiling_at_n": 0.33025529470507575,
+            "ceiling_at_n_sem": 0.009915635750738836
+          }
+        }
+      },
+      "KIT": {
+        "fp_inf": 0.7503886159826428,
+        "aux_inf": 0.8915847147496359,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.09840297762106393,
+              "sem": 0.015391167113420976
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.43717608523443496,
+              "sem": 0.08654159492336924
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.3387731076133711,
+            "ceiling_at_n_sem": 0.08221639304484038
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.16401732251944384,
+              "sem": 0.017696724227765116
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.7483177728181076,
+              "sem": 0.006510264637082834
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5843004502986637,
+            "ceiling_at_n_sem": 0.01689727555381789
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.26259058880565167,
+              "sem": 0.011855321763215843
+            },
+            "mt_eq": {
+              "mean": 0.06055212682055703,
+              "sem": 0.02130918607837312
+            },
+            "mt_gp": {
+              "mean": 0.07366017471972246,
+              "sem": 0.021604443059736356
+            },
+            "mt_spread": {
+              "mean": 0.16281153387838462,
+              "sem": 0.018342438991862754
+            },
+            "mt_free": {
+              "mean": 0.7612499286409391,
+              "sem": 0.004807987287344764
+            },
+            "headroom": -0.1889304140859292,
+            "headroom_sem": 0.019540442759188415,
+            "headroom_spread": -0.09977905492726705,
+            "headroom_spread_sem": 0.01827679645594803,
+            "headroom_2stage": -0.20203846198509465,
+            "headroom_2stage_sem": 0.02001901064882318,
+            "ceiling_at_n": 0.49865933983528743,
+            "ceiling_at_n_sem": 0.01379882429713071
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.2707388791689526,
+              "sem": 0.014222300032904377
+            },
+            "mt_eq": {
+              "mean": 0.13176593570619755,
+              "sem": 0.017394621827049674
+            },
+            "mt_gp": {
+              "mean": 0.12879539396526424,
+              "sem": 0.017750191393181573
+            },
+            "mt_spread": {
+              "mean": 0.23630697239695903,
+              "sem": 0.01998277748497924
+            },
+            "mt_free": {
+              "mean": 0.7604514437391395,
+              "sem": 0.003368765189182038
+            },
+            "headroom": -0.14194348520368835,
+            "headroom_sem": 0.019666563334260603,
+            "headroom_spread": -0.03443190677199357,
+            "headroom_spread_sem": 0.014504700765058425,
+            "headroom_2stage": -0.1389729434627551,
+            "headroom_2stage_sem": 0.020889095750118433,
+            "ceiling_at_n": 0.4897125645701867,
+            "ceiling_at_n_sem": 0.013420447982139346
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3621344472147603,
+              "sem": 0.009797261626190186
+            },
+            "mt_eq": {
+              "mean": 0.20014640899691621,
+              "sem": 0.012362429540865985
+            },
+            "mt_gp": {
+              "mean": 0.20845853323929156,
+              "sem": 0.013466660849815872
+            },
+            "mt_spread": {
+              "mean": 0.32871854745954016,
+              "sem": 0.0115365125627294
+            },
+            "mt_free": {
+              "mean": 0.7701129106802587,
+              "sem": 0.001905117685446763
+            },
+            "headroom": -0.15367591397546873,
+            "headroom_sem": 0.012686347205859067,
+            "headroom_spread": -0.033415899755220156,
+            "headroom_spread_sem": 0.009004649428380614,
+            "headroom_2stage": -0.16198803821784408,
+            "headroom_2stage_sem": 0.012560548070991008,
+            "ceiling_at_n": 0.40797846346549826,
+            "ceiling_at_n_sem": 0.010749538241765551
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4494758043648148,
+              "sem": 0.009781662312506371
+            },
+            "mt_eq": {
+              "mean": 0.21380497910174764,
+              "sem": 0.01776298217832561
+            },
+            "mt_gp": {
+              "mean": 0.23151372114412175,
+              "sem": 0.016940389025554014
+            },
+            "mt_spread": {
+              "mean": 0.4021789757542482,
+              "sem": 0.009503191854603157
+            },
+            "mt_free": {
+              "mean": 0.7715952875909255,
+              "sem": 0.0017058123840247466
+            },
+            "headroom": -0.21796208322069305,
+            "headroom_sem": 0.018471483358447373,
+            "headroom_spread": -0.04729682861056657,
+            "headroom_spread_sem": 0.009695926343220479,
+            "headroom_2stage": -0.23567082526306712,
+            "headroom_2stage_sem": 0.0188683040040133,
+            "ceiling_at_n": 0.32211948322611067,
+            "ceiling_at_n_sem": 0.010488107915206171
+          }
+        }
+      },
+      "LCK": {
+        "fp_inf": 0.7951462163771166,
+        "aux_inf": 0.9184108470866096,
+        "n_aux": 2,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.14598439845976738,
+              "sem": 0.02494822488907531
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.8523201529401332,
+              "sem": 0.008314344802731067
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.7063357544803658,
+            "ceiling_at_n_sem": 0.02724381980634978
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 3,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.2433317537774792,
+              "sem": 0.020005601524910637
+            },
+            "mt_eq": {
+              "mean": 0.05653647798688201,
+              "sem": 0.026379915810012304
+            },
+            "mt_gp": {
+              "mean": 0.06926241160352209,
+              "sem": 0.02470772703698588
+            },
+            "mt_spread": {
+              "mean": 0.14072074552739644,
+              "sem": 0.02484741014259665
+            },
+            "mt_free": {
+              "mean": 0.8719009985688102,
+              "sem": 0.006560547991610808
+            },
+            "headroom": -0.17406934217395714,
+            "headroom_sem": 0.019894533967496086,
+            "headroom_spread": -0.1026110082500828,
+            "headroom_spread_sem": 0.022017702903344257,
+            "headroom_2stage": -0.1867952757905972,
+            "headroom_2stage_sem": 0.021087423760526858,
+            "ceiling_at_n": 0.6285692447913311,
+            "ceiling_at_n_sem": 0.0229235510561356
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 6,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3128627981661792,
+              "sem": 0.01630221464516178
+            },
+            "mt_eq": {
+              "mean": 0.19092464890033417,
+              "sem": 0.02213355461928481
+            },
+            "mt_gp": {
+              "mean": 0.18840976855516917,
+              "sem": 0.02326490517648971
+            },
+            "mt_spread": {
+              "mean": 0.21503107241607897,
+              "sem": 0.025422135016615548
+            },
+            "mt_free": {
+              "mean": 0.8829109039423735,
+              "sem": 0.001086669391331036
+            },
+            "headroom": -0.12445302961100994,
+            "headroom_sem": 0.019539573572370614,
+            "headroom_spread": -0.09783172575010014,
+            "headroom_spread_sem": 0.020304486476153412,
+            "headroom_2stage": -0.12193814926584493,
+            "headroom_2stage_sem": 0.01978232394402636,
+            "ceiling_at_n": 0.5700481057761941,
+            "ceiling_at_n_sem": 0.016352603528008134
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 10,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.37968980485379944,
+              "sem": 0.01599284502979671
+            },
+            "mt_eq": {
+              "mean": 0.22267190381827082,
+              "sem": 0.018565748132513327
+            },
+            "mt_gp": {
+              "mean": 0.22454381700845275,
+              "sem": 0.01651473168665846
+            },
+            "mt_spread": {
+              "mean": 0.3013495528746405,
+              "sem": 0.01634935389747003
+            },
+            "mt_free": {
+              "mean": 0.8836587223646534,
+              "sem": 0.001518265362897519
+            },
+            "headroom": -0.15514598784534675,
+            "headroom_sem": 0.01661183726862858,
+            "headroom_spread": -0.07834025197915892,
+            "headroom_spread_sem": 0.011583763567490855,
+            "headroom_2stage": -0.15701790103552857,
+            "headroom_2stage_sem": 0.017773483773454918,
+            "ceiling_at_n": 0.5039689175108538,
+            "ceiling_at_n_sem": 0.01568387535494116
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 16,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.47539952792391205,
+              "sem": 0.0078319372663171
+            },
+            "mt_eq": {
+              "mean": 0.29728560431600276,
+              "sem": 0.015598650353190484
+            },
+            "mt_gp": {
+              "mean": 0.3055849200427113,
+              "sem": 0.012533949728934202
+            },
+            "mt_spread": {
+              "mean": 0.41524352525629904,
+              "sem": 0.013877056950249836
+            },
+            "mt_free": {
+              "mean": 0.8815864105021969,
+              "sem": 0.0022392634570190385
+            },
+            "headroom": -0.1698146078812007,
+            "headroom_sem": 0.014532504941254054,
+            "headroom_spread": -0.060156002667612986,
+            "headroom_spread_sem": 0.012027142900580911,
+            "headroom_2stage": -0.17811392360790929,
+            "headroom_2stage_sem": 0.01723132514058212,
+            "ceiling_at_n": 0.4061868825782848,
+            "ceiling_at_n_sem": 0.008266868490392067
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 26,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.521693365241284,
+              "sem": 0.010613334293086104
+            },
+            "mt_eq": {
+              "mean": 0.33367868031892395,
+              "sem": 0.022403672898514478
+            },
+            "mt_gp": {
+              "mean": 0.33796023576172557,
+              "sem": 0.020701562585947086
+            },
+            "mt_spread": {
+              "mean": 0.446420790991087,
+              "sem": 0.014081545902398152
+            },
+            "mt_free": {
+              "mean": 0.8861903168164191,
+              "sem": 0.0005518510696482003
+            },
+            "headroom": -0.18373312947955836,
+            "headroom_sem": 0.01738903443050134,
+            "headroom_spread": -0.07527257425019687,
+            "headroom_spread_sem": 0.0096082083067204,
+            "headroom_2stage": -0.18801468492235998,
+            "headroom_2stage_sem": 0.019719706214694262,
+            "ceiling_at_n": 0.36449695157513534,
+            "ceiling_at_n_sem": 0.010757731040762166
+          }
+        }
+      },
+      "MAP2K1": {
+        "fp_inf": 0.8342564579631777,
+        "aux_inf": 0.9286234694249687,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.14461294714494127,
+              "sem": 0.024152226950957124
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6854584664235059,
+              "sem": 0.031124474270891118
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5408455192785647,
+            "ceiling_at_n_sem": 0.033952480819911035
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.2297535988754514,
+              "sem": 0.024215767716804528
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.7865775771037458,
+              "sem": 0.008741183933303472
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5568239782282942,
+            "ceiling_at_n_sem": 0.025502902509079522
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.28501087988512974,
+              "sem": 0.013742584272111466
+            },
+            "mt_eq": {
+              "mean": 0.11758917749425243,
+              "sem": 0.01915145363105375
+            },
+            "mt_gp": {
+              "mean": 0.11527300517767389,
+              "sem": 0.019833375634507735
+            },
+            "mt_spread": {
+              "mean": 0.20729713850316264,
+              "sem": 0.020224071615352245
+            },
+            "mt_free": {
+              "mean": 0.7910896766831237,
+              "sem": 0.004621402470660733
+            },
+            "headroom": -0.16973787470745585,
+            "headroom_sem": 0.023297720907731728,
+            "headroom_spread": -0.0777137413819671,
+            "headroom_spread_sem": 0.021153116825233267,
+            "headroom_2stage": -0.16742170239087734,
+            "headroom_2stage_sem": 0.022849135434789124,
+            "ceiling_at_n": 0.506078796797994,
+            "ceiling_at_n_sem": 0.013396942100951608
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.344088456060707,
+              "sem": 0.010499983424206317
+            },
+            "mt_eq": {
+              "mean": 0.18665192020044824,
+              "sem": 0.027249501529549122
+            },
+            "mt_gp": {
+              "mean": 0.18327776520506553,
+              "sem": 0.02665909791817704
+            },
+            "mt_spread": {
+              "mean": 0.2275294019303118,
+              "sem": 0.02177449902148633
+            },
+            "mt_free": {
+              "mean": 0.8075540530675462,
+              "sem": 0.002068525199993935
+            },
+            "headroom": -0.16081069085564142,
+            "headroom_sem": 0.024811074396050965,
+            "headroom_spread": -0.1165590541303952,
+            "headroom_spread_sem": 0.020601638019414073,
+            "headroom_2stage": -0.15743653586025874,
+            "headroom_2stage_sem": 0.025252969072683196,
+            "ceiling_at_n": 0.4634655970068392,
+            "ceiling_at_n_sem": 0.01113601869600471
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4415694232475483,
+              "sem": 0.014758593528572396
+            },
+            "mt_eq": {
+              "mean": 0.22302411971145147,
+              "sem": 0.014717834240530659
+            },
+            "mt_gp": {
+              "mean": 0.21284057076324375,
+              "sem": 0.017846565970889267
+            },
+            "mt_spread": {
+              "mean": 0.349871297407182,
+              "sem": 0.018369979282453566
+            },
+            "mt_free": {
+              "mean": 0.8072012664726744,
+              "sem": 0.0017932304072372435
+            },
+            "headroom": -0.22872885248430458,
+            "headroom_sem": 0.019984524399191978,
+            "headroom_spread": -0.09169812584036627,
+            "headroom_spread_sem": 0.015364330890463658,
+            "headroom_2stage": -0.21854530353609683,
+            "headroom_2stage_sem": 0.01930083105775346,
+            "ceiling_at_n": 0.3656318432251261,
+            "ceiling_at_n_sem": 0.015994977229656395
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.5057913641570964,
+              "sem": 0.007123354054724525
+            },
+            "mt_eq": {
+              "mean": 0.30896581303384485,
+              "sem": 0.017759418582851797
+            },
+            "mt_gp": {
+              "mean": 0.31224539124274264,
+              "sem": 0.01800842867320037
+            },
+            "mt_spread": {
+              "mean": 0.42455871231516634,
+              "sem": 0.00660083723128893
+            },
+            "mt_free": {
+              "mean": 0.8087955648269268,
+              "sem": 0.001294387924905335
+            },
+            "headroom": -0.19354597291435366,
+            "headroom_sem": 0.014136613994106961,
+            "headroom_spread": -0.08123265184192996,
+            "headroom_spread_sem": 0.005798116944306136,
+            "headroom_2stage": -0.1968255511232515,
+            "headroom_2stage_sem": 0.01411545057444907,
+            "ceiling_at_n": 0.30300420066983047,
+            "ceiling_at_n_sem": 0.007107398428815667
+          }
+        }
+      },
+      "MAPK1": {
+        "fp_inf": 0.7181176731586015,
+        "aux_inf": 0.8910466387845192,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.07294845225782601,
+              "sem": 0.018812553477490362
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.5632488252792418,
+              "sem": 0.0781696580742619
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.4903003730214158,
+            "ceiling_at_n_sem": 0.08495462746804124
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.17814730092760828,
+              "sem": 0.01673665788210975
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6982852014839945,
+              "sem": 0.014019855084894835
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5201379005563863,
+            "ceiling_at_n_sem": 0.023691021275653958
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.2926718711501999,
+              "sem": 0.0158740337018584
+            },
+            "mt_eq": {
+              "mean": 0.16784702720719163,
+              "sem": 0.019419497696058097
+            },
+            "mt_gp": {
+              "mean": 0.1729678118711362,
+              "sem": 0.017984621956886746
+            },
+            "mt_spread": {
+              "mean": 0.23473745954633268,
+              "sem": 0.02127995940221652
+            },
+            "mt_free": {
+              "mean": 0.7390650709960738,
+              "sem": 0.010677858473599183
+            },
+            "headroom": -0.11970405927906373,
+            "headroom_sem": 0.02143105140938058,
+            "headroom_spread": -0.05793441160386721,
+            "headroom_spread_sem": 0.022286541009249084,
+            "headroom_2stage": -0.12482484394300827,
+            "headroom_2stage_sem": 0.022921440513137797,
+            "ceiling_at_n": 0.44639319984587394,
+            "ceiling_at_n_sem": 0.01854488572905268
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.34705075388967915,
+              "sem": 0.009568801244031214
+            },
+            "mt_eq": {
+              "mean": 0.17983250112985807,
+              "sem": 0.016993447919835244
+            },
+            "mt_gp": {
+              "mean": 0.187879647212679,
+              "sem": 0.016068075879410587
+            },
+            "mt_spread": {
+              "mean": 0.23769324904229502,
+              "sem": 0.01859657429705484
+            },
+            "mt_free": {
+              "mean": 0.7504516608378105,
+              "sem": 0.002661681353178279
+            },
+            "headroom": -0.15917110667700016,
+            "headroom_sem": 0.015695109001277147,
+            "headroom_spread": -0.10935750484738418,
+            "headroom_spread_sem": 0.017003253193192902,
+            "headroom_2stage": -0.16721825275982108,
+            "headroom_2stage_sem": 0.017358550458521037,
+            "ceiling_at_n": 0.40340090694813124,
+            "ceiling_at_n_sem": 0.009826187596922435
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.39666705017320203,
+              "sem": 0.011356502992423313
+            },
+            "mt_eq": {
+              "mean": 0.19749646751393862,
+              "sem": 0.017628034556269073
+            },
+            "mt_gp": {
+              "mean": 0.21275590460305865,
+              "sem": 0.017946184730536326
+            },
+            "mt_spread": {
+              "mean": 0.36674432744183083,
+              "sem": 0.013619360493730165
+            },
+            "mt_free": {
+              "mean": 0.7506094042433428,
+              "sem": 0.0033310772110584264
+            },
+            "headroom": -0.18391114557014335,
+            "headroom_sem": 0.02079124661119876,
+            "headroom_spread": -0.029922722731371264,
+            "headroom_spread_sem": 0.011109468195648491,
+            "headroom_2stage": -0.1991705826592634,
+            "headroom_2stage_sem": 0.020628604429828317,
+            "ceiling_at_n": 0.35394235407014074,
+            "ceiling_at_n_sem": 0.010015211472543941
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4798384500066635,
+              "sem": 0.01081496563248734
+            },
+            "mt_eq": {
+              "mean": 0.27439395986191306,
+              "sem": 0.014510539309909993
+            },
+            "mt_gp": {
+              "mean": 0.2884327575516447,
+              "sem": 0.013880015188340616
+            },
+            "mt_spread": {
+              "mean": 0.43337217922677185,
+              "sem": 0.009712881223549187
+            },
+            "mt_free": {
+              "mean": 0.7553841868958886,
+              "sem": 0.0015059035439565726
+            },
+            "headroom": -0.19140569245501873,
+            "headroom_sem": 0.015541678942508647,
+            "headroom_spread": -0.04646627077989168,
+            "headroom_spread_sem": 0.00692155113072604,
+            "headroom_2stage": -0.20544449014475044,
+            "headroom_2stage_sem": 0.016500476361197388,
+            "ceiling_at_n": 0.275545736889225,
+            "ceiling_at_n_sem": 0.011127896966711215
+          }
+        }
+      },
+      "MAPK14": {
+        "fp_inf": 0.6663894312211005,
+        "aux_inf": 0.8463463291314403,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.14847744857739256,
+              "sem": 0.022569365125632845
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6049949979784595,
+              "sem": 0.05927033353025754
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.45651754940106687,
+            "ceiling_at_n_sem": 0.055951393807310616
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.2092839560857644,
+              "sem": 0.018167837839564768
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.7678237131378898,
+              "sem": 0.004704483792567517
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5585397570521252,
+            "ceiling_at_n_sem": 0.018608361036209813
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.2944779924387204,
+              "sem": 0.013747789551452953
+            },
+            "mt_eq": {
+              "mean": 0.16614083576324362,
+              "sem": 0.02283447710595742
+            },
+            "mt_gp": {
+              "mean": 0.1736387410703025,
+              "sem": 0.024066745533221683
+            },
+            "mt_spread": {
+              "mean": 0.2718406987346701,
+              "sem": 0.01209395849495179
+            },
+            "mt_free": {
+              "mean": 0.7651487327348997,
+              "sem": 0.0037697360361094077
+            },
+            "headroom": -0.12083925136841789,
+            "headroom_sem": 0.024107325510962785,
+            "headroom_spread": -0.02263729370405031,
+            "headroom_spread_sem": 0.013697969268453942,
+            "headroom_2stage": -0.12833715667547677,
+            "headroom_2stage_sem": 0.0220670647421728,
+            "ceiling_at_n": 0.47067074029617934,
+            "ceiling_at_n_sem": 0.014177840755818134
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.30895958510276555,
+              "sem": 0.0128555197540319
+            },
+            "mt_eq": {
+              "mean": 0.16632445829121378,
+              "sem": 0.019283600573695655
+            },
+            "mt_gp": {
+              "mean": 0.16072336221504166,
+              "sem": 0.018995137034325992
+            },
+            "mt_spread": {
+              "mean": 0.25326759596288406,
+              "sem": 0.016214919534341555
+            },
+            "mt_free": {
+              "mean": 0.7690474413200942,
+              "sem": 0.004992566615356628
+            },
+            "headroom": -0.14823622288772392,
+            "headroom_sem": 0.016633403187073917,
+            "headroom_spread": -0.05569198913988151,
+            "headroom_spread_sem": 0.017594362680481274,
+            "headroom_2stage": -0.14263512681155174,
+            "headroom_2stage_sem": 0.015380681107318024,
+            "ceiling_at_n": 0.46008785621732873,
+            "ceiling_at_n_sem": 0.011858483407532887
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4030258645427421,
+              "sem": 0.010319899675876943
+            },
+            "mt_eq": {
+              "mean": 0.17742432885943937,
+              "sem": 0.01888329525691004
+            },
+            "mt_gp": {
+              "mean": 0.19350152536533444,
+              "sem": 0.01897010122515625
+            },
+            "mt_spread": {
+              "mean": 0.3641176803910252,
+              "sem": 0.00944182618855753
+            },
+            "mt_free": {
+              "mean": 0.7734059799349265,
+              "sem": 0.003801977313296839
+            },
+            "headroom": -0.2095243391774077,
+            "headroom_sem": 0.01985066445759434,
+            "headroom_spread": -0.03890818415171694,
+            "headroom_spread_sem": 0.008049579275774493,
+            "headroom_2stage": -0.22560153568330282,
+            "headroom_2stage_sem": 0.02156072317099209,
+            "ceiling_at_n": 0.37038011539218435,
+            "ceiling_at_n_sem": 0.008085720913049592
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.47251388216650064,
+              "sem": 0.010087246605771096
+            },
+            "mt_eq": {
+              "mean": 0.31483390492160923,
+              "sem": 0.01650462123425529
+            },
+            "mt_gp": {
+              "mean": 0.31189518195731697,
+              "sem": 0.017348975728708152
+            },
+            "mt_spread": {
+              "mean": 0.43405705121044785,
+              "sem": 0.010898162047363009
+            },
+            "mt_free": {
+              "mean": 0.7806948029711978,
+              "sem": 0.0008604483181380572
+            },
+            "headroom": -0.16061870020918367,
+            "headroom_sem": 0.01647914813018984,
+            "headroom_spread": -0.03845683095605278,
+            "headroom_spread_sem": 0.005758700230653512,
+            "headroom_2stage": -0.15767997724489133,
+            "headroom_2stage_sem": 0.01606184978592442,
+            "ceiling_at_n": 0.30818092080469706,
+            "ceiling_at_n_sem": 0.010246735715124779
+          }
+        }
+      },
+      "MAPKAPK2": {
+        "fp_inf": 0.7504872004246089,
+        "aux_inf": 0.9086887498192706,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.16823102867508521,
+              "sem": 0.02043001754709956
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6925792605034753,
+              "sem": 0.0389226609482515
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5243482318283901,
+            "ceiling_at_n_sem": 0.04693363318140865
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.19192417616420399,
+              "sem": 0.022796740005649383
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.7947027638050356,
+              "sem": 0.012099291606723583
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.6027785876408316,
+            "ceiling_at_n_sem": 0.024987476954254753
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.26742449522221096,
+              "sem": 0.01717248573084662
+            },
+            "mt_eq": {
+              "mean": 0.10935209487614032,
+              "sem": 0.025384193471949864
+            },
+            "mt_gp": {
+              "mean": 0.10440545575211169,
+              "sem": 0.025228000861938167
+            },
+            "mt_spread": {
+              "mean": 0.20136803857970972,
+              "sem": 0.020937459206952242
+            },
+            "mt_free": {
+              "mean": 0.824231834646819,
+              "sem": 0.00437676061359346
+            },
+            "headroom": -0.16301903947009927,
+            "headroom_sem": 0.026424944493887808,
+            "headroom_spread": -0.06605645664250123,
+            "headroom_spread_sem": 0.01716047468029887,
+            "headroom_2stage": -0.15807240034607065,
+            "headroom_2stage_sem": 0.0261335500615239,
+            "ceiling_at_n": 0.5568073394246081,
+            "ceiling_at_n_sem": 0.019088159310842633
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.32922535608763115,
+              "sem": 0.018796382602133524
+            },
+            "mt_eq": {
+              "mean": 0.16773493972060344,
+              "sem": 0.021557093448202842
+            },
+            "mt_gp": {
+              "mean": 0.1750868914256524,
+              "sem": 0.02212934166202302
+            },
+            "mt_spread": {
+              "mean": 0.27652277700561895,
+              "sem": 0.01702691586179256
+            },
+            "mt_free": {
+              "mean": 0.8268146013337164,
+              "sem": 0.003458659364852467
+            },
+            "headroom": -0.15413846466197875,
+            "headroom_sem": 0.025282550597062237,
+            "headroom_spread": -0.05270257908201217,
+            "headroom_spread_sem": 0.016868719640154854,
+            "headroom_2stage": -0.1614904163670277,
+            "headroom_2stage_sem": 0.02252149451854465,
+            "ceiling_at_n": 0.4975892452460853,
+            "ceiling_at_n_sem": 0.017743691283588308
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4380955742132224,
+              "sem": 0.010566075535744797
+            },
+            "mt_eq": {
+              "mean": 0.2664764950344646,
+              "sem": 0.013102214809905083
+            },
+            "mt_gp": {
+              "mean": 0.26674034929663615,
+              "sem": 0.013289808015923683
+            },
+            "mt_spread": {
+              "mean": 0.3727047587105582,
+              "sem": 0.010224301891592987
+            },
+            "mt_free": {
+              "mean": 0.8296737759768682,
+              "sem": 0.0017306022436622043
+            },
+            "headroom": -0.1713552249165862,
+            "headroom_sem": 0.016269381708708446,
+            "headroom_spread": -0.0653908155026642,
+            "headroom_spread_sem": 0.006194973552973168,
+            "headroom_2stage": -0.17161907917875774,
+            "headroom_2stage_sem": 0.016681151747309206,
+            "ceiling_at_n": 0.39157820176364583,
+            "ceiling_at_n_sem": 0.010904696525234084
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.49451335311776734,
+              "sem": 0.008752497969764624
+            },
+            "mt_eq": {
+              "mean": 0.28306456392973883,
+              "sem": 0.018117737999986682
+            },
+            "mt_gp": {
+              "mean": 0.29689249711985083,
+              "sem": 0.01588254736533372
+            },
+            "mt_spread": {
+              "mean": 0.4427182381291746,
+              "sem": 0.006940700957472095
+            },
+            "mt_free": {
+              "mean": 0.8344457441945691,
+              "sem": 0.0008870713108273382
+            },
+            "headroom": -0.19762085599791657,
+            "headroom_sem": 0.017648443959603997,
+            "headroom_spread": -0.051795114988592794,
+            "headroom_spread_sem": 0.00759530711642953,
+            "headroom_2stage": -0.21144878918802848,
+            "headroom_2stage_sem": 0.01926476096211513,
+            "ceiling_at_n": 0.33993239107680184,
+            "ceiling_at_n_sem": 0.008793690989177837
+          }
+        }
+      },
+      "MET": {
+        "fp_inf": 0.6339755994525448,
+        "aux_inf": 0.8542979140531004,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.10641161317586634,
+              "sem": 0.017627788716177914
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.4307323846393002,
+              "sem": 0.06450102409005089
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.32432077146343385,
+            "ceiling_at_n_sem": 0.07113677633219563
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.17482320230655407,
+              "sem": 0.014969661095833833
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6730386434193181,
+              "sem": 0.015672484079888062
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.498215441112764,
+            "ceiling_at_n_sem": 0.022941449000642142
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.2376612746061312,
+              "sem": 0.016106557361405555
+            },
+            "mt_eq": {
+              "mean": 0.09946070001383008,
+              "sem": 0.015597404989191902
+            },
+            "mt_gp": {
+              "mean": 0.11029720224523924,
+              "sem": 0.014683471459432735
+            },
+            "mt_spread": {
+              "mean": 0.1854306133054195,
+              "sem": 0.018981957961826577
+            },
+            "mt_free": {
+              "mean": 0.6926784371506941,
+              "sem": 0.0051512474765704535
+            },
+            "headroom": -0.12736407236089198,
+            "headroom_sem": 0.018476160109450333,
+            "headroom_spread": -0.0522306613007117,
+            "headroom_spread_sem": 0.020372668169988315,
+            "headroom_2stage": -0.13820057459230112,
+            "headroom_2stage_sem": 0.02070540917810169,
+            "ceiling_at_n": 0.4550171625445629,
+            "ceiling_at_n_sem": 0.017471163831803114
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.27217902533890626,
+              "sem": 0.011655791962924563
+            },
+            "mt_eq": {
+              "mean": 0.14709065363150103,
+              "sem": 0.01984955625109846
+            },
+            "mt_gp": {
+              "mean": 0.15092307483636852,
+              "sem": 0.01850981982556872
+            },
+            "mt_spread": {
+              "mean": 0.21577299200861227,
+              "sem": 0.012260213927683172
+            },
+            "mt_free": {
+              "mean": 0.7017619469921081,
+              "sem": 0.0026845870880888097
+            },
+            "headroom": -0.12125595050253765,
+            "headroom_sem": 0.019209994285907275,
+            "headroom_spread": -0.056406033330293925,
+            "headroom_spread_sem": 0.010561947840194066,
+            "headroom_2stage": -0.1250883717074051,
+            "headroom_2stage_sem": 0.020548447406353827,
+            "ceiling_at_n": 0.429582921653202,
+            "ceiling_at_n_sem": 0.01184775573011842
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.33587818212563725,
+              "sem": 0.013004391576252649
+            },
+            "mt_eq": {
+              "mean": 0.13280492577007422,
+              "sem": 0.021467213320697637
+            },
+            "mt_gp": {
+              "mean": 0.1503387011508774,
+              "sem": 0.01842624733803635
+            },
+            "mt_spread": {
+              "mean": 0.25097146206232657,
+              "sem": 0.014351325610195647
+            },
+            "mt_free": {
+              "mean": 0.700317895595015,
+              "sem": 0.0020787151655967447
+            },
+            "headroom": -0.18553948097475975,
+            "headroom_sem": 0.02031068600430335,
+            "headroom_spread": -0.08490672006331061,
+            "headroom_spread_sem": 0.012336457025941149,
+            "headroom_2stage": -0.203073256355563,
+            "headroom_2stage_sem": 0.023344258112153803,
+            "ceiling_at_n": 0.36443971346937787,
+            "ceiling_at_n_sem": 0.013286877371689794
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.39781032860569276,
+              "sem": 0.007759411052989756
+            },
+            "mt_eq": {
+              "mean": 0.1783765152898807,
+              "sem": 0.014691370304865791
+            },
+            "mt_gp": {
+              "mean": 0.2021822202978262,
+              "sem": 0.013421345281847578
+            },
+            "mt_spread": {
+              "mean": 0.3341015261565131,
+              "sem": 0.011617237663602908
+            },
+            "mt_free": {
+              "mean": 0.7061394580047635,
+              "sem": 0.0018485545634906865
+            },
+            "headroom": -0.19562810830786653,
+            "headroom_sem": 0.013728205694315527,
+            "headroom_spread": -0.06370880244917958,
+            "headroom_spread_sem": 0.012084761832774595,
+            "headroom_2stage": -0.2194338133158121,
+            "headroom_2stage_sem": 0.015285485201531293,
+            "ceiling_at_n": 0.3083291293990708,
+            "ceiling_at_n_sem": 0.008020022749953023
+          }
+        }
+      },
+      "PLK1": {
+        "fp_inf": 0.7865805317883863,
+        "aux_inf": 0.8990015479289594,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.17518389791724412,
+              "sem": 0.017782508020116838
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6917467627538479,
+              "sem": 0.042056323836296934
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5165628648366039,
+            "ceiling_at_n_sem": 0.038714121635405274
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.19953174935922868,
+              "sem": 0.019409689753707497
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.7780956252127006,
+              "sem": 0.019249537198697722
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.578563875853472,
+            "ceiling_at_n_sem": 0.022783166819782125
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3205052648069882,
+              "sem": 0.014176376883722055
+            },
+            "mt_eq": {
+              "mean": 0.12063297402748425,
+              "sem": 0.019634494825922215
+            },
+            "mt_gp": {
+              "mean": 0.14155016450943164,
+              "sem": 0.017323754663790686
+            },
+            "mt_spread": {
+              "mean": 0.22962720730778904,
+              "sem": 0.019997779248040443
+            },
+            "mt_free": {
+              "mean": 0.817249350880702,
+              "sem": 0.003851987177850873
+            },
+            "headroom": -0.1789551002975565,
+            "headroom_sem": 0.01450943101611177,
+            "headroom_spread": -0.09087805749919912,
+            "headroom_spread_sem": 0.01682746320404284,
+            "headroom_2stage": -0.1998722907795039,
+            "headroom_2stage_sem": 0.01645986062147549,
+            "ceiling_at_n": 0.496744086073714,
+            "ceiling_at_n_sem": 0.016364282166088186
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3655328883011224,
+              "sem": 0.013809925669885736
+            },
+            "mt_eq": {
+              "mean": 0.19370734201595288,
+              "sem": 0.016046150110454648
+            },
+            "mt_gp": {
+              "mean": 0.19233072089506562,
+              "sem": 0.015304508289961456
+            },
+            "mt_spread": {
+              "mean": 0.2891512612378214,
+              "sem": 0.018551622938260386
+            },
+            "mt_free": {
+              "mean": 0.8229397553652402,
+              "sem": 0.003278958563921495
+            },
+            "headroom": -0.1732021674060567,
+            "headroom_sem": 0.014754794422991158,
+            "headroom_spread": -0.0763816270633009,
+            "headroom_spread_sem": 0.014333012197081933,
+            "headroom_2stage": -0.17182554628516947,
+            "headroom_2stage_sem": 0.01564406658617434,
+            "ceiling_at_n": 0.45740686706411793,
+            "ceiling_at_n_sem": 0.013610475198608078
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4317563122036783,
+              "sem": 0.012355012309791028
+            },
+            "mt_eq": {
+              "mean": 0.24021739877933,
+              "sem": 0.0159427773148199
+            },
+            "mt_gp": {
+              "mean": 0.24796352571225938,
+              "sem": 0.015566575760885631
+            },
+            "mt_spread": {
+              "mean": 0.3902143099683242,
+              "sem": 0.009963427039516925
+            },
+            "mt_free": {
+              "mean": 0.828038178829086,
+              "sem": 0.0009527285458862585
+            },
+            "headroom": -0.18379278649141895,
+            "headroom_sem": 0.021209668339941107,
+            "headroom_spread": -0.041542002235354133,
+            "headroom_spread_sem": 0.011658784525880391,
+            "headroom_2stage": -0.1915389134243484,
+            "headroom_2stage_sem": 0.02065936881415172,
+            "ceiling_at_n": 0.39628186662540776,
+            "ceiling_at_n_sem": 0.011991373779891581
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.5247244997340277,
+              "sem": 0.006656058765902392
+            },
+            "mt_eq": {
+              "mean": 0.2941541110533654,
+              "sem": 0.019614528590881808
+            },
+            "mt_gp": {
+              "mean": 0.30161913375332194,
+              "sem": 0.018832073435446045
+            },
+            "mt_spread": {
+              "mean": 0.4829418542809699,
+              "sem": 0.006713885857085622
+            },
+            "mt_free": {
+              "mean": 0.8298942829045478,
+              "sem": 0.0011119103681766183
+            },
+            "headroom": -0.22310536598070568,
+            "headroom_sem": 0.017437796385586773,
+            "headroom_spread": -0.04178264545305781,
+            "headroom_spread_sem": 0.007397863350984907,
+            "headroom_2stage": -0.23057038868066226,
+            "headroom_2stage_sem": 0.018070218008464974,
+            "ceiling_at_n": 0.3051697831705201,
+            "ceiling_at_n_sem": 0.006992307701431274
+          }
+        }
+      },
+      "PTK2": {
+        "fp_inf": 0.6986171920373822,
+        "aux_inf": 0.8659651865695258,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.1580183038435781,
+              "sem": 0.023086500579429427
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.7111165440766662,
+              "sem": 0.03140174314868824
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5530982402330883,
+            "ceiling_at_n_sem": 0.03242274401895522
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.19641763007176155,
+              "sem": 0.021096114948796305
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6956161790327566,
+              "sem": 0.07312689417890604
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.49919854896099525,
+            "ceiling_at_n_sem": 0.07275987831202334
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.2746311610684141,
+              "sem": 0.020572733448767155
+            },
+            "mt_eq": {
+              "mean": 0.13076952931809008,
+              "sem": 0.01839802562462343
+            },
+            "mt_gp": {
+              "mean": 0.14294503565624356,
+              "sem": 0.017589684629313873
+            },
+            "mt_spread": {
+              "mean": 0.229768063434941,
+              "sem": 0.019980576663715305
+            },
+            "mt_free": {
+              "mean": 0.7906102376630313,
+              "sem": 0.0034947996981849923
+            },
+            "headroom": -0.13168612541217062,
+            "headroom_sem": 0.019699874910119652,
+            "headroom_spread": -0.044863097633473195,
+            "headroom_spread_sem": 0.017933011073610894,
+            "headroom_2stage": -0.1438616317503241,
+            "headroom_2stage_sem": 0.019004590747765802,
+            "ceiling_at_n": 0.5159790765946173,
+            "ceiling_at_n_sem": 0.021655698334532635
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3359429425962295,
+              "sem": 0.010989004532133775
+            },
+            "mt_eq": {
+              "mean": 0.1678634434050435,
+              "sem": 0.020249268973112848
+            },
+            "mt_gp": {
+              "mean": 0.17480845949741594,
+              "sem": 0.018910659334991288
+            },
+            "mt_spread": {
+              "mean": 0.30637983461092055,
+              "sem": 0.016047253683866947
+            },
+            "mt_free": {
+              "mean": 0.7948910654235546,
+              "sem": 0.0051313532093711055
+            },
+            "headroom": -0.16113448309881345,
+            "headroom_sem": 0.015278671170195803,
+            "headroom_spread": -0.029563107985308847,
+            "headroom_spread_sem": 0.012262069612032356,
+            "headroom_2stage": -0.16807949919118595,
+            "headroom_2stage_sem": 0.016143936500879016,
+            "ceiling_at_n": 0.4589481228273252,
+            "ceiling_at_n_sem": 0.012059912512806241
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3704928250856586,
+              "sem": 0.012886396096966927
+            },
+            "mt_eq": {
+              "mean": 0.21602423117818273,
+              "sem": 0.016713564858624484
+            },
+            "mt_gp": {
+              "mean": 0.2207748614483854,
+              "sem": 0.013758953838183135
+            },
+            "mt_spread": {
+              "mean": 0.344044526955891,
+              "sem": 0.01280344011679687
+            },
+            "mt_free": {
+              "mean": 0.8041644817056512,
+              "sem": 0.001281080492336095
+            },
+            "headroom": -0.14971796363727322,
+            "headroom_sem": 0.016643313120756044,
+            "headroom_spread": -0.026448298129767643,
+            "headroom_spread_sem": 0.010480082282449874,
+            "headroom_2stage": -0.1544685939074759,
+            "headroom_2stage_sem": 0.01778783551646543,
+            "ceiling_at_n": 0.43367165661999263,
+            "ceiling_at_n_sem": 0.013109415749582586
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4433344900062746,
+              "sem": 0.008489476305877923
+            },
+            "mt_eq": {
+              "mean": 0.26202824813193937,
+              "sem": 0.013372923074419299
+            },
+            "mt_gp": {
+              "mean": 0.2662263351134182,
+              "sem": 0.015112895384287148
+            },
+            "mt_spread": {
+              "mean": 0.41638893491806445,
+              "sem": 0.011305302506200963
+            },
+            "mt_free": {
+              "mean": 0.802541709173445,
+              "sem": 0.0019396583635421041
+            },
+            "headroom": -0.17710815489285642,
+            "headroom_sem": 0.014727709197603632,
+            "headroom_spread": -0.02694555508821022,
+            "headroom_spread_sem": 0.008641590013202916,
+            "headroom_2stage": -0.1813062418743353,
+            "headroom_2stage_sem": 0.01398927599283271,
+            "ceiling_at_n": 0.35920721916717036,
+            "ceiling_at_n_sem": 0.009037703816292892
+          }
+        }
+      },
+      "ROCK1": {
+        "fp_inf": 0.7873770879003223,
+        "aux_inf": 0.929908643796654,
+        "n_aux": 3,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.15097660882101344,
+              "sem": 0.01588788450571508
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.6663906819351806,
+              "sem": 0.0617645084402921
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5154140731141672,
+            "ceiling_at_n_sem": 0.06488413876221572
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 2,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.2370679129892274,
+              "sem": 0.023064421451785475
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.8158255257886735,
+              "sem": 0.007346259239238327
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.5787576127994462,
+            "ceiling_at_n_sem": 0.026895711092732293
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 5,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3096002851128071,
+              "sem": 0.012484218837908711
+            },
+            "mt_eq": {
+              "mean": 0.14111728979720503,
+              "sem": 0.020773387089442066
+            },
+            "mt_gp": {
+              "mean": 0.14465000345740164,
+              "sem": 0.017346857385371922
+            },
+            "mt_spread": {
+              "mean": 0.23610264056765948,
+              "sem": 0.017173825107983758
+            },
+            "mt_free": {
+              "mean": 0.834657060306904,
+              "sem": 0.0019270497214865178
+            },
+            "headroom": -0.16495028165540543,
+            "headroom_sem": 0.021124531172662983,
+            "headroom_spread": -0.0734976445451476,
+            "headroom_spread_sem": 0.014476499170664407,
+            "headroom_2stage": -0.1684829953156021,
+            "headroom_2stage_sem": 0.022604386900761067,
+            "ceiling_at_n": 0.5250567751940969,
+            "ceiling_at_n_sem": 0.012882902835708416
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 7,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.39610884020372217,
+              "sem": 0.013401584099407567
+            },
+            "mt_eq": {
+              "mean": 0.18973053040053295,
+              "sem": 0.021140439046565873
+            },
+            "mt_gp": {
+              "mean": 0.19138132308363187,
+              "sem": 0.01996196569151445
+            },
+            "mt_spread": {
+              "mean": 0.2802264591211062,
+              "sem": 0.019718407161173578
+            },
+            "mt_free": {
+              "mean": 0.8364897730678307,
+              "sem": 0.00284611842994456
+            },
+            "headroom": -0.20472751712009019,
+            "headroom_sem": 0.017309559742765927,
+            "headroom_spread": -0.11588238108261599,
+            "headroom_spread_sem": 0.016828372161428226,
+            "headroom_2stage": -0.2063783098031892,
+            "headroom_2stage_sem": 0.01826259070375857,
+            "ceiling_at_n": 0.4403809328641087,
+            "ceiling_at_n_sem": 0.014526187959446504
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 12,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.48753138126068923,
+              "sem": 0.00946003726608643
+            },
+            "mt_eq": {
+              "mean": 0.2923190321494355,
+              "sem": 0.013461909724588023
+            },
+            "mt_gp": {
+              "mean": 0.2923597897985501,
+              "sem": 0.014725737589442808
+            },
+            "mt_spread": {
+              "mean": 0.40727856213647834,
+              "sem": 0.014042645479063533
+            },
+            "mt_free": {
+              "mean": 0.8375701382167338,
+              "sem": 0.0015745445126848934
+            },
+            "headroom": -0.19517159146213917,
+            "headroom_sem": 0.016846180313299243,
+            "headroom_spread": -0.0802528191242109,
+            "headroom_spread_sem": 0.011904900847342423,
+            "headroom_2stage": -0.1952123491112538,
+            "headroom_2stage_sem": 0.014628976217615821,
+            "ceiling_at_n": 0.3500387569560445,
+            "ceiling_at_n_sem": 0.009629491936894167
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 20,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.536464023244525,
+              "sem": 0.008481537620465517
+            },
+            "mt_eq": {
+              "mean": 0.30330451688021676,
+              "sem": 0.018046365714667313
+            },
+            "mt_gp": {
+              "mean": 0.30587022551769605,
+              "sem": 0.016173453871353754
+            },
+            "mt_spread": {
+              "mean": 0.4450038832240419,
+              "sem": 0.010647353710874111
+            },
+            "mt_free": {
+              "mean": 0.8407146306860529,
+              "sem": 0.0009124540725610977
+            },
+            "headroom": -0.23059379772682886,
+            "headroom_sem": 0.015829684408775725,
+            "headroom_spread": -0.091460140020483,
+            "headroom_spread_sem": 0.010250454145752513,
+            "headroom_2stage": -0.23315950636430824,
+            "headroom_2stage_sem": 0.017679924456430803,
+            "ceiling_at_n": 0.30425060744152793,
+            "ceiling_at_n_sem": 0.00873694225812749
+          }
+        }
+      },
+      "SRC": {
+        "fp_inf": 0.754982962965722,
+        "aux_inf": 0.9004109902585156,
+        "n_aux": 2,
+        "n": {
+          "5": {
+            "cells": 5,
+            "m_molecules_mt": 1,
+            "rho_picked_median": NaN,
+            "stl": {
+              "mean": 0.17388042830569825,
+              "sem": 0.021304112050559994
+            },
+            "mt_eq": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_gp": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_spread": {
+              "mean": NaN,
+              "sem": NaN
+            },
+            "mt_free": {
+              "mean": 0.8599235815496534,
+              "sem": 0.0063359456146732
+            },
+            "headroom": NaN,
+            "headroom_sem": NaN,
+            "headroom_spread": NaN,
+            "headroom_spread_sem": NaN,
+            "headroom_2stage": NaN,
+            "headroom_2stage_sem": NaN,
+            "ceiling_at_n": 0.6860431532439554,
+            "ceiling_at_n_sem": 0.02177370980342981
+          },
+          "10": {
+            "cells": 10,
+            "m_molecules_mt": 3,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.1994703043006169,
+              "sem": 0.015071598096692916
+            },
+            "mt_eq": {
+              "mean": 0.08916582286002141,
+              "sem": 0.016514108896782207
+            },
+            "mt_gp": {
+              "mean": 0.08356485039948983,
+              "sem": 0.017310334051284584
+            },
+            "mt_spread": {
+              "mean": 0.13123392223364735,
+              "sem": 0.01696593650745407
+            },
+            "mt_free": {
+              "mean": 0.8685806481658341,
+              "sem": 0.004094072077756945
+            },
+            "headroom": -0.1159054539011271,
+            "headroom_sem": 0.022477809807210574,
+            "headroom_spread": -0.06823638206696951,
+            "headroom_spread_sem": 0.01768207979954691,
+            "headroom_2stage": -0.1103044814405955,
+            "headroom_2stage_sem": 0.024477605419929774,
+            "ceiling_at_n": 0.6691103438652171,
+            "ceiling_at_n_sem": 0.015562521274781173
+          },
+          "20": {
+            "cells": 20,
+            "m_molecules_mt": 6,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.25401447680517947,
+              "sem": 0.016787878619377354
+            },
+            "mt_eq": {
+              "mean": 0.12351774973191998,
+              "sem": 0.020638846028893355
+            },
+            "mt_gp": {
+              "mean": 0.1312748072998196,
+              "sem": 0.021489209932347486
+            },
+            "mt_spread": {
+              "mean": 0.19543361676471502,
+              "sem": 0.02510194931630889
+            },
+            "mt_free": {
+              "mean": 0.8746966070430394,
+              "sem": 0.0014728586639836938
+            },
+            "headroom": -0.12273966950535989,
+            "headroom_sem": 0.018786114572780125,
+            "headroom_spread": -0.05858086004046448,
+            "headroom_spread_sem": 0.0156818268937948,
+            "headroom_2stage": -0.1304967270732595,
+            "headroom_2stage_sem": 0.01845778302604249,
+            "ceiling_at_n": 0.62068213023786,
+            "ceiling_at_n_sem": 0.017015317903524122
+          },
+          "30": {
+            "cells": 30,
+            "m_molecules_mt": 10,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.3344646609791297,
+              "sem": 0.016681941285575333
+            },
+            "mt_eq": {
+              "mean": 0.22668032021096005,
+              "sem": 0.01998279664197386
+            },
+            "mt_gp": {
+              "mean": 0.21702852905232956,
+              "sem": 0.019902561320668977
+            },
+            "mt_spread": {
+              "mean": 0.28946281488353476,
+              "sem": 0.016446118165068583
+            },
+            "mt_free": {
+              "mean": 0.8787313422257654,
+              "sem": 0.0008706326253616665
+            },
+            "headroom": -0.11743613192680016,
+            "headroom_sem": 0.01742499789475764,
+            "headroom_spread": -0.045001846095595016,
+            "headroom_spread_sem": 0.009350961581972532,
+            "headroom_2stage": -0.10778434076816971,
+            "headroom_2stage_sem": 0.0159134177543392,
+            "ceiling_at_n": 0.5442666812466355,
+            "ceiling_at_n_sem": 0.016656394900780497
+          },
+          "50": {
+            "cells": 50,
+            "m_molecules_mt": 16,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.4340744550587532,
+              "sem": 0.008451426547532169
+            },
+            "mt_eq": {
+              "mean": 0.29125644939605033,
+              "sem": 0.01585730563769589
+            },
+            "mt_gp": {
+              "mean": 0.284665600483793,
+              "sem": 0.015142138775471202
+            },
+            "mt_spread": {
+              "mean": 0.3723591195039355,
+              "sem": 0.009460493326980478
+            },
+            "mt_free": {
+              "mean": 0.8803099023528714,
+              "sem": 0.0004839145524841388
+            },
+            "headroom": -0.1494088545749601,
+            "headroom_sem": 0.014462587046352634,
+            "headroom_spread": -0.061715335554817605,
+            "headroom_spread_sem": 0.009569379525553545,
+            "headroom_2stage": -0.14281800566270278,
+            "headroom_2stage_sem": 0.016126918883946358,
+            "ceiling_at_n": 0.44623544729411835,
+            "ceiling_at_n_sem": 0.008231646355447864
+          },
+          "80": {
+            "cells": 80,
+            "m_molecules_mt": 26,
+            "rho_picked_median": 1.0,
+            "stl": {
+              "mean": 0.5116022855271056,
+              "sem": 0.006837142924486734
+            },
+            "mt_eq": {
+              "mean": 0.3478596506684259,
+              "sem": 0.013113649260321842
+            },
+            "mt_gp": {
+              "mean": 0.3476247606330475,
+              "sem": 0.01407005618735675
+            },
+            "mt_spread": {
+              "mean": 0.45740243230204214,
+              "sem": 0.010570820310206872
+            },
+            "mt_free": {
+              "mean": 0.8801371577092494,
+              "sem": 0.0004107093889002333
+            },
+            "headroom": -0.1639775248940582,
+            "headroom_sem": 0.013050567833849022,
+            "headroom_spread": -0.05419985322506352,
+            "headroom_spread_sem": 0.0077812280364096,
+            "headroom_2stage": -0.16374263485867976,
+            "headroom_2stage_sem": 0.01223083267151646,
+            "ceiling_at_n": 0.3685348721821436,
+            "ceiling_at_n_sem": 0.007000721226680178
+          }
+        }
+      }
+    },
+    "summary": {
+      "5": {
+        "stl": 0.13054151879806883,
+        "mt_gp": NaN,
+        "mt_spread": NaN,
+        "mt_eq": NaN,
+        "mt_free": 0.5793982348698683,
+        "m_molecules_mt": 1,
+        "headroom": NaN,
+        "headroom_spread": NaN,
+        "headroom_2stage": NaN,
+        "headroom_sem_mean": NaN,
+        "headroom_spread_sem_mean": NaN,
+        "ceiling_at_n": 0.44885671607179944,
+        "rho_picked_median": NaN,
+        "n_targets_positive": 0,
+        "n_targets_positive_spread": 0
+      },
+      "10": {
+        "stl": 0.1940866337200765,
+        "mt_gp": 0.07750604070124771,
+        "mt_spread": 0.12035593651665392,
+        "mt_eq": 0.06755004674543995,
+        "mt_free": 0.7449818421600297,
+        "m_molecules_mt": 2,
+        "headroom": -0.1165805930188288,
+        "headroom_spread": -0.07373069720342258,
+        "headroom_2stage": -0.12653658697463654,
+        "headroom_sem_mean": 0.025193482714780207,
+        "headroom_spread_sem_mean": 0.011115570682999336,
+        "ceiling_at_n": 0.5508952084399533,
+        "rho_picked_median": 1.0,
+        "n_targets_positive": 0,
+        "n_targets_positive_spread": 0
+      },
+      "20": {
+        "stl": 0.27262166265190996,
+        "mt_gp": 0.13405374175119733,
+        "mt_spread": 0.20403554213936803,
+        "mt_eq": 0.1283436707334033,
+        "mt_free": 0.7720806402134025,
+        "m_molecules_mt": 5,
+        "headroom": -0.13856792090071263,
+        "headroom_spread": -0.06858612051254193,
+        "headroom_2stage": -0.14427799191850665,
+        "headroom_sem_mean": 0.007311866583188487,
+        "headroom_spread_sem_mean": 0.005310849389889703,
+        "ceiling_at_n": 0.49945897756149243,
+        "rho_picked_median": 1.0,
+        "n_targets_positive": 0,
+        "n_targets_positive_spread": 0
+      },
+      "30": {
+        "stl": 0.32588563475423815,
+        "mt_gp": 0.16436568758393458,
+        "mt_spread": 0.254841883363135,
+        "mt_eq": 0.16199776420312842,
+        "mt_free": 0.7773354682307557,
+        "m_molecules_mt": 7,
+        "headroom": -0.16151994717030357,
+        "headroom_spread": -0.07104375139110314,
+        "headroom_2stage": -0.16388787055110973,
+        "headroom_sem_mean": 0.007014372268504518,
+        "headroom_spread_sem_mean": 0.00546230176048084,
+        "ceiling_at_n": 0.4514498334765176,
+        "rho_picked_median": 1.0,
+        "n_targets_positive": 0,
+        "n_targets_positive_spread": 0
+      },
+      "50": {
+        "stl": 0.40562446788916906,
+        "mt_gp": 0.22659851693136776,
+        "mt_spread": 0.34544516873679804,
+        "mt_eq": 0.21957742336073932,
+        "mt_free": 0.7810833005711569,
+        "m_molecules_mt": 12,
+        "headroom": -0.1790259509578013,
+        "headroom_spread": -0.060179299152371024,
+        "headroom_2stage": -0.18604704452842974,
+        "headroom_sem_mean": 0.006332145665347759,
+        "headroom_spread_sem_mean": 0.004703354621532556,
+        "ceiling_at_n": 0.3754588326819879,
+        "rho_picked_median": 1.0,
+        "n_targets_positive": 0,
+        "n_targets_positive_spread": 0
+      },
+      "80": {
+        "stl": 0.47062050386958454,
+        "mt_gp": 0.27994418840842367,
+        "mt_spread": 0.4148390220370234,
+        "mt_eq": 0.2703160634845765,
+        "mt_free": 0.7840261901873066,
+        "m_molecules_mt": 20,
+        "headroom": -0.19067631546116087,
+        "headroom_spread": -0.05578148183256115,
+        "headroom_2stage": -0.20030444038500805,
+        "headroom_sem_mean": 0.005846039059029182,
+        "headroom_spread_sem_mean": 0.004010176538405667,
+        "ceiling_at_n": 0.31340568631772214,
+        "rho_picked_median": 0.9980952380952381,
+        "n_targets_positive": 0,
+        "n_targets_positive_spread": 0
+      }
+    },
+    "fp_inf_mean": 0.7304216693364075,
+    "aux_inf_mean": 0.8841303003236454,
+    "verdict": "negative_at_equal_cost"
+  }
+}

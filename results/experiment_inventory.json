@@ -1,0 +1,541 @@
+[
+  {
+    "group": "auxq",
+    "feeds": "auxiliary-quality ladder (appendix)",
+    "pattern": "results/auxq_*.json",
+    "n_artefacts": 16,
+    "blocks": 2,
+    "seeds_per_target": [
+      8
+    ],
+    "targets": [
+      4
+    ],
+    "campaigns_per_configuration": [
+      32
+    ],
+    "configurations": 16,
+    "distinct_budgets": 2,
+    "total_campaigns": 512,
+    "seeds_times_targets_consistent": true,
+    "history": [
+      50
+    ],
+    "history_design": [
+      "withheld"
+    ],
+    "budgets": [
+      111,
+      300
+    ],
+    "acquisition": [
+      "ei"
+    ],
+    "arms": [
+      [
+        "mt",
+        "pooled",
+        "stl"
+      ]
+    ],
+    "source": [
+      null
+    ],
+    "audited": 16,
+    "audit_clean": 16,
+    "audit_clean_on_rerun": 0,
+    "audit_accounted": 16,
+    "conflicts": []
+  },
+  {
+    "group": "sdref",
+    "feeds": "null-control table (all rows)",
+    "pattern": "results/sdref_*.json",
+    "n_artefacts": 4,
+    "blocks": 2,
+    "seeds_per_target": [
+      32
+    ],
+    "targets": [
+      4
+    ],
+    "campaigns_per_configuration": [
+      128
+    ],
+    "configurations": 4,
+    "distinct_budgets": 2,
+    "total_campaigns": 512,
+    "seeds_times_targets_consistent": true,
+    "history": [
+      50
+    ],
+    "history_design": [
+      "withheld"
+    ],
+    "budgets": [
+      111,
+      300
+    ],
+    "acquisition": [
+      "ei"
+    ],
+    "arms": [
+      [
+        "mt",
+        "pooled",
+        "stl"
+      ]
+    ],
+    "source": [
+      "data/cache/tdc/bindingdb_ic50.csv"
+    ],
+    "audited": 0,
+    "audit_clean": 0,
+    "audit_clean_on_rerun": 4,
+    "audit_accounted": 4,
+    "conflicts": []
+  },
+  {
+    "group": "sdscale",
+    "feeds": "matched-uncertainty baseline and the scale sweep",
+    "pattern": "results/sdscale_*.json",
+    "n_artefacts": 20,
+    "blocks": 2,
+    "seeds_per_target": [
+      32
+    ],
+    "targets": [
+      4
+    ],
+    "campaigns_per_configuration": [
+      128
+    ],
+    "configurations": 20,
+    "distinct_budgets": 2,
+    "total_campaigns": 2560,
+    "seeds_times_targets_consistent": true,
+    "history": [
+      50
+    ],
+    "history_design": [
+      "withheld"
+    ],
+    "budgets": [
+      111,
+      300
+    ],
+    "acquisition": [
+      "ei"
+    ],
+    "arms": [
+      [
+        "random",
+        "similarity",
+        "stl"
+      ],
+      [
+        "stl"
+      ]
+    ],
+    "source": [
+      "data/cache/tdc/bindingdb_ic50.csv"
+    ],
+    "audited": 0,
+    "audit_clean": 0,
+    "audit_clean_on_rerun": 20,
+    "audit_accounted": 20,
+    "conflicts": []
+  },
+  {
+    "group": "shuf [uniform]",
+    "feeds": "permutation null (CYP, both designs)",
+    "pattern": "results/shuf_*.json",
+    "n_artefacts": 1,
+    "blocks": 1,
+    "seeds_per_target": [
+      32
+    ],
+    "targets": [
+      4
+    ],
+    "campaigns_per_configuration": [
+      128
+    ],
+    "configurations": 1,
+    "distinct_budgets": 1,
+    "total_campaigns": 128,
+    "seeds_times_targets_consistent": true,
+    "history": [
+      50
+    ],
+    "history_design": [
+      "uniform"
+    ],
+    "budgets": [
+      111
+    ],
+    "acquisition": [
+      "ei"
+    ],
+    "arms": [
+      [
+        "mt",
+        "pooled",
+        "stl"
+      ]
+    ],
+    "source": [
+      "data/cache/tdc/bindingdb_ic50.csv"
+    ],
+    "audited": 0,
+    "audit_clean": 0,
+    "audit_clean_on_rerun": 1,
+    "audit_accounted": 1,
+    "conflicts": []
+  },
+  {
+    "group": "shuf [withheld]",
+    "feeds": "permutation null (CYP, both designs)",
+    "pattern": "results/shuf_*.json",
+    "n_artefacts": 1,
+    "blocks": 1,
+    "seeds_per_target": [
+      32
+    ],
+    "targets": [
+      4
+    ],
+    "campaigns_per_configuration": [
+      128
+    ],
+    "configurations": 1,
+    "distinct_budgets": 1,
+    "total_campaigns": 128,
+    "seeds_times_targets_consistent": true,
+    "history": [
+      50
+    ],
+    "history_design": [
+      "withheld"
+    ],
+    "budgets": [
+      111
+    ],
+    "acquisition": [
+      "ei"
+    ],
+    "arms": [
+      [
+        "mt",
+        "pooled",
+        "stl"
+      ]
+    ],
+    "source": [
+      "data/cache/tdc/bindingdb_ic50.csv"
+    ],
+    "audited": 0,
+    "audit_clean": 0,
+    "audit_clean_on_rerun": 1,
+    "audit_accounted": 1,
+    "conflicts": []
+  },
+  {
+    "group": "win32",
+    "feeds": "history-design table, withheld columns",
+    "pattern": "results/win32_*.json",
+    "n_artefacts": 12,
+    "blocks": 6,
+    "seeds_per_target": [
+      32
+    ],
+    "targets": [
+      4
+    ],
+    "campaigns_per_configuration": [
+      128
+    ],
+    "configurations": 12,
+    "distinct_budgets": 12,
+    "total_campaigns": 1536,
+    "seeds_times_targets_consistent": true,
+    "history": [
+      50
+    ],
+    "history_design": [
+      "withheld"
+    ],
+    "budgets": [
+      111,
+      125,
+      130,
+      195,
+      200,
+      300,
+      55,
+      66,
+      74,
+      82,
+      83,
+      99
+    ],
+    "acquisition": [
+      "ei"
+    ],
+    "arms": [
+      [
+        "mt",
+        "pooled",
+        "stl"
+      ]
+    ],
+    "source": [
+      null
+    ],
+    "audited": 12,
+    "audit_clean": 12,
+    "audit_clean_on_rerun": 0,
+    "audit_accounted": 12,
+    "conflicts": []
+  },
+  {
+    "group": "winleak",
+    "feeds": "history-design table, uniform columns",
+    "pattern": "results/winleak_*.json",
+    "n_artefacts": 12,
+    "blocks": 6,
+    "seeds_per_target": [
+      32
+    ],
+    "targets": [
+      4
+    ],
+    "campaigns_per_configuration": [
+      128
+    ],
+    "configurations": 12,
+    "distinct_budgets": 12,
+    "total_campaigns": 1536,
+    "seeds_times_targets_consistent": true,
+    "history": [
+      50
+    ],
+    "history_design": [
+      "uniform"
+    ],
+    "budgets": [
+      111,
+      125,
+      130,
+      195,
+      200,
+      300,
+      55,
+      66,
+      74,
+      82,
+      83,
+      99
+    ],
+    "acquisition": [
+      "ei"
+    ],
+    "arms": [
+      [
+        "mt",
+        "pooled",
+        "stl"
+      ]
+    ],
+    "source": [
+      "data/cache/tdc/bindingdb_ic50.csv"
+    ],
+    "audited": 12,
+    "audit_clean": 12,
+    "audit_clean_on_rerun": 0,
+    "audit_accounted": 12,
+    "conflicts": []
+  },
+  {
+    "group": "xfam_seed",
+    "feeds": "decision-rule table, seeding option",
+    "pattern": "results/xfam_seed/*.json",
+    "n_artefacts": 18,
+    "blocks": 18,
+    "seeds_per_target": [
+      32
+    ],
+    "targets": [
+      4
+    ],
+    "campaigns_per_configuration": [
+      128
+    ],
+    "configurations": 18,
+    "distinct_budgets": 1,
+    "total_campaigns": 2304,
+    "seeds_times_targets_consistent": true,
+    "history": [
+      50
+    ],
+    "history_design": [
+      "uniform"
+    ],
+    "budgets": [
+      95
+    ],
+    "acquisition": [
+      "ei"
+    ],
+    "arms": [
+      [
+        "stl"
+      ]
+    ],
+    "source": [
+      "data/cache/tdc/kiba_score.csv"
+    ],
+    "audited": 18,
+    "audit_clean": 18,
+    "audit_clean_on_rerun": 0,
+    "audit_accounted": 18,
+    "conflicts": []
+  },
+  {
+    "group": "xfam_seed_excl",
+    "feeds": "decision-rule table, seeding, withheld",
+    "pattern": "results/xfam_seed_excl/*.json",
+    "n_artefacts": 18,
+    "blocks": 18,
+    "seeds_per_target": [
+      32
+    ],
+    "targets": [
+      4
+    ],
+    "campaigns_per_configuration": [
+      128
+    ],
+    "configurations": 18,
+    "distinct_budgets": 1,
+    "total_campaigns": 2304,
+    "seeds_times_targets_consistent": true,
+    "history": [
+      50
+    ],
+    "history_design": [
+      "withheld"
+    ],
+    "budgets": [
+      95
+    ],
+    "acquisition": [
+      "ei"
+    ],
+    "arms": [
+      [
+        "stl"
+      ]
+    ],
+    "source": [
+      "data/cache/tdc/kiba_score.csv"
+    ],
+    "audited": 18,
+    "audit_clean": 18,
+    "audit_clean_on_rerun": 0,
+    "audit_accounted": 18,
+    "conflicts": []
+  },
+  {
+    "group": "xfam_transfer",
+    "feeds": "decision-rule table, transfer option",
+    "pattern": "results/xfam_transfer/*.json",
+    "n_artefacts": 18,
+    "blocks": 18,
+    "seeds_per_target": [
+      32
+    ],
+    "targets": [
+      4
+    ],
+    "campaigns_per_configuration": [
+      128
+    ],
+    "configurations": 18,
+    "distinct_budgets": 1,
+    "total_campaigns": 2304,
+    "seeds_times_targets_consistent": true,
+    "history": [
+      50
+    ],
+    "history_design": [
+      "uniform"
+    ],
+    "budgets": [
+      95
+    ],
+    "acquisition": [
+      "ei"
+    ],
+    "arms": [
+      [
+        "mt",
+        "stl"
+      ]
+    ],
+    "source": [
+      "data/cache/tdc/kiba_score.csv"
+    ],
+    "audited": 18,
+    "audit_clean": 18,
+    "audit_clean_on_rerun": 0,
+    "audit_accounted": 18,
+    "conflicts": []
+  },
+  {
+    "group": "xfam_transfer_excl",
+    "feeds": "decision-rule table, transfer, withheld",
+    "pattern": "results/xfam_transfer_excl/*.json",
+    "n_artefacts": 18,
+    "blocks": 18,
+    "seeds_per_target": [
+      32
+    ],
+    "targets": [
+      4
+    ],
+    "campaigns_per_configuration": [
+      128
+    ],
+    "configurations": 18,
+    "distinct_budgets": 1,
+    "total_campaigns": 2304,
+    "seeds_times_targets_consistent": true,
+    "history": [
+      50
+    ],
+    "history_design": [
+      "withheld"
+    ],
+    "budgets": [
+      95
+    ],
+    "acquisition": [
+      "ei"
+    ],
+    "arms": [
+      [
+        "mt",
+        "stl"
+      ]
+    ],
+    "source": [
+      "data/cache/tdc/kiba_score.csv"
+    ],
+    "audited": 18,
+    "audit_clean": 18,
+    "audit_clean_on_rerun": 0,
+    "audit_accounted": 18,
+    "conflicts": []
+  }
+]

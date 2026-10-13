@@ -1,0 +1,1060 @@
+{
+  "campaigns_per_cell": [
+    128
+  ],
+  "pairing": {
+    "cells": [
+      "cyp_b111",
+      "cyp_b74",
+      "dpp_b66",
+      "dpp_b99",
+      "hdac_b125",
+      "hdac_b83",
+      "jak_b200",
+      "jak_b300",
+      "mmp_b55",
+      "mmp_b82",
+      "pi3k_b130",
+      "pi3k_b195"
+    ],
+    "problems": [],
+    "clean": true
+  },
+  "design_table": {
+    "rows": 12,
+    "cells": 48,
+    "problems": [],
+    "found_in": "supplement.tex"
+  },
+  "macros_checked": 48,
+  "problems": [],
+  "clean": true,
+  "records": [
+    {
+      "name": "MtUniform",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": 11.490885416666666,
+      "sem": 3.247554804732928,
+      "ci95": [
+        3.142780025386763,
+        19.83899080794657
+      ],
+      "positive": 6,
+      "p": 0.03125,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.03125,
+        "approx": 0.027707849358079864,
+        "approx_cc": 0.036031686218233584,
+        "scipy_auto": 0.03125
+      },
+      "p_ttest": 0.016592206260556974,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        15.5078125,
+        3.8671875,
+        23.203125,
+        6.3671875,
+        16.09375,
+        3.90625
+      ],
+      "source": "winleak_{family}_b{budget}.json",
+      "note": "mt - stl, uniform history",
+      "families": {
+        "cyp": 15.5078125,
+        "dpp": 3.8671875,
+        "hdac": 23.203125,
+        "jak": 6.3671875,
+        "mmp": 16.09375,
+        "pi3k": 3.90625
+      },
+      "macros": {
+        "valMtUniform": {
+          "rendered": "$+11.49$",
+          "recomputed": 11.49,
+          "match": true
+        },
+        "semMtUniform": {
+          "rendered": "$3.25$",
+          "recomputed": 3.25,
+          "match": true
+        },
+        "nMtUniform": {
+          "rendered": "6",
+          "recomputed": 6,
+          "match": true
+        },
+        "pMtUniform": {
+          "rendered": "$0.031$",
+          "recomputed": 0.031,
+          "match": true
+        },
+        "ciMtUniform": {
+          "rendered": "$[+3.14,+19.84]$",
+          "recomputed": [
+            3.14,
+            19.84
+          ],
+          "match": true
+        },
+        "posMtUniform": {
+          "rendered": "6/6",
+          "recomputed": "6/6",
+          "match": true
+        }
+      }
+    },
+    {
+      "name": "MtWithheld",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": 9.368489583333334,
+      "sem": 2.9932075180652378,
+      "ci95": [
+        1.6742047071047779,
+        17.06277445956189
+      ],
+      "positive": 6,
+      "p": 0.03125,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.03125,
+        "approx": 0.027707849358079864,
+        "approx_cc": 0.036031686218233584,
+        "scipy_auto": 0.03125
+      },
+      "p_ttest": 0.02595988261926476,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        9.0625,
+        4.3359375,
+        21.1328125,
+        6.718750000000001,
+        14.21875,
+        0.7421875000000003
+      ],
+      "source": "win32_{family}_b{budget}.json",
+      "note": "mt - stl, withheld history",
+      "families": {
+        "cyp": 9.0625,
+        "dpp": 4.3359375,
+        "hdac": 21.1328125,
+        "jak": 6.718750000000001,
+        "mmp": 14.21875,
+        "pi3k": 0.7421875000000003
+      },
+      "macros": {
+        "valMtWithheld": {
+          "rendered": "$+9.37$",
+          "recomputed": 9.37,
+          "match": true
+        },
+        "semMtWithheld": {
+          "rendered": "$2.99$",
+          "recomputed": 2.99,
+          "match": true
+        },
+        "nMtWithheld": {
+          "rendered": "6",
+          "recomputed": 6,
+          "match": true
+        },
+        "pMtWithheld": {
+          "rendered": "$0.031$",
+          "recomputed": 0.031,
+          "match": true
+        },
+        "ciMtWithheld": {
+          "rendered": "$[+1.67,+17.06]$",
+          "recomputed": [
+            1.67,
+            17.06
+          ],
+          "match": true
+        },
+        "posMtWithheld": {
+          "rendered": "6/6",
+          "recomputed": "6/6",
+          "match": true
+        }
+      }
+    },
+    {
+      "name": "MtDesignChange",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": 2.1223958333333335,
+      "sem": 1.0435692260701706,
+      "ci95": [
+        -0.5601842634316938,
+        4.804975930098361
+      ],
+      "positive": 4,
+      "p": 0.15625,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.15625,
+        "approx": 0.11585149752593009,
+        "approx_cc": 0.1422132419363924,
+        "scipy_auto": 0.15625
+      },
+      "p_ttest": 0.09763892713755615,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        6.4453125,
+        -0.46875,
+        2.0703125,
+        -0.3515625000000009,
+        1.875,
+        3.1640624999999996
+      ],
+      "source": "winleak_* vs win32_*",
+      "note": "mt - stl, uniform minus withheld",
+      "families": {
+        "cyp": 6.4453125,
+        "dpp": -0.46875,
+        "hdac": 2.0703125,
+        "jak": -0.3515625000000009,
+        "mmp": 1.875,
+        "pi3k": 3.1640624999999996
+      },
+      "macros": {
+        "valMtDesignChange": {
+          "rendered": "$+2.12$",
+          "recomputed": 2.12,
+          "match": true
+        },
+        "semMtDesignChange": {
+          "rendered": "$1.04$",
+          "recomputed": 1.04,
+          "match": true
+        },
+        "nMtDesignChange": {
+          "rendered": "6",
+          "recomputed": 6,
+          "match": true
+        },
+        "pMtDesignChange": {
+          "rendered": "$0.156$",
+          "recomputed": 0.156,
+          "match": true
+        },
+        "ciMtDesignChange": {
+          "rendered": "$[-0.56,+4.80]$",
+          "recomputed": [
+            -0.56,
+            4.8
+          ],
+          "match": true
+        },
+        "posMtDesignChange": {
+          "rendered": "4/6",
+          "recomputed": "4/6",
+          "match": true
+        }
+      }
+    },
+    {
+      "name": "MtDesignChangeCell",
+      "unit": "configuration",
+      "n": 12,
+      "estimate": 2.1223958333333335,
+      "sem": 1.0209302602600776,
+      "ci95": [
+        -0.12465651898759189,
+        4.369448185654258
+      ],
+      "positive": 9,
+      "p": 0.054520531824333585,
+      "p_method": "normal approximation with continuity correction (0 zeros, 1 ties make the exact distribution inapplicable)",
+      "p_alternatives": {
+        "exact": 0.05224609375,
+        "approx": 0.0497722554312802,
+        "approx_cc": 0.054520531824333585,
+        "scipy_auto": 0.05029296875
+      },
+      "p_ttest": 0.061817183286937215,
+      "zeros": 0,
+      "ties": 1,
+      "p_floor": 0.00048828125,
+      "values": [
+        11.328125,
+        1.5625,
+        -1.328125,
+        0.390625,
+        2.96875,
+        1.171875,
+        -1.328125,
+        0.6249999999999982,
+        4.6875,
+        -0.9375,
+        4.53125,
+        1.7968749999999998
+      ],
+      "source": "winleak_* vs win32_*",
+      "note": "secondary figure: two budgets on one family are not independent",
+      "pairing": {
+        "aligned": true,
+        "n_by_key": 12,
+        "n_positional": 12
+      },
+      "macros": {
+        "valMtDesignChangeCell": {
+          "rendered": "$+2.12$",
+          "recomputed": 2.12,
+          "match": true
+        },
+        "semMtDesignChangeCell": {
+          "rendered": "$1.02$",
+          "recomputed": 1.02,
+          "match": true
+        },
+        "nMtDesignChangeCell": {
+          "rendered": "12",
+          "recomputed": 12,
+          "match": true
+        },
+        "pMtDesignChangeCell": {
+          "rendered": "$0.055$",
+          "recomputed": 0.055,
+          "match": true
+        },
+        "ciMtDesignChangeCell": {
+          "rendered": "$[-0.12,+4.37]$",
+          "recomputed": [
+            -0.12,
+            4.37
+          ],
+          "match": true
+        },
+        "posMtDesignChangeCell": {
+          "rendered": "9/12",
+          "recomputed": "9/12",
+          "match": true
+        }
+      }
+    },
+    {
+      "name": "MtGvalueQ0",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": 12.1484375,
+      "sem": 3.4545328483777418,
+      "ci95": [
+        3.268278109351199,
+        21.0285968906488
+      ],
+      "positive": 6,
+      "p": 0.03125,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.03125,
+        "approx": 0.027707849358079864,
+        "approx_cc": 0.036031686218233584,
+        "scipy_auto": 0.03125
+      },
+      "p_ttest": 0.01697940548961107,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        17.1484375,
+        5.703125,
+        24.296875,
+        4.921875,
+        16.953125,
+        3.8671874999999996
+      ],
+      "source": "winleak_* vs sdrefu_{family}_b{budget}_q0.json",
+      "note": "value of the auxiliary activities: measured minus Gaussian null",
+      "families": {
+        "cyp": 17.1484375,
+        "dpp": 5.703125,
+        "hdac": 24.296875,
+        "jak": 4.921875,
+        "mmp": 16.953125,
+        "pi3k": 3.8671874999999996
+      }
+    },
+    {
+      "name": "MtUnderQ0",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": -0.6575520833333333,
+      "sem": 0.4997778504976889,
+      "ci95": [
+        -1.942271947676054,
+        0.6271677810093874
+      ],
+      "positive": 2,
+      "p": 0.3125,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.3125,
+        "approx": 0.24886387493792206,
+        "approx_cc": 0.29450739368011014,
+        "scipy_auto": 0.3125
+      },
+      "p_ttest": 0.24537332958921587,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        -1.640625,
+        -1.8359375,
+        -1.09375,
+        1.4453125,
+        -0.8593749999999998,
+        0.03906250000000028
+      ],
+      "source": "sdrefu_{family}_b{budget}_q0.json",
+      "note": "mt - stl under the null alone",
+      "families": {
+        "cyp": -1.640625,
+        "dpp": -1.8359375,
+        "hdac": -1.09375,
+        "jak": 1.4453125,
+        "mmp": -0.8593749999999998,
+        "pi3k": 0.03906250000000028
+      }
+    },
+    {
+      "name": "MtGvalueShuf",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": 12.864583333333334,
+      "sem": 3.478371291319801,
+      "ci95": [
+        3.9231452742678226,
+        21.806021392398847
+      ],
+      "positive": 6,
+      "p": 0.03125,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.03125,
+        "approx": 0.027707849358079864,
+        "approx_cc": 0.036031686218233584,
+        "scipy_auto": 0.03125
+      },
+      "p_ttest": 0.014021954268552144,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        17.96875,
+        6.4453125,
+        23.984375,
+        4.8046875,
+        19.2578125,
+        4.7265625
+      ],
+      "source": "winleak_* vs sdrefu_{family}_b{budget}_shuf.json",
+      "note": "value of the auxiliary activities: measured minus permutation null",
+      "families": {
+        "cyp": 17.96875,
+        "dpp": 6.4453125,
+        "hdac": 23.984375,
+        "jak": 4.8046875,
+        "mmp": 19.2578125,
+        "pi3k": 4.7265625
+      }
+    },
+    {
+      "name": "MtUnderShuf",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": -1.3736979166666667,
+      "sem": 0.709850407035823,
+      "ci95": [
+        -3.1984264790119976,
+        0.45103064567866435
+      ],
+      "positive": 1,
+      "p": 0.15625,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.15625,
+        "approx": 0.11585149752593009,
+        "approx_cc": 0.1422132419363924,
+        "scipy_auto": 0.15625
+      },
+      "p_ttest": 0.1107507449725436,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        -2.4609375,
+        -2.578125,
+        -0.7812500000000002,
+        1.5625,
+        -3.1640625,
+        -0.8203125
+      ],
+      "source": "sdrefu_{family}_b{budget}_shuf.json",
+      "note": "mt - stl under the null alone",
+      "families": {
+        "cyp": -2.4609375,
+        "dpp": -2.578125,
+        "hdac": -0.7812500000000002,
+        "jak": 1.5625,
+        "mmp": -3.1640625,
+        "pi3k": -0.8203125
+      }
+    },
+    {
+      "name": "MtNullDifference",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": 0.7161458333333334,
+      "sem": 0.3789487554910221,
+      "ci95": [
+        -0.2579729541688751,
+        1.6902646208355419
+      ],
+      "positive": 4,
+      "p": 0.15625,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.15625,
+        "approx": 0.11585149752593009,
+        "approx_cc": 0.1422132419363924,
+        "scipy_auto": 0.15625
+      },
+      "p_ttest": 0.11738679514629327,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        0.8203125,
+        0.7421875,
+        -0.3124999999999998,
+        -0.1171875,
+        2.3046875,
+        0.8593750000000002
+      ],
+      "source": "sdrefu_*_shuf vs sdrefu_*_q0",
+      "note": "G(permutation) - G(Gaussian): is the null a distributional artefact?"
+    },
+    {
+      "name": "PooledUniform",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": 3.1575520833333335,
+      "sem": 5.141248464862621,
+      "ci95": [
+        -10.058447832935608,
+        16.373551999602274
+      ],
+      "positive": 4,
+      "p": 0.4375,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.4375,
+        "approx": 0.3454475304692257,
+        "approx_cc": 0.40167816646977306,
+        "scipy_auto": 0.4375
+      },
+      "p_ttest": 0.5659750319287145,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        13.7109375,
+        -12.734375,
+        17.4609375,
+        0.23437499999999983,
+        10.078125,
+        -9.8046875
+      ],
+      "source": "winleak_{family}_b{budget}.json",
+      "note": "pooled - stl, uniform history",
+      "families": {
+        "cyp": 13.7109375,
+        "dpp": -12.734375,
+        "hdac": 17.4609375,
+        "jak": 0.23437499999999983,
+        "mmp": 10.078125,
+        "pi3k": -9.8046875
+      },
+      "macros": {
+        "valPooledUniform": {
+          "rendered": "$+3.16$",
+          "recomputed": 3.16,
+          "match": true
+        },
+        "semPooledUniform": {
+          "rendered": "$5.14$",
+          "recomputed": 5.14,
+          "match": true
+        },
+        "nPooledUniform": {
+          "rendered": "6",
+          "recomputed": 6,
+          "match": true
+        },
+        "pPooledUniform": {
+          "rendered": "$0.438$",
+          "recomputed": 0.438,
+          "match": true
+        },
+        "ciPooledUniform": {
+          "rendered": "$[-10.06,+16.37]$",
+          "recomputed": [
+            -10.06,
+            16.37
+          ],
+          "match": true
+        },
+        "posPooledUniform": {
+          "rendered": "4/6",
+          "recomputed": "4/6",
+          "match": true
+        }
+      }
+    },
+    {
+      "name": "PooledWithheld",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": 8.88671875,
+      "sem": 4.7350748717777575,
+      "ci95": [
+        -3.285178705769855,
+        21.058616205769855
+      ],
+      "positive": 5,
+      "p": 0.15625,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.15625,
+        "approx": 0.11585149752593009,
+        "approx_cc": 0.1422132419363924,
+        "scipy_auto": 0.15625
+      },
+      "p_ttest": 0.11936852369190228,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        15.859375,
+        2.0312499999999996,
+        22.1484375,
+        4.3359375,
+        17.5390625,
+        -8.59375
+      ],
+      "source": "win32_{family}_b{budget}.json",
+      "note": "pooled - stl, withheld history",
+      "families": {
+        "cyp": 15.859375,
+        "dpp": 2.0312499999999996,
+        "hdac": 22.1484375,
+        "jak": 4.3359375,
+        "mmp": 17.5390625,
+        "pi3k": -8.59375
+      },
+      "macros": {
+        "valPooledWithheld": {
+          "rendered": "$+8.89$",
+          "recomputed": 8.89,
+          "match": true
+        },
+        "semPooledWithheld": {
+          "rendered": "$4.74$",
+          "recomputed": 4.74,
+          "match": true
+        },
+        "nPooledWithheld": {
+          "rendered": "6",
+          "recomputed": 6,
+          "match": true
+        },
+        "pPooledWithheld": {
+          "rendered": "$0.156$",
+          "recomputed": 0.156,
+          "match": true
+        },
+        "ciPooledWithheld": {
+          "rendered": "$[-3.29,+21.06]$",
+          "recomputed": [
+            -3.29,
+            21.06
+          ],
+          "match": true
+        },
+        "posPooledWithheld": {
+          "rendered": "5/6",
+          "recomputed": "5/6",
+          "match": true
+        }
+      }
+    },
+    {
+      "name": "PooledDesignChange",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": -5.729166666666667,
+      "sem": 2.0135109499295285,
+      "ci95": [
+        -10.905061340410334,
+        -0.5532719929230003
+      ],
+      "positive": 0,
+      "p": 0.03125,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.03125,
+        "approx": 0.027707849358079864,
+        "approx_cc": 0.036031686218233584,
+        "scipy_auto": 0.03125
+      },
+      "p_ttest": 0.03601912007464666,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        -2.1484375,
+        -14.765625,
+        -4.6875,
+        -4.1015625,
+        -7.4609375,
+        -1.2109375
+      ],
+      "source": "winleak_* vs win32_*",
+      "note": "pooled - stl, uniform minus withheld",
+      "families": {
+        "cyp": -2.1484375,
+        "dpp": -14.765625,
+        "hdac": -4.6875,
+        "jak": -4.1015625,
+        "mmp": -7.4609375,
+        "pi3k": -1.2109375
+      },
+      "macros": {
+        "valPooledDesignChange": {
+          "rendered": "$-5.73$",
+          "recomputed": -5.73,
+          "match": true
+        },
+        "semPooledDesignChange": {
+          "rendered": "$2.01$",
+          "recomputed": 2.01,
+          "match": true
+        },
+        "nPooledDesignChange": {
+          "rendered": "6",
+          "recomputed": 6,
+          "match": true
+        },
+        "pPooledDesignChange": {
+          "rendered": "$0.031$",
+          "recomputed": 0.031,
+          "match": true
+        },
+        "ciPooledDesignChange": {
+          "rendered": "$[-10.91,-0.55]$",
+          "recomputed": [
+            -10.91,
+            -0.55
+          ],
+          "match": true
+        },
+        "posPooledDesignChange": {
+          "rendered": "0/6",
+          "recomputed": "0/6",
+          "match": true
+        }
+      }
+    },
+    {
+      "name": "PooledDesignChangeCell",
+      "unit": "configuration",
+      "n": 12,
+      "estimate": -5.729166666666667,
+      "sem": 1.5607036707071713,
+      "ci95": [
+        -9.1642522851937,
+        -2.294081048139635
+      ],
+      "positive": 1,
+      "p": 0.00341796875,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.00341796875,
+        "approx": 0.006039559048656822,
+        "approx_cc": 0.006801651812875441,
+        "scipy_auto": 0.00341796875
+      },
+      "p_ttest": 0.003683921734693241,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.00048828125,
+      "values": [
+        3.203125,
+        -7.5,
+        -13.125,
+        -16.40625,
+        -2.65625,
+        -6.71875,
+        -3.28125,
+        -4.921875,
+        -5.859375,
+        -9.0625,
+        -0.546875,
+        -1.875
+      ],
+      "source": "winleak_* vs win32_*",
+      "note": "secondary figure: two budgets on one family are not independent",
+      "pairing": {
+        "aligned": true,
+        "n_by_key": 12,
+        "n_positional": 12
+      },
+      "macros": {
+        "valPooledDesignChangeCell": {
+          "rendered": "$-5.73$",
+          "recomputed": -5.73,
+          "match": true
+        },
+        "semPooledDesignChangeCell": {
+          "rendered": "$1.56$",
+          "recomputed": 1.56,
+          "match": true
+        },
+        "nPooledDesignChangeCell": {
+          "rendered": "12",
+          "recomputed": 12,
+          "match": true
+        },
+        "pPooledDesignChangeCell": {
+          "rendered": "$0.003$",
+          "recomputed": 0.003,
+          "match": true
+        },
+        "ciPooledDesignChangeCell": {
+          "rendered": "$[-9.16,-2.29]$",
+          "recomputed": [
+            -9.16,
+            -2.29
+          ],
+          "match": true
+        },
+        "posPooledDesignChangeCell": {
+          "rendered": "1/12",
+          "recomputed": "1/12",
+          "match": true
+        }
+      }
+    },
+    {
+      "name": "PooledGvalueQ0",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": 19.576822916666668,
+      "sem": 4.28681844787675,
+      "ci95": [
+        8.557205281884034,
+        30.5964405514493
+      ],
+      "positive": 6,
+      "p": 0.03125,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.03125,
+        "approx": 0.027707849358079864,
+        "approx_cc": 0.036031686218233584,
+        "scipy_auto": 0.03125
+      },
+      "p_ttest": 0.006019721680837979,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        28.984375,
+        9.7265625,
+        26.5625,
+        10.2734375,
+        31.6015625,
+        10.3125
+      ],
+      "source": "winleak_* vs sdrefu_{family}_b{budget}_q0.json",
+      "note": "value of the auxiliary activities: measured minus Gaussian null",
+      "families": {
+        "cyp": 28.984375,
+        "dpp": 9.7265625,
+        "hdac": 26.5625,
+        "jak": 10.2734375,
+        "mmp": 31.6015625,
+        "pi3k": 10.3125
+      }
+    },
+    {
+      "name": "PooledUnderQ0",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": -16.419270833333332,
+      "sem": 2.3930293827565325,
+      "ci95": [
+        -22.570748696791256,
+        -10.267792969875408
+      ],
+      "positive": 0,
+      "p": 0.03125,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.03125,
+        "approx": 0.027707849358079864,
+        "approx_cc": 0.036031686218233584,
+        "scipy_auto": 0.03125
+      },
+      "p_ttest": 0.0010050484511511947,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        -15.2734375,
+        -22.4609375,
+        -9.1015625,
+        -10.0390625,
+        -21.5234375,
+        -20.1171875
+      ],
+      "source": "sdrefu_{family}_b{budget}_q0.json",
+      "note": "pooled - stl under the null alone",
+      "families": {
+        "cyp": -15.2734375,
+        "dpp": -22.4609375,
+        "hdac": -9.1015625,
+        "jak": -10.0390625,
+        "mmp": -21.5234375,
+        "pi3k": -20.1171875
+      }
+    },
+    {
+      "name": "PooledGvalueShuf",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": 19.35546875,
+      "sem": 4.4722809613295,
+      "ci95": [
+        7.8591045469442715,
+        30.851832953055727
+      ],
+      "positive": 6,
+      "p": 0.03125,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.03125,
+        "approx": 0.027707849358079864,
+        "approx_cc": 0.036031686218233584,
+        "scipy_auto": 0.03125
+      },
+      "p_ttest": 0.007514446287131947,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        29.453125,
+        10.3515625,
+        27.890625,
+        8.4375,
+        30.5859375,
+        9.4140625
+      ],
+      "source": "winleak_* vs sdrefu_{family}_b{budget}_shuf.json",
+      "note": "value of the auxiliary activities: measured minus permutation null",
+      "families": {
+        "cyp": 29.453125,
+        "dpp": 10.3515625,
+        "hdac": 27.890625,
+        "jak": 8.4375,
+        "mmp": 30.5859375,
+        "pi3k": 9.4140625
+      }
+    },
+    {
+      "name": "PooledUnderShuf",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": -16.197916666666668,
+      "sem": 2.3982098720249194,
+      "ci95": [
+        -22.362711401737617,
+        -10.03312193159572
+      ],
+      "positive": 0,
+      "p": 0.03125,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.03125,
+        "approx": 0.027707849358079864,
+        "approx_cc": 0.036031686218233584,
+        "scipy_auto": 0.03125
+      },
+      "p_ttest": 0.00108017625520877,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        -15.7421875,
+        -23.0859375,
+        -10.4296875,
+        -8.203125,
+        -20.5078125,
+        -19.21875
+      ],
+      "source": "sdrefu_{family}_b{budget}_shuf.json",
+      "note": "pooled - stl under the null alone",
+      "families": {
+        "cyp": -15.7421875,
+        "dpp": -23.0859375,
+        "hdac": -10.4296875,
+        "jak": -8.203125,
+        "mmp": -20.5078125,
+        "pi3k": -19.21875
+      }
+    },
+    {
+      "name": "PooledNullDifference",
+      "unit": "protein family",
+      "n": 6,
+      "estimate": -0.22135416666666666,
+      "sem": 0.49293786496401126,
+      "ci95": [
+        -1.4884912884405006,
+        1.0457829551071671
+      ],
+      "positive": 3,
+      "p": 0.6875,
+      "p_method": "exact",
+      "p_alternatives": {
+        "exact": 0.6875,
+        "approx": 0.6001794871405538,
+        "approx_cc": 0.6749867139704893,
+        "scipy_auto": 0.6875
+      },
+      "p_ttest": 0.6721889919635851,
+      "zeros": 0,
+      "ties": 0,
+      "p_floor": 0.03125,
+      "values": [
+        0.46875,
+        0.625,
+        1.328125,
+        -1.8359375,
+        -1.015625,
+        -0.8984375
+      ],
+      "source": "sdrefu_*_shuf vs sdrefu_*_q0",
+      "note": "G(permutation) - G(Gaussian): is the null a distributional artefact?"
+    }
+  ]
+}

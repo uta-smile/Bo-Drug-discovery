@@ -1,0 +1,47 @@
+{
+  "family": "cyp",
+  "history": 50,
+  "history_cluster": 0.75,
+  "reach": 0.7856454143588877,
+  "history_excludes_top": true,
+  "budget": 60,
+  "batch": 5,
+  "k": 10,
+  "acquisition": "ei",
+  "repeats": 15,
+  "n_pool": 335,
+  "arms": {
+    "stl": {
+      "auc_mean": 6.177270321573333,
+      "auc_sem": 0.035287919036188664,
+      "recall_mean": 0.38000000000000006,
+      "delta_vs_stl": 0.0,
+      "delta_sem": 0.0,
+      "frac_better": 0.0
+    },
+    "mt": {
+      "auc_mean": 6.2594138868650155,
+      "auc_sem": 0.027005084336075725,
+      "recall_mean": 0.405,
+      "delta_vs_stl": 0.08214356529168107,
+      "delta_sem": 0.030455646331574954,
+      "frac_better": 0.55
+    },
+    "similarity": {
+      "auc_mean": 6.146200153257478,
+      "auc_sem": 0.02243975639132586,
+      "recall_mean": 0.26666666666666666,
+      "delta_vs_stl": -0.03107016831585683,
+      "delta_sem": 0.03349536787635994,
+      "frac_better": 0.45
+    },
+    "random": {
+      "auc_mean": 5.88798676856807,
+      "auc_sem": 0.0238819070636437,
+      "recall_mean": 0.17333333333333328,
+      "delta_vs_stl": -0.2892835530052643,
+      "delta_sem": 0.03081716783302103,
+      "frac_better": 0.13333333333333333
+    }
+  }
+}

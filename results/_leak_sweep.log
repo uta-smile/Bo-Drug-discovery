@@ -1,0 +1,554 @@
+
+leak: the window cells again with a UNIFORM history -- the other side of the --history-excludes-top control (section 40)
+    run   mmp 22% b55 H=50 ei                winleak_mmp_b55.json
+    run   dpp 22% b66 H=50 ei                winleak_dpp_b66.json
+    run   cyp 22% b74 H=50 ei                winleak_cyp_b74.json
+    run   mmp 33% b82 H=50 ei                winleak_mmp_b82.json
+    run   hdac 22% b83 H=50 ei               winleak_hdac_b83.json
+    run   dpp 33% b99 H=50 ei                winleak_dpp_b99.json
+    run   cyp 33% b111 H=50 ei               winleak_cyp_b111.json
+    run   hdac 33% b125 H=50 ei              winleak_hdac_b125.json
+    run   pi3k 22% b130 H=50 ei              winleak_pi3k_b130.json
+    run   pi3k 33% b195 H=50 ei              winleak_pi3k_b195.json
+    run   jak 22% b200 H=50 ei               winleak_jak_b200.json
+    run   jak 33% b300 H=50 ei               winleak_jak_b300.json
+
+0 already present, 12 to run
+
+=== [1/12] mmp 22% b55 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    MMP1     pile-ups: 5.30 x61, 5.00 x50, 4.00 x24, 6.00 x24
+    MMP2     pile-ups: 10.00 x13, 7.89 x10, 9.00 x10, 5.30 x10
+    MMP3     pile-ups: 5.30 x41, 4.00 x20, 6.00 x14
+    MMP9     pile-ups: 5.30 x34, 4.00 x29, 5.00 x15, 9.70 x10
+    kept 248 of 464 compounds (53.4%)
+mmp: 248 compounds x 4 targets, budget 55, batch 10, H=50 (0s)
+      MMP1: success set = top-10
+    MMP1     done
+      MMP2: success set = top-10
+    MMP2     done
+      MMP3: success set = top-10
+    MMP3     done
+      MMP9: success set = top-10
+    MMP9     done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 1.07 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    MMP1                 60.0%   85.0%         +25.0%
+    MMP2                 60.9%   73.1%         +12.2%
+    MMP3                 26.9%   52.2%         +25.3%
+    MMP9                 41.9%   47.5%          +5.6%
+    4/4 targets improve; spread +5.6% to +25.3%
+    -> unanimous: the self-check is informative on this panel.
+    stl               8.2475       47.4%                
+    mt                8.4268       64.5%   +0.1793+-0.0187
+    pooled            8.3119       57.9%   +0.0644+-0.0231
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.1793 AUC
+      over single-task BO (81% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_mmp_b55.json  (35s total)
+
+=== [2/12] dpp 22% b66 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    DPP4     pile-ups: 4.00 x38, 6.96 x16
+    DPP7     pile-ups: 4.00 x124
+    DPP8     pile-ups: 4.00 x274
+    DPP9     pile-ups: 4.00 x308
+    kept 300 of 698 compounds (43.0%)
+dpp: 300 compounds x 4 targets, budget 66, batch 10, H=50 (0s)
+      DPP4: success set = top-10
+    DPP4     done
+      DPP7: success set = top-10
+    DPP7     done
+      DPP8: success set = top-10
+    DPP8     done
+      DPP9: success set = top-10
+    DPP9     done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 1.00 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    DPP4                 39.7%   43.4%          +3.8%
+    DPP7                 74.7%   77.5%          +2.8%
+    DPP8                 83.4%   90.3%          +6.9%
+    DPP9                 80.9%   86.2%          +5.3%
+    4/4 targets improve; spread +2.8% to +6.9%
+    -> unanimous: the self-check is informative on this panel.
+    stl               7.2852       69.7%                
+    mt                7.4497       74.4%   +0.1644+-0.0209
+    pooled            7.3553       58.5%   +0.0701+-0.0267
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.1644 AUC
+      over single-task BO (74% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_dpp_b66.json  (43s total)
+
+=== [3/12] cyp 22% b74 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    CYP3A4   pile-ups: 5.00 x317, 4.52 x122, 4.30 x90, 5.30 x68, 4.00 x64, 4.70 x62, 4.40 x41, 4.60 x38
+    CYP2D6   pile-ups: 5.00 x399, 4.52 x136, 4.30 x88, 4.00 x79, 4.70 x76, 5.30 x62, 4.40 x57, 4.60 x35
+    CYP2C9   pile-ups: 5.00 x307, 4.52 x119, 5.30 x97, 4.30 x87, 4.70 x67, 4.60 x57, 4.00 x50, 4.40 x41
+    CYP2C19  pile-ups: 5.00 x325, 4.52 x119, 4.30 x101, 4.70 x76, 5.30 x72, 4.00 x50, 4.40 x46, 4.60 x38
+    kept 335 of 1,472 compounds (22.8%)
+cyp: 335 compounds x 4 targets, budget 74, batch 10, H=50 (0s)
+      CYP3A4: success set = top-10
+    CYP3A4   done
+      CYP2D6: success set = top-10
+    CYP2D6   done
+      CYP2C9: success set = top-10
+    CYP2C9   done
+      CYP2C19: success set = top-10
+    CYP2C19  done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.95 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    CYP3A4               30.0%   48.1%         +18.1%
+    CYP2D6               40.9%   54.1%         +13.1%
+    CYP2C9               44.1%   65.3%         +21.3%
+    CYP2C19              51.9%   78.4%         +26.6%
+    4/4 targets improve; spread +13.1% to +26.6%
+    -> unanimous: the self-check is informative on this panel.
+    stl               6.2791       41.7%                
+    mt                6.5821       61.5%   +0.3030+-0.0201
+    pooled            6.5678       59.1%   +0.2887+-0.0207
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.3030 AUC
+      over single-task BO (94% of campaigns better).
+      But pooling matches it -- on this block the campaign gain
+      does not require modelling the task structure.
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_cyp_b74.json  (52s total)
+
+=== [4/12] mmp 33% b82 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    MMP1     pile-ups: 5.30 x61, 5.00 x50, 4.00 x24, 6.00 x24
+    MMP2     pile-ups: 10.00 x13, 7.89 x10, 9.00 x10, 5.30 x10
+    MMP3     pile-ups: 5.30 x41, 4.00 x20, 6.00 x14
+    MMP9     pile-ups: 5.30 x34, 4.00 x29, 5.00 x15, 9.70 x10
+    kept 248 of 464 compounds (53.4%)
+mmp: 248 compounds x 4 targets, budget 82, batch 10, H=50 (0s)
+      MMP1: success set = top-10
+    MMP1     done
+      MMP2: success set = top-10
+    MMP2     done
+      MMP3: success set = top-10
+    MMP3     done
+      MMP9: success set = top-10
+    MMP9     done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 1.07 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    MMP1                 88.8%   99.7%         +10.9%
+    MMP2                 82.5%   92.2%          +9.7%
+    MMP3                 42.8%   71.9%         +29.1%
+    MMP9                 56.6%   67.5%         +10.9%
+    4/4 targets improve; spread +9.7% to +29.1%
+    -> unanimous: the self-check is informative on this panel.
+    stl               8.5484       67.7%                
+    mt                8.7118       82.8%   +0.1633+-0.0154
+    pooled            8.6273       77.3%   +0.0789+-0.0184
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.1633 AUC
+      over single-task BO (82% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_mmp_b82.json  (60s total)
+
+=== [5/12] hdac 22% b83 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    HDAC1    pile-ups: 4.00 x44
+    HDAC2    pile-ups: 4.00 x47
+    HDAC3    pile-ups: 4.00 x39
+    HDAC6    pile-ups: 4.00 x36, 8.70 x34, 8.52 x30, 8.40 x29, 8.30 x18, 4.30 x16
+    kept 378 of 560 compounds (67.5%)
+hdac: 378 compounds x 4 targets, budget 83, batch 10, H=50 (0s)
+      HDAC1: success set = top-10
+    HDAC1    done
+      HDAC2: success set = top-10
+    HDAC2    done
+      HDAC3: success set = top-10
+    HDAC3    done
+      HDAC6: success set = top-10
+    HDAC6    done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.93 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    HDAC1                60.9%   81.3%         +20.3%
+    HDAC2                59.4%   73.8%         +14.4%
+    HDAC3                53.8%   86.9%         +33.1%
+    HDAC6                18.1%   44.4%         +26.2%
+    4/4 targets improve; spread +14.4% to +33.1%
+    -> unanimous: the self-check is informative on this panel.
+    stl               8.3820       48.0%                
+    mt                8.5797       71.6%   +0.1977+-0.0171
+    pooled            8.5277       64.3%   +0.1457+-0.0182
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.1977 AUC
+      over single-task BO (88% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_hdac_b83.json  (61s total)
+
+=== [6/12] dpp 33% b99 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    DPP4     pile-ups: 4.00 x38, 6.96 x16
+    DPP7     pile-ups: 4.00 x124
+    DPP8     pile-ups: 4.00 x274
+    DPP9     pile-ups: 4.00 x308
+    kept 300 of 698 compounds (43.0%)
+dpp: 300 compounds x 4 targets, budget 99, batch 10, H=50 (0s)
+      DPP4: success set = top-10
+    DPP4     done
+      DPP7: success set = top-10
+    DPP7     done
+      DPP8: success set = top-10
+    DPP8     done
+      DPP9: success set = top-10
+    DPP9     done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 1.00 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    DPP4                 67.5%   73.1%          +5.6%
+    DPP7                 84.4%   86.9%          +2.5%
+    DPP8                 96.2%   96.6%          +0.3%
+    DPP9                 92.2%   95.9%          +3.7%
+    4/4 targets improve; spread +0.3% to +5.6%
+    -> unanimous: the self-check is informative on this panel.
+    stl               7.6006       85.1%                
+    mt                7.7141       88.1%   +0.1136+-0.0142
+    pooled            7.6074       70.8%   +0.0068+-0.0188
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.1136 AUC
+      over single-task BO (77% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_dpp_b99.json  (70s total)
+
+=== [7/12] cyp 33% b111 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    CYP3A4   pile-ups: 5.00 x317, 4.52 x122, 4.30 x90, 5.30 x68, 4.00 x64, 4.70 x62, 4.40 x41, 4.60 x38
+    CYP2D6   pile-ups: 5.00 x399, 4.52 x136, 4.30 x88, 4.00 x79, 4.70 x76, 5.30 x62, 4.40 x57, 4.60 x35
+    CYP2C9   pile-ups: 5.00 x307, 4.52 x119, 5.30 x97, 4.30 x87, 4.70 x67, 4.60 x57, 4.00 x50, 4.40 x41
+    CYP2C19  pile-ups: 5.00 x325, 4.52 x119, 4.30 x101, 4.70 x76, 5.30 x72, 4.00 x50, 4.40 x46, 4.60 x38
+    kept 335 of 1,472 compounds (22.8%)
+cyp: 335 compounds x 4 targets, budget 111, batch 10, H=50 (0s)
+      CYP3A4: success set = top-10
+    CYP3A4   done
+      CYP2D6: success set = top-10
+    CYP2D6   done
+      CYP2C9: success set = top-10
+    CYP2C9   done
+      CYP2C19: success set = top-10
+    CYP2C19  done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.95 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    CYP3A4               52.2%   61.3%          +9.1%
+    CYP2D6               53.8%   65.6%         +11.9%
+    CYP2C9               65.3%   75.9%         +10.6%
+    CYP2C19              74.7%   88.1%         +13.4%
+    4/4 targets improve; spread +9.1% to +13.4%
+    -> unanimous: the self-check is informative on this panel.
+    stl               6.5407       61.5%                
+    mt                6.7858       72.7%   +0.2451+-0.0172
+    pooled            6.7716       71.5%   +0.2308+-0.0179
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.2451 AUC
+      over single-task BO (95% of campaigns better).
+      But pooling matches it -- on this block the campaign gain
+      does not require modelling the task structure.
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_cyp_b111.json  (91s total)
+
+=== [8/12] hdac 33% b125 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    HDAC1    pile-ups: 4.00 x44
+    HDAC2    pile-ups: 4.00 x47
+    HDAC3    pile-ups: 4.00 x39
+    HDAC6    pile-ups: 4.00 x36, 8.70 x34, 8.52 x30, 8.40 x29, 8.30 x18, 4.30 x16
+    kept 378 of 560 compounds (67.5%)
+hdac: 378 compounds x 4 targets, budget 125, batch 10, H=50 (0s)
+      HDAC1: success set = top-10
+    HDAC1    done
+      HDAC2: success set = top-10
+    HDAC2    done
+      HDAC3: success set = top-10
+    HDAC3    done
+      HDAC6: success set = top-10
+    HDAC6    done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.93 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    HDAC1                73.1%   94.4%         +21.3%
+    HDAC2                67.8%   92.5%         +24.7%
+    HDAC3                68.1%   96.2%         +28.1%
+    HDAC6                33.1%   50.6%         +17.5%
+    4/4 targets improve; spread +17.5% to +28.1%
+    -> unanimous: the self-check is informative on this panel.
+    stl               8.5899       60.5%                
+    mt                8.7601       83.4%   +0.1702+-0.0137
+    pooled            8.7130       79.2%   +0.1230+-0.0145
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.1702 AUC
+      over single-task BO (91% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_hdac_b125.json  (108s total)
+
+=== [9/12] pi3k 22% b130 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    PIK3CA   pile-ups: 6.00 x143, 5.70 x113, 5.00 x57, 6.26 x22
+    PIK3CB   pile-ups: 5.70 x108, 6.00 x94, 6.26 x49, 7.00 x29, 5.00 x28
+    PIK3CD   pile-ups: 7.00 x157, 5.52 x107
+    PIK3CG   pile-ups: 5.00 x115, 6.00 x103, 5.70 x101, 6.26 x48, 7.00 x22
+    kept 590 of 1,039 compounds (56.8%)
+pi3k: 590 compounds x 4 targets, budget 130, batch 10, H=50 (0s)
+      PIK3CA: success set = top-10
+    PIK3CA   done
+      PIK3CB: success set = top-10
+    PIK3CB   done
+      PIK3CD: success set = top-10
+    PIK3CD   done
+      PIK3CG: success set = top-10
+    PIK3CG   done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.87 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    PIK3CA               73.4%   90.6%         +17.2%
+    PIK3CB               78.8%   62.2%         -16.6%
+    PIK3CD               51.2%   61.6%         +10.3%
+    PIK3CG               88.8%   95.0%          +6.2%
+    3/4 targets improve; spread -16.6% to +17.2%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               8.5865       73.0%                
+    mt                8.6849       77.3%   +0.0984+-0.0191
+    pooled            8.5999       63.7%   +0.0134+-0.0254
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.0984 AUC
+      over single-task BO (76% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_pi3k_b130.json  (109s total)
+
+=== [10/12] pi3k 33% b195 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    PIK3CA   pile-ups: 6.00 x143, 5.70 x113, 5.00 x57, 6.26 x22
+    PIK3CB   pile-ups: 5.70 x108, 6.00 x94, 6.26 x49, 7.00 x29, 5.00 x28
+    PIK3CD   pile-ups: 7.00 x157, 5.52 x107
+    PIK3CG   pile-ups: 5.00 x115, 6.00 x103, 5.70 x101, 6.26 x48, 7.00 x22
+    kept 590 of 1,039 compounds (56.8%)
+pi3k: 590 compounds x 4 targets, budget 195, batch 10, H=50 (0s)
+      PIK3CA: success set = top-10
+    PIK3CA   done
+      PIK3CB: success set = top-10
+    PIK3CB   done
+      PIK3CD: success set = top-10
+    PIK3CD   done
+      PIK3CG: success set = top-10
+    PIK3CG   done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.87 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    PIK3CA               87.8%   91.9%          +4.1%
+    PIK3CB               90.3%   92.2%          +1.9%
+    PIK3CD               74.1%   83.4%          +9.4%
+    PIK3CG              100.0%   98.8%          -1.2%
+    3/4 targets improve; spread -1.2% to +9.4%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               8.8064       88.0%                
+    mt                8.8714       91.6%   +0.0651+-0.0138
+    pooled            8.7711       77.8%   -0.0352+-0.0218
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.0651 AUC
+      over single-task BO (77% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_pi3k_b195.json  (256s total)
+
+=== [11/12] jak 22% b200 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+jak: 904 compounds x 4 targets, budget 200, batch 10, H=50 (1s)
+      JAK1: success set = top-10
+    JAK1     done
+      JAK2: success set = top-10
+    JAK2     done
+      JAK3: success set = top-10
+    JAK3     done
+      TYK2: success set = top-10
+    TYK2     done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.86 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    JAK1                 44.7%   57.2%         +12.5%
+    JAK2                 61.9%   74.7%         +12.8%
+    JAK3                 80.6%   71.9%          -8.7%
+    TYK2                 88.4%   89.7%          +1.3%
+    3/4 targets improve; spread -8.7% to +12.8%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               8.7811       68.9%                
+    mt                8.8769       73.4%   +0.0957+-0.0108
+    pooled            8.8311       68.6%   +0.0500+-0.0143
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.0957 AUC
+      over single-task BO (77% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_jak_b200.json  (268s total)
+
+=== [12/12] jak 33% b300 H=50 ei ===
+
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+jak: 904 compounds x 4 targets, budget 300, batch 10, H=50 (1s)
+      JAK1: success set = top-10
+    JAK1     done
+      JAK2: success set = top-10
+    JAK2     done
+      JAK3: success set = top-10
+    JAK3     done
+      TYK2: success set = top-10
+    TYK2     done
+    [audit] 1,920 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.86 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    JAK1                 60.6%   79.4%         +18.8%
+    JAK2                 71.9%   82.2%         +10.3%
+    JAK3                 85.3%   89.1%          +3.8%
+    TYK2                 89.4%   89.7%          +0.3%
+    4/4 targets improve; spread +0.3% to +18.8%
+    -> unanimous: the self-check is informative on this panel.
+    stl               8.9355       76.8%                
+    mt                9.0075       85.1%   +0.0720+-0.0082
+    pooled            8.9642       77.6%   +0.0287+-0.0116
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.0720 AUC
+      over single-task BO (73% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\winleak_jak_b300.json  (655s total)

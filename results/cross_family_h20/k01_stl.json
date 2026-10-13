@@ -1,0 +1,95 @@
+{
+  "family": "k01",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 20,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 13.170752568232114,
+  "baseline_auc_sem": 0.16515652670708716,
+  "bad_quantile": null,
+  "n_pool": 433,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.5435024540390574,
+      "delta_sem": 0.03152687011551477,
+      "n": 32,
+      "sem_multiple": 17.23934066552306,
+      "clears_bar": true,
+      "flag": "17.2 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.056549610397331196,
+      "delta_sem": 0.0439492234978087,
+      "n": 32,
+      "sem_multiple": 1.2867032884016882,
+      "clears_bar": false,
+      "flag": "1.3 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": -0.05420018456059139,
+      "delta_sem": 0.0811834248485396,
+      "n": 32,
+      "sem_multiple": 0.667626238505093,
+      "clears_bar": false,
+      "flag": "0.7 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": -0.17934974341528293,
+      "delta_sem": 0.09987440252634064,
+      "n": 32,
+      "sem_multiple": 1.7957528543710852,
+      "clears_bar": false,
+      "flag": "1.8 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.5977026385996488,
+    "sem": 0.08709013726834408,
+    "best_free": "aux_top",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.04648584920625466,
+  "rho_eff_mean": 0.0750949882223868,
+  "rho_eff_n": 86,
+  "top_k_seeded": {
+    "maxmin": 0.0,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.125
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "ERBB2",
+      "LCK",
+      "AKT1",
+      "FLT1"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_akt1-erbb2-flt1-lck.csv",
+    "n_block": 433,
+    "n_pool": 433,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

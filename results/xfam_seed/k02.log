@@ -1,0 +1,21 @@
+k02: 428 compounds x 4 targets, budget 95, batch 10, H=50 (0s)
+      EGFR: success set = top-10
+    EGFR     done
+      GSK3B: success set = top-10
+    GSK3B    done
+      NEK2: success set = top-10
+    NEK2     done
+      PBK: success set = top-10
+    PBK      done
+    [audit] 640 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.87 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+    seeding aux_top: pool 30 of 428 (7.0%), 0.8 of the true top-10 inside it -- read the gain against this
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+    stl              12.7377       51.6%                
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\xfam_seed\k02.json  (1s total)

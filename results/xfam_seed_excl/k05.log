@@ -1,0 +1,21 @@
+k05: 430 compounds x 4 targets, budget 95, batch 10, H=50 (0s)
+      PHKG2: success set = top-10
+    PHKG2    done
+      TYRO3: success set = top-10
+    TYRO3    done
+      SRMS: success set = top-10
+    SRMS     done
+      CLK4: success set = top-10
+    CLK4     done
+    [audit] 768 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.89 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+    seeding aux_top: pool 30 of 430 (7.0%), 0.0 of the true top-10 inside it -- history was drawn clear of the top-k, so this is 0 by construction
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+    stl              12.6174       33.9%                
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\xfam_seed_excl\k05.json  (1s total)

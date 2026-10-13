@@ -1,0 +1,54 @@
+{
+  "family": "jak",
+  "history": 50,
+  "history_cluster": 0.0,
+  "reach": 0.9017041857196643,
+  "history_excludes_top": true,
+  "budget": 62,
+  "batch": 10,
+  "k": 10,
+  "acquisition": "ei",
+  "repeats": 8,
+  "n_pool": 566,
+  "arms": {
+    "stl": {
+      "auc_mean": 8.085706977086128,
+      "auc_sem": 0.0666579498568,
+      "recall_mean": 0.284375,
+      "delta_vs_stl": 0.0,
+      "delta_sem": 0.0,
+      "frac_better": 0.0
+    },
+    "mt": {
+      "auc_mean": 8.167256624986939,
+      "auc_sem": 0.07498165620923301,
+      "recall_mean": 0.325,
+      "delta_vs_stl": 0.08154964790081118,
+      "delta_sem": 0.027203027423311606,
+      "frac_better": 0.78125
+    }
+  },
+  "per_target": {
+    "JAK1": {
+      "stl_recall": 0.16250000000000003,
+      "mt_recall": 0.3,
+      "delta": 0.13749999999999996
+    },
+    "JAK2": {
+      "stl_recall": 0.1625,
+      "mt_recall": 0.30000000000000004,
+      "delta": 0.13750000000000004
+    },
+    "JAK3": {
+      "stl_recall": 0.17500000000000002,
+      "mt_recall": 0.2625,
+      "delta": 0.0875
+    },
+    "TYK2": {
+      "stl_recall": 0.6375,
+      "mt_recall": 0.4375,
+      "delta": -0.19999999999999996
+    }
+  },
+  "targets_improving": 3
+}

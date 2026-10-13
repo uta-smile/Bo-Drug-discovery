@@ -1,0 +1,49 @@
+
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+
+[0c] random subsample to 400 compounds (size control for --qed-min)
+jak: 400 compounds x 4 targets, budget 150, batch 10, H=50 (0s)
+      JAK1: success set = top-10
+    JAK1     done
+      JAK2: success set = top-10
+    JAK2     done
+      JAK3: success set = top-10
+    JAK3     done
+      TYK2: success set = top-10
+    TYK2     done
+
+    [audit] 32 target x repeat cells, 3 arms each
+    [audit] all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.95 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    JAK1                 61.2%   72.5%         +11.3%
+    JAK2                 65.0%   72.5%          +7.5%
+    JAK3                 92.5%   96.2%          +3.7%
+    TYK2                 58.7%   57.5%          -1.2%
+    3/4 targets improve; spread -1.2% to +11.3%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               8.5134       69.4%                
+    mt                8.5952       74.7%   +0.0818+-0.0160
+    pooled            8.5976       76.9%   +0.0842+-0.0180
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.0818 AUC
+      over single-task BO (81% of campaigns better).
+      But pooling matches it -- on this block the campaign gain
+      does not require modelling the task structure.
+
+wrote results\scale_jak_N400_b150.json  (54s total)

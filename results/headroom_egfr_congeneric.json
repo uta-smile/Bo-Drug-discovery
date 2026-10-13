@@ -1,0 +1,119 @@
+{
+  "dataset": "data/chembl/egfr_anilinoquinazoline.csv",
+  "library_size": 2103,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "n_init": 10,
+  "k": 10,
+  "rows": [
+    {
+      "budget": 50,
+      "fraction": 0.25,
+      "n_allowed": 526,
+      "bo_auc": 0.6654313900226758,
+      "ceiling_auc": 0.71128710430839,
+      "headroom": 0.04585571428571422,
+      "p_value": 0.009765625,
+      "cohens_dz": 1.1269970796762998,
+      "bo_top1pct_recall": 0.21904761904761902
+    },
+    {
+      "budget": 50,
+      "fraction": 0.1,
+      "n_allowed": 210,
+      "bo_auc": 0.6654313900226758,
+      "ceiling_auc": 0.7342081043083901,
+      "headroom": 0.0687767142857143,
+      "p_value": 0.00390625,
+      "cohens_dz": 1.3022698001608481,
+      "bo_top1pct_recall": 0.21904761904761902
+    },
+    {
+      "budget": 50,
+      "fraction": 0.05,
+      "n_allowed": 105,
+      "bo_auc": 0.6654313900226758,
+      "ceiling_auc": 0.759408961451247,
+      "headroom": 0.09397757142857122,
+      "p_value": 0.00390625,
+      "cohens_dz": 1.73084898612674,
+      "bo_top1pct_recall": 0.21904761904761902
+    },
+    {
+      "budget": 100,
+      "fraction": 0.25,
+      "n_allowed": 526,
+      "bo_auc": 0.7582311950113377,
+      "ceiling_auc": 0.7978205521541949,
+      "headroom": 0.03958935714285716,
+      "p_value": 0.009765625,
+      "cohens_dz": 0.9481867558429711,
+      "bo_top1pct_recall": 0.3619047619047619
+    },
+    {
+      "budget": 100,
+      "fraction": 0.1,
+      "n_allowed": 210,
+      "bo_auc": 0.7582311950113377,
+      "ceiling_auc": 0.8191877664399094,
+      "headroom": 0.06095657142857169,
+      "p_value": 0.001953125,
+      "cohens_dz": 1.2290456566799641,
+      "bo_top1pct_recall": 0.3619047619047619
+    },
+    {
+      "budget": 100,
+      "fraction": 0.05,
+      "n_allowed": 105,
+      "bo_auc": 0.7582311950113377,
+      "ceiling_auc": 0.8397517664399092,
+      "headroom": 0.0815205714285715,
+      "p_value": 0.001953125,
+      "cohens_dz": 1.6789406352771832,
+      "bo_top1pct_recall": 0.3619047619047619
+    },
+    {
+      "budget": 200,
+      "fraction": 0.25,
+      "n_allowed": 526,
+      "bo_auc": 0.8249615260770975,
+      "ceiling_auc": 0.8563095975056688,
+      "headroom": 0.03134807142857132,
+      "p_value": 0.001953125,
+      "cohens_dz": 1.2868196174240378,
+      "bo_top1pct_recall": 0.5238095238095237
+    },
+    {
+      "budget": 200,
+      "fraction": 0.1,
+      "n_allowed": 210,
+      "bo_auc": 0.8249615260770975,
+      "ceiling_auc": 0.8710318475056689,
+      "headroom": 0.04607032142857137,
+      "p_value": 0.001953125,
+      "cohens_dz": 1.7209317391708026,
+      "bo_top1pct_recall": 0.5238095238095237
+    },
+    {
+      "budget": 200,
+      "fraction": 0.05,
+      "n_allowed": 105,
+      "bo_auc": 0.8249615260770975,
+      "ceiling_auc": 0.8818758832199544,
+      "headroom": 0.056914357142856864,
+      "p_value": 0.001953125,
+      "cohens_dz": 2.126649643707366,
+      "bo_top1pct_recall": 0.5238095238095237
+    }
+  ]
+}

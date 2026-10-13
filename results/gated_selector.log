@@ -1,0 +1,260 @@
+
+==============================================================================
+cruzipain  (504 compounds, shortlist 15, 200 seeds)
+==============================================================================
+
+  budget 30 (20 decisions per run)
+    sel_oracle (ceiling)      +0.0515  p=0.0000
+    gate                      acts on      dAUC        p  vs rand@cov
+    -----------------------------------------------------------------
+    maxmu_always0                63%   +0.0050   0.0005      +0.0000
+    maxmu_late025                50%   +0.0026   0.0000      -0.0020
+    maxmu_late05                 36%   +0.0009   0.0000      -0.0023
+    maxmu_late075                18%   +0.0004   0.0000      -0.0012
+    maxmu_early025               14%   +0.0034   0.2745      +0.0019
+    maxmu_early05                29%   +0.0034   0.0717      +0.0002
+    maxmu_early075               46%   +0.0045   0.0041      -0.0002
+    maxmu_margin025              35%   +0.0012   0.1274      -0.0020
+    maxmu_margin05               20%   +0.0005   0.0031      -0.0010
+    maxmu_margin1                 7%   +0.0010   0.0000      -0.0006
+    maxmu_settled098              8%   +0.0005   0.3690      -0.0010
+    maxmu_settled095              6%   -0.0001   0.6848      -0.0017
+    maxmu_settled09               3%   -0.0000   0.7399      -0.0016
+    maxmu_rand025                17%   +0.0016   0.0654             
+    maxmu_rand05                 35%   +0.0033   0.0010             
+    maxmu_rand075                49%   +0.0046   0.0004             
+
+  budget 60 (50 decisions per run)
+    sel_oracle (ceiling)      +0.0373  p=0.0000
+    gate                      acts on      dAUC        p  vs rand@cov
+    -----------------------------------------------------------------
+    maxmu_always0                66%   -0.0008   0.3557      +0.0000
+    maxmu_late025                51%   -0.0049   0.1356      -0.0042
+    maxmu_late05                 35%   -0.0021   0.4788      -0.0014
+    maxmu_late075                17%   -0.0003   0.0001      -0.0009
+    maxmu_early025               16%   +0.0020   0.3538      +0.0014
+    maxmu_early05                32%   +0.0010   0.1938      +0.0017
+    maxmu_early075               49%   -0.0008   0.3369      -0.0001
+    maxmu_margin025              37%   -0.0030   0.5788      -0.0022
+    maxmu_margin05               27%   -0.0006   0.5577      -0.0012
+    maxmu_margin1                14%   +0.0005   0.0000      -0.0001
+    maxmu_settled098              4%   +0.0010   0.2841      +0.0004
+    maxmu_settled095              4%   +0.0004   0.8213      -0.0002
+    maxmu_settled09               2%   +0.0001   0.4498      -0.0005
+    maxmu_rand025                18%   +0.0006   0.5548             
+    maxmu_rand05                 36%   -0.0007   0.3230             
+    maxmu_rand075                52%   -0.0007   0.3339             
+
+==============================================================================
+usp7  (539 compounds, shortlist 15, 200 seeds)
+==============================================================================
+
+  budget 30 (20 decisions per run)
+    sel_oracle (ceiling)      +0.0496  p=0.0000
+    gate                      acts on      dAUC        p  vs rand@cov
+    -----------------------------------------------------------------
+    maxmu_always0                62%   +0.0034   0.0462      +0.0000
+    maxmu_late025                47%   +0.0030   0.0050      +0.0018
+    maxmu_late05                 32%   -0.0001   0.0098      -0.0008
+    maxmu_late075                16%   -0.0001   0.0027      -0.0009
+    maxmu_early025               14%   -0.0007   0.8236      -0.0015
+    maxmu_early05                31%   +0.0018   0.2765      +0.0012
+    maxmu_early075               47%   +0.0029   0.0983      +0.0018
+    maxmu_margin025              32%   -0.0002   0.0740      -0.0009
+    maxmu_margin05               17%   +0.0000   0.0152      -0.0008
+    maxmu_margin1                 3%   +0.0003   0.0012      -0.0005
+    maxmu_settled098              9%   +0.0001   0.0537      -0.0007
+    maxmu_settled095              7%   -0.0003   0.1559      -0.0011
+    maxmu_settled09               3%   -0.0009   0.8463      -0.0017
+    maxmu_rand025                16%   +0.0008   0.0221             
+    maxmu_rand05                 31%   +0.0007   0.1307             
+    maxmu_rand075                47%   +0.0012   0.1159             
+
+  budget 60 (50 decisions per run)
+    sel_oracle (ceiling)      +0.0523  p=0.0000
+    gate                      acts on      dAUC        p  vs rand@cov
+    -----------------------------------------------------------------
+    maxmu_always0                63%   -0.0038   0.8243      +0.0000
+    maxmu_late025                47%   -0.0037   0.0661      +0.0027
+    maxmu_late05                 34%   -0.0016   0.0001      +0.0017
+    maxmu_late075                18%   +0.0002   0.0000      -0.0010
+    maxmu_early025               16%   -0.0010   0.9116      -0.0021
+    maxmu_early05                31%   -0.0032   0.7945      +0.0000
+    maxmu_early075               46%   -0.0039   0.6596      +0.0025
+    maxmu_margin025              36%   -0.0067   0.5700      -0.0035
+    maxmu_margin05               23%   -0.0014   0.6212      -0.0025
+    maxmu_margin1                 9%   -0.0005   0.0002      -0.0017
+    maxmu_settled098              5%   -0.0004   0.6347      -0.0015
+    maxmu_settled095              4%   -0.0012   0.6690      -0.0023
+    maxmu_settled09               2%   -0.0017   0.5163      -0.0029
+    maxmu_rand025                18%   +0.0012   0.6605             
+    maxmu_rand05                 34%   -0.0032   0.6552             
+    maxmu_rand075                50%   -0.0064   0.2912             
+
+==============================================================================
+cblb  (603 compounds, shortlist 15, 200 seeds)
+==============================================================================
+
+  budget 30 (20 decisions per run)
+    sel_oracle (ceiling)      +0.0332  p=0.0000
+    gate                      acts on      dAUC        p  vs rand@cov
+    -----------------------------------------------------------------
+    maxmu_always0                70%   -0.0008   0.0696      +0.0000
+    maxmu_late025                54%   -0.0005   0.0761      +0.0009
+    maxmu_late05                 37%   -0.0000   0.0230      -0.0002
+    maxmu_late075                18%   +0.0002   0.0022      +0.0005
+    maxmu_early025               15%   -0.0006   0.1538      -0.0003
+    maxmu_early05                33%   -0.0009   0.0901      -0.0011
+    maxmu_early075               51%   -0.0008   0.0795      +0.0006
+    maxmu_margin025              35%   -0.0001   0.1096      -0.0003
+    maxmu_margin05               16%   +0.0005   0.0291      +0.0007
+    maxmu_margin1                 2%   +0.0001   0.0230      +0.0004
+    maxmu_settled098             30%   +0.0007   0.0057      +0.0005
+    maxmu_settled095             26%   +0.0006   0.0021      +0.0004
+    maxmu_settled09              18%   -0.0005   0.0843      -0.0003
+    maxmu_rand025                17%   -0.0003   0.4574             
+    maxmu_rand05                 34%   +0.0002   0.2332             
+    maxmu_rand075                52%   -0.0014   0.0990             
+
+  budget 60 (50 decisions per run)
+    sel_oracle (ceiling)      +0.0291  p=0.0000
+    gate                      acts on      dAUC        p  vs rand@cov
+    -----------------------------------------------------------------
+    maxmu_always0                75%   +0.0014   0.0001      +0.0000
+    maxmu_late025                58%   +0.0019   0.0000      +0.0004
+    maxmu_late05                 40%   +0.0016   0.0000      -0.0009
+    maxmu_late075                19%   +0.0006   0.0000      -0.0001
+    maxmu_early025               17%   -0.0001   0.0187      -0.0008
+    maxmu_early05                35%   +0.0003   0.0072      -0.0022
+    maxmu_early075               56%   +0.0009   0.0016      -0.0006
+    maxmu_margin025              52%   +0.0011   0.0000      -0.0004
+    maxmu_margin05               34%   +0.0018   0.0000      -0.0006
+    maxmu_margin1                10%   +0.0005   0.0000      -0.0002
+    maxmu_settled098             29%   +0.0012   0.0001      +0.0005
+    maxmu_settled095             25%   +0.0009   0.0000      +0.0002
+    maxmu_settled09              19%   -0.0002   0.0011      -0.0009
+    maxmu_rand025                19%   +0.0007   0.0217             
+    maxmu_rand05                 38%   +0.0025   0.0001             
+    maxmu_rand075                57%   +0.0015   0.0001             
+
+==============================================================================
+hpk1  (1725 compounds, shortlist 15, 200 seeds)
+==============================================================================
+
+  budget 30 (20 decisions per run)
+    sel_oracle (ceiling)      +0.0163  p=0.0000
+    gate                      acts on      dAUC        p  vs rand@cov
+    -----------------------------------------------------------------
+    maxmu_always0                82%   +0.0001   0.1468      +0.0000
+    maxmu_late025                63%   +0.0002   0.2342      -0.0003
+    maxmu_late05                 42%   +0.0001   0.1710      -0.0004
+    maxmu_late075                21%   +0.0001   0.0025      -0.0004
+    maxmu_early025               20%   -0.0003   0.7586      -0.0008
+    maxmu_early05                41%   +0.0001   0.1839      -0.0004
+    maxmu_early075               62%   +0.0001   0.1503      -0.0004
+    maxmu_margin025              39%   +0.0007   0.0325      +0.0001
+    maxmu_margin05               12%   +0.0003   0.0801      -0.0002
+    maxmu_margin1                 1%   +0.0000   0.0188      -0.0005
+    maxmu_settled098             62%   +0.0008   0.0116      +0.0003
+    maxmu_settled095             59%   +0.0006   0.0203      +0.0001
+    maxmu_settled09              50%   +0.0004   0.0448      -0.0001
+    maxmu_rand025                20%   +0.0005   0.0154             
+    maxmu_rand05                 41%   +0.0005   0.1057             
+    maxmu_rand075                61%   +0.0005   0.0932             
+
+  budget 60 (50 decisions per run)
+    sel_oracle (ceiling)      +0.0154  p=0.0000
+    gate                      acts on      dAUC        p  vs rand@cov
+    -----------------------------------------------------------------
+    maxmu_always0                84%   -0.0012   0.0342      +0.0000
+    maxmu_late025                62%   -0.0000   0.6881      +0.0000
+    maxmu_late05                 42%   -0.0001   0.4552      -0.0003
+    maxmu_late075                20%   +0.0001   0.0057      +0.0000
+    maxmu_early025               21%   -0.0007   0.7280      -0.0008
+    maxmu_early05                42%   -0.0010   0.1441      -0.0012
+    maxmu_early075               63%   -0.0013   0.0298      -0.0012
+    maxmu_margin025              51%   -0.0004   0.3971      -0.0006
+    maxmu_margin05               27%   +0.0000   0.3578      -0.0000
+    maxmu_margin1                 6%   +0.0001   0.0015      +0.0000
+    maxmu_settled098             69%   -0.0003   0.3540      -0.0003
+    maxmu_settled095             66%   -0.0003   0.4566      -0.0002
+    maxmu_settled09              61%   -0.0005   0.1538      -0.0005
+    maxmu_rand025                21%   +0.0000   0.7580             
+    maxmu_rand05                 42%   +0.0002   0.4270             
+    maxmu_rand075                63%   -0.0001   0.9727             
+
+==============================================================================
+egfr_anilinoquinazoline  (2103 compounds, shortlist 15, 200 seeds)
+==============================================================================
+
+  budget 30 (20 decisions per run)
+    sel_oracle (ceiling)      +0.0380  p=0.0000
+    gate                      acts on      dAUC        p  vs rand@cov
+    -----------------------------------------------------------------
+    maxmu_always0                72%   +0.0053   0.0001      +0.0000
+    maxmu_late025                56%   +0.0040   0.0000      +0.0009
+    maxmu_late05                 37%   +0.0013   0.0003      +0.0003
+    maxmu_late075                18%   +0.0005   0.0000      -0.0008
+    maxmu_early025               17%   +0.0017   0.1101      +0.0004
+    maxmu_early05                35%   +0.0039   0.0078      +0.0029
+    maxmu_early075               54%   +0.0047   0.0006      +0.0017
+    maxmu_margin025              33%   +0.0030   0.0001      +0.0021
+    maxmu_margin05               14%   +0.0019   0.0000      +0.0006
+    maxmu_margin1                 2%   +0.0002   0.0010      -0.0011
+    maxmu_settled098             14%   +0.0017   0.0100      +0.0004
+    maxmu_settled095             11%   +0.0003   0.1997      -0.0010
+    maxmu_settled09               7%   +0.0004   0.1649      -0.0009
+    maxmu_rand025                17%   +0.0013   0.0393             
+    maxmu_rand05                 35%   +0.0010   0.0956             
+    maxmu_rand075                53%   +0.0031   0.0080             
+
+  budget 60 (50 decisions per run)
+    sel_oracle (ceiling)      +0.0350  p=0.0000
+    gate                      acts on      dAUC        p  vs rand@cov
+    -----------------------------------------------------------------
+    maxmu_always0                76%   +0.0038   0.1102      +0.0000
+    maxmu_late025                55%   +0.0003   0.3054      +0.0020
+    maxmu_late05                 37%   -0.0020   0.6696      -0.0003
+    maxmu_late075                18%   -0.0003   0.0730      +0.0010
+    maxmu_early025               18%   -0.0004   0.8865      +0.0010
+    maxmu_early05                37%   +0.0023   0.1376      +0.0040
+    maxmu_early075               57%   +0.0038   0.1038      +0.0055
+    maxmu_margin025              39%   +0.0000   0.6935      +0.0017
+    maxmu_margin05               19%   -0.0004   0.8302      +0.0010
+    maxmu_margin1                 4%   +0.0002   0.2606      +0.0015
+    maxmu_settled098              9%   +0.0017   0.2362      +0.0030
+    maxmu_settled095              7%   +0.0001   0.4302      +0.0015
+    maxmu_settled09               4%   -0.0002   0.7148      +0.0012
+    maxmu_rand025                18%   -0.0013   0.8634             
+    maxmu_rand05                 37%   -0.0017   0.9582             
+    maxmu_rand075                55%   -0.0017   0.5322             
+
+wrote results\gated_selector.json
+
+
+==============================================================================
+POOLED over 5 libraries x 2 budgets
+==============================================================================
+  gate                      acts on  dAUC vs BO  vs rand@cov
+  ----------------------------------------------------------
+  sel_oracle                  100%     +0.0358             
+  maxmu_always0                71%     +0.0012      +0.0000
+  maxmu_late025                54%     +0.0003      +0.0002
+  maxmu_late05                 37%     -0.0002      -0.0005
+  maxmu_late075                18%     +0.0001      -0.0004
+  maxmu_early025               17%     +0.0003      -0.0002
+  maxmu_early05                35%     +0.0008      +0.0005
+  maxmu_early075               53%     +0.0010      +0.0010
+  maxmu_margin025              39%     -0.0004      -0.0006
+  maxmu_margin05               21%     +0.0003      -0.0004
+  maxmu_margin1                 6%     +0.0002      -0.0003
+  maxmu_settled098             24%     +0.0007      +0.0002
+  maxmu_settled095             22%     +0.0001      -0.0004
+  maxmu_settled09              17%     -0.0003      -0.0008
+  maxmu_rand025                18%     +0.0005             
+  maxmu_rand05                 37%     +0.0003             
+  maxmu_rand075                54%     +0.0001             
+
+  A gate is evidence only in the last column: the gap against a random gate
+  acting equally often. Anything positive in column three alone is the
+  selector being switched off, which is free.

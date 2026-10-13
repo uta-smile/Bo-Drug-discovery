@@ -1,0 +1,95 @@
+{
+  "family": "k11",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 20,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 12.770372876670574,
+  "baseline_auc_sem": 0.09704251878817072,
+  "bad_quantile": null,
+  "n_pool": 430,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.48605571841471334,
+      "delta_sem": 0.01787020934200723,
+      "n": 32,
+      "sem_multiple": 27.199217933734527,
+      "clears_bar": true,
+      "flag": "27.2 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.060181190852056754,
+      "delta_sem": 0.0690645476342453,
+      "n": 32,
+      "sem_multiple": 0.8713760230613053,
+      "clears_bar": false,
+      "flag": "0.9 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": -0.00871239923206929,
+      "delta_sem": 0.052543329447220774,
+      "n": 32,
+      "sem_multiple": 0.16581361180815168,
+      "clears_bar": false,
+      "flag": "0.2 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": -0.005837200497022854,
+      "delta_sem": 0.05759322816732924,
+      "n": 32,
+      "sem_multiple": 0.10135220203430284,
+      "clears_bar": false,
+      "flag": "0.1 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.4918929189117362,
+    "sem": 0.060301942859755424,
+    "best_free": "aux_scaffold_nn",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.1420990382909977,
+  "rho_eff_mean": 0.16067560146323803,
+  "rho_eff_n": 95,
+  "top_k_seeded": {
+    "maxmin": 0.21875,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.125
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "PRKCG",
+      "RET",
+      "MARK3",
+      "CSNK1A1"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_csnk1a1-mark3-prkcg-ret.csv",
+    "n_block": 430,
+    "n_pool": 430,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

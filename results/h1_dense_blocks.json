@@ -1,0 +1,129 @@
+[
+  {
+    "targets": [
+      "O43613",
+      "O43614"
+    ],
+    "n_molecules": 3992,
+    "cells": 7984
+  },
+  {
+    "targets": [
+      "P08684",
+      "P10635",
+      "P11712"
+    ],
+    "n_molecules": 2178,
+    "cells": 6534
+  },
+  {
+    "targets": [
+      "P08684",
+      "P10635",
+      "P11712",
+      "P33261"
+    ],
+    "n_molecules": 1472,
+    "cells": 5888
+  },
+  {
+    "targets": [
+      "P23458",
+      "P52333"
+    ],
+    "n_molecules": 2357,
+    "cells": 4714
+  },
+  {
+    "targets": [
+      "P23458",
+      "P29597",
+      "P52333"
+    ],
+    "n_molecules": 1570,
+    "cells": 4710
+  },
+  {
+    "targets": [
+      "P23219",
+      "P35354"
+    ],
+    "n_molecules": 2173,
+    "cells": 4346
+  },
+  {
+    "targets": [
+      "O42275",
+      "P81908"
+    ],
+    "n_molecules": 2098,
+    "cells": 4196
+  },
+  {
+    "targets": [
+      "P21397",
+      "P27338"
+    ],
+    "n_molecules": 2054,
+    "cells": 4108
+  },
+  {
+    "targets": [
+      "Q13547",
+      "Q9UBN7"
+    ],
+    "n_molecules": 2026,
+    "cells": 4052
+  },
+  {
+    "targets": [
+      "P23975",
+      "P31645",
+      "Q01959"
+    ],
+    "n_molecules": 1305,
+    "cells": 3915
+  },
+  {
+    "targets": [
+      "P42336",
+      "P42345"
+    ],
+    "n_molecules": 1787,
+    "cells": 3574
+  },
+  {
+    "targets": [
+      "C7C422",
+      "P52699"
+    ],
+    "n_molecules": 1673,
+    "cells": 3346
+  },
+  {
+    "targets": [
+      "P42336",
+      "P42338",
+      "P48736"
+    ],
+    "n_molecules": 1056,
+    "cells": 3168
+  },
+  {
+    "targets": [
+      "P11362",
+      "P21802",
+      "P22607"
+    ],
+    "n_molecules": 995,
+    "cells": 2985
+  },
+  {
+    "targets": [
+      "P27487",
+      "Q9UHL4"
+    ],
+    "n_molecules": 1488,
+    "cells": 2976
+  }
+]

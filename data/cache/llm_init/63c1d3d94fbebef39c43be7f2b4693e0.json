@@ -1,0 +1,30 @@
+{
+  "backend": "llamacpp:qwen3.5-4b:t=0.0:topk=1:seed=0:think=0",
+  "version": "i1",
+  "system": "You are a medicinal chemist starting a hit-to-lead campaign.\n\nNothing has been measured yet. You will be shown a random sample of compounds\nfrom the screening library and must choose which ones to assay first.\n\nThis is the one point in the campaign where chemical knowledge has nothing to\ncompete with: there is no data, so a model fitted to the results cannot help.\nChoose the compounds whose measurements would teach you the most -- covering the\nstructural options in the sample rather than repeating one of them, and\nfavouring chemotypes you believe are plausible for a potent inhibitor.\n\nRespond with JSON only.",
+  "prompt": "A random sample of 40 compounds from the screening library:\n\n  [ 0] Brc1cccc(Nc2ncnc3cc4c(cc23)OCCOCCO4)c1\n  [ 1] C#Cc1cccc(Nc2ncnc3ccc(OCCCCCC(=O)NO)cc23)c1\n  [ 2] C=CC(=O)N1CC[C@@H](Oc2cc3c(Nc4ccc(F)c(Cl)c4F)ncnc3cc2OC)C[C@@H]1C(N)=O\n  [ 3] C=CC(=O)Nc1cc2c(Nc3cc(Cl)c(Cl)cc3F)ncnc2cc1OCCNCC(C)=O\n  [ 4] C=CC(=O)Nc1cc2c(Nc3cccc(Br)c3)ncnc2cc1OCCCN1CCOCC1\n  [ 5] CC(C)(C)N1CCC(n2cc([C@@H](Nc3ccc4ncnc(Nc5ccc(F)c(Cl)c5)c4c3)c3ccc(Cl)cc3)nn2)CC1\n  [ 6] CCC(=O)Nc1cc2c(Nc3ccc(Cc4ccncc4)cc3)ncnc2cc1OC\n  [ 7] CCC(=O)Nc1cc2c(Nc3ccc(Oc4cccc(F)c4)cc3)ncnc2cc1OC\n  [ 8] CCCN1CC2(C1)CN(c1cc3c(Nc4cccc(Cl)c4F)ncnc3cc1OC)C(=O)O2\n  [ 9] CCCS(=O)(=O)CCNCc1ccc(-c2ccc3ncnc(Nc4ccc(OCc5cccc(F)c5)c(Cl)c4)c3c2)o1\n  [10] CCOc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1NC(=O)CCN(C)C\n  [11] CCOc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OC(=O)CCc1cccnc1\n  [12] COC(=O)Nc1ccc2ncnc(Nc3cccc(Br)c3)c2c1\n  [13] COCCOc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1NC(=O)/C=C/CN(C)C1CC1\n  [14] COCCOc1cc2ncnc(Nc3cccc(O)c3)c2cc1OCCOC\n  [15] COc1cc(Nc2ncnc3ccc(-c4ccc(CN5C[C@@H]6[C@@H](CO)[C@@H]6C5)cc4)cc23)ccc1Oc1ccccc1\n  [16] COc1cc(ON2CCC(C)CC2)c2c(Nc3ccc(OCc4ccccn4)c(Cl)c3)ncnc2c1\n  [17] COc1cc2c(Nc3ccc(-c4ccccc4)cc3)ncnc2cc1OCC1CCN(C)CC1\n  [18] COc1cc2c(Nc3ccc(NC(=O)Nc4ccccc4C)cc3)ncnc2cc1OCCCN1CCN(C)CC1\n  [19] COc1cc2c(Nc3ccc(Oc4ccccc4)cc3)ncnc2cc1OCC1CCN(C)CC1\n  [20] COc1cc2nc(Cl)nc(Nc3ccc(O)cc3)c2cc1OC\n  [21] COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1NC(=O)/C=C/CN1CCC(F)CC1\n  [22] COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OCC(O)CN(CCO)CCO\n  [23] COc1cc2ncnc(Nc3cccc(Br)c3)c2cc1OCCCn1c([N+](=O)[O-])cnc1C\n  [24] COc1cc2ncnc(Nc3cccc(Cl)c3F)c2cc1OC1CCN(S(C)(=O)=O)CC1\n  [25] COc1ccc(-c2c(NC(=O)/C=C/CN(C)C)ccc3ncnc(Nc4ccc(OCc5ccccn5)c(Cl)c4)c23)cc1OC\n  [26] Cc1c(OCC(F)(F)F)ccnc1COc1cccc(Nc2ncnc3cc4oc(=O)n(CCCN5CCOCC5)c4cc23)c1\n  [27] Clc1cc(Nc2ncnc3ccc(NC4=NC[C@@H](COc5ccccc5)O4)cc23)ccc1OCc1nccs1\n  [28] Clc1ccc2c(Nc3ccc(-c4nc5ccccc5s4)c(Cl)c3)ncnc2c1\n  [29] FC(F)(F)c1nnc(NC(=S)Nc2ccc3ncnc(Nc4cccc(Cl)c4)c3c2)s1\n  [30] Fc1c(Nc2ncnc3cc4c(cc23)OCCO4)ccc(Cl)c1Br\n  [31] Fc1cc2c(cc1Cl)Nc1ncnc3ccc(cc13)OCCOCCO2\n  [32] Fc1ccc(Nc2ncnc3ccc(NC(=S)NCCN4CCOCC4)cc23)cc1Cl\n  [33] O=C(/C=C/CN1CCC(N2CCCCC2)CC1)Nc1ccc2ncnc(Nc3cccc(Br)c3)c2c1\n  [34] O=C(/C=C/c1ccc(-c2ccc3ncnc(Nc4ccc(OCc5cccc(F)c5)c(Cl)c4)c3c2)s1)NO\n  [35] O=C(CCCCCOc1cc2ncnc(Nc3ccccc3Cl)c2c2c1OCCO2)NO\n  [36] O=C(NCc1ccccc1)Nc1ccc2ncnc(Nc3cccc(Br)c3)c2c1\n  [37] Oc1cccc(Nc2ncnc3ccc(NC(=S)NCc4ccccc4)cc23)c1\n  [38] S=C(NCc1ccccc1)Nc1ccc2ncnc(Nc3cccc(Cl)c3)c2c1\n  [39] S=C(Nc1ccc2ncnc(Nc3cccc(Cl)c3)c2c1)Nc1ncc(Cl)s1\n\nNothing has been measured yet. The objective is pchembl_value (higher is more potent).\nChoose exactly 10 of them to assay first, by index.",
+  "response": {
+    "choices": [
+      2,
+      6,
+      7,
+      12,
+      14,
+      20,
+      23,
+      24,
+      33,
+      38
+    ],
+    "reasoning": "To maximize information gain in the absence of data, I selected compounds that represent distinct structural scaffolds and key pharmacophore variations within the sample. \n\n1. **Core Scaffold Diversity**: I chose compounds representing the three dominant core types: the fused bicyclic system (indices 2, 6, 7), the simple phenyl-pyrazole/pyrimidine cores (indices 12, 14, 20), and the thiazole/thiad"
+  },
+  "usage": {
+    "completion_tokens": 178,
+    "prompt_tokens": 1803,
+    "total_tokens": 1981,
+    "prompt_tokens_details": {
+      "cached_tokens": 133
+    }
+  },
+  "finish_reason": "stop"
+}

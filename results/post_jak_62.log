@@ -1,0 +1,41 @@
+﻿
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+jak: 904 compounds x 4 targets, budget 62, batch 10, H=50 (1s)
+    post-hoc scoring: full library of 904 searched, 566 drug-like count as successes
+      JAK1: success set = top-10 potency among 566 drug-like (QED>=0.5)
+    JAK1     done
+      JAK2: success set = top-10 potency among 566 drug-like (QED>=0.5)
+    JAK2     done
+      JAK3: success set = top-10 potency among 566 drug-like (QED>=0.5)
+    JAK3     done
+      TYK2: success set = top-10 potency among 566 drug-like (QED>=0.5)
+    TYK2     done
+
+    history reach ratio 0.86 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    JAK1                  5.0%    8.8%          +3.8%
+    JAK2                 13.8%   13.8%          +0.0%
+    JAK3                 13.8%   18.8%          +5.0%
+    TYK2                 45.0%   17.5%         -27.5%
+    2/4 targets improve; spread -27.5% to +5.0%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               8.0645       19.4%                
+    mt                8.1860       14.7%   +0.1216+-0.0380
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.1216 AUC
+      over single-task BO (69% of campaigns better).
+
+wrote results\post_jak_62.json  (14s total)

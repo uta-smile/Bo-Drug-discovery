@@ -1,0 +1,48 @@
+{
+  "family": "cyp",
+  "protocol_n_obs": 50,
+  "protocol": {
+    "numerator_model": "fitted multi-task GP (r by exact LML)",
+    "numerator_auxiliary": "randomized (q = 0)",
+    "candidate_set": "not primary-observed and not in history",
+    "scale": "standardized, both models",
+    "per_campaign": false,
+    "seed_offset": 900000
+  },
+  "curve": {
+    "25": {
+      "c": 0.8266646290249011,
+      "sem": 0.027591639150293223,
+      "n": 24
+    },
+    "50": {
+      "c": 0.797481159561659,
+      "sem": 0.02024549798287625,
+      "n": 24
+    },
+    "100": {
+      "c": 0.8278156568977136,
+      "sem": 0.02325278404179044,
+      "n": 24
+    },
+    "150": {
+      "c": 0.8841033021912915,
+      "sem": 0.020256536460023903,
+      "n": 24
+    }
+  },
+  "direct_comparison": {
+    "cyp": {
+      "n": 128,
+      "a_mean": -0.234375,
+      "b_mean": -0.46875,
+      "difference": 0.234375,
+      "sem": 1.616782842169979,
+      "ci95": [
+        -2.9649464714583553,
+        3.4336964714583553
+      ],
+      "p": 0.6972468262823751
+    }
+  }
+}

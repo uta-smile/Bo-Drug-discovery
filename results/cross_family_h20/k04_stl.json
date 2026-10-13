@@ -1,0 +1,95 @@
+{
+  "family": "k04",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 20,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 12.826122792253667,
+  "baseline_auc_sem": 0.1202610787900796,
+  "bad_quantile": null,
+  "n_pool": 430,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.5405771455584893,
+      "delta_sem": 0.031510987243707204,
+      "n": 32,
+      "sem_multiple": 17.1551954680964,
+      "clears_bar": true,
+      "flag": "17.2 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": -0.22923910769218053,
+      "delta_sem": 0.07507415001237576,
+      "n": 32,
+      "sem_multiple": 3.053502539214778,
+      "clears_bar": true,
+      "flag": "3.1 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": -0.06570060171109554,
+      "delta_sem": 0.06690394934843147,
+      "n": 32,
+      "sem_multiple": 0.9820138026371362,
+      "clears_bar": false,
+      "flag": "1.0 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": -0.011903711028283526,
+      "delta_sem": 0.061919806099787957,
+      "n": 32,
+      "sem_multiple": 0.19224399716465343,
+      "clears_bar": false,
+      "flag": "0.2 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.5524808565867729,
+    "sem": 0.0694766486274951,
+    "best_free": "aux_scaffold_nn",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.08911948816145356,
+  "rho_eff_mean": 0.09936410158680299,
+  "rho_eff_n": 86,
+  "top_k_seeded": {
+    "maxmin": 0.0625,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.1875
+  },
+  "provenance": {
+    "source": "data/cache/tdc/kiba_score.csv",
+    "potency": "identity",
+    "blocks_from": "results/cross_family_blocks.json",
+    "seed_pool": "random",
+    "targets": [
+      "SRC",
+      "AKT2",
+      "PRKX",
+      "MAP4K5"
+    ],
+    "block_csv": "data/bindingdb/block_kiba_score_akt2-map4k5-prkx-src.csv",
+    "n_block": 430,
+    "n_pool": 430,
+    "censoring": "skipped (--keep-censored)",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

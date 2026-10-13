@@ -1,0 +1,96 @@
+dataset   data/chembl/usp7.csv
+library   539 compounds  seeds 200  method kmeans
+
+[k=10] 10 clusters | best holds 36/539 compounds and 100% of the top 1% (lift 15.0)
+       coherence: within 0.422 vs between 0.167 (separation +0.256) | sizes 19/48/103
+
+  budget 20
+  arm                       AUC     sem     dAUC        p     dz   top1%
+  ----------------------------------------------------------------------
+  bo_whole               0.4543  0.0063                            0.157
+  bo_random_cluster      0.3838  0.0044  -0.0705   0.0000  -1.58   0.019
+  bo_ucb_cluster         0.4378  0.0045  -0.0165   0.0000  -0.33   0.218
+  bo_best_cluster        0.4956  0.0045  +0.0413   0.0000  +0.97   0.297
+
+  VERDICT (k=10, budget 20)
+    Ceiling +0.0413 AUC. A free bandit already takes -40% of it
+    (-0.0165, p=0.000); random restriction gives -0.0705.
+    Room left for a LEARNED chooser: +0.0577 AUC. That is what a CLM prior
+    would have to capture, and it must beat the bandit, not plain BO.
+
+
+  budget 30
+  arm                       AUC     sem     dAUC        p     dz   top1%
+  ----------------------------------------------------------------------
+  bo_whole               0.5484  0.0076                            0.292
+  bo_random_cluster      0.4030  0.0037  -0.1454   0.0000  -1.94   0.019
+  bo_ucb_cluster         0.5653  0.0041  +0.0169   0.0084  +0.20   0.442
+  bo_best_cluster        0.6249  0.0033  +0.0765   0.0000  +0.97   0.556
+
+  VERDICT (k=10, budget 30)
+    Ceiling +0.0765 AUC. A free bandit already takes 22% of it
+    (+0.0169, p=0.008); random restriction gives -0.1454.
+    Room left for a LEARNED chooser: +0.0596 AUC. That is what a CLM prior
+    would have to capture, and it must beat the bandit, not plain BO.
+
+
+  budget 40
+  arm                       AUC     sem     dAUC        p     dz   top1%
+  ----------------------------------------------------------------------
+  bo_whole               0.6137  0.0079                            0.462
+  bo_random_cluster      0.4127  0.0034  -0.2010   0.0000  -2.42   0.019
+  bo_ucb_cluster         0.6501  0.0038  +0.0364   0.0005  +0.38   0.787
+  bo_best_cluster        0.7007  0.0025  +0.0870   0.0000  +0.95   0.863
+
+  VERDICT (k=10, budget 40)
+    Ceiling +0.0870 AUC. A free bandit already takes 42% of it
+    (+0.0364, p=0.000); random restriction gives -0.2010.
+    Room left for a LEARNED chooser: +0.0505 AUC. That is what a CLM prior
+    would have to capture, and it must beat the bandit, not plain BO.
+
+
+  budget 60
+  arm                       AUC     sem     dAUC        p     dz   top1%
+  ----------------------------------------------------------------------
+  bo_whole               0.7051  0.0069                            0.778
+  bo_random_cluster      0.4576  0.0036  -0.2475   0.0000  -3.70   0.187
+  bo_ucb_cluster         0.7422  0.0036  +0.0370   0.0006  +0.40   0.957
+  bo_best_cluster        0.7809  0.0017  +0.0757   0.0000  +0.90   1.000
+
+  VERDICT (k=10, budget 60)
+    Ceiling +0.0757 AUC. A free bandit already takes 49% of it
+    (+0.0370, p=0.001); random restriction gives -0.2475.
+    Room left for a LEARNED chooser: +0.0387 AUC. That is what a CLM prior
+    would have to capture, and it must beat the bandit, not plain BO.
+
+
+  budget 80
+  arm                       AUC     sem     dAUC        p     dz   top1%
+  ----------------------------------------------------------------------
+  bo_whole               0.7618  0.0054                            0.865
+  bo_random_cluster      0.5531  0.0040  -0.2087   0.0000  -4.18   0.644
+  bo_ucb_cluster         0.7907  0.0034  +0.0289   0.0006  +0.37   0.961
+  bo_best_cluster        0.8222  0.0013  +0.0604   0.0000  +0.90   1.000
+
+  VERDICT (k=10, budget 80)
+    Ceiling +0.0604 AUC. A free bandit already takes 48% of it
+    (+0.0289, p=0.001); random restriction gives -0.2087.
+    Room left for a LEARNED chooser: +0.0315 AUC. That is what a CLM prior
+    would have to capture, and it must beat the bandit, not plain BO.
+
+
+  budget 120
+  arm                       AUC     sem     dAUC        p     dz   top1%
+  ----------------------------------------------------------------------
+  bo_whole               0.8217  0.0036                            0.933
+  bo_random_cluster      0.6777  0.0030  -0.1440   0.0000  -4.33   0.842
+  bo_ucb_cluster         0.8413  0.0029  +0.0196   0.0001  +0.33   0.976
+  bo_best_cluster        0.8644  0.0009  +0.0427   0.0000  +0.96   1.000
+
+  VERDICT (k=10, budget 120)
+    Ceiling +0.0427 AUC. A free bandit already takes 46% of it
+    (+0.0196, p=0.000); random restriction gives -0.1440.
+    Room left for a LEARNED chooser: +0.0231 AUC. That is what a CLM prior
+    would have to capture, and it must beat the bandit, not plain BO.
+
+wrote results\cluster_curve_usp7.json

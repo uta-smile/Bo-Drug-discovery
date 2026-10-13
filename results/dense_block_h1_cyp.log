@@ -1,0 +1,78 @@
+﻿block from data\bindingdb\block_cyp2c19-cyp2c9-cyp2d6-cyp3a4.csv: 1,472 compounds x 4 targets (3s)
+
+[1] the block: 1,472 compounds x 4 targets = 5,888 cells, fully observed
+    CYP3A4 pIC50 3.30..7.40  median 5.00  sd 0.58
+    CYP2D6 pIC50 2.00..8.26  median 4.96  sd 0.62
+    CYP2C9 pIC50 2.00..9.00  median 5.00  sd 0.65
+    CYP2C19 pIC50 3.30..8.15  median 5.00  sd 0.60
+
+    empirical task correlation (Pearson on the same compounds):
+             CYP3A4  CYP2D6  CYP2C9 CYP2C19
+    CYP3A4       --    0.43    0.54    0.56
+    CYP2D6     0.43      --    0.45    0.53
+    CYP2C9     0.54    0.45      --    0.68
+    CYP2C19    0.56    0.53    0.68      --
+    off-diagonal: min +0.43  median +0.54  max +0.68
+
+    pool nearest-neighbour similarity 0.663  (ChEMBL libraries 0.64-0.71, DOCKSTRING 0.38)
+    auxiliary reach ratio 1.00 by construction: the tasks share the molecules.
+
+[2] H1-split -- equal cells, concentrated vs spread (10 repeats)
+    a cell is one (compound, target) measurement; every arm spends n.
+
+     cells  each      stl  blocked   spread        spread gain
+    ----------------------------------------------------------
+        10     2    0.121      nan      nan                n/a
+        20     5    0.164    0.087    0.111       -0.053+-0.016
+        40    10    0.240    0.110    0.184       -0.055+-0.013
+        80    20    0.309    0.175    0.263       -0.045+-0.008
+
+    verdict:
+      H1-split fails on measured data too: best -0.045+-0.008.
+      Same answer as DOCKSTRING (section 14), now without the
+      docking-score and library-geometry caveats.
+
+[3] H1-cold -- primary charged n, family carries H free (10 repeats)
+    n=10 done
+    n=20 done
+    n=40 done
+    n=80 done
+
+    Spearman on held-out compounds
+       n   H=0 (stl)        H=5       H=10       H=25       H=50      H=100      H=200
+    ----------------------------------------------------------------------------------
+      10       0.102      0.112      0.163      0.232      0.296      0.364      0.428
+      20       0.155      0.203      0.190      0.258      0.319      0.378      0.432
+      40       0.219      0.229      0.249      0.301      0.335      0.381      0.440
+      80       0.298      0.317      0.320      0.356      0.369      0.410      0.454
+
+    gain over the single-task GP
+       n               H=5              H=10              H=25              H=50             H=100             H=200
+    ----------------------------------------------------------------------------------------------------------------
+      10      +0.010+-0.016      +0.061+-0.021      +0.130+-0.021      +0.194+-0.019      +0.262+-0.017      +0.326+-0.016
+      20      +0.048+-0.016      +0.035+-0.017      +0.103+-0.016      +0.164+-0.015      +0.223+-0.017      +0.277+-0.016
+      40      +0.011+-0.015      +0.030+-0.012      +0.083+-0.016      +0.117+-0.014      +0.162+-0.013      +0.221+-0.011
+      80      +0.019+-0.011      +0.022+-0.010      +0.059+-0.011      +0.071+-0.009      +0.112+-0.011      +0.156+-0.010
+
+    control: the same observations with the task structure discarded
+    (r fixed at 1, i.e. pool all four targets into one function)
+       n               H=5              H=10              H=25              H=50             H=100             H=200
+    ----------------------------------------------------------------------------------------------------------------
+      10      0.133 -0.021      0.167 -0.004      0.259 -0.027      0.301 -0.005      0.366 -0.002      0.427 +0.001
+      20      0.211 -0.008      0.207 -0.017      0.268 -0.010      0.325 -0.006      0.377 +0.001      0.436 -0.004
+      40      0.231 -0.002      0.260 -0.012      0.314 -0.012      0.345 -0.010      0.388 -0.007      0.447 -0.007
+      80      0.315 +0.002      0.326 -0.005      0.361 -0.005      0.374 -0.005      0.415 -0.005      0.456 -0.002
+    each cell: pooled rho, then (fitted ICM - pooled).
+
+    task correlation selected: median 1.00 (10th 0.20, 90th 1.00)
+
+    verdict:
+      n=10  breaks even at H=25; best +0.326 at H=200 (100% of runs positive).
+      n=20  breaks even at H=5; best +0.277 at H=200 (98% of runs positive).
+      n=40  breaks even at H=25; best +0.221 at H=200 (100% of runs positive).
+      n=80  breaks even at H=25; best +0.156 at H=200 (98% of runs positive).
+      H1-cold HOLDS on measured data, at every budget, on a block
+      where chemical reach cannot be the explanation. This is the
+      first support for any form of H1 outside docking scores.
+
+wrote results\dense_block_h1_cyp.json  (204s total)

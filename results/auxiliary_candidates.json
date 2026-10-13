@@ -1,0 +1,487 @@
+{
+ "min_per_target": 400,
+ "size": 4,
+ "pile_frac": 0.02,
+ "n_targets": 460,
+ "targets": [
+  {
+   "family": "jak",
+   "accession": "P23458",
+   "gene": "JAK1",
+   "in_scan": true,
+   "n_candidates": 3,
+   "n_in_family": 3,
+   "n_out_of_family": 0,
+   "n_out_ge400": 0,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "O60674",
+    "P52333",
+    "P29597"
+   ],
+   "best_any_raw": 1563
+  },
+  {
+   "family": "jak",
+   "accession": "O60674",
+   "gene": "JAK2",
+   "in_scan": true,
+   "n_candidates": 9,
+   "n_in_family": 3,
+   "n_out_of_family": 6,
+   "n_out_ge400": 3,
+   "best_out_of_family": [
+    "Q9UHD2",
+    "Q14164",
+    "Q05397"
+   ],
+   "best_out_raw": 7,
+   "best_any": [
+    "P23458",
+    "P52333",
+    "P29597"
+   ],
+   "best_any_raw": 1563
+  },
+  {
+   "family": "jak",
+   "accession": "P52333",
+   "gene": "JAK3",
+   "in_scan": true,
+   "n_candidates": 8,
+   "n_in_family": 3,
+   "n_out_of_family": 5,
+   "n_out_ge400": 0,
+   "best_out_of_family": [
+    "Q06187",
+    "P06239",
+    "P00533"
+   ],
+   "best_out_raw": 149,
+   "best_any": [
+    "O60674",
+    "P23458",
+    "P29597"
+   ],
+   "best_any_raw": 1563
+  },
+  {
+   "family": "jak",
+   "accession": "P29597",
+   "gene": "TYK2",
+   "in_scan": true,
+   "n_candidates": 3,
+   "n_in_family": 3,
+   "n_out_of_family": 0,
+   "n_out_ge400": 0,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "O60674",
+    "P23458",
+    "P52333"
+   ],
+   "best_any_raw": 1563
+  },
+  {
+   "family": "cyp",
+   "accession": "P08684",
+   "gene": "CYP3A4",
+   "in_scan": true,
+   "n_candidates": 8,
+   "n_in_family": 3,
+   "n_out_of_family": 5,
+   "n_out_ge400": 1,
+   "best_out_of_family": [
+    "Q12809",
+    "P10632",
+    "Q14524"
+   ],
+   "best_out_raw": 4,
+   "best_any": [
+    "P10635",
+    "P11712",
+    "P33261"
+   ],
+   "best_any_raw": 1472
+  },
+  {
+   "family": "cyp",
+   "accession": "P10635",
+   "gene": "CYP2D6",
+   "in_scan": true,
+   "n_candidates": 6,
+   "n_in_family": 3,
+   "n_out_of_family": 3,
+   "n_out_ge400": 1,
+   "best_out_of_family": [
+    "Q12809",
+    "P31645"
+   ],
+   "best_out_raw": 58,
+   "best_any": [
+    "P08684",
+    "P11712",
+    "P33261"
+   ],
+   "best_any_raw": 1472
+  },
+  {
+   "family": "cyp",
+   "accession": "P11712",
+   "gene": "CYP2C9",
+   "in_scan": true,
+   "n_candidates": 6,
+   "n_in_family": 3,
+   "n_out_of_family": 3,
+   "n_out_ge400": 1,
+   "best_out_of_family": [
+    "Q12809",
+    "P10632",
+    "Q14524"
+   ],
+   "best_out_raw": 4,
+   "best_any": [
+    "P08684",
+    "P10635",
+    "P33261"
+   ],
+   "best_any_raw": 1472
+  },
+  {
+   "family": "cyp",
+   "accession": "P33261",
+   "gene": "CYP2C19",
+   "in_scan": true,
+   "n_candidates": 5,
+   "n_in_family": 3,
+   "n_out_of_family": 2,
+   "n_out_ge400": 0,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "P11712",
+    "P10635",
+    "P08684"
+   ],
+   "best_any_raw": 1472
+  },
+  {
+   "family": "pi3k",
+   "accession": "P42336",
+   "gene": "PIK3CA",
+   "in_scan": true,
+   "n_candidates": 4,
+   "n_in_family": 3,
+   "n_out_of_family": 1,
+   "n_out_ge400": 1,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "P42345",
+    "P48736",
+    "O00329"
+   ],
+   "best_any_raw": 198
+  },
+  {
+   "family": "pi3k",
+   "accession": "P42338",
+   "gene": "PIK3CB",
+   "in_scan": true,
+   "n_candidates": 6,
+   "n_in_family": 3,
+   "n_out_of_family": 3,
+   "n_out_ge400": 0,
+   "best_out_of_family": [
+    "Q8NEB9",
+    "P27986",
+    "P42345"
+   ],
+   "best_out_raw": 85,
+   "best_any": [
+    "O00329",
+    "P48736",
+    "P42336"
+   ],
+   "best_any_raw": 1039
+  },
+  {
+   "family": "pi3k",
+   "accession": "O00329",
+   "gene": "PIK3CD",
+   "in_scan": true,
+   "n_candidates": 7,
+   "n_in_family": 3,
+   "n_out_of_family": 4,
+   "n_out_ge400": 3,
+   "best_out_of_family": [
+    "P27986",
+    "O00459",
+    "P42345"
+   ],
+   "best_out_raw": 149,
+   "best_any": [
+    "P48736",
+    "P42338",
+    "P42336"
+   ],
+   "best_any_raw": 1039
+  },
+  {
+   "family": "pi3k",
+   "accession": "P48736",
+   "gene": "PIK3CG",
+   "in_scan": true,
+   "n_candidates": 7,
+   "n_in_family": 3,
+   "n_out_of_family": 4,
+   "n_out_ge400": 3,
+   "best_out_of_family": [
+    "P27986",
+    "O00459",
+    "P42345"
+   ],
+   "best_out_raw": 155,
+   "best_any": [
+    "O00329",
+    "P42338",
+    "P42336"
+   ],
+   "best_any_raw": 1039
+  },
+  {
+   "family": "dpp",
+   "accession": "P27487",
+   "gene": "DPP4",
+   "in_scan": true,
+   "n_candidates": 4,
+   "n_in_family": 3,
+   "n_out_of_family": 1,
+   "n_out_ge400": 0,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "Q9UHL4",
+    "Q6V1X1",
+    "Q86TI2"
+   ],
+   "best_any_raw": 698
+  },
+  {
+   "family": "dpp",
+   "accession": "Q9UHL4",
+   "gene": "DPP7",
+   "in_scan": true,
+   "n_candidates": 4,
+   "n_in_family": 3,
+   "n_out_of_family": 1,
+   "n_out_ge400": 0,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "P27487",
+    "Q6V1X1",
+    "Q86TI2"
+   ],
+   "best_any_raw": 698
+  },
+  {
+   "family": "dpp",
+   "accession": "Q6V1X1",
+   "gene": "DPP8",
+   "in_scan": true,
+   "n_candidates": 3,
+   "n_in_family": 3,
+   "n_out_of_family": 0,
+   "n_out_ge400": 0,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "P27487",
+    "Q9UHL4",
+    "Q86TI2"
+   ],
+   "best_any_raw": 698
+  },
+  {
+   "family": "dpp",
+   "accession": "Q86TI2",
+   "gene": "DPP9",
+   "in_scan": true,
+   "n_candidates": 3,
+   "n_in_family": 3,
+   "n_out_of_family": 0,
+   "n_out_ge400": 0,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "Q6V1X1",
+    "P27487",
+    "Q9UHL4"
+   ],
+   "best_any_raw": 698
+  },
+  {
+   "family": "hdac",
+   "accession": "Q13547",
+   "gene": "HDAC1",
+   "in_scan": true,
+   "n_candidates": 5,
+   "n_in_family": 3,
+   "n_out_of_family": 2,
+   "n_out_ge400": 2,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "Q9UBN7",
+    "O15379",
+    "Q92769"
+   ],
+   "best_any_raw": 560
+  },
+  {
+   "family": "hdac",
+   "accession": "Q92769",
+   "gene": "HDAC2",
+   "in_scan": true,
+   "n_candidates": 5,
+   "n_in_family": 3,
+   "n_out_of_family": 2,
+   "n_out_ge400": 1,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "Q13547",
+    "O15379",
+    "Q9UBN7"
+   ],
+   "best_any_raw": 560
+  },
+  {
+   "family": "hdac",
+   "accession": "O15379",
+   "gene": "HDAC3",
+   "in_scan": true,
+   "n_candidates": 5,
+   "n_in_family": 3,
+   "n_out_of_family": 2,
+   "n_out_ge400": 1,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "Q13547",
+    "Q9UBN7",
+    "Q92769"
+   ],
+   "best_any_raw": 560
+  },
+  {
+   "family": "hdac",
+   "accession": "Q9UBN7",
+   "gene": "HDAC6",
+   "in_scan": true,
+   "n_candidates": 5,
+   "n_in_family": 3,
+   "n_out_of_family": 2,
+   "n_out_ge400": 2,
+   "best_out_of_family": [],
+   "best_out_raw": 0,
+   "best_any": [
+    "Q13547",
+    "O15379",
+    "Q92769"
+   ],
+   "best_any_raw": 560
+  },
+  {
+   "family": "mmp",
+   "accession": "P03956",
+   "gene": "MMP1",
+   "in_scan": true,
+   "n_candidates": 9,
+   "n_in_family": 3,
+   "n_out_of_family": 6,
+   "n_out_ge400": 4,
+   "best_out_of_family": [
+    "P45452",
+    "P78536",
+    "P50281"
+   ],
+   "best_out_raw": 80,
+   "best_any": [
+    "P14780",
+    "P08253",
+    "P08254"
+   ],
+   "best_any_raw": 464
+  },
+  {
+   "family": "mmp",
+   "accession": "P08253",
+   "gene": "MMP2",
+   "in_scan": true,
+   "n_candidates": 10,
+   "n_in_family": 3,
+   "n_out_of_family": 7,
+   "n_out_ge400": 3,
+   "best_out_of_family": [
+    "P45452",
+    "P50281",
+    "P22894"
+   ],
+   "best_out_raw": 143,
+   "best_any": [
+    "P14780",
+    "P03956",
+    "P08254"
+   ],
+   "best_any_raw": 464
+  },
+  {
+   "family": "mmp",
+   "accession": "P08254",
+   "gene": "MMP3",
+   "in_scan": true,
+   "n_candidates": 7,
+   "n_in_family": 3,
+   "n_out_of_family": 4,
+   "n_out_ge400": 1,
+   "best_out_of_family": [
+    "P45452",
+    "P09237",
+    "P22894"
+   ],
+   "best_out_raw": 94,
+   "best_any": [
+    "P03956",
+    "P08253",
+    "P14780"
+   ],
+   "best_any_raw": 464
+  },
+  {
+   "family": "mmp",
+   "accession": "P14780",
+   "gene": "MMP9",
+   "in_scan": true,
+   "n_candidates": 9,
+   "n_in_family": 3,
+   "n_out_of_family": 6,
+   "n_out_ge400": 1,
+   "best_out_of_family": [
+    "P45452",
+    "P78536",
+    "P50281"
+   ],
+   "best_out_raw": 57,
+   "best_any": [
+    "P08253",
+    "P03956",
+    "P08254"
+   ],
+   "best_any_raw": 464
+  }
+ ]
+}

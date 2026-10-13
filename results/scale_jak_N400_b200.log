@@ -1,0 +1,47 @@
+
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+
+[0c] random subsample to 400 compounds (size control for --qed-min)
+jak: 400 compounds x 4 targets, budget 200, batch 10, H=50 (0s)
+      JAK1: success set = top-10
+    JAK1     done
+      JAK2: success set = top-10
+    JAK2     done
+      JAK3: success set = top-10
+    JAK3     done
+      TYK2: success set = top-10
+    TYK2     done
+
+    [audit] 32 target x repeat cells, 3 arms each
+    [audit] all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.95 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    JAK1                 77.5%   91.3%         +13.8%
+    JAK2                 77.5%   81.2%          +3.7%
+    JAK3                 92.5%   97.5%          +5.0%
+    TYK2                 58.7%   82.5%         +23.8%
+    4/4 targets improve; spread +3.7% to +23.8%
+    -> unanimous: the self-check is informative on this panel.
+    stl               8.6208       76.6%                
+    mt                8.6873       88.1%   +0.0665+-0.0126
+    pooled            8.6889       86.6%   +0.0681+-0.0137
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.0665 AUC
+      over single-task BO (84% of campaigns better).
+      But pooling matches it -- on this block the campaign gain
+      does not require modelling the task structure.
+
+wrote results\scale_jak_N400_b200.json  (116s total)

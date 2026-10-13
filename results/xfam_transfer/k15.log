@@ -1,0 +1,34 @@
+k15: 430 compounds x 4 targets, budget 95, batch 10, H=50 (0s)
+      FER: success set = top-10
+    FER      done
+      MAPKAPK2: success set = top-10
+    MAPKAPK2 done
+      STK3: success set = top-10
+    STK3     done
+      MET: success set = top-10
+    MET      done
+    [audit] 1,280 checks over 128 cells
+            all invariants hold: equal initial design, shared history,
+            exact budget, no repeats, no eligibility or label violations
+
+    history reach ratio 0.89 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    FER                  47.8%   74.1%         +26.2%
+    MAPKAPK2             48.1%   52.2%          +4.1%
+    STK3                 64.4%   79.7%         +15.3%
+    MET                  70.6%   86.2%         +15.6%
+    4/4 targets improve; spread +4.1% to +26.2%
+    -> unanimous: the self-check is informative on this panel.
+    stl              12.8133       57.7%                
+    mt               13.0299       73.0%   +0.2166+-0.0332
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.2166 AUC
+      over single-task BO (70% of campaigns better).
+
+wrote C:\Users\tnkch\Downloads\research_2026\Bo for drug discovery\results\xfam_transfer\k15.json  (63s total)

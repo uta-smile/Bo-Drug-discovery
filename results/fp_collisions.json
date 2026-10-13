@@ -1,0 +1,64 @@
+{
+  "note": "ECFP4 radius 2, 2048 bits",
+  "library_size": 2086,
+  "includeChirality_false": {
+    "pairs": 133,
+    "molecules": 204,
+    "max_gap": 3.0,
+    "mean_gap": 0.4296992481203007,
+    "pairs_gap_gt_half": 42,
+    "worst_examples": [
+      {
+        "gap": 3.0,
+        "a": "CN(/N=N/c1ccc2ncnc(Nc3cccc(Cl)c3)c2c1)C(=O)OCCl",
+        "b": "CN(/N=N\\c1ccc2ncnc(Nc3cccc(Cl)c3)c2c1)C(=O)OCCl",
+        "value_a": 6.41,
+        "value_b": 9.41
+      },
+      {
+        "gap": 2.93,
+        "a": "C[C@@H](COc1cccc2ncnc(Nc3ccc(OCc4ccccn4)c(Cl)c3)c12)N(C)C(=O)CO",
+        "b": "C[C@H](COc1cccc2ncnc(Nc3ccc(OCc4ccccn4)c(Cl)c3)c12)N(C)C(=O)CO",
+        "value_a": 5.59,
+        "value_b": 8.52
+      },
+      {
+        "gap": 2.03,
+        "a": "CCN(CC)CCOc1cc2c(Nc3ccc(F)c(Cl)c3)ncnc2cc1OC",
+        "b": "CCN(CC)CCOc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OC",
+        "value_a": 7.03,
+        "value_b": 5.0
+      }
+    ]
+  },
+  "includeChirality_true": {
+    "pairs": 65,
+    "molecules": 94,
+    "max_gap": 2.0300000000000002,
+    "mean_gap": 0.3555384615384615,
+    "pairs_gap_gt_half": 15,
+    "worst_examples": [
+      {
+        "gap": 2.03,
+        "a": "CCN(CC)CCOc1cc2c(Nc3ccc(F)c(Cl)c3)ncnc2cc1OC",
+        "b": "CCN(CC)CCOc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OC",
+        "value_a": 7.03,
+        "value_b": 5.0
+      },
+      {
+        "gap": 1.48,
+        "a": "COc1cc2c(Nc3ccc(-c4nc5ccccc5s4)c(O)c3)ncnc2cc1OCCCN1CCN(C)CC1",
+        "b": "COc1cc2ncnc(Nc3ccc(-c4nc5ccccc5s4)c(O)c3)c2cc1OCCCN1CCN(C)CC1",
+        "value_a": 6.96,
+        "value_b": 5.48
+      },
+      {
+        "gap": 1.22,
+        "a": "COc1cc2c(Nc3ccc(C)c(Br)c3)ncnc2cc1OCCOCCNC(=O)Cn1cnc([N+](=O)[O-])n1",
+        "b": "COc1cc2c(Nc3ccc(C)c(Br)c3)ncnc2cc1OCCOCCOCCNC(=O)Cn1cnc([N+](=O)[O-])n1",
+        "value_a": 9.43,
+        "value_b": 8.21
+      }
+    ]
+  }
+}

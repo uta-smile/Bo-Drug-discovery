@@ -1,0 +1,39 @@
+{
+  "backend": "llamacpp:qwen3.5-4b:t=0.0:topk=1:seed=0:think=0",
+  "version": "v1",
+  "system": "You are steering a Bayesian optimisation campaign over a fixed library of\nmolecules. You do not choose molecules. You choose how the next candidate is\nscored, and nothing else.\n\nEach round you are shown the state of the Gaussian Process surrogate and the\ncampaign's budget. Pick the acquisition function for this round.\n\nAvailable:\n  ei        expected improvement -- balanced; xi widens it toward exploration\n  ucb       upper confidence bound -- explicit exploration; beta sets the width\n  pi        probability of improvement -- conservative, exploits hard\n  greedy    posterior mean only -- pure exploitation, learns nothing\n  ts        Thompson sampling -- one draw from the posterior; exploration\n            that respects correlations\n\nGuidance:\n- A rising `rounds since improve` means the current strategy has stopped paying.\n- `posterior sd` collapsing towards zero means the surrogate believes it has\n  seen everything worth seeing. It may be wrong, and it cannot tell you so.\n- A large `GP noise ratio` late in a run means the representation cannot\n  separate compounds the assay separates. No acquisition function repairs that.\n- Exploration only pays if there is budget left to exploit what it finds.\n\nRespond with JSON only.\n",
+  "prompt": "round 10  calls 120/1000  observed 120  candidates 2000\nlibrary explored      0.05%\nbest observed         0.7646\nrounds since improve  4\nposterior mean        max 0.5450  mean 0.2981\nposterior sd          max 0.2175  mean 0.2022\nGP noise ratio (eta)  0.1\nGP log marg lik       -160.2\nacquisition in use    ei\n\nChoose the acquisition function for the next round.",
+  "response": {
+    "acquisition": "ucb",
+    "xi": 2.0,
+    "beta": 2.0,
+    "rationale": "The campaign has stalled with 4 rounds since improvement and the posterior standard deviation is collapsing (0.2022), indicating the surrogate is overconfident. The current EI strategy is failing to explore sufficiently to find new maxima. UCB with an explicit beta parameter will force exploration to counter the GP's false confidence, ensuring we probe unexplored regions of the library before the budget runs out."
+  },
+  "usage": {
+    "completion_tokens": 123,
+    "prompt_tokens": 412,
+    "total_tokens": 535,
+    "prompt_tokens_details": {
+      "cached_tokens": 259
+    }
+  },
+  "diagnostics": {
+    "round_index": 10,
+    "calls_spent": 120,
+    "budget": 1000,
+    "n_observed": 120,
+    "n_candidates": 2000,
+    "library_size": 249455,
+    "best_observed": 0.7646342808624104,
+    "rounds_since_improvement": 4,
+    "mu_max": 0.5450083856438712,
+    "mu_mean": 0.2981207931460919,
+    "sd_max": 0.21753264861358115,
+    "sd_mean": 0.20216302768775174,
+    "gp_eta": 0.1,
+    "gp_lml": -160.2375727154913,
+    "acquisition": "ei",
+    "fraction_explored": 0.00048,
+    "budget_remaining": 880
+  }
+}

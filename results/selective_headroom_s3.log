@@ -1,0 +1,194 @@
+[gate] 411 eligible targets; testing 45 (k=10, budget 30, 100 seeds)
+[gate] ridge on (150000, 2528) from 562 targets in 69s
+
+target        n pick best        lift  pLift   bandit   commit   d_best
+-----------------------------------------------------------------------
+P25440      505    7    0 miss    5.6   33.7  -0.0225  +0.0137  +0.0380
+Q9Y345      293    6    2 miss    1.9   12.2  -0.0275  -0.1453  -0.0553
+P15428      302    2    3 miss    8.4   11.6  -0.0128  -0.0828  +0.0243
+P43115      364    8    2 miss    1.9   12.1  -0.0063  -0.0073  +0.0140
+P49682      895    9    0 miss    6.7    7.9  -0.0145  -0.0765  +0.0493
+P55211      481    3    8 miss    8.7    7.4  -0.0092  -0.0866  +0.0780
+Q9Y239      426    2    7 miss    4.5    8.5  +0.0197  -0.0172  +0.0078
+P13497      341    8    7 miss    7.6    7.1  -0.0099  -0.0485  +0.0271
+P21980      391    6    9 miss   11.7   11.5  -0.0200  -0.0158  +0.0587
+P31751      952    2    3 miss    3.7    8.5  -0.0267  -0.0254  +0.0732
+Q15910      957    0    6 miss    7.0    6.7  -0.0235  -0.0685  +0.0597
+P35236      652    1    5 miss    1.3   23.3  -0.0148  +0.0148  -0.0262
+P05164      283    2    2  HIT    2.3    3.5  -0.0210  -0.0621  -0.0621
+P23978      260    5    4 miss    5.3    8.7  -0.0271  -0.0757  +0.0528
+P97266      909    3    0 miss    1.0    6.7  -0.0127  +0.0120  +0.0106
+O96017      402    8    3 miss    5.2    3.7  -0.0336  -0.0210  +0.0440
+P51679      469    8    3 miss    2.3   26.8  +0.0065  -0.0394  -0.0135
+P08842      481    0    4 miss    3.4    2.7  +0.0008  -0.0213  -0.0201
+P49840     1008    3    2 miss    4.5    5.8  -0.0373  -0.0712  +0.0560
+P30304      307    9    9  HIT    2.8    2.8  -0.0059  +0.0061  +0.0061
+P25779      515    7    9 miss   21.5   21.5  +0.0130  -0.0482  +0.0620
+O60725      261    0    1 miss    6.4    6.4  -0.0160  -0.0905  +0.0335
+P34998      602    4    4  HIT   17.9    6.1  -0.0066  +0.0298  +0.0298
+P50172      981    9    2 miss    6.0   12.1  -0.0188  -0.0271  +0.0330
+P51684      306    3    3  HIT    3.2    3.2  -0.0412  +0.0971  +0.0971
+P11940      428    3    9 miss    1.3    8.6  -0.0944  +0.0702  +0.1000
+P49146      408    1    8 miss    7.7    5.2  -0.0201  -0.0211  +0.0443
+P07861      393    2    7 miss    3.2    5.5  -0.0087  -0.0513  +0.0017
+P53350     1014    5    8 miss    1.0   17.8  -0.0459  -0.0824  +0.0036
+O60240      277    6    7 miss    1.3    7.7  -0.0025  -0.0337  -0.0038
+P29089      322    6    0 miss    1.9    8.9  -0.0133  -0.0509  -0.0184
+P08238      712    4    0 miss    4.6    7.7  -0.0063  -0.0284  +0.0184
+P32897      266    5    0 miss    4.2    3.6  -0.0181  +0.0235  +0.0414
+O94925      842    9    1 miss    2.5    7.2  -0.0207  -0.0893  +0.0387
+Q9H7Z7      289    9    9  HIT   16.1   10.7  +0.0352  +0.0631  +0.0631
+Q92633      272    5    2 miss    3.2   22.7  -0.0290  -0.0353  +0.0470
+Q9HBA0      312    5    7 miss   13.6    9.8  -0.0332  -0.0280  +0.0354
+P09923      295    0    8 miss    9.8    3.3  -0.0344  +0.0576  +0.0294
+P00749      348    4    4  HIT    8.9    6.7  -0.0201  -0.1193  -0.1193
+P17252      787    3    3  HIT    6.3   10.1  -0.0180  +0.0396  +0.0396
+O15111      372    5    5  HIT    9.3    2.3  -0.0171  +0.0922  +0.0922
+P25099      376    2    5 miss    4.9    6.0  -0.0037  -0.0347  +0.0167
+Q9UNQ0      573    2    0 miss    3.5   19.1  -0.0105  -0.0058  +0.0194
+P63279      330    6    2 miss    3.7    2.1  -0.0225  -0.0081  +0.0432
+P32300      686    6    9 miss   17.8   10.5  +0.0080  -0.0298  +0.0737
+
+
+==========================================================================
+GATING A CHOOSER THAT MUST vs MAY ACT  (45 targets, 100 seeds)
+==========================================================================
+
+reference: the free UCB bandit over regions. All deltas are vs it.
+
+  policy                                 dAUC      sem        p
+  --------------------------------------------------------------------
+  commit(prior)          [sec 4]      -0.0251   0.0079   0.0024   acts on every target
+  gate(correctness)                   +0.0033   0.0046   0.4008   acts on 18%
+  gate(outcome)   CEILING             +0.0115   0.0037   0.0022   acts on 27%
+  commit(best region)    [sec 3]      +0.0276   0.0063   0.0000   reads the answer key
+  gate(outcome) on best region        +0.0347   0.0043   0.0000   both answer keys
+
+
+Does anything computable predict when acting pays?
+  signal                    AUROC vs pays   perm p  AUROC vs hit  rho vs dAUC
+  ---------------------------------------------------------------------------
+  entropy                           0.545    0.650         0.416       +0.017
+  margin                            0.444    0.565         0.321       -0.071
+  n_pred_top_in_pick                0.407    0.370         0.490       -0.062
+  pred_lift                         0.394    0.280         0.260       -0.149
+  top1_score                        0.386    0.240         0.267       -0.144
+  best_lift [answer key]            0.490    0.910         0.635       +0.020
+
+
+A gate on each real signal, thresholded
+  signal            rule                      acts on      dAUC        p
+  ----------------------------------------------------------------------
+  entropy           in-sample (optimistic)       13%   +0.0017         
+                    leave-one-out (honest)             +0.0011   0.6858
+  margin            in-sample (optimistic)        4%   +0.0033         
+                    leave-one-out (honest)             +0.0013   0.3173
+  n_pred_top_in_pickin-sample (optimistic)        4%   +0.0003         
+                    leave-one-out (honest)             -0.0006   0.3173
+  pred_lift         in-sample (optimistic)       13%   +0.0050         
+                    leave-one-out (honest)             +0.0023   0.7532
+  top1_score        in-sample (optimistic)       18%   +0.0041         
+                    leave-one-out (honest)             +0.0020   0.6121
+
+
+95% bootstrap interval over targets (10k resamples)
+  commit(prior)               -0.0251   [-0.0401, -0.0100]
+  gate(correctness)           +0.0033   [-0.0058, +0.0122]
+  gate(outcome) CEILING       +0.0115   [+0.0049, +0.0195]
+  commit(best region)         +0.0276   [+0.0149, +0.0394]
+
+
+BREAK-EVEN SURFACE (hit): dAUC vs the free bandit
+  alpha = P(pick = best region).  delta = AUROC of its confidence
+  against hit: confidence tracks WHICH REGION IS RIGHT (a Choice-shaped question).
+  delta = 0.50 is an uncalibrated chooser, which is every chooser
+  this project has built. The threshold is chosen per cell to
+  maximise dAUC -- optimistic for the gate, and it still has to
+  clear zero.
+
+  alpha |      0.50      0.60      0.70      0.80      0.90      1.00
+  ------+------------------------------------------------------------
+    0.1 |   -0.0019   -0.0015   -0.0012   -0.0005   +0.0004   +0.0027
+    0.2 |   -0.0015   -0.0010   -0.0004   +0.0003   +0.0015   +0.0055
+    0.3 |   -0.0012   -0.0006   +0.0001   +0.0010   +0.0031   +0.0082
+    0.4 |   -0.0007   -0.0001   +0.0007   +0.0024   +0.0051   +0.0111
+    0.5 |   -0.0004   +0.0003   +0.0019   +0.0044   +0.0074   +0.0138
+    0.6 |   -0.0001   +0.0018   +0.0043   +0.0070   +0.0102   +0.0166
+    0.7 |   +0.0058   +0.0063   +0.0081   +0.0106   +0.0135   +0.0194
+    0.8 |   +0.0130   +0.0130   +0.0136   +0.0150   +0.0172   +0.0221
+    0.9 |   +0.0204   +0.0204   +0.0204   +0.0208   +0.0217   +0.0249
+    1.0 |   +0.0276   +0.0276   +0.0276   +0.0276   +0.0276   +0.0276
+
+  coverage (fraction of targets acted on) at the optimising threshold
+  alpha |      0.50      0.60      0.70      0.80      0.90      1.00
+  ------+------------------------------------------------------------
+    0.1 |        5%        5%        5%        5%        5%       10%
+    0.2 |        5%        5%        5%        5%       10%       20%
+    0.3 |        5%        5%        5%       15%       20%       30%
+    0.4 |        5%        5%       10%       25%       30%       40%
+    0.5 |        5%       10%       30%       35%       45%       50%
+    0.6 |        5%       40%       50%       50%       55%       60%
+    0.7 |      100%       85%       70%       70%       65%       70%
+    0.8 |      100%      100%       90%       85%       80%       80%
+    0.9 |      100%      100%      100%       95%       90%       90%
+    1.0 |      100%      100%      100%      100%      100%      100%
+
+  break-even accuracy (lowest alpha with dAUC > 0), per delta
+    delta 0.50  ->  70%
+    delta 0.60  ->  50%
+    delta 0.70  ->  30%
+    delta 0.80  ->  20%
+    delta 0.90  ->  10%
+    delta 1.00  ->  10%
+
+  at the prior's MEASURED accuracy (18%, grid 20%): a gate needs delta >= 0.80
+  the best free signal measured here reaches delta = 0.490  ->  short
+
+
+BREAK-EVEN SURFACE (pays): dAUC vs the free bandit
+  alpha = P(pick = best region).  delta = AUROC of its confidence
+  against pays: confidence tracks WHETHER ACTING HELPS (a Noul-shaped question).
+  delta = 0.50 is an uncalibrated chooser, which is every chooser
+  this project has built. The threshold is chosen per cell to
+  maximise dAUC -- optimistic for the gate, and it still has to
+  clear zero.
+
+  alpha |      0.50      0.60      0.70      0.80      0.90      1.00
+  ------+------------------------------------------------------------
+    0.1 |   -0.0019   -0.0011   -0.0003   +0.0005   +0.0023   +0.0070
+    0.2 |   -0.0015   -0.0007   +0.0002   +0.0014   +0.0040   +0.0100
+    0.3 |   -0.0012   -0.0003   +0.0007   +0.0027   +0.0060   +0.0135
+    0.4 |   -0.0007   +0.0001   +0.0017   +0.0046   +0.0085   +0.0164
+    0.5 |   -0.0004   +0.0006   +0.0033   +0.0069   +0.0111   +0.0190
+    0.6 |   -0.0001   +0.0027   +0.0060   +0.0097   +0.0141   +0.0216
+    0.7 |   +0.0058   +0.0070   +0.0099   +0.0134   +0.0175   +0.0253
+    0.8 |   +0.0130   +0.0132   +0.0148   +0.0176   +0.0212   +0.0287
+    0.9 |   +0.0204   +0.0204   +0.0209   +0.0225   +0.0253   +0.0312
+    1.0 |   +0.0276   +0.0276   +0.0276   +0.0283   +0.0299   +0.0338
+
+  coverage (fraction of targets acted on) at the optimising threshold
+  alpha |      0.50      0.60      0.70      0.80      0.90      1.00
+  ------+------------------------------------------------------------
+    0.1 |        5%        5%        5%        5%       15%       25%
+    0.2 |        5%        5%        5%       15%       25%       35%
+    0.3 |        5%        5%       10%       20%       30%       40%
+    0.4 |        5%        5%       20%       30%       40%       45%
+    0.5 |        5%       15%       30%       40%       45%       50%
+    0.6 |        5%       45%       50%       50%       55%       60%
+    0.7 |      100%       80%       65%       60%       60%       65%
+    0.8 |      100%       95%       80%       75%       70%       70%
+    0.9 |      100%      100%       95%       85%       80%       75%
+    1.0 |      100%      100%      100%       95%       90%       80%
+
+  break-even accuracy (lowest alpha with dAUC > 0), per delta
+    delta 0.50  ->  70%
+    delta 0.60  ->  40%
+    delta 0.70  ->  20%
+    delta 0.80  ->  10%
+    delta 0.90  ->  10%
+    delta 1.00  ->  10%
+
+  at the prior's MEASURED accuracy (18%, grid 20%): a gate needs delta >= 0.70
+  the best free signal measured here reaches delta = 0.545  ->  short
+
+wrote results\selective_headroom_s3.json

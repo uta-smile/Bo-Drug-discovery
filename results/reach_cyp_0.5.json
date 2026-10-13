@@ -1,0 +1,47 @@
+{
+  "family": "cyp",
+  "history": 50,
+  "history_cluster": 0.5,
+  "reach": 0.852411966992914,
+  "history_excludes_top": true,
+  "budget": 60,
+  "batch": 5,
+  "k": 10,
+  "acquisition": "ei",
+  "repeats": 15,
+  "n_pool": 335,
+  "arms": {
+    "stl": {
+      "auc_mean": 6.177270321573333,
+      "auc_sem": 0.035287919036188664,
+      "recall_mean": 0.38000000000000006,
+      "delta_vs_stl": 0.0,
+      "delta_sem": 0.0,
+      "frac_better": 0.0
+    },
+    "mt": {
+      "auc_mean": 6.2413055047498585,
+      "auc_sem": 0.026370607445325524,
+      "recall_mean": 0.3716666666666667,
+      "delta_vs_stl": 0.06403518317652282,
+      "delta_sem": 0.026062706426562693,
+      "frac_better": 0.5166666666666667
+    },
+    "similarity": {
+      "auc_mean": 6.155115781497593,
+      "auc_sem": 0.025447173757025862,
+      "recall_mean": 0.27666666666666667,
+      "delta_vs_stl": -0.02215454007574181,
+      "delta_sem": 0.03143512611845178,
+      "frac_better": 0.4666666666666667
+    },
+    "random": {
+      "auc_mean": 5.88798676856807,
+      "auc_sem": 0.0238819070636437,
+      "recall_mean": 0.17333333333333328,
+      "delta_vs_stl": -0.2892835530052643,
+      "delta_sem": 0.03081716783302103,
+      "frac_better": 0.13333333333333333
+    }
+  }
+}

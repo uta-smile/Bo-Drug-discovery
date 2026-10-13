@@ -1,0 +1,23 @@
+{
+  "fingerprint_version": "v2-chiral",
+  "n_molecules": 2086,
+  "fp_nominal_dim": 2048,
+  "fp_active_bits": 1830,
+  "fp_informative_bits": 1827,
+  "bits_per_mol_mean": 62.294342041015625,
+  "bits_per_mol_min": 26,
+  "bits_per_mol_max": 94,
+  "density_pct": 3.0417158603668213,
+  "tanimoto_mean": 0.30007714805248664,
+  "tanimoto_median": 0.28378379344940186,
+  "tanimoto_p95": 0.46666666865348816,
+  "tanimoto_max": 1.0,
+  "eff_rank_participation": 10.122530678111776,
+  "eigs_for_90pct": 480,
+  "eigs_for_95pct": 850,
+  "heavy_min": 17,
+  "heavy_max": 55,
+  "heavy_median": 33.0,
+  "value_min": 4.0,
+  "value_max": 11.0
+}

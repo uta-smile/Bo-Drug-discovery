@@ -1,0 +1,95 @@
+{
+  "family": "k01",
+  "arm": "stl",
+  "budget": 60,
+  "batch": 10,
+  "n_init": 10,
+  "k": 10,
+  "history": 20,
+  "history_excludes_top": true,
+  "candidates": 12,
+  "repeats": 8,
+  "start": "random",
+  "baseline_auc_mean": 7.168554188702148,
+  "baseline_auc_sem": 0.11367329548412039,
+  "bad_quantile": null,
+  "n_pool": 300,
+  "rows": [
+    {
+      "label": "hindsight ceiling",
+      "delta_mean": 0.4030848478970892,
+      "delta_sem": 0.033158798229750076,
+      "n": 32,
+      "sem_multiple": 12.15619592435776,
+      "clears_bar": true,
+      "flag": "12.2 SEM"
+    },
+    {
+      "label": "maxmin",
+      "delta_mean": 0.22734384996604706,
+      "delta_sem": 0.06951338957785021,
+      "n": 32,
+      "sem_multiple": 3.270504450246058,
+      "clears_bar": true,
+      "flag": "3.3 SEM"
+    },
+    {
+      "label": "aux_top",
+      "delta_mean": -0.06278925623127238,
+      "delta_sem": 0.07443619698530142,
+      "n": 32,
+      "sem_multiple": 0.8435312223657946,
+      "clears_bar": false,
+      "flag": "0.8 SEM"
+    },
+    {
+      "label": "aux_scaffold_nn",
+      "delta_mean": 0.04222201866421063,
+      "delta_sem": 0.0620858610848201,
+      "n": 32,
+      "sem_multiple": 0.680058517776342,
+      "clears_bar": false,
+      "flag": "0.7 SEM"
+    }
+  ],
+  "gate": {
+    "ceiling_minus_best_free": 0.17574099793104214,
+    "sem": 0.07701699312907022,
+    "best_free": "maxmin",
+    "inert": false
+  },
+  "aux_quality": null,
+  "rho_eff": 0.2704515139497853,
+  "rho_eff_mean": 0.2867374544515021,
+  "rho_eff_n": 96,
+  "top_k_seeded": {
+    "maxmin": 0.625,
+    "aux_top": 0.0,
+    "aux_scaffold_nn": 0.34375
+  },
+  "provenance": {
+    "source": "data/cache/tdc/bindingdb_ic50.csv",
+    "potency": "nanomolar",
+    "blocks_from": "results/cross_family_blocks_bindingdb.json",
+    "seed_pool": "random",
+    "targets": [
+      "DPP4",
+      "DPP7",
+      "DPP8",
+      "DPP9"
+    ],
+    "block_csv": "data/bindingdb/block_dpp4-dpp7-dpp8-dpp9.csv",
+    "n_block": 698,
+    "n_pool": 300,
+    "censoring": "pile_frac=0.02",
+    "qed_min": null,
+    "subsample": null
+  },
+  "audit": {
+    "enabled": true,
+    "checks": 960,
+    "cells": 32,
+    "clean": true,
+    "problems": []
+  }
+}

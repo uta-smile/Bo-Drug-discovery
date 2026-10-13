@@ -1,0 +1,850 @@
+% RECOMB 2027 manuscript using the optional Springer LLNCS class.
+% Call for papers: 10 pages of main text excluding the bibliography, with an
+% additional title page permitted; publicly accessible, documented source code
+% is required for new software or analysis methods.
+% Deadlines: abstract registration October 28, full paper November 4.
+% Do not replace the LLNCS class or adjust layout just to shorten the paper.
+\documentclass[10pt,letterpaper,runningheads]{llncs}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{refcount}
+
+% Keep captions, abstract, tables, and footnotes at the 10pt submission minimum.
+\renewcommand{\small}{\fontsize{10}{12}\selectfont}
+\renewcommand{\footnotesize}{\fontsize{10}{12}\selectfont}
+
+\newcommand{\stl}{\textsc{stl}}
+\newcommand{\mt}{\textsc{mt}}
+\newcommand{\pooled}{\textsc{pooled}}
+\newcommand{\simarm}{\textsc{sim}}
+\newcommand{\rnd}{\textsc{rand}}
+\newcommand{\auxtop}{\texttt{aux\_top}}
+\newcommand{\auxnn}{\texttt{aux\_scaffold\_nn}}
+\newcommand{\maxmin}{\texttt{maxmin}}
+\newcommand{\rhoeff}{\rho_{\mathrm{eff}}}
+\newcommand{\mtzero}{\textsc{mt}$_{r=0}$}
+
+% Required: copy your actual generated summary files into generated/.
+% Do NOT substitute example numbers in your submitted manuscript.
+\input{generated/macros}
+\input{generated/macros_families}
+\input{generated/macros_avoidance}
+\input{generated/macros_permutation}
+\input{generated/macros_crossed}
+
+\title{When Does Auxiliary Data Really Help Molecular Bayesian Optimization?}
+\titlerunning{When Does Auxiliary Data Help Molecular BO?}
+
+% RECOMB 2027 review is single-blind; verify author details before submission.
+
+\author{Thanh Tran\orcidID{0009-0008-8775-074X}}
+
+\authorrunning{T. Tran}
+
+\institute{
+University of Texas at Arlington,
+Arlington, TX, USA\\
+\email{cxt5391@mavs.uta.edu}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Historical activity measurements from related protein targets can guide
+molecular Bayesian optimization (BO) when primary-target assays are scarce.
+Yet improved compound discovery does not by itself establish informative
+cross-target transfer: auxiliary data also affect surrogate fitting,
+acquisition behavior, and the influence of historically measured compounds.
+
+We examine these effects through retrospective screening experiments using
+BindingDB data from six protein families. We compare single-task, fitted
+multi-task, and fully pooled Gaussian-process BO under matched assay budgets
+and historical observation locations. Four diagnostic controls test auxiliary
+response correspondence, joint fitting, acquisition uncertainty, and
+historical compound selection. Within-target permutation preserves the
+response distributions actually observed in auxiliary history. Crossed
+controls exchange conditioning responses while retaining the parameters
+and normalization transforms of measured- or permuted-response fits.
+
+Under uniform histories, fitted multi-task BO improves discovery across
+all six families, and its advantage is reduced by historical-response
+permutation. Measured-response fitting improves discovery when conditioning
+also uses measured responses, but reduces it when conditioning responses
+are permuted. Matched-history replays further show that response-dependent
+predictive means change compound selection at identical predictive variance.
+Other gains persist under randomized responses and can be reproduced by
+covariance-free joint fitting, uncertainty-adjusted acquisition, or historical
+compound avoidance. Full pooling is particularly sensitive to outcome-informed
+historical sampling. These results distinguish routes of auxiliary response
+information from alternative explanations for discovery gains and provide
+a practical evaluation protocol without assigning unique causal mechanisms
+or causal percentages to the observed effects.
+\end{abstract}
+
+% RECOMB permits an additional page containing the title, authors, and abstract.
+\clearpage
+\label{page:main-start}
+
+\section{Introduction}
+\label{sec:intro}
+
+Identifying active compounds for a protein target requires screening
+molecular libraries under limited experimental budgets. Bayesian
+optimization (BO) fits a surrogate to observed activities and uses an
+acquisition function to select compounds for evaluation~\cite{jones1998ego,shahriari2016taking}.
+With few primary-target measurements, both predictions and uncertainty
+estimates depend strongly on the surrogate's modeling assumptions;
+uncertainty calibration is also difficult to assess at small sample
+sizes~\cite{foldager2023uncertainty}.
+
+Historical activity measurements from related protein targets offer a way
+to guide screening without purchasing additional primary-target assays.
+Multi-task molecular prediction and BO use such measurements by sharing
+information across targets~\cite{zhao2020multitask,swersky2013multitask}.
+A natural evaluation compares discovery against single-task BO at the same
+assay budget. However, a gain in discovery recall does not establish that
+the measured auxiliary responses contain useful information about the
+primary target.
+
+Auxiliary data can affect BO through several routes. Joint fitting can
+change shared hyperparameters and predictive uncertainty, thereby altering
+acquisition decisions. Historical observation locations can also influence
+which compounds the optimizer explores, independently of their auxiliary
+responses. Distinguishing these effects is necessary to interpret a gain
+as evidence of informative cross-target transfer.
+
+We study this distinction through retrospective molecular BO experiments
+on six BindingDB protein families. Figure~\ref{fig:matrix-methods} shows the
+primary-target screening problem and the auxiliary history available to
+multi-task models. Our comparisons pair discovery performance with controls
+on response information, model fitting, acquisition uncertainty, and
+historical sampling. The crossed experiment asks whether auxiliary activity information improves
+discovery through posterior conditioning, through the parameters learned
+during fitting, or through their interaction.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+\item We develop a reproducible diagnostic experiment that crosses auxiliary
+response correspondence with fitted parameters and normalization transforms,
+within a four-control framework for interpreting molecular BO gains.
+\item Across six retrospective protein-family libraries under uniform
+histories, measured-response fitting helps discovery with measured
+conditioning responses but hurts with permuted responses; shared-state
+replays show altered compound selection at identical predictive variance.
+\item We show that outcome-informed exclusion of the primary target's best
+compounds from history can reverse full pooling's apparent benefit, and
+that an avoidance policy using no auxiliary responses reproduces much of
+this sensitivity in separate calibrated runs.
+\end{enumerate}
+
+% RECOMB requires public, documented code by the submission deadline.
+% Verify the repository and reproduction records before replacing this promise
+% with a statement of current availability.
+Code and audited campaign records will be available with the final
+submission.\footnote{\url{https://github.com/uta-smile/Bo-Drug-discovery}.
+Reproduction instructions and audited experiment records will be included
+in the released repository.}
+
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Bayesian optimization for molecular discovery.}
+Graff et al.~\cite{graff2021accelerating} studied active learning for
+structure-based virtual screening, and Gao et al.~\cite{gao2022pmo}
+emphasized evaluation under limited oracle budgets. McDonald
+et al.~\cite{mcdonald2025multifidelity} combined computational and
+experimental measurements through multifidelity BO. Our setting reuses
+historical responses from related protein targets, rather than allocating
+new evaluations across experimental fidelities.
+
+\paragraph{Multi-task learning and knowledge transfer.}
+Multi-task Gaussian processes combine a shared input kernel with a task
+covariance matrix~\cite{bonilla2007multitask}. Swersky
+et al.~\cite{swersky2013multitask} used this approach to reuse observations
+across optimization tasks, while Sedgwick et al.~\cite{sedgwick2025transfer}
+compared transfer-learning approaches for biological sequence design.
+HyperBO learns GP priors from earlier tasks~\cite{wang2024hyperbo},
+illustrating that auxiliary responses can inform fitting as well as
+posterior conditioning. Hvarfner et al.~\cite{hvarfner2026pitfalls} showed that task relationships
+can be difficult to estimate with limited data and observation overlap.
+Our contribution is a diagnostic comparison of these routes in sequential
+molecular screening, rather than a new permutation test or GP prior-learning
+algorithm.
+
+\paragraph{Validation and historical-data selection.}
+Response randomization tests whether molecular predictive relationships
+survive disruption of activity labels~\cite{rucker2007yrandomization}.
+Training-data composition also affects model-guided biological
+optimization~\cite{wittmann2021informed}, and relationships between protein
+targets can introduce leakage into affinity benchmarks~\cite{leakage2026}.
+Our controls extend these concerns to sequential screening, where both
+auxiliary responses and historical observation locations influence
+acquisition decisions.
+
+\section{Diagnosing Auxiliary-Data Gains}
+\label{sec:framework}
+\label{sec:method}
+
+\subsection{Experimental Setting and Assay Budget}
+\label{sec:matrix}
+
+We consider Bayesian optimization over a fixed compound
+library $\mathcal M$, with one primary protein target
+$t_0$ and related targets $t_1,\ldots,t_{T-1}$ providing
+historical activity measurements. Let $y(m,t_j)$ denote
+the activity of compound $m$ against target $t_j$,
+with larger values indicating greater activity.
+Available measurements are represented by a
+compound--target observation mask
+$M\in\{0,1\}^{N\times T}$; missing entries are
+not imputed.
+
+In each retrospective campaign, primary-target
+activities are revealed only when their compounds
+are selected for evaluation. Discovery performance
+is measured against the ten most active compounds
+in the constructed library, rather than against
+an external or exhaustive chemical space.
+
+We distinguish two uses of auxiliary measurements.
+In the main transfer experiments, historical assays
+have already been collected and do not consume the
+new screening budget. Each newly evaluated
+compound--target pair counts as one assay, and
+the entire new budget is allocated to the primary
+target. A separate study, reported in the
+supplement, examines how a fixed budget for new
+measurements should be divided across targets.
+
+\begin{figure}[htbp]
+\centering
+% Render the same observation matrix in LaTeX to keep labels at 10pt.
+\begingroup
+\definecolor{assayprimary}{HTML}{2878B8}
+\definecolor{assayauxiliary}{HTML}{F2AC45}
+\definecolor{assaymissing}{HTML}{E5E8EC}
+\newcommand{\matrixcell}[2]{\colorbox{#1}{\makebox[1.4em]{\strut #2}}}
+\setlength{\tabcolsep}{1pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{minipage}[c]{0.44\linewidth}
+\centering
+\textbf{Compound--target observations}\\[6pt]
+\begin{tabular}{cccc}
+$P$ & $A1$ & $A2$ & $A3$ \\
+\matrixcell{assayprimary}{\textcolor{white}{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} \\
+\matrixcell{assayprimary}{\textcolor{white}{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} \\
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$} \\
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$} \\
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$}
+\end{tabular}\\[4pt]
+Observed activity matrix
+\end{minipage}\hfill
+\begin{minipage}[c]{0.52\linewidth}
+\matrixcell{assayprimary}{\phantom{$y$}}\quad Primary-target assays\\[6pt]
+\matrixcell{assayauxiliary}{\phantom{$y$}}\quad Existing auxiliary history\\[10pt]
+Gray cells are unobserved.\\
+Each row represents a compound.
+\end{minipage}
+\endgroup
+\caption{
+Compound--target observation matrix used in
+retrospective molecular BO. Columns represent
+the primary target ($P$) and auxiliary targets
+($A1$--$A3$); rows represent compounds.
+Blue and orange cells indicate available
+primary-target and historical auxiliary
+measurements, respectively, while gray cells
+are unobserved. The single-task model uses
+primary-target measurements only, whereas
+multi-task and fully pooled models also
+incorporate auxiliary history.
+}
+\label{fig:matrix-methods}
+\end{figure}
+
+\subsection{Sources of Auxiliary-Data Effects}
+An auxiliary history comprises observed compound--target
+locations $\mathcal L$, their responses $y_{\mathrm{aux}}$,
+and a sampling rule $\pi$, with
+$\mathcal L=\{(m,t_j):M_{mj}=1,\ j\geq1\}$.
+Responses may convey primary-target activity information;
+observation locations can affect uncertainty and acquisition;
+and joint fitting may change shared hyperparameters.
+Consequently, a gain over single-task BO does not identify
+its source. Controls C1--C4 test the original auxiliary
+activity--compound correspondence and alternative explanations
+in model fitting, acquisition, and historical selection.
+Their effects need not be independent or additive.
+
+\subsection{Models and Acquisition}
+\label{sec:models}
+
+Each observed compound--target entry supplies a training example
+$((\mathbf{x}_m,t_j),y(m,t_j))$. The same compound may appear at several
+targets with different responses. We use fixed 2048-bit ECFP4
+fingerprints~\cite{rogers2010ecfp,rdkit} and a Tanimoto kernel, without
+learned molecular features or protein sequence and structure features.
+Cross-target dependence enters only through the task covariance matrix.
+
+We compare three GP surrogates. Single-task
+BO (\stl{}) uses only primary-target
+measurements. Fitted multi-task BO (\mt{})
+uses both primary and auxiliary measurements,
+with cross-target dependence learned from the
+data. Fully pooled BO (\pooled{}) uses the
+same measurements but assumes complete
+dependence across targets.
+
+For the multi-task model, the covariance
+between compound--target pairs is
+\[
+k\big((m,a),(m',b)\big)
+=
+k_{\mathrm{Tanimoto}}(m,m')B_{ab},
+\qquad
+B=(1-r)I+r\mathbf{1}\mathbf{1}^{\top}.
+\]
+The parameter $r$ controls the common
+dependence between different targets.
+At $r=0$, their direct covariance vanishes;
+at $r=1$, they are modeled as fully coupled.
+Thus, \mt{} estimates one shared coupling
+parameter rather than a separate relationship
+for each pair of proteins.
+
+We select $r$ by marginal likelihood over the fixed grid given in
+Supplement~S1.1.
+
+Kernel and noise hyperparameters are fitted
+jointly using primary and auxiliary observations,
+and responses are standardized separately for
+each target. Accordingly, full pooling assumes
+a common activity function on the standardized
+scale. Importantly, fixing $r=0$ removes direct
+cross-target covariance but still allows
+auxiliary observations to influence shared
+hyperparameter estimates. This distinction
+motivates the covariance-free control
+(\mtzero{}). Further details of GP fitting
+are provided in the supplement.
+
+Compound selection uses expected improvement
+(EI), computed from the posterior predictive
+distribution relative to the best observed
+primary-target activity, with improvement
+offset $\xi=0.01$. Because EI depends on both
+predictive mean and uncertainty, changes in
+the fitted surrogate can alter compound
+selection even without improving activity
+predictions.
+
+Each campaign begins with ten primary-target
+observations. Subsequent experiments are
+selected in batches of ten, using the
+highest EI scores without replacement.
+The posterior remains fixed within a batch
+and is refitted after each batch. Acquisition
+ties are resolved randomly, and the final
+batch is truncated when necessary to respect
+the assay budget. All methods use EI except
+where an acquisition control explicitly
+modifies its uncertainty input.
+
+\subsection{Four Diagnostic Controls}
+\label{sec:method-controls}
+
+Controls C1--C4 test whether measured auxiliary responses are required
+for a discovery gain and whether model fitting, acquisition behavior, or
+historical compound selection can reproduce it.
+
+\paragraph{C1. Auxiliary-response randomization.}
+We perturb auxiliary responses while preserving primary-target responses
+and historical observation locations. Within-target permutation retains
+the empirical distribution of the responses observed in each auxiliary
+target's history, but breaks their activity--compound correspondence.
+Historical locations are drawn first; only their observed responses are
+permuted, with one fixed permutation per target and repeat. A separate Gaussian-noise control
+interpolates between measured responses ($q=1$) and randomized responses
+($q=0$), with noise regenerated for each held-out target and repeat;
+Supplement~S1.2 gives its construction. Unlike permutation, the Gaussian
+null does not preserve the empirical marginal distribution.
+Both controls are evaluated across six families under uniform histories,
+with matched initial designs and historical observation locations.
+This adapts response-randomization validation~\cite{rucker2007yrandomization}
+to the information supplied by auxiliary targets.
+
+\paragraph{C2. Response correspondence and joint fitting.}
+At each selection round, we fit two multi-task donors at the same primary
+observations and historical locations: one uses measured auxiliary responses
+($M$), the other their historical-response permutation ($P$). We cross the
+parameter donor with the responses used for posterior conditioning, yielding
+$MM$, $MP$, $PM$, and $PP$; the first letter denotes the parameter donor.
+Coupling, signal variance, noise ratio, all normalization transforms, and
+numerical jitter are fixed during reconditioning. Donors are re-estimated
+at every round from the observations available on that policy's trajectory.
+Thus, $MM$ and $PP$ reproduce ordinary measured- and permuted-response
+multi-task BO. At a shared state, $MM$ versus $MP$ changes response
+correspondence without changing predictive variance, whereas $MM$ versus
+$PM$ changes fitting while retaining measured conditioning responses.
+
+We evaluate the four policies both as sequential campaigns and as next-batch
+replays on shared single-task and $MM$ trajectories. The latter hold the
+primary observations fixed; the former include feedback from differing
+selections. Parameters learned from measured responses still carry response
+information, so $MP$ is not an auxiliary-value-free control. The earlier
+covariance-free check (\mtzero{}) remains a special case: fixing $r=0$ and
+all appropriate single-task parameters reproduces the single-task posterior.
+Supplement~S2 gives implementation details and the original JAK comparison.
+
+\paragraph{C3. Uncertainty-adjusted acquisition.}
+We retain the single-task training data and predictive means, and rescale
+only the predictive standard deviation supplied to EI:
+\[
+\widetilde{\sigma}(m)=c\,\sigma_{\stl}(m).
+\]
+The scale $c$ comes from the early predictive uncertainty ratio between
+fitted multi-task and single-task BO, independently of recall. This tests
+whether an uncertainty change of the observed magnitude can reproduce a
+gain; a single scale need not reproduce the full multi-task posterior.
+
+\paragraph{C4. Historical compound selection.}
+We compare \emph{uniform histories}, sampled without reference to
+primary-target activities, with \emph{withheld histories}, which exclude
+the primary target's true top-10 compounds. Withholding uses primary-target
+outcomes and is a retrospective diagnostic, not a prospective sampling
+strategy. Uniform histories provide the main evaluation.
+
+Historical observations can reduce uncertainty at measured compounds and
+lower their priority under EI. Avoiding history may then favor discovery
+when the best compounds are withheld, but hinder it when uniform histories
+include them. To test this behavior without reading auxiliary responses,
+we downweight single-task EI at historical compounds and compare the
+resulting selection behavior with full pooling.
+
+\subsection{Data, Metrics, and Inference}
+\label{sec:setup}
+
+We evaluate our approach using BindingDB activity
+data~\cite{bindingdb2016} from six protein families:
+JAK, CYP, DPP, HDAC, MMP, and PI3K. For each family,
+we construct a panel of four protein targets and
+retain compounds with measured activities against
+all four. This allows us to control which auxiliary
+measurements are available during optimization
+without confounding historical sampling with
+missing assay outcomes. Each target serves in turn
+as the primary optimization task, while the
+remaining three provide auxiliary history.
+JAK and CYP are used for detailed mechanism
+analyses, and all six families are included
+in the historical sampling experiments.
+Requiring complete four-target measurement
+makes the resulting libraries small: after
+removing reporting-limit artifacts, the
+campaign library holds $904$ compounds for
+JAK, $590$ for PI3K, $378$ for HDAC, $335$
+for CYP, $300$ for DPP, and $248$ for MMP.
+These sizes bound what any method can recover
+and should be read alongside every recall
+figure below. Panel composition, target
+identifiers, and pairwise correlations are
+provided in Supplement~S1.3.
+
+We use recorded activities without imputation,
+convert IC$_{50}$ values to pIC$_{50}$ where
+appropriate, and exclude reporting-limit
+artifacts. Complementary experiments on KIBA~\cite{tang2014kiba},
+ChEMBL~\cite{chembl2019}, and DOCKSTRING~\cite{dockstring2022}
+examine assay allocation, historical-data reuse,
+and initial compound selection. KIBA scores
+are retained on their original scale, while
+DOCKSTRING provides simulated docking scores
+rather than experimental activities.
+These additional analyses are reported in
+the supplement.
+
+Discovery performance is measured by top-10
+recall, the proportion of the primary target's
+ten most active compounds recovered within
+an assay budget. Let $\mathcal H_{10}$ denote
+these compounds in the constructed library
+and $\mathcal S_b$ the distinct compounds
+evaluated on the primary target by budget $b$.
+We define
+\[
+\operatorname{Recall@10}(b)
+=
+\frac{|\mathcal S_b\cap\mathcal H_{10}|}{10}.
+\]
+Performance differences relative to
+single-task BO are reported in percentage
+points. For initial-design experiments,
+we additionally use the area under the
+recall curve to account for the timing
+of compound discovery.
+
+Campaigns use matched assay budgets, initial designs,
+and historical samples. Repeats characterize within-panel
+variation, not independent biological replicates. The two
+budgets within each family share a historical draw, verified
+by index hashes (Supplement~S6); cross-family inference
+therefore averages budget-specific effects within each
+family and uses six family-level effects in a two-sided
+Wilcoxon signed-rank test. We report effect sizes, confidence
+intervals, and positive-family counts; the minimum two-sided
+$p$-value at $n=6$ is $0.03125$.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Auxiliary Responses Contribute to Gains Under Uniform Histories}
+\label{sec:res-null}
+
+Under uniform histories, fitted multi-task BO ($MM$) improves recall
+relative to \stl{} by $\crossMeasuredGain{}$ percentage points, compared with
+$\crossPermutedGain{}$ after permutation of the observed historical responses
+($PP$). The paired measured-minus-permuted contrast is $\crossPrimary{}$
+points (95\% CI $\crossPrimaryCi{}$), positive in
+$\crossPrimaryPositive{}/6$ families ($p=\crossPrimaryP{}$).
+Historical locations and the exact response multiset for each auxiliary
+target are unchanged. This comparison therefore tests response correspondence
+without changing the observed response distributions. Each condition uses
+\crossCampaigns{} campaigns per family and budget; inference averages the
+two budgets within each family. The new runs reproduce the original
+single-task and measured-response recall vectors exactly. Per-budget values
+and legacy permutation diagnostics are reported in Supplement~S2.
+
+The withheld-history experiments show a
+different pattern. Even after auxiliary
+responses are randomized, JAK \mt{} retains
+a gain of \valNullJakMtRand{} points, while
+CYP \pooled{} retains
+\valNullCypPooledRand{} points
+(Table~\ref{tab:null}). These results show
+that improvements can also occur without
+the original auxiliary activity--compound
+correspondence, motivating the mechanism
+controls examined next.
+
+\begin{table}[htbp]
+\caption{C1: Change in top-10 recall relative to \stl{} (percentage points)
+with randomized ($q=0$) or measured ($q=1$) auxiliary responses under
+withheld histories. The observation locations are held fixed.
+Mean $\pm$ SEM over $n=\nNullJakMtRand{}$ campaigns per comparison.}
+\label{tab:null}
+\centering
+\small
+\begin{tabular}{llcc}
+\toprule
+Block & Model vs.\ \stl{}
+& $q=0$ (randomized)
+& $q=1$ (measured) \\
+\midrule
+
+JAK & \mt{}
+& \valNullJakMtRand{} $\pm$ \semNullJakMtRand{}
+& \valNullJakMtReal{} $\pm$ \semNullJakMtReal{} \\
+
+JAK & \pooled{}
+& \valNullJakPooledRand{} $\pm$ \semNullJakPooledRand{}
+& \valNullJakPooledReal{} $\pm$ \semNullJakPooledReal{} \\
+
+CYP & \mt{}
+& \valNullCypMtRand{} $\pm$ \semNullCypMtRand{}
+& \valNullCypMtReal{} $\pm$ \semNullCypMtReal{} \\
+
+CYP & \pooled{}
+& \valNullCypPooledRand{} $\pm$ \semNullCypPooledRand{}
+& \valNullCypPooledReal{} $\pm$ \semNullCypPooledReal{} \\
+
+\bottomrule
+\end{tabular}
+
+\end{table}
+
+\subsection{Crossed Controls Separate Conditioning from Response-Informed Fitting}
+\label{sec:res-mech}
+
+Table~\ref{tab:crossed} compares the crossed policies under uniform histories.
+With the measured-response fit retained, measured rather than permuted
+conditioning responses improve recall by
+$\crossResponseMeasuredFit{}$ points ($MM-MP$; 95\% CI
+$\crossResponseMeasuredFitCi{}$). With the permuted-response fit retained,
+the corresponding contrast is $\crossResponsePermutedFit{}$ points
+($PM-PP$; $\crossResponsePermutedFitCi{}$). Conversely, changing the fit
+while retaining measured responses gives $\crossFitMeasuredResponse{}$
+points ($MM-PM$; $\crossFitMeasuredResponseCi{}$), and with permuted
+responses gives $\crossFitPermutedResponse{}$ points
+($MP-PP$; $\crossFitPermutedResponseCi{}$). Thus, the measured-response
+fit improves discovery when conditioning retains measured responses, but
+hurts when conditioning uses permuted responses.
+
+\begin{table}[htbp]
+\caption{C2: Recall@10 gain over \stl{} (percentage points) under uniform
+histories, averaged over the two budgets within each family. The first
+letter identifies the response condition supplying fitted parameters; the
+second identifies the conditioning responses ($M$: measured, $P$: permuted
+within observed history). Each budget uses \crossCampaigns{} campaigns.}
+\label{tab:crossed}
+\centering
+\input{generated/table_crossed}
+\end{table}
+
+These are predefined descriptive policy contrasts, not independent tests
+of biological mechanisms. Their factorial interaction is
+$\crossInteraction{}$ points (95\% CI $\crossInteractionCi{}$); the
+conditional comparisons need not agree, and the effects are not assigned
+causal percentages. Matched-history replay provides a complementary check:
+on shared single-task trajectories, $MM$ and $MP$ recover
+$\crossStlAnchorMMBatchHits{}$ and $\crossStlAnchorMPBatchHits{}$ top-10
+compounds per proposed batch, respectively; on shared $MM$ trajectories,
+the corresponding means are $\crossMtAnchorMMBatchHits{}$ and
+$\crossMtAnchorMPBatchHits{}$. Each pair has identical predictive variance
+at every shared state. Any difference in these proposed batches therefore
+comes from the response-dependent predictive means at the fixed fit,
+not from a variance change. Replay outcomes describe one-step choices,
+not a decomposition of final sequential recall. The original covariance-free
+JAK result remains supporting evidence in Supplement~S2.
+
+\subsection{Acquisition Uncertainty Can Reproduce a Comparable JAK Gain}
+\label{sec:res-exploration}
+
+Under covariance-free joint fitting, mean predictive standard deviation
+decreases from $0.643$ to $0.558$ on JAK and from $0.629$ to $0.522$ on CYP
+(Supplement~S2). C3 tests whether a comparable uncertainty adjustment,
+without auxiliary observations, can reproduce the discovery gain.
+
+In a separate early-campaign diagnostic on JAK, fitted \mt{} has
+approximately $0.80$ times the predictive uncertainty of \stl{} near
+50 primary observations. Using this ratio to rescale only the
+single-task standard deviation inside EI ($c=0.80$) produces a gain of
+\valScaleMatchedJak{} $\pm$ \semScaleMatchedJak{} points, comparable to
+the \valMechJakMt{}-point gain of \mt{} with randomized auxiliary
+responses. With measured auxiliary responses, \mt{} still exceeds the
+scaled single-task baseline by $5.31\pm0.91$ points. This residual is
+consistent with useful activity information, although the comparison
+does not isolate its contribution exactly. Uncertainty scaling is an
+acquisition intervention, not evidence of improved calibration; existing
+calibration and chemical-isolation probes are reported in Supplement~S2.
+
+The same fixed-rescaling explanation does not reproduce the pooled CYP
+effect. Across the tested scales $c\in[0.35,20]$, the largest improvement
+for single-task BO is $+0.08$ points, far below the
+\valMechCypPooled{}-point pooled gain under randomized responses.
+Thus, changing exploration can produce a JAK gain of the observed size,
+but is insufficient to account for the CYP result in these controls.
+
+% Detailed uncertainty and calibration diagnostics are in Supplement S2.
+
+\subsection{Historical Selection Can Reverse the Pooled-Model Gain}
+\label{sec:res-design}
+
+Unlike fitted \mt{}, \pooled{} treats auxiliary measurements as
+observations of the same standardized activity function as the primary
+target. This can reduce uncertainty at historically assayed compounds and
+change which candidates rank highest under EI. On CYP with uniform
+histories, the ratio of historical-compound selection to its library
+coverage is $0.288$ for \pooled{}, compared with $0.542$ for \mt{}
+and $0.972$ for \stl{}. The corresponding pooled-model mean predictive
+standard deviation is $0.412$ on historical compounds and $0.542$
+elsewhere. The observed avoidance concerns the compounds selected, not
+necessarily the average EI value over the entire historical set.
+
+This behavior has opposite consequences under the two sampling rules.
+Withheld histories exclude the primary target's true top-10 compounds,
+so avoiding history can favor discovery. Uniform histories may contain
+those compounds, making avoidance potentially harmful. On CYP, with
+randomized auxiliary responses and 300 historical entries, switching
+from withheld to uniform sampling changes the pooled recall gain from
+$+22.97$ to $-23.05$ points---a reversal of approximately 46 points.
+Under withholding, increasing history from 30 to 300 entries increases
+the gain from $-1.25$ to $+22.97$ points. A separate check at
+150 entries under uniform sampling finds similar effects for permuted
+and randomized auxiliary responses ($-19.69$ and $-18.52$ points,
+respectively), supporting the interpretation that the original
+activity--compound correspondence is not required.
+
+\paragraph{Auxiliary-value-free avoidance control.}
+We calibrate the single-task EI penalty $W$ on historically
+measured compounds to match the pooled model's campaign-wide
+history-selection ratio, without reading auxiliary activity
+values. In separate calibrated CYP runs, the target ratio
+\avoidTargetRatioHundred{} is matched within $0.003$
+(\avoidAchievedRatioHundred{} at $W=$\avoidWHundred{}).
+The control reproduces \avoidRecallFracHundred{} of the
+pooled model's withheld-to-uniform recall change
+(\avoidRecallSwingHundred{} versus
+\pooledRecallSwingHundred{} points;
+\avoidCampaignsHundred{} campaigns per condition).
+At coverage \avoidCoverageFifty{}, it reproduces
+\avoidRecallFracFifty{}. These comparisons establish a
+behavioral explanation for much of the design sensitivity,
+not a causal partition of the pooled-model effect.
+Calibration and recall-curve AUC appear in Supplement~S2.
+
+\paragraph{Effects across protein families.}
+Table~\ref{tab:design} extends the historical-design comparison to
+JAK, CYP, DPP, HDAC, MMP, and PI3K at two primary-assay budgets per
+family. The main comparison uses uniform histories, avoiding
+the outcome-informed exclusion built into the withheld design.
+
+\begin{table}[htbp]
+\caption{C4: Recall@10 gain over \stl{} (percentage points), averaged over
+the two budgets within each family under withheld and uniform histories.
+Coverage is the fraction of library compounds included in auxiliary history.
+The twelve budget rows are retained in Supplement~S2.1.}
+\label{tab:design}
+\centering\small
+\input{generated/table_design_family}
+\end{table}
+
+Under uniform histories, fitted \mt{} improves recall in all 12 budget
+settings and all six families, with a mean family-level gain of
+\valMtUniform{} points. Full pooling improves recall in seven of 12
+settings and four of six families; its family-level mean is
+\valPooledUniform{} points, with a confidence interval
+\ciPooledUniform{} that includes zero. Thus, uniform sampling does not
+make pooling uniformly harmful, but its benefits are less consistent
+than those of fitted coupling.
+
+Changing from withheld to uniform history changes the pooled-model
+advantage by \valPooledDesignChange{}$\pm$\semPooledDesignChange{}
+points (95\% CI \ciPooledDesignChange{}). The change is negative in all
+six families ($p=\pPooledDesignChange{}$), whereas the corresponding
+change for \mt{} (\valMtDesignChange{}$\pm$\semMtDesignChange{}
+points) has mixed signs. The stronger sensitivity of full pooling is
+consistent with the history-avoidance mechanism.
+
+Target similarity provides a complementary, exploratory perspective.
+Across the six families, median pairwise target correlation is more
+closely associated with the pooled gain than with the fitted multi-task
+gain (Spearman \rhoPooledCoupling{} versus \rhoMtCoupling{};
+Supplement~S1.3). Full pooling performs particularly poorly on DPP,
+whose targets have weak and uneven activity relationships. Given the
+small number of families, we treat these correlations as descriptive
+rather than as independent evidence of a general relationship.
+
+\subsection{The Value of Existing History Differs from New Auxiliary Assays}
+\label{sec:res-sharing}
+Existing historical measurements do not consume new
+primary-target assays. By contrast, allocating new assays
+to related targets reduces primary-target predictive rank
+correlation in the tested settings. Reusing history is most
+useful when primary data are scarce and offers little benefit
+on low-overlap ChEMBL; history can also guide initial
+compound selection without entering the GP. These supplementary
+analyses use predictive rank correlation or recall-curve AUC,
+not the main Recall@10 metric (Supplement~S3--S4).
+
+\section{Discussion}
+\label{sec:discussion}
+\label{sec:limits}
+
+The crossed controls show that the value of auxiliary response correspondence
+depends on the fit used to interpret it. Measured-response fitting helps
+when conditioning retains measured responses, but hurts after permutation
+in all six families. Thus, response-informed fitting is itself a route of
+useful auxiliary information, and its benefit depends on the conditioning
+responses. The shared-state replays distinguish response-dependent selection
+from changes in predictive variance; sequential campaigns assess the
+resulting discovery performance as observations accumulate.
+
+For screening teams evaluating historical assay reuse, these comparisons
+can test whether an apparent gain depends on activity information or can
+be reproduced through fitting, acquisition, or compound selection. Within
+the shared-coupling model class studied here, the results favor fitted
+multi-task BO over assuming full pooling. They support an evaluation
+protocol; prospective assay savings remain to be established. Reusing
+existing history also differs from purchasing new auxiliary assays.
+
+\paragraph{A reporting protocol.}
+We recommend pairing discovery comparisons with the four diagnostic
+controls. Compare measured and within-target permuted auxiliary responses
+at matched historical observation locations, preserving the observed
+response multisets, to assess the contribution of activity correspondence.
+Then cross response conditions with locked response-informed fits to compare
+conditioning and fitting at shared states and in sequential campaigns. When gains persist after randomization,
+use covariance-free joint fitting and uncertainty-adjusted single-task BO
+to test alternative modeling explanations. Compare historical sampling
+designs and an auxiliary-response-free avoidance policy to assess sensitivity
+to compound selection. Positive measured-versus-permuted contrasts support
+informative auxiliary responses; successful alternative controls establish
+that a gain need not arise solely from cross-target transfer. No single
+control identifies a unique causal mechanism, and the comparisons do not
+provide a causal decomposition of the observed effects.
+
+\paragraph{Limitations.}
+Our experiments replay recorded activities in constructed libraries rather
+than test compounds prospectively. Requiring measurements against all four
+targets may favor well-studied chemical series and limits generalization to
+sparse screening libraries. Recall@10 measures recovery of top-ranked
+compounds within each library, not an absolute activity or selectivity
+threshold. The study covers six protein families; repeated random seeds
+measure within-panel variation, not independent biological replication.
+
+The fixed ECFP4 representation and single shared coupling parameter $r$
+restrict the model class. We do not test learned molecular representations
+or models with a separate relationship for each target pair. Neither uniform
+nor withheld histories fully represents the original collection of assay
+records. The controls reproduce gains of the observed magnitude without
+quantifying each mechanism's contribution to an individual gain. Sequential
+crossed-policy contrasts also include differences in acquired primary
+observations; matched-history replays isolate one-step decisions instead.
+
+\paragraph{Future directions.}
+Prospective screening and more realistic historical sampling would test
+whether these findings extend beyond retrospective libraries. More flexible
+task covariance models, including priors from protein language models or
+structural similarity, could inform target relationships when activity data
+are scarce. The same controls can assess whether such extensions improve
+discovery through informative transfer or through changes in fitting and
+compound selection.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Crossing auxiliary responses with locked fits reveals an interaction between
+response correspondence and response-informed parameter estimation in
+molecular BO. Across six retrospective libraries, measured-response fitting
+helps with measured conditioning responses but hurts after permutation,
+while full pooling remains sensitive to historical sampling. Evaluations
+of historical assay reuse should pair discovery performance with these
+crossed controls and sampling checks to interpret where gains arise.
+
+\section*{Acknowledgements}
+% DRAFT ONLY: replace every bracketed field with confirmed funding details.
+\textbf{Funding acknowledgement incomplete.}
+Funder: [FUNDER]. Grant or award: [GRANT OR AWARD NUMBER].\\
+Supported author: [AUTHOR].\\
+Required acknowledgement wording: [TO BE CONFIRMED].
+
+% Flush main-text floats before the excluded bibliography.
+\clearpage
+\label{page:references-start}
+
+\bibliographystyle{splncs04}
+\bibliography{mybibliography}
+\AtEndDocument{\typeout{RECOMB main-text pages: \number\numexpr
+\getpagerefnumber{page:references-start}-\getpagerefnumber{page:main-start}\relax}}
+\end{document}

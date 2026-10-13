@@ -1,0 +1,87 @@
+{
+ "pool": "ZINC-250k",
+ "pool_size": 249455,
+ "tasks": {
+  "albuterol_similarity": {
+   "pool_top1": 0.6666666666666666,
+   "pool_top10_mean": 0.6207027033901678,
+   "pool_top100_mean": 0.5521758538077168,
+   "pool_mean": 0.2506464297993162,
+   "n_scored": 249455,
+   "wall_s": 111.5,
+   "probe": "ok"
+  },
+  "celecoxib_rediscovery": {
+   "pool_top1": 0.4583333333333333,
+   "pool_top10_mean": 0.4363080626513677,
+   "pool_top100_mean": 0.39551250095544915,
+   "pool_mean": 0.14160300184335445,
+   "n_scored": 249455,
+   "wall_s": 90.5,
+   "probe": "ok"
+  },
+  "deco_hop": {
+   "pool_top1": 0.870790932406718,
+   "pool_top10_mean": 0.6729461845757957,
+   "pool_top100_mean": 0.6132345877673562,
+   "pool_mean": 0.5182160047987702,
+   "n_scored": 249455,
+   "wall_s": 1373.7,
+   "probe": "ok"
+  },
+  "median1": {
+   "pool_top1": 0.32425739335111103,
+   "pool_top10_mean": 0.29859250069315346,
+   "pool_top100_mean": 0.24459546920620878,
+   "pool_mean": 0.06648318085165923,
+   "n_scored": 249455,
+   "wall_s": 108.6,
+   "probe": "ok"
+  },
+  "osimertinib_mpo": {
+   "pool_top1": 0.8288042708674447,
+   "pool_top10_mean": 0.8165918577491154,
+   "pool_top100_mean": 0.7967469657070825,
+   "pool_mean": 0.17875239920904876,
+   "n_scored": 249455,
+   "wall_s": 272.7,
+   "probe": "ok"
+  },
+  "qed": {
+   "pool_top1": 0.9484420427916639,
+   "pool_top10_mean": 0.9481385567914467,
+   "pool_top100_mean": 0.9472528571779684,
+   "pool_mean": 0.7318428839336183,
+   "n_scored": 249455,
+   "wall_s": 305.5,
+   "probe": "ok"
+  },
+  "isomers_c7h8n2o2": {
+   "pool_top1": 1.0,
+   "pool_top10_mean": 0.9309171838280049,
+   "pool_top100_mean": 0.8012401911394867,
+   "pool_mean": 0.003967356850440498,
+   "n_scored": 249455,
+   "wall_s": 410.3,
+   "probe": "ok"
+  },
+  "troglitazone_rediscovery": {
+   "pool_top1": 0.391304347826087,
+   "pool_top10_mean": 0.33061178464083063,
+   "pool_top100_mean": 0.2854024585045374,
+   "pool_mean": 0.13541677717133427,
+   "n_scored": 249455,
+   "wall_s": 99.8,
+   "probe": "ok"
+  },
+  "zaleplon_mpo": {
+   "pool_top1": 0.5672245255634084,
+   "pool_top10_mean": 0.5297985616238713,
+   "pool_top100_mean": 0.4873606891702312,
+   "pool_mean": 0.07237233749744572,
+   "n_scored": 249455,
+   "wall_s": 438.6,
+   "probe": "ok"
+  }
+ }
+}

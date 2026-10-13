@@ -1,0 +1,6 @@
+[prior] loading BindingDB...
+[prior] 607 targets, 429,601 (target, molecule) pairs
+[prior] 25/607 targets  25s[prior] 50/607 targets  47s[prior] 75/607 targets  72s[prior] 100/607 targets  91s[prior] 125/607 targets  116s[prior] 150/607 targets  139s[prior] 175/607 targets  165s[prior] 200/607 targets  183s[prior] 225/607 targets  204s[prior] 250/607 targets  230s[prior] 275/607 targets  255s[prior] 300/607 targets  269s[prior] 325/607 targets  289s[prior] 350/607 targets  308s[prior] 375/607 targets  326s[prior] 400/607 targets  347s[prior] 425/607 targets  367s[prior] 450/607 targets  382s[prior] 475/607 targets  401s[prior] 500/607 targets  418s[prior] 525/607 targets  433s[prior] 550/607 targets  452s[prior] 575/607 targets  469s[prior] 600/607 targets  482s[prior] 607/607 targets  488s
+[prior] 607 targets written to data\prior\clusters.npz
+[prior] best-region lift: median 5.4, 91% of targets above 2.0
+[prior] a chooser that picks at random would be right 10% of the time -- that is the floor to beat

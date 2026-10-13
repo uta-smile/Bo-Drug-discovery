@@ -1,0 +1,27 @@
+﻿
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+jak: 904 compounds x 4 targets, budget 60, batch 5, H=50 (1s)
+    JAK1     done
+    JAK2     done
+    JAK3     done
+    TYK2     done
+
+    history reach ratio 0.80 (cluster_frac=0.5; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+    stl               8.1563       27.2%                
+    mt                8.2395       29.8%   +0.0832+-0.0249
+    similarity        8.0837       10.5%   -0.0726+-0.0310
+    random            7.8859        6.0%   -0.2705+-0.0251
+
+    verdict:
+      the transfer gain survives as a campaign result: +0.0832 AUC
+      over single-task BO (77% of campaigns better).
+
+wrote results\reach_jak_0.5.json  (37s total)

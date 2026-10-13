@@ -1,0 +1,43 @@
+﻿
+[0] censoring filter (values held by >2% of a column)
+    JAK1     pile-ups: 6.26 x98, 5.26 x89, 5.00 x46, 6.00 x33
+    JAK2     pile-ups: 7.26 x145, 6.26 x59, 5.00 x44
+    JAK3     pile-ups: 5.26 x200, 5.00 x194, 6.00 x187
+    TYK2     pile-ups: 7.26 x143, 6.00 x138, 6.26 x62, 5.00 x46
+    kept 904 of 1,563 compounds (57.8%)
+jak: 904 compounds x 4 targets, budget 125, batch 10, H=50 (1s)
+    post-hoc scoring: full library of 904 searched, 566 drug-like count as successes
+      JAK1: success set = top-10 potency among 566 drug-like (QED>=0.5)
+    JAK1     done
+      JAK2: success set = top-10 potency among 566 drug-like (QED>=0.5)
+    JAK2     done
+      JAK3: success set = top-10 potency among 566 drug-like (QED>=0.5)
+    JAK3     done
+      TYK2: success set = top-10 potency among 566 drug-like (QED>=0.5)
+    TYK2     done
+
+    history reach ratio 0.86 (cluster_frac=0; real ChEMBL libraries 0.53, co-measured block 1.00)
+
+    arm           AUC top-10      recall          vs stl
+    ----------------------------------------------------
+
+    per-target (the leave-one-target-out self-check)
+    held-out target        stl      mt   delta recall
+    JAK1                 13.8%   21.2%          +7.5%
+    JAK2                 27.5%   32.5%          +5.0%
+    JAK3                 40.0%   51.2%         +11.2%
+    TYK2                 87.5%   76.2%         -11.2%
+    3/4 targets improve; spread -11.2% to +11.2%
+    -> not unanimous: a leave-one-out check on this panel would
+       give a different answer depending on which target you held
+       out, so it cannot be used to decide for a new one.
+    stl               8.4882       42.2%                
+    mt                8.5955       45.3%   +0.1074+-0.0379
+
+    verdict:
+      no campaign gain: +0.1074+-0.0379 AUC. The regression improvement in
+      sections 18-19 does not convert into finding the top faster.
+      That is the section 4 pattern again: an offline proxy moving
+      without the campaign outcome moving.
+
+wrote results\post_jak_125.json  (35s total)

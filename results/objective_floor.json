@@ -1,0 +1,244 @@
+{
+  "base": "jak2",
+  "pool": 2000,
+  "topk": 50,
+  "repeats": 20,
+  "seed": 0,
+  "treatments": [
+    {
+      "name": "jak2@w10",
+      "qed_weight": 10.0,
+      "qed_min": null,
+      "n_admitted": 2000,
+      "floor": 0.48,
+      "floor_kind": "QED",
+      "floor_rho": 0.929208231097417,
+      "n": {
+        "10": {
+          "recall": 0.4800000000000001,
+          "recall_naive": 0.05400000000000001,
+          "recall_informed": 0.4800000000000001,
+          "recall_sem": 0.005099019513592784,
+          "learnable_rho": 0.9301583666101306,
+          "headroom": 1.1102230246251565e-16,
+          "free_share": 0.9999999999999998
+        },
+        "30": {
+          "recall": 0.479,
+          "recall_naive": 0.051000000000000004,
+          "recall_informed": 0.479,
+          "recall_sem": 0.007934103604062654,
+          "learnable_rho": 0.9314149968912325,
+          "headroom": -0.0010000000000000009,
+          "free_share": 1.0020876826722338
+        },
+        "80": {
+          "recall": 0.506,
+          "recall_naive": 0.07800000000000001,
+          "recall_informed": 0.506,
+          "recall_sem": 0.007224956747275378,
+          "learnable_rho": 0.9352174492472191,
+          "headroom": 0.026000000000000023,
+          "free_share": 0.9486166007905138
+        }
+      }
+    },
+    {
+      "name": "jak2@w5",
+      "qed_weight": 5.0,
+      "qed_min": null,
+      "n_admitted": 2000,
+      "floor": 0.28,
+      "floor_kind": "QED",
+      "floor_rho": 0.7696770515351495,
+      "n": {
+        "10": {
+          "recall": 0.29300000000000004,
+          "recall_naive": 0.048,
+          "recall_informed": 0.29300000000000004,
+          "recall_sem": 0.005877924803874238,
+          "learnable_rho": 0.7728111010429413,
+          "headroom": 0.013000000000000012,
+          "free_share": 0.9556313993174061
+        },
+        "30": {
+          "recall": 0.29500000000000004,
+          "recall_naive": 0.05,
+          "recall_informed": 0.29500000000000004,
+          "recall_sem": 0.007193747284969078,
+          "learnable_rho": 0.7775236284401384,
+          "headroom": 0.015000000000000013,
+          "free_share": 0.9491525423728813
+        },
+        "80": {
+          "recall": 0.314,
+          "recall_naive": 0.085,
+          "recall_informed": 0.314,
+          "recall_sem": 0.010207840124139878,
+          "learnable_rho": 0.7911118396808104,
+          "headroom": 0.033999999999999975,
+          "free_share": 0.8917197452229301
+        }
+      }
+    },
+    {
+      "name": "jak2@w2",
+      "qed_weight": 2.0,
+      "qed_min": null,
+      "n_admitted": 2000,
+      "floor": 0.1,
+      "floor_kind": "QED",
+      "floor_rho": 0.38646802155178195,
+      "n": {
+        "10": {
+          "recall": 0.10000000000000002,
+          "recall_naive": 0.056000000000000015,
+          "recall_informed": 0.10000000000000002,
+          "recall_sem": 0.0037416573867739417,
+          "learnable_rho": 0.39796365054232546,
+          "headroom": 1.3877787807814457e-17,
+          "free_share": 0.9999999999999999
+        },
+        "30": {
+          "recall": 0.09700000000000002,
+          "recall_naive": 0.053000000000000005,
+          "recall_informed": 0.09700000000000002,
+          "recall_sem": 0.0076517971745205075,
+          "learnable_rho": 0.4172419320193878,
+          "headroom": -0.002999999999999989,
+          "free_share": 1.0309278350515463
+        },
+        "80": {
+          "recall": 0.11800000000000002,
+          "recall_naive": 0.079,
+          "recall_informed": 0.11800000000000002,
+          "recall_sem": 0.00859069263796581,
+          "learnable_rho": 0.4668876814982588,
+          "headroom": 0.018000000000000016,
+          "free_share": 0.8474576271186439
+        }
+      }
+    },
+    {
+      "name": "jak2@w1",
+      "qed_weight": 1.0,
+      "qed_min": null,
+      "n_admitted": 2000,
+      "floor": 0.0,
+      "floor_kind": "QED",
+      "floor_rho": 0.14749520728973395,
+      "n": {
+        "10": {
+          "recall": 0.05700000000000001,
+          "recall_naive": 0.05700000000000001,
+          "recall_informed": 0.016000000000000004,
+          "recall_sem": 0.00363318042491699,
+          "learnable_rho": 0.17381375336649954,
+          "headroom": 0.05700000000000001,
+          "free_share": 0.0
+        },
+        "30": {
+          "recall": 0.05700000000000001,
+          "recall_naive": 0.05700000000000001,
+          "recall_informed": 0.03300000000000001,
+          "recall_sem": 0.004954795656734998,
+          "learnable_rho": 0.21612471827038032,
+          "headroom": 0.05700000000000001,
+          "free_share": 0.0
+        },
+        "80": {
+          "recall": 0.08,
+          "recall_naive": 0.08,
+          "recall_informed": 0.08,
+          "recall_sem": 0.009273618495495703,
+          "learnable_rho": 0.31119388985701224,
+          "headroom": 0.08,
+          "free_share": 0.0
+        }
+      }
+    },
+    {
+      "name": "jak2@w0",
+      "qed_weight": 0.0,
+      "qed_min": null,
+      "n_admitted": 2000,
+      "floor": 0.025,
+      "floor_kind": "chance",
+      "floor_rho": 0.0,
+      "n": {
+        "10": {
+          "recall": 0.03500000000000001,
+          "recall_naive": 0.03500000000000001,
+          "recall_informed": 0.03500000000000001,
+          "recall_sem": 0.007331439149307589,
+          "learnable_rho": 0.12837045456256896,
+          "headroom": 0.010000000000000009,
+          "free_share": 0.7142857142857141
+        },
+        "30": {
+          "recall": 0.05,
+          "recall_naive": 0.05,
+          "recall_informed": 0.05,
+          "recall_sem": 0.005744562646538027,
+          "learnable_rho": 0.20465407059060917,
+          "headroom": 0.025,
+          "free_share": 0.5
+        },
+        "80": {
+          "recall": 0.079,
+          "recall_naive": 0.079,
+          "recall_informed": 0.079,
+          "recall_sem": 0.008423182296495784,
+          "learnable_rho": 0.2966951516705128,
+          "headroom": 0.054,
+          "free_share": 0.31645569620253167
+        }
+      }
+    },
+    {
+      "name": "jak2@w0",
+      "qed_weight": 0.0,
+      "qed_min": 0.5,
+      "n_admitted": 1345,
+      "floor": 0.03717472118959108,
+      "floor_kind": "chance",
+      "floor_rho": 0.0,
+      "n": {
+        "10": {
+          "recall": 0.054000000000000006,
+          "recall_naive": 0.054000000000000006,
+          "recall_informed": 0.054000000000000006,
+          "recall_sem": 0.007496665925596524,
+          "learnable_rho": 0.14036079988649092,
+          "headroom": 0.016825278810408927,
+          "free_share": 0.6884207627702051
+        },
+        "30": {
+          "recall": 0.09000000000000001,
+          "recall_naive": 0.09000000000000001,
+          "recall_informed": 0.09000000000000001,
+          "recall_sem": 0.01053565375285274,
+          "learnable_rho": 0.22522192315176084,
+          "headroom": 0.05282527881040893,
+          "free_share": 0.41305245766212306
+        },
+        "80": {
+          "recall": 0.11300000000000003,
+          "recall_naive": 0.11300000000000003,
+          "recall_informed": 0.11300000000000003,
+          "recall_sem": 0.009723682430026187,
+          "learnable_rho": 0.32598787312863897,
+          "headroom": 0.07582527881040896,
+          "free_share": 0.32897983353620414
+        }
+      }
+    }
+  ],
+  "verdict": {
+    "published_headroom": 0.026000000000000023,
+    "best_headroom": 0.07582527881040896,
+    "published_free_share": 0.9486166007905138,
+    "best_free_share": 0.32897983353620414,
+    "best_treatment": "w=0 with QED >= 0.5"
+  }
+}
