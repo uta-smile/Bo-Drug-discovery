@@ -38,7 +38,3 @@ uv manages Python dependencies; LaTeX itself must be installed separately. On Wi
 ## Reproduce the crossed-control experiments
 
 The full campaigns take substantially longer than building the manuscript. Follow the fixed protocol, resource requirements, smoke checks, and full-run commands in [the experiment README](results/crossed_auxiliary_v1/README.md). Do not rerun campaigns just to compile the paper.
-
-## Other project experiments
-
-The repository also contains earlier molecular BO experiments with ChEMBL, PMO, LLM-assisted policies, and Boltz-2. Their scripts and results are separate from the RECOMB auxiliary-data study described above.
