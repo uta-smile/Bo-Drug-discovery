@@ -178,3 +178,6 @@ report/supplement.pdf
 
 # Local Claude guidance is not part of the shared project.
 /CLAUDE.md
+
+# Local Claude Code configuration and skills.
+.claude/
