@@ -88,6 +88,67 @@ shared-parameter refitting can still change primary-target predictions and
 uncertainty, which is the effect that the \mtzero{} arm of control C2
 isolates.
 
+\begin{figure}[htbp]
+\centering
+% Render the same observation matrix in LaTeX to keep labels at 10pt.
+\begingroup
+\definecolor{assayprimary}{HTML}{2878B8}
+\definecolor{assayauxiliary}{HTML}{F2AC45}
+\definecolor{assaymissing}{HTML}{E5E8EC}
+\newcommand{\matrixcell}[2]{\colorbox{#1}{\makebox[1.4em]{\strut #2}}}
+\setlength{\tabcolsep}{1pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{minipage}[c]{0.44\linewidth}
+\centering
+\textbf{Compound--target observations}\\[6pt]
+\begin{tabular}{cccc}
+$P$ & $A1$ & $A2$ & $A3$ \\
+\matrixcell{assayprimary}{\textcolor{white}{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} \\
+\matrixcell{assayprimary}{\textcolor{white}{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assaymissing}{\phantom{$y$}} \\
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$} \\
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$} \\
+\matrixcell{assaymissing}{\phantom{$y$}} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$} &
+\matrixcell{assayauxiliary}{$y$}
+\end{tabular}\\[4pt]
+Observed activity matrix
+\end{minipage}\hfill
+\begin{minipage}[c]{0.52\linewidth}
+\matrixcell{assayprimary}{\phantom{$y$}}\quad Primary-target assays\\[6pt]
+\matrixcell{assayauxiliary}{\phantom{$y$}}\quad Existing auxiliary history\\[10pt]
+Gray cells are unobserved.\\
+Each row represents a compound.
+\end{minipage}
+\endgroup
+\caption{
+Compound--target observation matrix used in
+retrospective molecular BO. Columns represent
+the primary target ($P$) and auxiliary targets
+($A1$--$A3$); rows represent compounds.
+Blue and orange cells indicate available
+primary-target and historical auxiliary
+measurements, respectively, while gray cells
+are unobserved. The single-task model uses
+primary-target measurements only, whereas
+multi-task and fully pooled models also
+incorporate auxiliary history.
+}
+\label{fig:matrix-methods}
+\end{figure}
+
 \subsection{Construction of degraded auxiliary responses}
 \label{app:degradation}
 
@@ -461,6 +522,27 @@ summarize behavioral reproduction, not a causal partition of the pooled effect.
 
 \section{Assay allocation and library overlap}
 \label{app:sharing}
+
+Complementary experiments on KIBA~\cite{tang2014kiba},
+ChEMBL~\cite{chembl2019}, and DOCKSTRING~\cite{dockstring2022}
+examine assay allocation, historical-data reuse,
+and initial compound selection. KIBA scores
+are retained on their original scale, while
+DOCKSTRING provides simulated docking scores
+rather than experimental activities.
+These analyses distinguish experimental activities, KIBA scores on their
+original scale, and simulated DOCKSTRING docking scores.
+
+Existing historical measurements do not consume new
+primary-target assays. By contrast, allocating new assays
+to related targets reduces primary-target predictive rank
+correlation in the tested settings. Reusing history is most
+useful when primary data are scarce and offers little benefit
+on low-overlap ChEMBL; history can also guide initial
+compound selection without entering the GP. These supplementary
+analyses use predictive rank correlation or recall-curve AUC,
+not the main Recall@10 metric (Sections~S3--S4).
+
 
 Allocating \emph{new} assays and reusing \emph{existing} history are
 different interventions with different cost models, and Table~\ref{tab:sharing}

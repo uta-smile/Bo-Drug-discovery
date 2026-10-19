@@ -5167,3 +5167,247 @@ python scripts/selection_diagnosis.py --family jak --budget 300 --repeats 8
 python scripts/scale_protocol.py --family jak
 python scripts/summaries.py --tex-dir report/generated --check report/paper.tex
 ```
+
+## 51. The final audit: exact pairing masks, the family-level statistics, and a calibration that was interpolated
+
+Three checks the advisor asked for before stopping. **All three pass**, and
+three reporting defects surfaced on the way -- none of which moves a number in
+the manuscript, two of which would have been quoted wrongly in the evidence
+package.
+
+### Item 1 — the pairing was verified on coverage statistics, not on the rows
+
+The six-family permutation experiment is read as a paired difference: each cell
+is the measured run (`winleak_*`) minus the same run with the auxiliary column
+destroyed (`sdrefu_*_q0`) or permuted (`sdrefu_*_shuf`). Until now the evidence
+that those are the *same* run was indirect — equal history size and equal
+`reach`. **Neither implies equal rows.** Two different draws of 150 compounds
+out of 335 land at the same reach routinely; `reach` is a mean
+nearest-neighbour similarity, and it is nearly saturated on a co-measured
+block.
+
+`dense_block_campaign.py` now carries `RunDigest`, which hashes three streams
+in cell order and stores them in every artefact:
+
+| stream | what it hashes | what it must do across a null |
+|---|---|---|
+| `history` | the drawn indices, per auxiliary slot, in draw order | **be identical** |
+| `init_design` | the initial design, taken from the first arm | **be identical** |
+| `aux_value` | the values handed to the arms at those indices | **differ** |
+
+The third is the check that equality alone cannot make: identical `aux_value`
+digests would mean the null never took effect, and nothing else in the run
+would say so.
+
+`scripts/history_pairing_audit.py` then re-ran **all 36 runs** (12 cells x 3
+auxiliary conditions, 2,005 s on six workers) and compared each against the
+committed artefact it claims to be:
+
+| check | result |
+|---|---|
+| re-run reproduces the stored per-campaign recall and AUC, 128 campaigns per cell | **12/12 cells, all three conditions** |
+| `history` digest identical across measured / Gaussian / permuted | **12/12** |
+| `init_design` digest identical across the three | **12/12** |
+| `aux_value` digests pairwise distinct | **12/12** |
+| runtime audit clean on the re-run, not read from the stored field | **36/36** |
+
+On CYP b111, all three conditions hash to history `c4d98cd7765c…` and initial
+design `e2b2d32f0994…`, with auxiliary values at `2f2702ac…`, `b6b6181f…` and
+`175bd38c…`. **The mask is the same mask; only the column changed.**
+
+**An unplanned result, from the same digests.** Grouping the twelve cells by
+history digest gives exactly six groups — the two budget cells of each family
+share one draw, and the six families are pairwise distinct:
+
+```
+c4d98cd7765c  cyp b74, cyp b111        3afd3e9218bc  jak b200, jak b300
+1554f064c5c8  dpp b66, dpp b99         269b936fd2c1  mmp b55, mmp b82
+3281c732a42d  hdac b83, hdac b125      517cd7b77be3  pi3k b130, pi3k b195
+```
+
+The history is a function of the seed, the held-out target, the repeat and the
+library — never of the budget. So "two budgets on one family are not
+independent" is not a modelling assumption here: **the two cells were measured
+on literally the same historical compounds from the same starting designs.**
+That is the strongest available argument for the n=6 unit, and it came out of
+an instrument built for something else.
+
+### Item 2 — the family-level statistics, recomputed from the artefacts up
+
+`scripts/family_inference_audit.py` reads `results/` directly, aggregates with
+its own code, and compares against **the rendered macros** in
+`report/generated/macros.tex` — the strings the manuscript compiles, not the
+dictionary that produced them. It also checks the C4 table's per-cell grid,
+which carries a `% summaries-exempt` marker and is therefore hand-typed.
+
+| checked | result |
+|---|---|
+| rendered macros (value, SEM, CI, n, sign count, p) | **48/48 reproduce** |
+| hand-typed C4 cells | **48/48 reproduce** |
+| typed coverage percentages | **12/12 reproduce** |
+| four conditions cover the same 12 cells with the same geometry | **clean** |
+| positional pairing (`summaries.py` subtracts two sorted globs) agrees with pairing by `(family, budget)` | **aligned** |
+| any family-level macro with n != 6 | **none** |
+
+The unit ledger is explicit: **128 campaigns per cell (4 held-out targets x 32
+repeats), 12 configurations, 6 families**, and no cross-family statistic uses
+anything but the six.
+
+The permutation experiment had no generator in the package — its family-level
+table lived only in a session note. It is now computed under the same rules:
+
+| quantity | n | estimate | SEM | 95% CI | sign | p (signed-rank) | p (t) |
+|---|---|---|---|---|---|---|---|
+| `mt` G vs Gaussian null | 6 | +12.15 | 3.45 | [+3.27, +21.03] | 6/6 | 0.031 | 0.017 |
+| `mt` G vs permutation null | 6 | +12.86 | 3.48 | [+3.92, +21.81] | 6/6 | 0.031 | 0.014 |
+| `mt` under the Gaussian null alone | 6 | −0.66 | 0.50 | [−1.94, +0.63] | 2/6 | 0.312 | 0.245 |
+| `pooled` G vs Gaussian null | 6 | +19.58 | 4.29 | [+8.56, +30.60] | 6/6 | 0.031 | 0.006 |
+| `pooled` G vs permutation null | 6 | +19.36 | 4.47 | [+7.86, +30.85] | 6/6 | 0.031 | 0.008 |
+| `pooled` under the Gaussian null alone | 6 | −16.42 | 2.39 | [−22.57, −10.27] | 0/6 | 0.031 | 0.001 |
+| permutation minus Gaussian, `mt` | 6 | +0.72 | 0.38 | [−0.26, +1.69] | 4/6 | 0.156 | 0.117 |
+| permutation minus Gaussian, `pooled` | 6 | −0.22 | 0.49 | [−1.49, +1.05] | 3/6 | 0.688 | 0.672 |
+
+**At n = 6 the smallest attainable two-sided signed-rank p is 2^-5 = 0.031**,
+reached exactly when all six families agree in sign. Every `0.031` above is
+that floor and carries no more information than the sign count beside it. The
+floor is now printed with every p, and the paired t is reported alongside,
+since the interval already is a t interval.
+
+**Two defects in how tests were reported.** Neither reaches the manuscript.
+
+1. **A label that disagreed with its own number.** Sixteen within-block records
+   in `summaries.py` named `"paired t-test within block"` and stored a
+   *signed-rank* p, because `record()` computed Wilcoxon unconditionally.
+   `record()` now computes the test it names and keeps both (`p_signed_rank`,
+   `p_ttest`). Nine rendered p-macros changed; none is used in `paper.tex`.
+2. **A tie-handling convention left to a library default.**
+   `mtDesignChangeCell` has one tie among twelve differences, which puts the
+   exact distribution out of reach. The conventions span **0.050 to 0.055** —
+   across the 0.05 line — and the rendered value was whichever `scipy.wilcoxon`
+   picked. The rule is now named in the code: exact when available, otherwise
+   the normal approximation **with** a continuity correction (0.055).
+
+**A third defect, found by running the tool.** `experiment_inventory.py`
+crashed on this results tree: `summaries.json` is a top-level JSON list, and
+`cross_family_scan`/`seed_rho_curve`/`bad_start_gate` write `arms` as a list of
+names rather than a dict. Discovery is exhaustive by design, so the inventory
+meets them; it now answers "not a campaign grid" instead of raising. The
+inventory reports **29,536 campaigns** across 33 groups, with `sdrefu`,
+`avoid`, `avoidw` and `avoidcal` now named rather than "(not cited)".
+
+### Item 3 — the calibrated avoidance was interpolated; now it is run
+
+`stl_avoid` with `--avoid-weight W` was swept on a six-point grid, and the
+calibrated W — the one at which the avoidance-only arm avoids as hard as
+`pooled` measurably does — falls between grid points. The recovered fraction
+was therefore read off the grid by an interpolation rule **no artefact
+recorded**, which is why the figure at 90% coverage had been written down as
+76% and could not be reproduced from any stated rule.
+
+`scripts/avoidance_calibration.py` states the rule (interpolate W on the
+measured ratio-versus-W curve, averaged over the two history designs, since one
+W must serve both halves of the swing), writes the interpolated prediction
+down **before** running anything, and then runs it:
+
+All swings below are in **top-10 recall points**, the metric the C4 result and
+the rest of the paper are stated in. (The first version of this table was in
+AUC units by mistake — see the correction at the end of this section.)
+
+| coverage | pooled's ratio | calibrated W | achieved ratio | interpolated swing | **measured swing** | pooled's swing | **recovered** |
+|---|---|---|---|---|---|---|---|
+| 45% (H=50) | 0.2177 | 0.2274 | 0.2146 | +21.82 | **+22.34** | +29.06 | **77%** |
+| 90% (H=100) | 0.8199 | 0.3794 | 0.8177 | +33.32 | **+33.52** | +46.02 | **73%** |
+
+Both direct runs land within **0.003** of the selection ratio they were
+calibrated to, and the interpolation was accurate to **0.53 and 0.20 recall
+points**. The audit is clean on both. The earlier **76% at 90% coverage is
+confirmed at a measured 73%**; the 78% at 45% coverage is confirmed at 77%.
+
+**The metric is not neutral.** The same two runs give 77% / 73% in recall and
+77% / 84% in AUC. A recovered fraction quoted without its metric is unreadable,
+so `avoidance_calibration.py` now reports both and
+`tests/test_swing_metric.py` pins which is which.
+
+The standing caveat holds: at 90% coverage only 35 of 335 compounds sit outside
+the history, so the achievable ratio is floored near 0.74 and the whole W range
+compresses into [0.74, 0.99]. The 45% cell is the meaningful calibration; the
+90% cell is reported because the swing there is the one the paper's C4 pair is
+measured in.
+
+**Conclusion, unchanged in substance and now measured rather than
+interpolated:** avoidance alone, at the pooled model's own avoidance intensity
+and reading no auxiliary values at all, reproduces **roughly three quarters**
+of the pooled model's design sensitivity. The remaining quarter is something
+else in the pooled posterior.
+
+### Correction to item 3: the first version of this table was in AUC units
+
+The advisor noticed that the calibration report gave pooled design swings of
+15.28 and 41.65 points where the C4 result is 29.06 and 46.02, and asked for
+the budget, history construction, q=0 generation, campaign count, seeds and
+definition of swing to be confirmed for both sets before the percentages were
+reported beside the C4 number. **They are the same runs.** The 15.28 and 41.65
+were those runs' swings in `auc_top_k` units.
+
+`arms[a]["delta_vs_stl"]` in a campaign artefact is the **AUC** difference —
+`dense_block_campaign.py` builds it from `acc[arm]["auc"]` — while recall lives
+in `recall_mean` and in the per-campaign `recall` vector. The first version of
+`avoidance_calibration.py` read that field and labelled it recall points. The
+two are not proportional: the ratio between them is 190 on the 45% pair and 110
+on the 90% pair, which is why the error was larger at low coverage.
+
+`scripts/swing_provenance.py` now answers the question from the artefacts for
+any cell. It finds every stored run carrying the contrast, groups runs whose
+**per-campaign vectors are identical** (same 128 numbers, not the same mean),
+prints the configuration ledger per group, and reports the swing in both
+metrics:
+
+| coverage | the pair | also stored as | swing (recall) | swing (AUC) |
+|---|---|---|---|---|
+| 45% | `avoid_cyp_h50_{withheld,uniform}` | `mech_cyp_q0`, `sdref_cyp_0.0`; `sdleak_cyp_noise_keeptop`, `sdrefu_cyp_b111_q0` | **+29.06** | +0.1528 |
+| 90% | `avoid_cyp_h100_{withheld,uniform}` | `sdrows_cyp_h100`; `sdleak_cyp_h100_keeptop` | **+46.02** | +0.4165 |
+
+Both pairs agree on every ledger field except the history design: budget 111,
+batch 10, `n_init` 10, top-10, 32 repeats x 4 held-out targets = 128 campaigns,
+pool 335, q=0 with achieved Spearman −0.0022, xi 0.01, beta 2.0, sd_scale 1.0,
+pile_frac 0.02. **The same campaigns are stored under several names** across
+the null ladder, the mechanism decomposition and the avoidance baseline, which
+the grouping makes visible rather than leaving to filename archaeology.
+
+**A cross-check the digests make possible.** The calibrated avoidance run at
+45% coverage under a uniform history hashes to history `c4d98cd7765c…` and
+initial design `e2b2d32f0994…` — the same values as the CYP cells of the
+six-family experiment (b74 and b111, item 1 above). The mechanism experiment
+and the cross-family experiment are not merely configured alike; on CYP they
+search from the same starting designs with the same historical compounds
+measured.
+
+Two provenance improvements fell out of it:
+
+1. **`seed` is now recorded in every artefact.** Every RNG stream in a run is
+   `seed + f(repeat, target)`, so it is the whole of what makes two runs
+   comparable draw for draw, and no stored artefact could answer it. Older
+   artefacts have identical per-campaign vectors instead, which is stronger
+   evidence than the field but only available after the fact.
+2. **Schema growth is no longer read as disagreement.** `n_init`, `xi`, `beta`
+   and `seed` are absent from pre-October artefacts; the ledger comparison
+   reports *absent* separately from *different*, and separately again from the
+   `--aux-quality 1.0`-versus-no-flag equivalence, which shows up here as two
+   artefacts with identical vectors and different recorded q.
+
+### Reproducing
+
+```bash
+python scripts/history_pairing_audit.py --jobs 6     # 36 re-runs, ~35 min
+python scripts/family_inference_audit.py
+python scripts/avoidance_calibration.py --run --iterate 1
+python scripts/swing_provenance.py                   # which runs a swing is from
+python scripts/summaries.py --json results/summaries.json \
+    --tex-dir report/generated --check report/paper.tex
+python scripts/experiment_inventory.py
+python -m pytest tests/test_run_digest.py tests/test_swing_metric.py
+```
+
+Verdicts are written to `results/history_pairing_audit.json`,
+`results/family_inference_audit.json`, `results/avoidance_calibration.json`
+and `results/swing_provenance.json`; each exits non-zero on a disagreement.
