@@ -226,6 +226,24 @@ class TanimotoGP:
         return mu[None, :] + noise * sd[None, :]
 
 
+TREND_VARIANCE_GRID: tuple[float, ...] = (
+    0.0, 0.03, 0.1, 0.3, 1.0, 3.0, 10.0)
+"""Trend-coefficient prior variances scanned by :class:`BasisTransferGP`.
+
+``0.0`` is included for the same reason ``TASK_RHO_GRID`` includes it: at that
+value the auxiliary basis contributes nothing and the model is exactly
+:class:`TanimotoGP` on the primary observations, so the likelihood can always
+decline the transfer. A gain over single-task BO is then a gain the marginal
+likelihood chose, not one the model family imposed.
+
+The upper end is deliberately generous. ``tau2 = 10`` on standardised basis
+columns is a near-flat prior on the coefficients -- effectively ordinary
+universal kriging -- so a family whose auxiliary targets really are a linear
+predictor of the primary can say so. An interior selection is a measurement; a
+selection pinned at either endpoint should be read as "the grid ran out" and is
+reported by :meth:`BasisTransferGP.parameter_snapshot`."""
+
+
 TASK_RHO_GRID: tuple[float, ...] = (
     0.0, 0.2, 0.4, 0.6, 0.75, 0.85, 0.92, 0.97, 0.99, 0.995, 0.999, 1.0)
 """Task correlations scanned by :class:`CoregionalisedGP`.
@@ -293,6 +311,15 @@ class CoregionalisedGP:
     passes: int = 2
     """Coordinate-ascent sweeps over the pairs, for ``structure="free"``."""
 
+    extra_diag: np.ndarray | None = None
+    """Per-observation noise added to the joint kernel diagonal, in joint row
+    order (task 0's rows first, then task 1's, and so on).
+
+    ``None`` adds nothing and is the default, so every existing fit is
+    unchanged bit for bit. :class:`SelectionAwareGP` uses it to down-weight
+    auxiliary rows whose compounds were likely to have been chosen *because*
+    of their values; see that class for why that is the right channel."""
+
     def _lml(self, Kb, y_j, C, idx_per_task):
         """Log marginal likelihood of a candidate task correlation, or -inf.
 
@@ -310,6 +337,17 @@ class CoregionalisedGP:
             return -np.inf, None
         T = len(idx_per_task)
         Kj = np.block([[C[a, b] * Kb[a][b] for b in range(T)] for a in range(T)])
+        if self.extra_diag is not None:
+            d = np.asarray(self.extra_diag, dtype=np.float64)
+            if d.shape != (Kj.shape[0],):
+                raise ValueError(
+                    f"extra_diag has {d.shape} entries but the joint kernel is "
+                    f"{Kj.shape[0]}x{Kj.shape[0]}")
+            if np.any(d < 0):
+                raise ValueError("extra_diag must be non-negative; a negative "
+                                 "entry can take the joint kernel out of the "
+                                 "PSD cone")
+            Kj = Kj + np.diag(d)
         try:
             kw = {} if self.eta_grid is None else {"eta_grid": tuple(self.eta_grid)}
             if self.fixed_scale is not None:
@@ -468,6 +506,579 @@ class CoregionalisedGP:
             return mu * self.y0_scale_ + self.y0_mean_
         mu, sd = self._gp.predict_gram(Ks, k_diag=np.ones(len(c)), return_std=True)
         return mu * self.y0_scale_ + self.y0_mean_, sd * self.y0_scale_
+
+
+def loo_log_predictive(gp: "TanimotoGP", rows=None) -> float:
+    """Leave-one-out log predictive density of a fitted :class:`TanimotoGP`.
+
+    Closed form, no refitting: for ``z ~ N(0, C)`` the LOO predictive at row
+    ``i`` has variance ``1 / [C^-1]_ii`` and residual ``[C^-1 z]_i / [C^-1]_ii``
+    (Rasmussen & Williams, *Gaussian Processes for Machine Learning*, eqs.
+    5.10-5.12). Here ``C = scale * (K0 + eta I)``, whose Cholesky factor and
+    ``alpha = (K0 + eta I)^-1 z`` the fit already stored, so the whole quantity
+    costs one triangular solve.
+
+    ``rows`` restricts the sum, which is the point of having this: a
+    multi-task fit can be scored on the primary task's rows alone.
+
+    The density is of the *inner standardised* target. The standardising
+    transform does not depend on the parameters being compared, so the
+    Jacobian is a shared constant and is omitted.
+    """
+    if not getattr(gp, "_fitted", False):
+        raise RuntimeError("loo_log_predictive needs a fitted TanimotoGP")
+    L = gp._L
+    n = L.shape[0]
+    # diag((K0 + eta I)^-1) = column norms of L^-1, since M^-1 = L^-T L^-1.
+    Linv = solve_triangular(L, np.eye(n), lower=True, check_finite=False)
+    minv_diag = np.einsum("ij,ij->j", Linv, Linv)
+    var = gp.scale_ / minv_diag
+    resid = gp._alpha / minv_diag
+    lpd = -0.5 * (np.log(2.0 * np.pi * var) + resid ** 2 / var)
+    if rows is not None:
+        lpd = lpd[np.asarray(rows, dtype=np.intp)]
+    return float(lpd.sum())
+
+
+SELECTION_GAMMA_GRID: tuple[float, ...] = (0.0, 0.03, 0.1, 0.3, 1.0, 3.0, 10.0)
+"""Strength of the selection correction in :class:`SelectionAwareGP`.
+
+``0.0`` is the uncorrected coregionalised model, reached exactly rather than in
+the limit, so the correction can be *declined* by the likelihood and the arm
+reproduces :class:`CoregionalisedGP` bit for bit when it is. The top of the
+grid is far past the useful range for the same reason ``TASK_RHO_GRID`` runs to
+1.0: a value selected at the edge of its own grid is a wall, not an estimate.
+"""
+
+
+@dataclass
+class SelectionAwareGP:
+    """Coregionalisation that discounts auxiliary rows by how predictable the
+    panel's membership was.
+
+    **The problem.** A coregionalised GP conditions on auxiliary measurements
+    as though the compounds carrying them were an exchangeable sample of the
+    library. They are not. Panels are assembled by people, and
+    ``scripts/panel_propensity.py`` measures the consequence in BindingDB: the
+    compounds co-assayed across a family are enriched for actives in some
+    families (JAK2 holds 10 of its top 10) and depleted in others (CYP3A4
+    holds 0 of 4.5 expected). Conditioning on a selected observation as if it
+    were exchangeable overstates how much it says, and in this model the
+    overstatement lands on the *variance*: the predictive sd at every
+    panel-covered compound is deflated, expected improvement reads the
+    deflation as "already explored", and the campaign steers away from exactly
+    the compounds the panel covers. That channel, not the prior mean, carries
+    the design artefact the crossed controls isolate.
+
+    **The correction.** Estimate the selection propensity ``pi(x) = P(x is in
+    the panel | structure)`` and inflate the auxiliary observation noise in
+    proportion to it::
+
+        noise_i = base + gamma * (pi_i - min pi)      (auxiliary rows only)
+
+    An observation weight of ``1 / pi`` is the Horvitz-Thompson weight
+    (Horvitz & Thompson, JASA 47(260):663-685, 1952), and a weight enters a
+    Gaussian likelihood as a reciprocal noise variance, so noise proportional
+    to ``pi`` *is* inverse-propensity weighting written in kernel form. The
+    shift by ``min pi`` makes the term non-negative, which keeps the joint
+    kernel PSD; a constant offset would be absorbed by ``eta`` anyway, so only
+    the *differential* part of the propensity is identified, which is the part
+    that encodes selection.
+
+    ``gamma`` is chosen by the same exact marginal likelihood that chooses
+    ``r`` and ``eta``. The model is therefore free to decline the correction,
+    and at ``gamma = 0`` it is :class:`CoregionalisedGP` exactly.
+
+    **Where the idea comes from.** Three fields solved this problem before
+    molecular BO met it, and the construction above borrows from each:
+
+    * *Geostatistics.* Diggle, Menezes & Su (JRSS-C 59(2):191-232, 2010) named
+      preferential sampling and modelled the locations and the field jointly.
+      Closer still, Schliep, Wikle & Daw (arXiv:2108.12354) correct spatial
+      covariance parameters *and the kriging variance* under informative
+      sampling by weighted composite likelihood -- the same quantity and the
+      same device as here.
+    * *Recommender systems.* Ratings are missing not at random because people
+      choose what to watch, and Schnabel et al. (ICML 2016) debias matrix
+      completion by inverse propensity. Their standing difficulty is that
+      estimating the propensity needs a missing-completely-at-random sample
+      that production logs do not contain. **A dense co-measured block is
+      exactly that sample**, which is why this correction can be validated
+      here and not there.
+    * *Ecology.* Fithian, Elith, Hastie & Keith (Methods Ecol Evol, 2015)
+      estimate presence-only sampling bias by pooling species and assuming the
+      bias is shared, borrowing strength across them. The propensity here is
+      likewise shared across a family's targets rather than fitted per target.
+
+    **What is not claimed.** The propensity is estimated from co-assay, which
+    is observational: a compound may sit in a panel because somebody expected
+    it to be potent, or because one paper ran one series against several
+    targets. This corrects the association, and does not identify the
+    mechanism.
+    """
+
+    rho_grid: tuple[float, ...] = TASK_RHO_GRID
+    gamma_grid: tuple[float, ...] = SELECTION_GAMMA_GRID
+    fixed_scale: float | None = None
+    eta_grid: tuple[float, ...] | None = None
+    structure: str = "shared"
+    gamma_: float = field(default=0.0, repr=False)
+    propensity_: np.ndarray | None = field(default=None, repr=False)
+    gamma_loo_: tuple[float, ...] = ()
+    """Primary-task LOO log predictive density at each grid value of ``gamma``,
+    in grid order. Reported so a selection at the edge of the grid is visible
+    as the wall it is."""
+
+    @staticmethod
+    def propensity(K, selected, n_library, *, folds: int = 5):
+        """Out-of-fold estimate of ``P(compound is in the panel | structure)``.
+
+        A membership indicator regressed on the Tanimoto Gram, through the same
+        :class:`TanimotoGP` the rest of the module uses, so the smoothing is
+        chosen by the exact likelihood and there is no optimiser to seed.
+
+        The estimate is **out of fold**. Fitted in-sample, a GP with a small
+        fitted ``eta`` interpolates the indicator, the propensity collapses to
+        the indicator itself, the correction becomes a constant on the
+        auxiliary rows, and ``eta`` absorbs it -- a silent no-op that still
+        reports a fitted ``gamma``. Out-of-fold prediction also makes the
+        estimate honest enough to score: its AUC says whether panel membership
+        was predictable from structure at all, which is the quantity Pogodin
+        et al. (2019) report at roughly 0.87 for ChEMBL.
+
+        Reads no response value, primary or auxiliary -- only *which* compounds
+        the panel covers.
+
+        **Shrunk by its own measured skill.** Out-of-fold prediction stops the
+        estimate being *right* about random labels; it does not stop it being
+        *variable* about them. Measured on a shuffled panel the raw estimate
+        still had a spread of 0.155 against 0.188 for the real one, so a
+        correction driven by it fires just as hard on noise as on selection --
+        the identifiability failure Copas selection models are known for in
+        meta-analysis. So the estimate is shrunk toward the base rate by its
+        out-of-fold coefficient of determination::
+
+            s  = max(0, 1 - SS_res / SS_tot)
+            pi = base + s * (pi_raw - base)
+
+        A propensity with no out-of-fold skill has ``s = 0``, collapses to a
+        constant, and leaves the model exactly uncorrected. No new
+        hyperparameter: ``s`` is measured, not chosen.
+        """
+        K = np.asarray(K, dtype=np.float64)
+        ind = np.zeros(int(n_library), dtype=np.float64)
+        ind[np.asarray(selected, dtype=np.intp)] = 1.0
+        base = float(ind.mean())
+        if ind.all() or not ind.any():
+            # Nothing to learn: every compound is in the panel, or none is.
+            return np.full(len(ind), base)
+        pi = np.empty(len(ind), dtype=np.float64)
+        fold = np.arange(len(ind)) % int(folds)
+        for f in range(int(folds)):
+            te = fold == f
+            tr = ~te
+            if not tr.any() or not te.any() or ind[tr].std() < 1e-12:
+                pi[te] = float(ind[tr].mean()) if tr.any() else base
+                continue
+            gp = TanimotoGP().fit_gram(K[np.ix_(tr, tr)], ind[tr])
+            pi[te] = gp.predict_gram(K[np.ix_(te, tr)], return_std=False)
+        pi = np.clip(pi, 0.0, 1.0)
+        ss_tot = float(((ind - base) ** 2).sum())
+        ss_res = float(((ind - pi) ** 2).sum())
+        skill = 0.0 if ss_tot <= 0 else max(0.0, 1.0 - ss_res / ss_tot)
+        return np.clip(base + skill * (pi - base), 0.0, 1.0)
+
+    def fit_gram(self, K, idx_per_task, y_per_task,
+                 propensity=None) -> "SelectionAwareGP":
+        """Fit, scanning ``gamma`` against the exact joint likelihood.
+
+        ``propensity`` is over the whole library. ``None`` means no correction
+        is available, and the fit is then :class:`CoregionalisedGP` exactly.
+        """
+        idx = [np.asarray(i, dtype=np.intp) for i in idx_per_task]
+        sizes = [len(i) for i in idx]
+        n_joint = int(sum(sizes))
+
+        if propensity is None:
+            grid, pi = (0.0,), None
+        else:
+            pi = np.asarray(propensity, dtype=np.float64)
+            # Validate here rather than relying on the guard in
+            # CoregionalisedGP._lml. That guard sees `gamma * (pi - min pi)`,
+            # which the shift makes non-negative for *any* input, so an
+            # out-of-range propensity would otherwise be silently rescaled
+            # into something plausible instead of rejected.
+            if pi.ndim != 1:
+                raise ValueError(f"propensity must be 1-d, got shape {pi.shape}")
+            if not np.all(np.isfinite(pi)):
+                raise ValueError("propensity contains non-finite values")
+            if pi.min() < 0.0 or pi.max() > 1.0:
+                raise ValueError(
+                    f"propensity must lie in [0, 1]; got "
+                    f"[{pi.min():.3g}, {pi.max():.3g}]")
+            need = max((int(i.max()) for i in idx if len(i)), default=-1) + 1
+            if len(pi) < need:
+                raise ValueError(
+                    f"propensity has {len(pi)} entries but the task indices "
+                    f"reach library row {need - 1}")
+            grid = tuple(self.gamma_grid)
+            # Only auxiliary rows are corrected. The primary task's own
+            # observations are the campaign's picks, not the panel's, and the
+            # acquisition function that chose them is already accounted for.
+            aux = np.concatenate([pi[i] for i in idx[1:]]) if len(idx) > 1 \
+                else np.empty(0)
+            lo = float(aux.min()) if aux.size else 0.0
+
+        # gamma is scored by leave-one-out predictive density on the PRIMARY
+        # rows, not by the joint marginal likelihood. The joint likelihood is
+        # rewarded for explaining the auxiliary observations, which is exactly
+        # what this correction sets out to discount, so it drives gamma to
+        # zero whatever the selection looks like: measured on the synthetic
+        # check it moved the panel sd ratio only 0.645 -> 0.679. Scoring the
+        # estimand the campaign actually uses is the same move Hadad et al.
+        # (PNAS 118(15), 2021) make for adaptively collected data. Every other
+        # parameter is still fitted by the exact joint likelihood inside
+        # CoregionalisedGP; only this one trades auxiliary fit against primary
+        # prediction, and only this one therefore needs a held-out criterion.
+        primary_rows = np.arange(sizes[0], dtype=np.intp)
+        best, scores = None, []
+        for gamma in grid:
+            if pi is None or gamma == 0.0:
+                extra = None
+            else:
+                extra = np.zeros(n_joint, dtype=np.float64)
+                at = sizes[0]
+                for i in idx[1:]:
+                    extra[at:at + len(i)] = gamma * (pi[i] - lo)
+                    at += len(i)
+            co = CoregionalisedGP(
+                rho_grid=self.rho_grid, fixed_scale=self.fixed_scale,
+                eta_grid=self.eta_grid, structure=self.structure,
+                extra_diag=extra)
+            try:
+                co.fit_gram(K, idx, y_per_task)
+                score = loo_log_predictive(co._gp, primary_rows)
+            except np.linalg.LinAlgError:  # pragma: no cover
+                scores.append(float("-inf"))
+                continue
+            if not np.isfinite(score):  # pragma: no cover
+                scores.append(float("-inf"))
+                continue
+            scores.append(score)
+            # Ties go to the smaller gamma: the grid is ascending, so a strict
+            # `>` keeps the least-corrected model that fits equally well.
+            if best is None or score > best[0]:
+                best = (score, gamma, co)
+        if best is None:  # pragma: no cover
+            raise np.linalg.LinAlgError("no selection correction was factorisable")
+
+        self.loo_, self.gamma_, self._co = best
+        self.lml_ = float(self._co.lml_)
+        self.gamma_loo_ = tuple(scores)
+        self.propensity_ = pi
+        self.rho_ = self._co.rho_
+        self.idx_ = self._co.idx_
+        return self
+
+    def predict_gram(self, K, candidates, return_std: bool = False):
+        """Posterior on the primary task; see :meth:`CoregionalisedGP.predict_gram`.
+
+        The correction is observation noise, so it changes the training
+        covariance only. The prior variance at a candidate is untouched, which
+        is the point: a compound the panel covers keeps its honest predictive
+        sd instead of the deflated one.
+        """
+        if not hasattr(self, "_co"):
+            raise RuntimeError("SelectionAwareGP.predict_gram called before fit_gram")
+        return self._co.predict_gram(K, candidates, return_std=return_std)
+
+
+@dataclass
+class BasisTransferGP:
+    """Transfer through the prior *mean* only: auxiliary assays as basis functions.
+
+    The coregionalised model transfers through the covariance, which is why an
+    auxiliary measurement at compound ``m`` shrinks the primary-target
+    predictive variance at ``m``. Section 40 measured that shrinkage (0.412
+    against 0.542 on CYP) and section 50 showed what it costs: expected
+    improvement reads the compressed variance as "already explored" and the
+    pooled arm selects historically assayed compounds at 0.288 of their library
+    share, paying a value-free selection penalty in every family. The penalty
+    is paid whether or not the auxiliary responses carry any information, which
+    is what makes it a modelling artefact rather than a finding.
+
+    This model removes that channel by construction rather than by correction.
+    Each auxiliary target is fitted on its own data, and its posterior mean over
+    the library becomes a *basis function* for the primary task::
+
+        f(x) = h(x)' beta + g(x),    g ~ GP(0, k_tan),    beta ~ N(0, tau2 I)
+
+    with ``h(x)`` the standardised auxiliary posterior means. Marginalising over
+    ``beta`` leaves a Gaussian process with the augmented kernel ``k_tan(x, x')
+    + tau2 h(x)' h(x')`` (Rasmussen & Williams, Gaussian Processes for Machine
+    Learning, section 2.7), so the whole model is one more Tanimoto GP and
+    inherits this module's exact likelihood, its eta scan and its determinism.
+
+    Three properties follow, and each is pinned by a test:
+
+    **Historical compounds are not made artificially certain.** The auxiliary
+    rows are not entries in the conditioning set: they reach the posterior only
+    through a ``T``-dimensional trend, so whatever variance they remove, they
+    remove everywhere the trend is confident rather than specifically at the
+    compounds that happen to have been assayed. Nine hundred historical rows
+    shrink the posterior through three fitted coefficients, not through nine
+    hundred conditioning events. The readable consequence is the statistic
+    section 50 reports -- mean predictive sd at historically assayed compounds
+    over mean sd elsewhere. On synthetic data from this kernel that ratio is
+    0.99 for ``stl``, **0.51** for the coregionalised model, and **1.05** here.
+
+    Note what is *not* claimed. The basis is built from the auxiliary values,
+    and ``tau2`` is refitted against them, so replacing those values with noise
+    does move the predictive sd -- it should, and it does so in the right
+    direction (the likelihood drops ``tau2`` from 1.0 to 0.03 on a noise
+    basis). The property is the absence of *location-specific* deflation, which
+    is the thing that drives expected improvement away from assayed compounds.
+    A test pins the ratio; none pins bit-identity, because bit-identity is
+    false.
+
+    **Each auxiliary target gets its own fitted coefficient.** ``beta_`` is one
+    number per auxiliary assay, estimated by the same marginal likelihood that
+    chooses everything else here, and it answers the inclusion question
+    directly: a coefficient at zero is an assay the model declined to use. No
+    threshold is fitted across blocks, so nothing here repeats section 44's
+    failure -- the decision is made inside a single campaign from that
+    campaign's own primary observations.
+
+    **It is cheaper than the model it replaces.** The auxiliary fits happen once
+    (history does not grow during a campaign) and cost ``O(sum_j n_j^3)``; each
+    BO round is then ``O(n_t^3)`` in the primary observations alone, against
+    ``O((n_t + sum_j n_j)^3)`` per round for the coregionalised GP. On a
+    four-target block with 300 historical rows each that is a 100x100 Cholesky
+    per round instead of a 1000x1000 one.
+
+    What it gives up is real and should not be glossed: a genuinely
+    well-specified coregionalised model with a correctly estimated task
+    correlation *should* borrow variance, and refusing to do so is a loss of
+    statistical efficiency. Tighineanu et al. (arXiv:2111.11223) argue exactly
+    this against mean-only transfer, on synthetic benchmarks. Whether the
+    efficiency loss or the selection artefact dominates is an empirical
+    question about the data, which is why this is an arm and not a replacement.
+
+    Construct with :meth:`from_auxiliary`, which does the history fitting once,
+    then call :meth:`fit_gram` per round with the primary observations.
+    """
+
+    tau2_grid: tuple[float, ...] = TREND_VARIANCE_GRID
+    eta_grid: tuple[float, ...] = ETA_GRID
+    fixed_scale: float | None = None
+    """Passed to the inner GP; see :attr:`TanimotoGP.fixed_scale`."""
+
+    rank: int | None = None
+    """Truncate the basis to its leading ``rank`` principal directions.
+
+    ``None`` keeps one column per auxiliary target. An integer replaces them
+    with the leading left singular vectors of the stacked columns, which is
+    worth doing whenever the auxiliary targets are tightly coupled: on CYP the
+    pairwise correlations run 0.52-0.74, so three raw columns span barely more
+    than one direction and the coefficient prior is asked to resolve a nearly
+    degenerate basis. Orthogonalising removes that, and truncating is a
+    regulariser with a chemical reading -- the leading direction is general
+    activity against the family, and the later ones are what separates one
+    target from another.
+
+    The decomposition runs on the auxiliary *posterior means*, which are
+    complete over the library by construction. Running it on the raw history
+    matrix instead would require imputing the unmeasured entries, and the
+    imputation would put structure into the basis that no assay measured.
+
+    Directions are whitened to unit variance rather than kept at their singular
+    values, so ``tau2`` is one prior variance per orthogonal direction and the
+    likelihood, not the auxiliary spectrum, decides which directions earn
+    weight."""
+
+    H_: np.ndarray | None = field(default=None, repr=False)
+    """``(n_library, n_aux)`` standardised auxiliary posterior means."""
+
+    aux_lml_: tuple[float, ...] = ()
+    """Log marginal likelihood of each auxiliary fit, for diagnostics."""
+
+    @classmethod
+    def from_auxiliary(cls, K, aux_idx, aux_val, *, n_library=None, **kwargs):
+        """Fit one GP per auxiliary target and cache the basis over the library.
+
+        Separated from :meth:`fit_gram` because the history is fixed for the
+        whole campaign: refitting it every round would multiply the cost of the
+        arm by the number of rounds and could not change the answer. ``K`` is
+        the full library Gram.
+
+        Each column is standardised over the library, so ``tau2`` means the same
+        thing for an auxiliary target whose assay happens to span three log
+        units as for one that spans one. No primary-target value is touched
+        here, which is what keeps the basis free of leakage.
+        """
+        K = np.asarray(K, dtype=np.float64)
+        n = K.shape[0] if n_library is None else int(n_library)
+        self = cls(**kwargs)
+        cols, lmls = [], []
+        for idx, val in zip(aux_idx, aux_val):
+            idx = np.asarray(idx, dtype=np.intp)
+            val = np.asarray(val, dtype=np.float64).ravel()
+            if idx.size == 0:
+                continue
+            if idx.shape[0] != val.shape[0]:
+                raise ValueError(
+                    f"auxiliary task has {idx.shape[0]} indices but {val.shape[0]} values")
+            gp = TanimotoGP(eta_grid=self.eta_grid).fit_gram(
+                K[np.ix_(idx, idx)], val)
+            m = gp.predict_gram(K[:, idx], return_std=False)
+            sd = float(m.std())
+            # A flat column carries no information and would divide by zero on
+            # standardisation; drop it rather than letting a numerical artefact
+            # become a basis function the likelihood then has to shrink away.
+            if sd <= 1e-12:
+                continue
+            cols.append((m - m.mean()) / sd)
+            lmls.append(float(gp.lml_))
+        H = (np.column_stack(cols) if cols
+             else np.zeros((n, 0), dtype=np.float64))
+        self.H_ = self._reduce(H, self.rank)
+        self.aux_lml_ = tuple(lmls)
+        return self
+
+    @classmethod
+    def from_chemistry(cls, K, *, rank: int = 3, **kwargs):
+        """A rank-matched basis built from the library's chemistry alone.
+
+        The control for the method, not the method. It takes no auxiliary
+        argument at all -- not the values, not the locations -- so "this basis
+        carries no auxiliary information" is a property of the signature rather
+        than something a test has to establish. If an arm built on this
+        reproduces the gain that :meth:`from_auxiliary` shows, then the
+        auxiliary assays are not what is working and the trend is reading
+        library structure the Tanimoto kernel already had.
+
+        The matched null in between -- same history locations, same response
+        distribution, correspondence destroyed -- is the existing
+        ``--aux-shuffle`` path applied to :meth:`from_auxiliary`, so the three
+        together bracket the claim: chemistry only, locations only, and the
+        real thing.
+        """
+        K = np.asarray(K, dtype=np.float64)
+        # Kernel PCA: eigenvectors of the centred Gram, largest first.
+        n = K.shape[0]
+        J = np.eye(n) - np.full((n, n), 1.0 / n)
+        w, V = np.linalg.eigh(J @ K @ J)
+        H = V[:, ::-1][:, :max(int(rank), 0)]
+        self = cls(rank=None, **kwargs)
+        self.H_ = self._reduce(H, None)
+        self.aux_lml_ = ()
+        return self
+
+    @staticmethod
+    def _reduce(H, rank):
+        """Standardise the basis, optionally rotating to its leading directions."""
+        H = np.asarray(H, dtype=np.float64)
+        if H.shape[1] == 0:
+            return H
+        if rank is not None:
+            # Left singular vectors of the centred basis. `full_matrices=False`
+            # keeps this an (n x T) decomposition rather than an (n x n) one.
+            #
+            # Applied whenever a rank is given, including `rank == n_columns`.
+            # At full rank this is a pure rotation and changes nothing a linear
+            # model could express, but it is still worth doing: the raw columns
+            # of a tightly coupled family are near-collinear, and an orthogonal
+            # basis is what makes a single `tau2` mean the same thing in every
+            # direction. `None` is the way to ask for no rotation at all.
+            U, _, _ = np.linalg.svd(H - H.mean(axis=0), full_matrices=False)
+            H = U[:, :max(int(rank), 0)]
+        sd = H.std(axis=0)
+        keep = sd > 1e-12
+        H = H[:, keep]
+        if H.shape[1] == 0:
+            return np.zeros((len(H), 0), dtype=np.float64)
+        return (H - H.mean(axis=0)) / H.std(axis=0)
+
+    def fit_gram(self, K, obs_idx, y_obs) -> "BasisTransferGP":
+        """Condition on the primary observations, scanning ``tau2`` by likelihood."""
+        if self.H_ is None:
+            raise RuntimeError("fit_gram requires a basis; use from_auxiliary")
+        K = np.asarray(K, dtype=np.float64)
+        obs = np.asarray(obs_idx, dtype=np.intp)
+        y = np.asarray(y_obs, dtype=np.float64).ravel()
+        if obs.shape[0] != y.shape[0]:
+            raise ValueError(
+                f"{obs.shape[0]} observation indices but {y.shape[0]} values")
+        self.obs_ = obs
+        Hobs = self.H_[obs]
+        K0 = K[np.ix_(obs, obs)]
+
+        best = None
+        for tau2 in self.tau2_grid:
+            # The augmented kernel IS the marginalisation over beta, so the
+            # likelihood compared across the grid is the exact marginal
+            # likelihood of the semi-parametric model -- not a profile
+            # likelihood with beta plugged in at its mode.
+            Kaug = K0 if tau2 == 0.0 else K0 + tau2 * (Hobs @ Hobs.T)
+            kw = {"eta_grid": self.eta_grid}
+            if self.fixed_scale is not None:
+                kw["fixed_scale"] = self.fixed_scale
+            try:
+                gp = TanimotoGP(**kw).fit_gram(Kaug, y)
+            except np.linalg.LinAlgError:  # pragma: no cover - jitter covers this
+                continue
+            if best is None or gp.lml_ > best[0]:
+                best = (gp.lml_, tau2, gp)
+        if best is None:  # pragma: no cover
+            raise np.linalg.LinAlgError("no trend variance was factorisable")
+
+        self.lml_, self.tau2_, self._gp = best
+        # Posterior mean of the trend coefficients, free of charge: for the
+        # linear part of an additive kernel, beta_hat = tau2 * H' alpha. In the
+        # inner GP's z-units; `beta_response_` puts it back on the primary scale.
+        self.beta_ = (self.tau2_ * (Hobs.T @ self._gp._alpha)
+                      if Hobs.shape[1] else np.zeros(0))
+        self.beta_response_ = self.beta_ * self._gp.y_scale_
+        return self
+
+    def predict_gram(self, K, candidates, return_std: bool = False):
+        """Posterior on the primary task, for rows ``candidates`` of ``K``."""
+        if not hasattr(self, "_gp"):
+            raise RuntimeError("BasisTransferGP.predict_gram called before fit_gram")
+        c = np.asarray(candidates, dtype=np.intp)
+        Ks = np.asarray(K)[np.ix_(c, self.obs_)]
+        Hc = self.H_[c]
+        if self.tau2_ != 0.0 and Hc.shape[1]:
+            Ks = Ks + self.tau2_ * (Hc @ self.H_[self.obs_].T)
+        if not return_std:
+            return self._gp.predict_gram(Ks, return_std=False)
+        # Prior variance at x is k(x,x) + tau2 h(x)'h(x): unit Tanimoto variance
+        # plus the trend's own uncertainty. The second term is what an honest
+        # mean-transfer model must carry -- the basis is an estimate, and a
+        # compound where the auxiliary models disagree with each other is a
+        # compound this model is entitled to be less sure about.
+        k_diag = np.ones(len(c))
+        if self.tau2_ != 0.0 and Hc.shape[1]:
+            k_diag = k_diag + self.tau2_ * np.einsum("ij,ij->i", Hc, Hc)
+        return self._gp.predict_gram(Ks, k_diag=k_diag, return_std=True)
+
+    def parameter_snapshot(self) -> dict:
+        """Serializable fitted parameters, including the per-assay coefficients."""
+        if not hasattr(self, "_gp"):
+            raise RuntimeError("parameter_snapshot requires a fitted model")
+        return {
+            "tau2": float(self.tau2_),
+            "tau2_at_grid_edge": bool(
+                self.tau2_ in (self.tau2_grid[0], self.tau2_grid[-1])),
+            "beta": [float(b) for b in self.beta_],
+            "beta_response_scale": [float(b) for b in self.beta_response_],
+            "n_basis": int(self.H_.shape[1]),
+            "rank": (None if self.rank is None else int(self.rank)),
+            "eta": float(self._gp.eta_),
+            "signal_variance": float(self._gp.scale_),
+            "lml": float(self.lml_),
+            "auxiliary_lml": list(self.aux_lml_),
+        }
 
 
 class LibraryKernel:

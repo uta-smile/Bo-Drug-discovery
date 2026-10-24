@@ -2,8 +2,17 @@
 
 Reads the same results/crossed_auxiliary_v1/<stage>/summary.json that
 summarize_crossed_auxiliary.py writes the Table 1 numbers from, so the figure
-cannot drift from the table. Writes report/generated/fig_crossed_interaction.tex
-(TikZ body only; the figure environment and caption stay in paper.tex).
+cannot drift from the table: the arm-mean and interaction intervals are
+recomputed with the same family-level t interval and checked against the
+estimates stored in the summary. Writes
+report/generated/fig_crossed_interaction.tex (TikZ body only; the figure
+environment and caption stay in paper.tex).
+
+Encoding, shared by both panels: black markers are six-family means with 95%
+t intervals (n = 6 families); grey dots are individual families. Panel (a)
+separates the two fitting types by marker (filled = measured, open = permuted)
+and line (solid / dashed); panel (b) uses no dashes, so no style means two
+things.
 
     python scripts/make_crossed_figure.py [--stage full]
 """
@@ -11,23 +20,67 @@ from __future__ import annotations
 import argparse, json
 from pathlib import Path
 
+import numpy as np
+from scipy.stats import t
+
 ROOT = Path(__file__).resolve().parents[1]
 ORDER = ["jak", "cyp", "dpp", "hdac", "mmp", "pi3k"]
 LABEL = {"pi3k": "PI3K"}
 
-# Panel (a) geometry, in mm. Shared y-scale across both panels.
+# Geometry in mm. Both panels share one y-scale so magnitudes compare directly.
 Y_LO, Y_HI = -15.0, 25.0
 Y_MM = 45.0                      # millimetres spanned by the y range
-X_COND = (0.0, 40.0)             # measured, permuted conditioning
-X_FAM = [0.0, 8.0, 16.0, 24.0, 32.0, 40.0]
+TICKS = (-10, 0, 10, 20)
+# panel (a): y axis at x=0, conditioning types at X_COND, fitting types offset
+X_A_END = 58.0
+X_COND = {"M": 13.0, "P": 45.5}  # measured, permuted conditioning
+FIT_DX = {"M": -2.5, "P": 2.5}   # measured-fit series left, permuted-fit right
+FAM_DX = 1.7                     # family dots sit just outside their series
+# panel (b): y axis at XB, six families then the mean
+XB = 74.0
+X_FAM = [6.0, 14.0, 22.0, 30.0, 38.0, 46.0]
+X_MEAN = 56.0
+X_B_END = 62.0
+
+FAM_R, MEAN_R = 0.55, 0.9        # marker radii (mm)
+CAP = 0.9                        # half-width of interval caps (mm)
 
 
 def ymm(v: float) -> float:
     return (v - Y_LO) * Y_MM / (Y_HI - Y_LO)
 
 
-def fmt_tick(t: int) -> str:
-    return "0" if t == 0 else f"{t:+d}"
+def fmt_tick(v: int) -> str:
+    return "0" if v == 0 else f"{v:+d}"
+
+
+def ci95(values) -> tuple[float, float, float]:
+    """Family-level mean and 95% t interval, as in summarize_crossed_auxiliary.estimate."""
+    v = np.asarray(values, dtype=float)
+    half = float(t.ppf(0.975, len(v) - 1) * v.std(ddof=1) / np.sqrt(len(v)))
+    return float(v.mean()), float(v.mean() - half), float(v.mean() + half)
+
+
+def check(name: str, ours, stored) -> None:
+    got = (ours[0], ours[1], ours[2])
+    want = (stored["mean"], *stored["ci95"])
+    if max(abs(a - b) for a, b in zip(got, want)) > 1e-9:
+        raise SystemExit(f"{name}: figure {got} disagrees with summary {want}")
+
+
+def y_axis(w, x0: float, label: str) -> None:
+    w(f"  \\draw[ax] ({x0:.1f},{ymm(Y_LO):.2f}) -- ({x0:.1f},{ymm(Y_HI):.2f});")
+    for v in TICKS:
+        w(f"  \\draw[ax] ({x0:.1f},{ymm(v):.2f}) -- ({x0-1.2:.1f},{ymm(v):.2f});")
+        w(f"  \\node[anchor=east,font=\\small,inner sep=0.6mm] at ({x0-1.2:.1f},{ymm(v):.2f}) "
+          f"{{${fmt_tick(v)}$}};")
+    w(f"  \\node[rotate=90,font=\\small] at ({x0-11.5:.1f},{ymm((Y_LO+Y_HI)/2):.2f}) {{{label}}};")
+
+
+def interval(w, x: float, lo: float, hi: float) -> None:
+    w(f"  \\draw[bar] ({x:.2f},{ymm(lo):.2f}) -- ({x:.2f},{ymm(hi):.2f});")
+    for v in (lo, hi):
+        w(f"  \\draw[bar] ({x-CAP:.2f},{ymm(v):.2f}) -- ({x+CAP:.2f},{ymm(v):.2f});")
 
 
 def main(argv=None) -> int:
@@ -39,104 +92,110 @@ def main(argv=None) -> int:
     report = json.loads(src.read_text(encoding="utf8"))
     if not report["audit"]["clean"]:
         raise SystemExit(f"refusing to plot an unclean audit: {src}")
-    fam = report["families"]
+    fam, est = report["families"], report["estimates"]
 
     g = {f: fam[f]["gains"] for f in ORDER}
-    mean = {arm: sum(g[f][arm] for f in ORDER) / len(ORDER) for arm in ("MM", "MP", "PM", "PP")}
+    arm = {k: ci95([g[f][k] for f in ORDER]) for k in ("MM", "MP", "PM", "PP")}
     inter = {f: (g[f]["MM"] - g[f]["MP"]) - (g[f]["PM"] - g[f]["PP"]) for f in ORDER}
-    inter_mean = sum(inter.values()) / len(inter)
+    ix = ci95([inter[f] for f in ORDER])
+    check("MM", arm["MM"], est["measured_gain"])
+    check("PP", arm["PP"], est["permuted_gain"])
+    check("interaction", ix, est["interaction"])
+    fit_gap = {"M": est["fit_measured_response"]["mean"],    # MM - PM
+               "P": est["fit_permuted_response"]["mean"]}    # MP - PP
+    check_gap = {"M": arm["MM"][0] - arm["PM"][0], "P": arm["MP"][0] - arm["PP"][0]}
+    for c in "MP":
+        if abs(fit_gap[c] - check_gap[c]) > 1e-9:
+            raise SystemExit(f"fit gap {c} disagrees with summary")
 
     L = []
     w = L.append
     w("% Generated by scripts/make_crossed_figure.py; do not edit.")
     w(r"\begin{tikzpicture}[x=1mm,y=1mm,")
-    w(r"    ax/.style={black!55,line width=0.3pt},")
-    w(r"    famM/.style={black!22,line width=0.25pt},")
-    w(r"    famP/.style={black!22,line width=0.25pt,dashed},")
-    w(r"    meanM/.style={black,line width=0.9pt},")
-    w(r"    meanP/.style={black,line width=0.9pt,dashed},")
-    w(r"    dot/.style={fill=black,draw=none}]")
+    w(r"    ax/.style={black!60,line width=0.3pt},")
+    w(r"    zero/.style={black!45,line width=0.3pt,dotted},")
+    w(r"    bar/.style={black,line width=0.5pt},")
+    w(r"    fitM/.style={black,line width=0.8pt},")
+    w(r"    fitP/.style={black,line width=0.8pt,dash pattern=on 2.2pt off 1.4pt},")
+    w(r"    meanM/.style={fill=black,draw=black,line width=0.5pt},")
+    w(r"    meanP/.style={fill=white,draw=black,line width=0.6pt},")
+    w(r"    fam/.style={fill=black!40,draw=white,line width=0.2pt}]")
 
-    # ---- panel (a) axes -------------------------------------------------
-    w(r"  %% panel (a): interaction")
-    w(f"  \\draw[ax] (-5,{ymm(Y_LO):.2f}) -- (-5,{ymm(Y_HI):.2f});")
-    for t in (-10, 0, 10, 20):
-        w(f"  \\draw[ax] (-5,{ymm(t):.2f}) -- (-6.5,{ymm(t):.2f});")
-        w(f"  \\node[anchor=east,font=\\small] at (-7,{ymm(t):.2f}) {{${fmt_tick(t)}$}};")
-    w(f"  \\draw[ax,dotted] (-5,{ymm(0):.2f}) -- ({X_COND[1]+5:.1f},{ymm(0):.2f});")
-    w(f"  \\node[rotate=90,font=\\small] at (-17,{ymm(5):.2f}) {{Recall@10 gain (pts)}};")
-    w(f"  \\node[font=\\small] at ({X_COND[0]:.1f},-7) {{measured}};")
-    w(f"  \\node[font=\\small] at ({X_COND[1]:.1f},-7) {{permuted}};")
-    w(f"  \\node[font=\\small] at ({sum(X_COND)/2:.1f},-12) {{conditioning responses}};")
+    # ---- panel (a) -------------------------------------------------------
+    w(r"  %% panel (a): Recall@10 gain by fitting x conditioning")
+    y_axis(w, 0.0, r"Recall@10 gain (pp)")
+    w(f"  \\draw[zero] (0,{ymm(0):.2f}) -- ({X_A_END:.1f},{ymm(0):.2f});")
+    w(f"  \\draw[ax] (0,{ymm(Y_LO):.2f}) -- ({X_A_END:.1f},{ymm(Y_LO):.2f});")
+    for c, name, pair in (("M", "measured", "MM-PM"), ("P", "permuted", "MP-PP")):
+        x = X_COND[c]
+        w(f"  \\draw[ax] ({x:.1f},{ymm(Y_LO):.2f}) -- ({x:.1f},{ymm(Y_LO)-1.2:.2f});")
+        w(f"  \\node[anchor=north,font=\\small,inner sep=0pt] at ({x:.1f},{ymm(Y_LO)-2.0:.2f}) "
+          f"{{{name}}};")
+        w(f"  \\node[anchor=north,font=\\small,inner sep=0pt] at ({x:.1f},{ymm(Y_LO)-6.5:.2f}) "
+          f"{{${pair.replace('-', '{-}')}={fit_gap[c]:+.2f}$}};")
+    w(f"  \\node[anchor=north,font=\\small,inner sep=0pt] at ({X_A_END/2:.1f},{ymm(Y_LO)-11.5:.2f}) "
+      f"{{conditioning responses}};")
 
-    # ---- panel (a) family lines ----------------------------------------
-    for f in ORDER:
-        w(f"  \\draw[famM] ({X_COND[0]:.1f},{ymm(g[f]['MM']):.2f}) -- "
-          f"({X_COND[1]:.1f},{ymm(g[f]['MP']):.2f});")
-        w(f"  \\draw[famP] ({X_COND[0]:.1f},{ymm(g[f]['PM']):.2f}) -- "
-          f"({X_COND[1]:.1f},{ymm(g[f]['PP']):.2f});")
+    # family dots: drawn first so means and intervals sit on top
+    for fit in "MP":
+        for c in "MP":
+            x = X_COND[c] + FIT_DX[fit] + (FAM_DX if fit == "P" else -FAM_DX)
+            for f in ORDER:
+                w(f"  \\fill[fam] ({x:.2f},{ymm(g[f][fit + c]):.2f}) circle ({FAM_R}mm);")
+    # mean lines connect each fitting type across conditioning types
+    for fit in "MP":
+        xs = [X_COND[c] + FIT_DX[fit] for c in "MP"]
+        ys = [arm[fit + c][0] for c in "MP"]
+        w(f"  \\draw[fit{fit}] ({xs[0]:.2f},{ymm(ys[0]):.2f}) -- ({xs[1]:.2f},{ymm(ys[1]):.2f});")
+    for fit in "MP":
+        for c in "MP":
+            x = X_COND[c] + FIT_DX[fit]
+            m, lo, hi = arm[fit + c]
+            interval(w, x, lo, hi)
+            w(f"  \\filldraw[mean{fit}] ({x:.2f},{ymm(m):.2f}) circle ({MEAN_R}mm);")
 
-    # ---- panel (a) mean lines -------------------------------------------
-    w(f"  \\draw[meanM] ({X_COND[0]:.1f},{ymm(mean['MM']):.2f}) -- "
-      f"({X_COND[1]:.1f},{ymm(mean['MP']):.2f});")
-    w(f"  \\draw[meanP] ({X_COND[0]:.1f},{ymm(mean['PM']):.2f}) -- "
-      f"({X_COND[1]:.1f},{ymm(mean['PP']):.2f});")
-    for arm, x in (("MM", X_COND[0]), ("MP", X_COND[1]),
-                   ("PM", X_COND[0]), ("PP", X_COND[1])):
-        w(f"  \\draw[dot] ({x:.1f},{ymm(mean[arm]):.2f}) circle (0.8mm);")
-    tag = r"fill=white,inner sep=0.4mm,font=\small"
-    w(f"  \\node[{tag},anchor=south west] "
-      f"at ({X_COND[0]+1.0:.1f},{ymm(mean['MM'])+1.0:.2f}) {{$MM$}};")
-    w(f"  \\node[{tag},anchor=north west] "
-      f"at ({X_COND[0]+1.0:.1f},{ymm(mean['PM'])-1.0:.2f}) {{$PM$}};")
-    w(f"  \\node[{tag},anchor=north east] "
-      f"at ({X_COND[1]-1.0:.1f},{ymm(mean['MP'])-1.0:.2f}) {{$MP$}};")
-    w(f"  \\node[{tag},anchor=south east] "
-      f"at ({X_COND[1]-1.0:.1f},{ymm(mean['PP'])+1.0:.2f}) {{$PP$}};")
+    # legend in the empty upper right of panel (a)
+    lx, ly = 25.0, ymm(22.0)
+    for i, (fit, text) in enumerate((("M", "fit on measured"), ("P", "fit on permuted"))):
+        yy = ly - 4.6 * i
+        w(f"  \\draw[fit{fit}] ({lx:.1f},{yy:.2f}) -- ({lx+7:.1f},{yy:.2f});")
+        w(f"  \\filldraw[mean{fit}] ({lx+3.5:.1f},{yy:.2f}) circle ({MEAN_R}mm);")
+        w(f"  \\node[anchor=west,font=\\small,inner sep=0pt] at ({lx+8.5:.1f},{yy:.2f}) {{{text}}};")
+    yy = ly - 9.2
+    w(f"  \\fill[fam] ({lx+3.5:.1f},{yy:.2f}) circle ({FAM_R}mm);")
+    w(f"  \\node[anchor=west,font=\\small,inner sep=0pt] at ({lx+8.5:.1f},{yy:.2f}) {{one family}};")
+    w(f"  \\node[font=\\small] at ({X_A_END/2:.1f},{ymm(Y_LO)-18.5:.2f}) {{(a)}};")
 
-    # ---- panel (a) the two fitting gaps ---------------------------------
-    for x, lo, hi, lab, anchor, dx in (
-        (X_COND[0] + 3.5, mean["PM"], mean["MM"],
-         f"{mean['MM']-mean['PM']:+.2f}", "west", 1.3),
-        (X_COND[1] - 3.5, mean["MP"], mean["PP"],
-         f"{mean['MP']-mean['PP']:+.2f}", "east", -1.3),
-    ):
-        w(f"  \\draw[ax,|-|] ({x:.1f},{ymm(lo):.2f}) -- ({x:.1f},{ymm(hi):.2f});")
-        w(f"  \\node[{tag},anchor={anchor}] at ({x+dx:.1f},{ymm((lo+hi)/2):.2f}) "
-          f"{{${lab}$}};")
-    w(f"  \\node[font=\\small] at ({sum(X_COND)/2:.1f},-17) {{(a)}};")
-
-    # ---- panel (b): per-family interaction -------------------------------
+    # ---- panel (b) -------------------------------------------------------
     w(r"  %% panel (b): per-family interaction")
-    xb = 68.0
-    w(f"  \\draw[ax] ({xb-5:.1f},{ymm(Y_LO):.2f}) -- ({xb-5:.1f},{ymm(Y_HI):.2f});")
-    for t in (0, 10, 20):
-        w(f"  \\draw[ax] ({xb-5:.1f},{ymm(t):.2f}) -- ({xb-6.5:.1f},{ymm(t):.2f});")
-        w(f"  \\node[anchor=east,font=\\small] at ({xb-7:.1f},{ymm(t):.2f}) {{${fmt_tick(t)}$}};")
-    w(f"  \\draw[ax,dotted] ({xb-5:.1f},{ymm(0):.2f}) -- ({xb+X_FAM[-1]+4:.1f},{ymm(0):.2f});")
-    w(f"  \\draw[black,line width=0.6pt,dashed] ({xb-5:.1f},{ymm(inter_mean):.2f}) -- "
-      f"({xb+X_FAM[-1]+4:.1f},{ymm(inter_mean):.2f});")
-    w(f"  \\node[anchor=west,font=\\small] at ({xb+X_FAM[-1]+4.5:.1f},{ymm(inter_mean):.2f}) "
-      f"{{mean ${inter_mean:+.2f}$}};")
+    y_axis(w, XB, r"$\Delta_{\mathrm{FC}}$ (pp)")
+    w(f"  \\draw[zero] ({XB:.1f},{ymm(0):.2f}) -- ({XB+X_B_END:.1f},{ymm(0):.2f});")
+    w(f"  \\draw[ax] ({XB:.1f},{ymm(Y_LO):.2f}) -- ({XB+X_B_END:.1f},{ymm(Y_LO):.2f});")
     for f, x in zip(ORDER, X_FAM):
-        w(f"  \\draw[dot] ({xb+x:.1f},{ymm(inter[f]):.2f}) circle (0.8mm);")
-        w(f"  \\node[rotate=90,anchor=east,font=\\small] at ({xb+x:.1f},{ymm(Y_LO)-1:.2f}) "
-          f"{{{LABEL.get(f, f.upper())}}};")
-    w(f"  \\node[rotate=90,font=\\small] at ({xb-17:.1f},{ymm(5):.2f}) "
-      f"{{interaction (pts)}};")
-    w(f"  \\node[font=\\small] at ({xb+X_FAM[-1]/2:.1f},-17) {{(b)}};")
+        w(f"  \\fill[fam] ({XB+x:.1f},{ymm(inter[f]):.2f}) circle ({MEAN_R}mm);")
+        w(f"  \\node[rotate=90,anchor=east,font=\\small,inner sep=0pt] "
+          f"at ({XB+x:.1f},{ymm(Y_LO)-1.5:.2f}) {{{LABEL.get(f, f.upper())}}};")
+    xm = XB + X_MEAN
+    w(f"  \\draw[ax,densely dotted] ({xm-4.0:.1f},{ymm(Y_LO):.2f}) -- ({xm-4.0:.1f},{ymm(Y_HI):.2f});")
+    interval(w, xm, ix[1], ix[2])
+    w(f"  \\filldraw[meanM] ({xm:.1f},{ymm(ix[0]):.2f}) circle ({MEAN_R}mm);")
+    w(f"  \\node[anchor=west,font=\\small,inner sep=0pt] at ({xm+1.8:.1f},{ymm(ix[0]):.2f}) "
+      f"{{${ix[0]:+.2f}$}};")
+    w(f"  \\node[rotate=90,anchor=east,font=\\small,inner sep=0pt] "
+      f"at ({xm:.1f},{ymm(Y_LO)-1.5:.2f}) {{mean}};")
+    w(f"  \\node[font=\\small] at ({XB+X_B_END/2:.1f},{ymm(Y_LO)-18.5:.2f}) {{(b)}};")
     w(r"\end{tikzpicture}")
 
     out = ROOT / "report" / "generated" / "fig_crossed_interaction.tex"
     out.write_text("\n".join(L) + "\n", encoding="utf8")
     print(f"wrote {out.relative_to(ROOT)}")
-    print(f"  mean  MM {mean['MM']:+.2f}  MP {mean['MP']:+.2f} "
-          f" PM {mean['PM']:+.2f}  PP {mean['PP']:+.2f}")
-    print(f"  fitting effect: measured cond {mean['MM']-mean['PM']:+.2f}, "
-          f"permuted cond {mean['MP']-mean['PP']:+.2f}")
+    for k, (m, lo, hi) in arm.items():
+        print(f"  {k} gain {m:+.2f} [{lo:+.2f},{hi:+.2f}]")
+    print(f"  fitting effect: measured cond {fit_gap['M']:+.2f}, "
+          f"permuted cond {fit_gap['P']:+.2f}")
     print(f"  interaction per family: "
           + ", ".join(f"{f.upper()} {inter[f]:+.2f}" for f in ORDER))
-    print(f"  interaction mean {inter_mean:+.2f} (positive in "
+    print(f"  interaction mean {ix[0]:+.2f} [{ix[1]:+.2f},{ix[2]:+.2f}] (positive in "
           f"{sum(v > 0 for v in inter.values())}/6)")
     return 0
 

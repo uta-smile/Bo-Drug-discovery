@@ -31,6 +31,7 @@
 \newcommand{\stl}{\textsc{stl}}
 \newcommand{\mt}{\textsc{mt}}
 \newcommand{\pooled}{\textsc{pooled}}
+\newcommand{\basis}{\textsc{basis}}
 \newcommand{\rnd}{\textsc{rand}}
 \newcommand{\auxtop}{\texttt{aux\_top}}
 \newcommand{\auxnn}{\texttt{aux\_scaffold\_nn}}
@@ -43,6 +44,8 @@
 \input{generated/macros_permutation}
 \input{generated/macros_crossed}
 \input{generated/macros_avoidance}
+\input{generated/macros_decomp}
+\input{generated/macros_panel_alpha}
 
 % S-numbering for a standalone appendix.
 \renewcommand{\thesection}{S\arabic{section}}
@@ -302,6 +305,78 @@ exact two-sided $p$-value is $0.03125$. We report uncertainties and counts of
 positive families alongside tests; exploratory tests were not adjusted for
 family-wise multiplicity.
 
+\subsection{The mean-transfer arm (control C5)}
+\label{app:basis}
+
+The coregionalised model of Section~\ref{app:model-details} transfers through
+the covariance, so an auxiliary measurement at compound $m$ reduces the
+primary-target predictive variance \emph{at that compound}. Section
+\ref{app:design-ladder} quantifies the consequence: expected improvement reads
+the compressed variance as already explored, and the pooled arm selects
+historically assayed compounds at $0.288$ of their library share. The penalty
+is paid whether or not the auxiliary responses carry information, which is
+what makes it a modelling artefact rather than a finding.
+
+Control C5 removes that route by construction rather than by correction. Each
+auxiliary target $t_a$ is fitted as an independent single-task GP on its own
+history, and its posterior mean over the whole library becomes a basis
+function for the primary target. Writing $h(m)\in\mathbb R^{T-1}$ for the
+standardized auxiliary posterior means at compound $m$,
+\[
+f(m)=h(m)^\top\beta+g(m),\qquad
+g\sim\mathcal{GP}\big(0,k_{\mathrm{Tanimoto}}\big),\qquad
+\beta\sim\mathcal N\big(0,\tau^2 I\big).
+\]
+Marginalizing $\beta$ leaves an ordinary single-task GP with the augmented
+kernel
+\[
+k_{\mathrm{basis}}(m,m')=k_{\mathrm{Tanimoto}}(m,m')+\tau^2\,h(m)^\top h(m'),
+\]
+which is semi-parametric GP regression~\cite[\S2.7]{rasmussen2006gp}, also
+known as universal kriging. The arm therefore inherits the same
+likelihood, the same noise scan, and the same determinism as every other GP
+in this study; $\tau^2$ is selected by marginal likelihood on the same footing
+as $r$ is for the coregionalised model.
+
+\paragraph{What the construction does and does not remove.}
+Auxiliary rows are not entries in the conditioning set. They reach the
+posterior through $T-1$ fitted coefficients rather than through hundreds of
+conditioning events, so whatever variance they remove, they remove wherever
+the trend is confident rather than specifically at the compounds that happen
+to have been assayed. On synthetic data drawn from this kernel, the ratio of
+mean predictive standard deviation at historically assayed compounds to the
+mean elsewhere is $0.99$ for \stl{}, $0.51$ for the coregionalised model, and
+$1.05$ here.
+
+What is \emph{not} claimed is independence from the auxiliary values. The
+basis is built from those values and $\tau^2$ is refitted against them, so
+replacing them with noise does move the predictive standard deviation, and it
+should: the likelihood drops $\tau^2$ from $1.0$ to $0.03$ on a noise basis.
+The property the control relies on is the absence of \emph{compound-specific}
+deflation, which is the mechanism that drives expected improvement away from
+assayed compounds. Accordingly \basis{} is not bit-identical between measured
+and randomized auxiliary responses, and Section~\ref{app:decomp-families} does
+not treat it as if it were.
+
+\paragraph{Cost.}
+The auxiliary fits happen once, because history does not grow during a
+campaign, and cost $O(\sum_j n_j^3)$. Each subsequent BO round is $O(n_t^3)$
+in the primary observations alone, against $O((n_t+\sum_j n_j)^3)$ per round
+for the coregionalised GP. On a four-target block with $100$ historical rows
+per auxiliary target that is a $100\times100$ Cholesky factorization per round
+instead of a $400\times400$ one.
+
+\paragraph{What it gives up.}
+A well-specified coregionalised model with a correctly estimated task
+correlation \emph{should} borrow variance across targets, and declining to do
+so forfeits statistical efficiency, an argument made against mean-only
+transfer on synthetic benchmarks~\cite{tighineanu2021transfer}. Whether the
+efficiency loss or the selection artefact dominates is an empirical question
+about the data, which is why \basis{} enters as a diagnostic arm and not as a
+replacement model. The head-to-head comparisons in
+Section~\ref{app:decomp-families} show the efficiency loss is real under
+uniform histories.
+
 \section{Further transfer diagnostics}
 \label{app:transfer-diagnostics}
 
@@ -449,8 +524,10 @@ unique causal mechanisms or assign causal fractions to final recall.
 \centering\small
 \input{generated/table_crossed}
 \caption{Verified crossed-control recall gains over single-task BO, in
-percentage points. Each family averages its two budgets; condition notation
-matches main-text Table~1. The complete per-budget outcomes and additional
+percentage points. Each family averages its two budgets. $M$ denotes measured
+and $P$ permuted auxiliary responses (first letter: fitting; second:
+conditioning); these rows are the family points in main-text Fig.~3a. The
+complete per-budget outcomes and additional
 replay metrics are in the independent summary JSON.}
 \label{tab:crossed-supp}
 \end{table}
@@ -476,6 +553,7 @@ yields a recall gain of \valScaleMatchedJak{} $\pm$
 \semScaleMatchedJak{} points over \nScaleMatchedJak{} campaigns.
 
 \subsection{High-coverage CYP history-design ladder}
+\label{app:design-ladder}
 
 The twelve budget cells behind control C4, and the family-level aggregates
 computed from them, are given in the main text; this section records the
@@ -519,6 +597,122 @@ change is \avoidRecallSwingFifty{} points, reproducing
 \avoidAucSwingFifty{}, or \avoidAucFracFifty{} of the pooled AUC change.
 Each condition uses \avoidCampaignsHundred{} campaigns. These ratios
 summarize behavioral reproduction, not a causal partition of the pooled effect.
+
+\subsection{Where real panels sit on the history-design axis}
+\label{app:panel-alpha}
+
+The preferential history design of control C4 draws a compound into the
+auxiliary history with probability proportional to $\exp(\alpha z)$, for $z$
+its standardized mean auxiliary activity. Uniform sampling is $\alpha=0$, and
+the withheld design is a deliberate stress test rather than a value of
+$\alpha$. Whether the design effects in Section~\ref{app:decomp-families}
+describe anything a practitioner would meet depends on where real assay
+panels fall on this axis, which is an empirical question we can answer
+directly from BindingDB.
+
+For each of the \panelReliableTargets{} targets whose panel coverage is below
+\panelMaxCoverage{}, we treat one target as primary and the remaining three as
+the panel, and compute two scale-free statistics. The first is the
+standardized mean difference (SMD) in auxiliary activity between compounds the
+panel contains and compounds it omits. The second is the top-\panelTopK{}
+capture lift: the share of the primary target's \panelTopK{} best compounds
+that the panel holds, divided by the panel's coverage of the library. Both are
+compared against curves simulated over $\alpha\in[-6,6]$ with
+\panelRepeats{} repeats, and inverting a curve gives the $\alpha$ that would
+reproduce the observed statistic.
+
+Each curve is simulated at \emph{that panel's own coverage}. This matters:
+capture lift is bounded above by the reciprocal of coverage, so a panel
+covering $85\%$ of the library cannot exceed a lift of $1.18$ however
+selectively it was assembled, and curves computed at different coverages are
+not comparable. Targets above \panelMaxCoverage{} coverage are excluded for
+the same reason, since the statistic has too little room to resolve. We report
+all three censoring rules, because the project's default rule discards the
+largest activity pile-up, which on these larger BindingDB populations removes
+genuinely potent compounds rather than censored readouts: \texttt{low} drops
+pile-ups at or below the median only, \texttt{none} drops none, and
+\texttt{all} drops every pile-up.
+
+\begin{table}[htbp]
+\centering\small
+\input{generated/table_panel_alpha}
+\caption{Real BindingDB panels on the history-design axis. Cov.\ is the
+fraction of the primary target's library that the auxiliary panel covers. SMD
+and capture lift are reported under all three censoring rules; $\alpha$ is
+inverted under the \texttt{low} rule and is given from the SMD curve and the
+lift curve respectively where each resolves. Em dashes mark statistics that
+fall outside the simulated range. Targets with coverage above
+\panelMaxCoverage{} are omitted.}
+\label{tab:panel-alpha}
+\end{table}
+
+Table~\ref{tab:panel-alpha} shows that real panels span \emph{both}
+directions. Across the \panelAlphaTargets{} targets where a curve resolves,
+$\alpha$ runs from \panelAlphaMin{} to \panelAlphaMax{}, and the sign tracks
+what the family is used for. JAK2 and MMP2 sit at positive $\alpha$: these are
+development targets whose panels over-represent active compounds. The CYP and
+PI3K panels sit at negative $\alpha$, under-representing the primary target's
+actives. The extreme case is CYP3A4, whose panel covers
+\panelCypThreeAFourCoverage{} of the library and yet holds a capture lift of
+\panelCypThreeAFourLift{}, meaning \emph{none} of the primary target's ten
+best compounds against \panelCypThreeAFourExpected{} expected under uniform
+sampling. The withheld design of control C4, which we introduced as an
+artificial stress test, occurs naturally in this panel.
+
+Two cautions. The $\alpha$ estimates come from the \texttt{low} rule only, and
+resolve for \panelAlphaTargets{} of the \panelReliableTargets{} eligible
+targets; the SMD and lift columns, which require no inversion, are stable
+across all three rules. And a one-parameter exponential tilt is a summary of a
+real selection process, not a model of it: real panels are assembled by
+project history, assay availability and medicinal-chemistry judgement, none of
+which is a function of activity alone.
+
+\subsection{Per-family decomposition of the history design effect}
+\label{app:decomp-families}
+
+Table~\ref{tab:decomp-families} gives the per-family values behind main-text
+Table~1. The design effect is the Recall@10 gain over \stl{} under
+preferential histories minus the same gain under uniform histories, averaged
+over targets and repeats within a family. Under randomized auxiliary responses
+($q=0$) no auxiliary value carries information, so a surviving design effect
+is artefact; the information component is the $q=1$ effect minus the $q=0$
+effect. Additivity is an approximation, and it is the same approximation
+control C1 makes elsewhere.
+
+\begin{table}[htbp]
+\centering\small
+\input{generated/table_decomp_families}
+\caption{History design effect (preferential minus uniform) in Recall@10
+points, decomposed per family. The avoidance-only arm reads no auxiliary
+value, so its information row is exactly zero by construction. Only \basis{}
+has an artefact component whose confidence interval contains zero.}
+\label{tab:decomp-families}
+\end{table}
+
+\paragraph{Internal validity.}
+Arms that read no auxiliary \emph{value} must be unaffected by randomizing
+those values. Across every family, history design, and campaign, \stl{}, the
+avoidance-only arm, and a chemistry-only basis variant are bit-identical
+between $q=1$ and $q=0$. The randomization therefore introduces no design
+effect of its own, which is what licenses reading the $q=0$ column as
+artefact. \basis{} is deliberately not in that list: as
+Section~\ref{app:basis} explains, it reads the auxiliary values through the
+basis and through $\tau^2$, so it must and does differ between $q=1$ and
+$q=0$.
+
+\paragraph{Head to head.}
+Because \basis{} carries the smallest artefact, it is worth stating plainly
+that it is not the better model. Under uniform histories it trails \mt{} by
+\decompBasisMinusMtUniform{} points
+(95\% CI: \decompBasisMinusMtUniformCi{};
+$p=\decompBasisMinusMtUniformP{}$, negative in all
+\decompFamilies{} families), which is the efficiency loss that
+Section~\ref{app:basis} anticipates. Under preferential histories it leads by
+\decompBasisMinusMtPreferential{} points
+(\decompBasisMinusMtPreferentialCi{}), an interval containing zero. The
+comparison is diagnostic rather than a recommendation: the arm that recovers
+more hits under uniform sampling is also the arm carrying the larger
+design artefact.
 
 \section{Assay allocation and library overlap}
 \label{app:sharing}

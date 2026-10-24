@@ -54,7 +54,8 @@ about the action space rather than about adaptivity.
 """
 from molbo.audit import Audit  # noqa: E402
 from molbo.metrics import auc_top_k, degrade_to_rho  # noqa: E402
-from molbo.surrogate import CoregionalisedGP, TanimotoGP  # noqa: E402
+from molbo.surrogate import (  # noqa: E402
+    BasisTransferGP, CoregionalisedGP, SelectionAwareGP, TanimotoGP)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from dense_block_h1 import (  # noqa: E402
@@ -276,7 +277,22 @@ class RunDigest:
         return out
 
 
-def draw_history(K, y, size, rng, *, cluster_frac, exclude_top, k):
+def topk_capture(y, hist, k):
+    """How many of the primary target's true top-k sit in the history.
+
+    The readable form of the history design. Uniform sampling of a related
+    panel already captures more than chance (section 44 measured 1.73 of the
+    true top-10 against 0.70 expected), because related targets share actives;
+    `--history-excludes-top` forces it to 0 and `--history-prefer-aux` pushes
+    it up. Reported per draw rather than assumed, for the same reason `reach`
+    is: the knob is not the quantity.
+    """
+    top = set(np.argsort(y)[-k:].tolist())
+    return int(len(top & set(np.asarray(hist).tolist())))
+
+
+def draw_history(K, y, size, rng, *, cluster_frac, exclude_top, k,
+                 prefer=None, prefer_alpha=0.0):
     """Historical compounds, at a controllable distance from the search pool.
 
     Section 22 bounded the campaign gain between two endpoints -- history drawn
@@ -290,6 +306,27 @@ def draw_history(K, y, size, rng, *, cluster_frac, exclude_top, k):
     the history from "a different chemical series" to "a random sample of the
     same library". The achieved reach is measured per draw rather than assumed,
     because the knob is not the quantity -- the ratio is.
+
+    ``prefer`` and ``prefer_alpha`` add the axis the two endpoints above do not
+    span. Both of them, and the uniform design between them, assume the panel
+    was assembled without reference to how active the compounds turned out to
+    be. Real historical panels are not: a compound enters a panel because
+    somebody expected it to be interesting, so actives are over-represented by
+    the design, not by chance. In spatial statistics this is *preferential
+    sampling* -- the sampling locations and the measured process are not
+    independent -- and Diggle, Menezes & Su (JRSS-C 59(2):191-232, 2010) show
+    it biases ordinary kriging, with mineral exploration as the motivating
+    example: you drill where you think the ore is.
+
+    ``prefer`` is a per-compound score and ``prefer_alpha`` its strength;
+    inclusion probability is proportional to ``exp(alpha * z(score))``. The
+    score this script passes is mean standardised activity on the *auxiliary*
+    targets, which is what a panel assembler could actually have known. No
+    primary-target value is read, so unlike ``exclude_top`` this design is
+    feasible rather than a retrospective stress test.
+
+    ``prefer_alpha=0`` takes the original code path untouched, so every stored
+    run reproduces bit for bit.
     """
     n_pool = len(y)
     pool_idx = np.arange(n_pool)
@@ -303,7 +340,18 @@ def draw_history(K, y, size, rng, *, cluster_frac, exclude_top, k):
     else:
         clustered = np.empty(0, dtype=np.intp)
     rest = np.setdiff1d(pool_idx, clustered)
-    unif = rng.choice(rest, size=size - n_cluster, replace=False)
+    if prefer is None or prefer_alpha == 0.0:
+        unif = rng.choice(rest, size=size - n_cluster, replace=False)
+    else:
+        s = np.asarray(prefer, dtype=np.float64)[rest]
+        sd = float(s.std())
+        z = (s - s.mean()) / (sd if sd > 1e-12 else 1.0)
+        # Softmax over the score. Shifting by the max before exponentiating
+        # keeps a large alpha from overflowing; it cancels in the
+        # normalisation, so it does not change the distribution.
+        w = np.exp(prefer_alpha * (z - z.max()))
+        unif = rng.choice(rest, size=size - n_cluster, replace=False,
+                          p=w / w.sum())
     return np.concatenate([clustered, unif]).astype(np.intp)
 
 
@@ -492,7 +540,8 @@ def shuffle_auxiliary_responses(vals, aux_idx, others, rng, scope="library"):
 
 def run_campaign(K, y, aux_idx, aux_val, *, arm, budget, batch, n_init, k,
                  acquisition, rng, qed=None, eligible=None, seed_pool=None,
-                 init_idx=None, sd_scale=1.0, avoid_weight=None, trace=None):
+                 init_idx=None, sd_scale=1.0, avoid_weight=None, basis_rank=None,
+                 trace=None):
     """One campaign. Returns the sequence of true values, in acquisition order.
 
     The auxiliary observations are fixed before the campaign starts and never
@@ -537,6 +586,27 @@ def run_campaign(K, y, aux_idx, aux_val, *, arm, budget, batch, n_init, k,
     hist_idx = (np.unique(np.concatenate([np.asarray(a, dtype=np.intp)
                                           for a in aux_idx]))
                 if aux_idx else np.empty(0, dtype=np.intp))
+    # The auxiliary basis is fixed for the whole campaign -- history does not
+    # grow -- so it is built once here rather than refitted every round. That
+    # is most of why this arm is cheaper than the coregionalised one, and it is
+    # also the correct construction: refitting it per round could not change
+    # the answer, since no new auxiliary data ever arrives.
+    basis = None
+    if arm == "basis":
+        basis = BasisTransferGP.from_auxiliary(K, aux_idx, aux_val,
+                                               n_library=n_pool, rank=basis_rank)
+    elif arm == "basis_chem":
+        # The floor: a rank-matched trend from library chemistry alone. It is
+        # handed no auxiliary argument, so it cannot read one.
+        basis = BasisTransferGP.from_chemistry(
+            K, rank=(basis_rank if basis_rank is not None else max(len(aux_idx), 1)))
+    # The selection propensity is a property of the history, which does not
+    # grow either, so it is estimated once for the same reason the basis is.
+    # It reads only *which* compounds the panel covers, never a response.
+    propensity = None
+    if arm == "selaware" and aux_idx:
+        covered = np.unique(np.concatenate(aux_idx))
+        propensity = SelectionAwareGP.propensity(K, covered, n_pool)
     start = np.arange(n_pool) if eligible is None else np.asarray(eligible)
     if seed_pool is not None:
         # Only the *initial design* is restricted. The campaign may then select
@@ -597,6 +667,23 @@ def run_campaign(K, y, aux_idx, aux_val, *, arm, budget, batch, n_init, k,
             gp = TanimotoGP().fit_gram(K[np.ix_(obs, obs)], y[obs])
             mu, sd = gp.predict_gram(K[np.ix_(cand, obs)],
                                      k_diag=np.ones(len(cand)), return_std=True)
+        elif basis is not None:
+            # Transfer through the prior mean. The auxiliary rows never enter
+            # the conditioning set, so the Cholesky is over the primary
+            # observations alone and nothing shrinks the posterior variance at
+            # a compound merely because a relative was assayed there.
+            basis.fit_gram(K, obs, y[obs])
+            mu, sd = basis.predict_gram(K, cand, return_std=True)
+        elif arm == "selaware":
+            # Coregionalisation with the auxiliary rows discounted by how
+            # predictable the panel's membership was. gamma is scanned against
+            # the primary task's leave-one-out predictive density, and gamma=0
+            # is the uncorrected model reached exactly, so this arm can fall
+            # back onto `mt` rather than merely approach it.
+            model = SelectionAwareGP()
+            model.fit_gram(K, [obs] + aux_idx, [y[obs]] + aux_val,
+                           propensity=propensity)
+            mu, sd = model.predict_gram(K, cand, return_std=True)
         else:
             # `mt_r0` is the separation the mechanism question needs. It is the
             # joint model with the task covariance forced to be diagonal, so
@@ -744,14 +831,32 @@ def main(argv=None) -> int:
                         "neighbourhood instead of uniformly. 0 = same chemistry "
                         "as the search pool (reach ~1), 1 = a series of its own. "
                         "The achieved reach ratio is measured and reported")
+    p.add_argument("--history-prefer-aux", type=float, default=0.0,
+                   metavar="ALPHA",
+                   help="draw the history preferentially towards compounds "
+                        "that are active on the AUXILIARY targets, with "
+                        "inclusion probability proportional to "
+                        "exp(ALPHA * z(mean auxiliary activity)). 0 is the "
+                        "uniform design and the original code path. This is "
+                        "preferential sampling in the Diggle sense and is what "
+                        "a real assay panel looks like; unlike "
+                        "--history-excludes-top it reads no primary-target "
+                        "value, so it is a feasible design rather than a "
+                        "retrospective stress test")
     p.add_argument("--history-excludes-top", action="store_true",
                    help="drop the primary target's own top-k from the pool the "
                         "auxiliary history is drawn from. Tests whether the "
                         "campaign gain needs the history to point at the answer")
     p.add_argument("--arms", nargs="+", default=["stl", "mt", "pooled"],
                    choices=["stl", "mt", "pooled", "mt_r0", "stl_avoid",
+                            "basis", "basis_chem", "selaware",
                             "random", "similarity", "qed_only"],
                    help="which surrogates to run; stl alone is the budget ladder")
+    p.add_argument("--basis-rank", type=int, default=None,
+                   help="for the `basis` arm: rotate the auxiliary basis to its "
+                        "leading N principal directions instead of keeping one "
+                        "column per auxiliary target. Worth setting on a tightly "
+                        "coupled family, where the raw columns are near-collinear")
     p.add_argument("--report-druglike", type=float, default=None,
                    help="post-hoc scoring: search the FULL library, but count "
                         "only compounds above this QED as successes. The "
@@ -993,6 +1098,7 @@ def main(argv=None) -> int:
     acc = {a: {"auc": [], "recall": [], "hist_ratio": []} for a in arms}
     achieved: list[float] = []
     reaches = []
+    captures = []
     seed_sizes: list[int] = []
     seed_hits: list[int] = []
     audit = Audit(enabled=args.audit)
@@ -1048,10 +1154,22 @@ def main(argv=None) -> int:
             # have it. But it means the auxiliary data can point straight at the
             # answer, and a reviewer will say so, so it has to be possible to
             # take it away and see whether the gain survives.
+            # Preferential sampling score: mean standardised activity on the
+            # auxiliary targets. Built from `vals[:, others]` only, so the
+            # primary column is never read and the design stays feasible.
+            prefer = None
+            if args.history_prefer_aux:
+                a = vals[:, others].astype(np.float64)
+                sd = a.std(axis=0)
+                prefer = ((a - a.mean(axis=0))
+                          / np.where(sd > 1e-12, sd, 1.0)).mean(axis=1)
             hist = draw_history(K, y, args.history * len(others), g,
                                 cluster_frac=args.history_cluster,
-                                exclude_top=args.history_excludes_top, k=args.k)
+                                exclude_top=args.history_excludes_top, k=args.k,
+                                prefer=prefer,
+                                prefer_alpha=args.history_prefer_aux)
             reaches.append(reach_ratio(K, hist))
+            captures.append(topk_capture(y, hist, args.k))
             aux_idx = [hist[a * args.history:(a + 1) * args.history]
                        for a in range(len(others))]
             aux_val = [vals[aux_idx[a], others[a]] for a in range(len(others))]
@@ -1118,6 +1236,7 @@ def main(argv=None) -> int:
                     acquisition=args.acquisition, qed=qed, eligible=eligible,
                     seed_pool=seed_pool, sd_scale=args.sd_scale,
                     avoid_weight=args.avoid_weight,
+                    basis_rank=args.basis_rank,
                     # Same stream per (repeat, target) so the initial design is
                     # identical across arms; only the surrogate differs.
                     rng=np.random.default_rng(args.seed + 1009 * r + 97 * ti))
@@ -1169,9 +1288,12 @@ def main(argv=None) -> int:
     ))
 
     reach = float(np.mean(reaches)) if reaches else float("nan")
+    capture = float(np.mean(captures)) if captures else float("nan")
     print(f"\n    history reach ratio {reach:.2f} "
           f"(cluster_frac={args.history_cluster:g}; real ChEMBL libraries 0.53, "
           "co-measured block 1.00)")
+    print(f"    history captures {capture:.2f} of the primary top-{args.k} "
+          f"(prefer_aux alpha={args.history_prefer_aux:g})")
     seeding = {"mode": seed_mode}
     if seed_sizes:
         hits = float(np.mean(seed_hits))
@@ -1195,6 +1317,8 @@ def main(argv=None) -> int:
               "pile_frac": args.pile_frac,
               "history": args.history,
               "history_cluster": args.history_cluster, "reach": reach,
+              "history_prefer_aux": float(args.history_prefer_aux),
+              "topk_capture": capture,
               "history_excludes_top": bool(args.history_excludes_top),
               "budget": args.budget, "batch": args.batch, "k": args.k,
               "n_init": int(args.n_init),
@@ -1211,6 +1335,8 @@ def main(argv=None) -> int:
               "xi": float(EI_XI), "beta": float(BETA),
               "avoid_weight": (None if args.avoid_weight is None
                                else float(args.avoid_weight)),
+              "basis_rank": (None if args.basis_rank is None
+                             else int(args.basis_rank)),
               "sd_scale": float(args.sd_scale),
               "n_pool": int(n_pool), "seeding": seeding,
               "provenance": block_provenance(

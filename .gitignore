@@ -181,3 +181,9 @@ report/supplement.pdf
 
 # Local Claude Code configuration and skills.
 .claude/
+
+# Plain-language explainer of the paper (local only)
+report/explain_paper.md
+
+# Editor and manual backups
+*.bak
