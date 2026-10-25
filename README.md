@@ -11,16 +11,17 @@ protein families (JAK, CYP, DPP, HDAC, MMP, PI3K):
 
 | Control | Question |
 |---|---|
-| C1 | Does the gain need each auxiliary activity attached to the right compound? (response permutation) |
-| C2 | Does fitting on measured responses help regardless of the responses used for conditioning? (MM, MP, PM, PP) |
+| C1 | Does the gain need each auxiliary activity attached to the right compound? |
+| C2 | Does fitting on measured responses help regardless of the responses used for conditioning? |
 | C3 | Can a change in acquisition uncertainty alone reproduce the gain? |
-| C4 | Does the gain depend on which compounds the history contains? (history designs, selection control) |
+| C4 | Does the gain depend on which compounds the history contains? |
 | C5 | Is a basis transfer model less sensitive to the history design? |
 
-## 1. Install
+## Install
 
-Requirements: Python 3.11 or newer, [uv](https://docs.astral.sh/uv/), and a
-LaTeX distribution with `pdflatex` and `bibtex`. No GPU is needed.
+Requirements: Python 3.12, [uv](https://docs.astral.sh/uv/), a LaTeX
+distribution with `pdflatex` and `bibtex`, and Bash (Git Bash on Windows).
+No GPU is needed.
 
 ```bash
 git clone https://github.com/uta-smile/Bo-Drug-discovery.git
@@ -28,142 +29,70 @@ cd Bo-Drug-discovery
 uv sync
 ```
 
-## 2. Build the paper
+`uv sync` installs the exact package versions in `uv.lock`, the ones that
+produced the saved results.
 
-```bash
-cd report
-pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper
-pdflatex supplement && bibtex supplement && pdflatex supplement && pdflatex supplement
-cd ..
-```
+## Reproduce the paper
 
-This produces `report/paper.pdf` and `report/supplement.pdf`.
+All scripts live in [`experiments/`](experiments/) and run from any folder.
 
-## 3. Reproduce every number in the paper (a few minutes)
-
-All campaign results used in the paper are saved in `results/`. These commands
-recompute every number, table, and generated figure from them and write
-`report/generated/`. Nothing is rerun.
-
-```bash
-uv run python scripts/summaries.py --json results/summaries.json --tex-dir report/generated
-uv run python scripts/family_inference_audit.py --tex-dir report/generated
-uv run python scripts/family_table.py --tex report/generated/table_families.tex
-uv run python scripts/summarize_crossed_auxiliary.py --stage full --emit-tex
-uv run python scripts/make_crossed_figure.py --stage full
-uv run python scripts/coupling_by_family.py --tex report/generated/macros_coupling.tex
-uv run python scripts/avoidance_calibration.py --run --iterate 1 --tex-dir report/generated
-uv run python scripts/decompose_design.py
-uv run python scripts/panel_alpha_table.py
-```
-
-Then rebuild the paper (step 2). `git status report/generated` shows no
-changes when the saved results are untouched.
-
-| Paper content | Script | Saved results |
+| Script | What it does | Time |
 |---|---|---|
-| Multitask and pooled gains, uniform and withheld histories (Results, C4) | `summaries.py`, `family_inference_audit.py` | `winleak_*`, `win32_*` |
-| C1 and C2, Fig. 3 | `summarize_crossed_auxiliary.py`, `make_crossed_figure.py` | `crossed_auxiliary_v1/full/` |
-| Fitted coupling r̂ and family correlation (C2) | `coupling_by_family.py`, `family_table.py` | `crossed_auxiliary_v1/full/`, `data/bindingdb/` |
-| Randomized response controls (C1, Supplement) | `summaries.py`, `family_inference_audit.py` | `sdref_*`, `sdrefu_*` |
-| Uncertainty rescaling (C3) | `summaries.py` | `mech_*`, `sdscale_*` |
-| CYP history reversal and selection control (C4, Fig. 4) | `avoidance_calibration.py` | `sdrows_*`, `avoid_*`, `avoidw_*`, `avoidcal_*` |
-| History design and basis transfer (C5, Table 1) | `decompose_design.py` | `family_sweep/` |
+| `reproduce_numbers.sh` | Recomputes every number, table, and generated figure from the saved results in `results/` | minutes |
+| `build_paper.sh` | Builds `report/paper.pdf` and `report/supplement.pdf` | about a minute |
+| `01_family_comparison.sh` | Multitask and pooled BO under uniform and withheld histories (Results, C4) | hours |
+| `02_crossed_c1_c2.sh` | Crossed fitting and conditioning, MM, MP, PM, PP (C1, C2, Fig. 3) | hours |
+| `03_randomized_responses_c1.sh` | Randomized and shuffled auxiliary responses (C1, Supplement S1.2) | hours |
+| `04_uncertainty_rescaling_c3.sh` | Uncertainty rescaling of single task BO on JAK and CYP (C3) | under an hour |
+| `05_history_reversal_c4.sh` | CYP history reversal and the selection control (C4, Fig. 4) | about half an hour |
+| `06_history_design_c5.sh` | Uniform, preferential, and reversed histories with basis transfer (C5, Table 1) | hours |
+| `run_all.sh` | Runs 01 to 06, then `reproduce_numbers.sh` and `build_paper.sh` | a day or more |
 
-## 4. Rerun the experiments
-
-The six BindingDB family blocks are included in `data/bindingdb/`. Each command
-below runs one cell of 128 campaigns (4 primary targets, 32 repeats each) and
-writes one JSON file to `results/`. After rerunning, repeat step 3 and step 2.
-
-The examples use this shorthand and the two primary assay budgets of each family:
+**From the saved results** (no campaigns are rerun):
 
 ```bash
-RUN="uv run python scripts/dense_block_campaign.py --batch 10 --repeats 32 --audit"
-CELLS="jak:200 jak:300 cyp:74 cyp:111 dpp:66 dpp:99 hdac:83 hdac:125 mmp:55 mmp:82 pi3k:130 pi3k:195"
+bash experiments/reproduce_numbers.sh
+bash experiments/build_paper.sh
 ```
 
-**Multitask and pooled BO under uniform and withheld histories (Results, C4).**
+`git status report/generated` then shows no changes.
+
+**Rerunning the experiments.** Each script reruns one experiment and writes its
+campaign results to `results/`, replacing the saved files with identical ones.
+Afterwards, run `reproduce_numbers.sh` and `build_paper.sh`.
 
 ```bash
-for c in $CELLS; do f=${c%:*}; b=${c#*:}
-  $RUN --family $f --budget $b --history 50 --arms stl mt pooled --out results/winleak_${f}_b${b}.json
-  $RUN --family $f --budget $b --history 50 --arms stl mt pooled --history-excludes-top --out results/win32_${f}_b${b}.json
-done
+bash experiments/01_family_comparison.sh
+bash experiments/reproduce_numbers.sh
+bash experiments/build_paper.sh
 ```
 
-**C1 and C2, crossed fitting and conditioning.** A short smoke run, then the full run:
+Every campaign cell runs 128 campaigns (4 primary targets, 32 repeats each).
+A CYP cell takes about 4 minutes on a laptop; JAK and PI3K cells take longer.
+
+**Quick check.** Settings at the top of
+[`experiments/common.sh`](experiments/common.sh) can be overridden. This runs
+an experiment on one family with 2 repeats and writes to a separate folder, so
+the saved results stay untouched:
 
 ```bash
-uv run python scripts/crossed_auxiliary.py --stage smoke --repeats 2 --workers 4
-uv run python scripts/run_crossed_parallel.py --workers 4
+REPEATS=2 OUT=results/quick CELLS="cyp:111" LARGE="cyp:111" bash experiments/01_family_comparison.sh
 ```
 
-The protocol is described in
-[`results/crossed_auxiliary_v1/README.md`](results/crossed_auxiliary_v1/README.md).
+## Where each part of the paper comes from
 
-**C1, randomized auxiliary responses.**
+| Paper content | Experiment script | Saved results | Number script |
+|---|---|---|---|
+| Multitask and pooled gains, uniform and withheld histories | `01` | `winleak_*`, `win32_*` | `summaries.py`, `family_inference_audit.py` |
+| C1 and C2, Fig. 3, fitted coupling r̂ | `02` | `crossed_auxiliary_v1/full/` | `summarize_crossed_auxiliary.py`, `make_crossed_figure.py`, `coupling_by_family.py` |
+| Randomized response controls | `03` | `sdref_*`, `sdrefu_*` | `summaries.py`, `family_inference_audit.py` |
+| Uncertainty rescaling (C3) | `04` | `mech_*`, `sdscale_*` | `summaries.py` |
+| CYP history reversal and selection control (C4, Fig. 4) | `05` | `sdrows_*`, `avoid_*`, `avoidw_*`, `avoidcal_*` | `avoidance_calibration.py` |
+| History design and basis transfer (C5, Table 1) | `06` | `family_sweep/` | `decompose_design.py` |
+| Family table and activity correlations (Supplement S1.3) | | `data/bindingdb/` | `family_table.py` |
 
-```bash
-for f in jak:300 cyp:111; do b=${f#*:}; f=${f%:*}
-  for q in 0.0 1.0; do
-    $RUN --family $f --budget $b --history 50 --history-excludes-top --aux-quality $q --arms stl mt pooled --out results/sdref_${f}_${q}.json
-  done
-done
-for c in $CELLS; do f=${c%:*}; b=${c#*:}
-  $RUN --family $f --budget $b --history 50 --aux-quality 0 --arms stl mt pooled --out results/sdrefu_${f}_b${b}_q0.json
-  $RUN --family $f --budget $b --history 50 --aux-shuffle  --arms stl mt pooled --out results/sdrefu_${f}_b${b}_shuf.json
-done
-```
-
-**C3, uncertainty rescaling.**
-
-```bash
-$RUN --family jak --budget 300 --history 50 --history-excludes-top --aux-quality 0 --arms stl mt mt_r0 pooled --out results/mech_jak_q0.json
-$RUN --family cyp --budget 111 --history 50 --history-excludes-top --aux-quality 0 --arms stl mt mt_r0 pooled --out results/mech_cyp_q0.json
-for s in 0.50 0.70 0.80 0.85 0.90 0.95 1.00; do
-  $RUN --family jak --budget 300 --history 50 --history-excludes-top --sd-scale $s --arms stl --out results/sdscale_jak_${s}.json
-done
-for s in 0.35 0.50 0.60 0.70 0.80 0.90 1.00 1.50 2.00 4.00 8.00 20.00; do
-  $RUN --family cyp --budget 111 --history 50 --history-excludes-top --sd-scale $s --arms stl --out results/sdscale_cyp_${s}.json
-done
-```
-
-**C4, CYP history reversal and the selection control.**
-
-```bash
-for h in 10 25 100; do
-  $RUN --family cyp --budget 111 --history $h --history-excludes-top --aux-quality 0 --arms stl pooled --out results/sdrows_cyp_h${h}.json
-done
-for h in 50 100; do
-  for d in uniform withheld; do
-    X=""; [ $d = withheld ] && X="--history-excludes-top"
-    $RUN --family cyp --budget 111 --history $h $X --aux-quality 0 --arms stl pooled stl_avoid --out results/avoid_cyp_h${h}_${d}.json
-    for w in 0.00 0.10 0.25 0.50 0.75 1.00; do
-      $RUN --family cyp --budget 111 --history $h $X --aux-quality 0 --avoid-weight $w --arms stl stl_avoid --out results/avoidw_cyp_h${h}_${d}_w${w}.json
-    done
-  done
-done
-uv run python scripts/avoidance_calibration.py --run --force --iterate 1 --tex-dir report/generated
-```
-
-The last command calibrates the avoidance weight to the pooled model's own
-selection of historical compounds and runs the calibrated cells.
-
-**C5, history design and basis transfer.** Uniform (α = 0), preferential
-(α = 1), and reversed (α = −1) histories, with measured (q1) and randomized
-(q0) auxiliary responses:
-
-```bash
-for c in jak:300 cyp:111 dpp:99 hdac:125 mmp:82 pi3k:195; do f=${c%:*}; b=${c#*:}
-  for a in uniform:0 pref1:1 neg1:-1; do d=${a%:*}; alpha=${a#*:}
-    $RUN --family $f --budget $b --history 50 --history-prefer-aux $alpha \
-         --arms stl mt pooled stl_avoid basis basis_chem --out results/family_sweep/fam_${f}_${d}_q1.json
-    $RUN --family $f --budget $b --history 50 --history-prefer-aux $alpha --aux-quality 0 \
-         --arms stl mt pooled stl_avoid basis basis_chem --out results/family_sweep/fam_${f}_${d}_q0.json
-  done
-done
-```
+The six BindingDB family blocks are in `data/bindingdb/`. Figures 1, 2, and 4
+are drawn by hand and saved in `report/generated/`.
 
 ## Tests
 
