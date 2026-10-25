@@ -48,9 +48,10 @@
 \input{generated/macros_permutation}
 \input{generated/macros_crossed}
 \input{generated/macros_decomp}
+\input{generated/macros_coupling}
 
-\title{More Data, Better Molecules? Auxiliary Data in Molecular Bayesian Optimization}
-\titlerunning{When Does Auxiliary Data Help Molecular BO?}
+\title{Better Hit Recovery Is Not Evidence of Transfer: Controls for Auxiliary Assays in Molecular Bayesian Optimization}
+\titlerunning{Hit Recovery Is Not Evidence of Transfer}
 
 % RECOMB 2027 review is single-blind; verify author details before submission.
 
@@ -69,25 +70,27 @@ Arlington, TX, USA\\
 
 
 \begin{abstract}
-Historical assays from related protein targets can accelerate molecular
-Bayesian optimization (BO), but improved hit recovery does not necessarily
-indicate informative activity transfer between targets. This study examines
-how auxiliary activity values, Gaussian Process fitting, posterior
-conditioning, acquisition behavior, and historical sampling influence
-molecular screening. Across six BindingDB protein families, permuting
-auxiliary responses at fixed assay locations reduces multitask BO gains.
-Fitting on measured responses improves recall when conditioning uses
-measured activities, but impairs recall under permuted conditioning, with
-a positive interaction across all six families. On CYP, changing from
-withheld to uniform histories reverses a full pooling advantage from
-$+22.97$ to $-23.05$ percentage points despite randomized auxiliary
-responses. A selection control using no auxiliary response values
-reproduces much of this sensitivity. When auxiliary responses are randomized, changing from uniform to
-preferential historical sampling does not significantly change the
-Recall@10 gain of a basis transfer model, unlike the reductions observed
-for multitask and pooled BO. Together, these experiments distinguish
-gains that depend on measured compound activities from those associated
-with model fitting, compound coverage, and selection behavior.
+Historical assays from related protein targets can accelerate the search
+for active compounds, but an improvement in hit recovery does not show
+that activity information has transferred between targets. We introduce
+controls that separate activity transfer from model fitting, acquisition,
+and historical compound coverage in multitask Bayesian optimization (BO):
+response permutation at fixed assay locations, a crossed design of
+Gaussian Process fitting against posterior conditioning, and historical
+sampling controls. Across six BindingDB protein families, measured
+auxiliary responses outperform permuted ones, with a Recall@10 difference
+of \crossPrimary{} percentage points that favors measured responses in
+all six families. Fitting on measured responses helps when the posterior
+conditions on measured activities and hurts under permuted conditioning
+(interaction \crossInteraction{} points, positive in all six families),
+because measured fitting raises the learned coupling between targets
+from \couplingPermuted{} to \couplingMeasured{}, in line with each
+family's activity correlation (Spearman \couplingVsCorr{}). Separately,
+a selection control that never reads auxiliary activities reproduces
+\avoidRecallFracHundred{} of a CYP pooling reversal that occurs when the
+historically assayed compounds change. Our results suggest caution when
+reading multitask BO gains as evidence of biological transfer unless
+response permutation and sampling controls are reported.
 Code and reproduction instructions are available at
 \url{https://github.com/uta-smile/Bo-Drug-discovery}.
 \end{abstract}
@@ -105,9 +108,9 @@ Finding compounds that act on a protein target is a central task in early stage 
 
 Bayesian optimization (BO) addresses limited assay budgets by iteratively selecting compounds using a predictive model and an acquisition function \cite{jones1998ego,shahriari2016taking,hie2020leveraging,bellamy2022batched}. In molecular BO, early selections are particularly consequential because relatively few measurements are available for the target of interest \cite{graff2021accelerating,gao2022pmo}. Multitask models can incorporate assays collected for related proteins and may improve the recovery of active compounds without consuming additional primary target assays \cite{zhao2020multitask,swersky2013multitask,ramsundar2015massively}. However, improved hit recovery is not, by itself, evidence that a model has learned useful compound activity relationships across targets~\cite{xu2017demystifying}. Auxiliary observations can also change Gaussian Process (GP) parameter estimation, posterior uncertainty, and acquisition decisions. Even which compounds appear in a historical assay panel can influence the search. Consequently, the same observed gain can support very different conclusions about the biological information being transferred.
 
-Previous work has developed multitask GP models for sharing information across tasks \cite{bonilla2007multitask,swersky2013multitask,tighineanu2021transfer}, methods that learn GP priors from previous optimization tasks \cite{wang2024hyperbo}, and approaches for combining measurements with differing fidelity or cost \cite{mcdonald2025multifidelity}. Recent analyses distinguish shared parameter transfer from transfer through correlated function values \cite{sedgwick2025transfer}, and show that response standardization and limited observation overlap complicate task correlation inference \cite{hvarfner2026pitfalls}. These advances motivate a complementary question for molecular screening: when related target assays improve the sequence of selected compounds, how much of that improvement requires the measured activities to remain associated with the correct molecules?
+Previous work has developed multitask GP models for sharing information across tasks \cite{bonilla2007multitask,swersky2013multitask,tighineanu2021transfer}, methods that learn GP priors from previous optimization tasks \cite{wang2024hyperbo}, and approaches for combining measurements with differing fidelity or cost \cite{mcdonald2025multifidelity}. Recent analyses distinguish shared parameter transfer from transfer through correlated function values \cite{sedgwick2025transfer}, and show that response standardization and limited observation overlap complicate task correlation inference \cite{hvarfner2026pitfalls}. These advances motivate a complementary question for molecular screening: when related target assays improve the sequence of selected compounds, how much of that improvement requires the measured activities to remain associated with the correct molecules? To our knowledge, no study of multitask BO has permuted auxiliary activities while holding their assay locations fixed, or crossed the responses used for GP fitting with those used for posterior conditioning.
 
-We investigate this question through controlled retrospective screening experiments using BindingDB measurements \cite{bindingdb2016} from six protein families: JAK, CYP, DPP, HDAC, MMP, and PI3K. In each family, one protein is treated as the primary screening target and three as sources of historical auxiliary assays. We first permute auxiliary activity values within each target while keeping their empirical distributions and observed compound locations fixed. We then cross the responses used for GP parameter fitting with those used for posterior conditioning, allowing us to study their interaction in full sequential campaigns. Matched state replays additionally examine immediate compound selection with the same primary observations. Finally, we test uncertainty rescaled acquisition and changes to historical compound coverage, including a selection control that uses no auxiliary response values (Fig.~\ref{fig:design}). An additional control summarizes auxiliary observations through predictive features without directly conditioning on their individual assay rows.
+We investigate this question through controlled retrospective screening experiments using BindingDB measurements \cite{bindingdb2016} from six protein families: JAK, CYP, DPP, HDAC, MMP, and PI3K. In each family, one protein is treated as the primary screening target and three as sources of historical auxiliary assays, with each protein taking the primary role in turn. We first permute auxiliary activity values within each target while keeping their empirical distributions and observed compound locations fixed. We then cross the responses used for GP parameter fitting with those used for posterior conditioning, allowing us to study their interaction in full sequential campaigns. Matched state replays additionally examine immediate compound selection with the same primary observations. Finally, we test uncertainty rescaled acquisition and changes to historical compound coverage, including a selection control that uses no auxiliary response values (Fig.~\ref{fig:design}).
 
 % ---------------------------------------------------------
 % Figure 1: Overview of the experimental design
@@ -142,9 +145,12 @@ We investigate this question through controlled retrospective screening experime
 
 The experiments are organized to move from detecting useful activity
 correspondence to explaining how the surrogate and the sampled historical
-compounds influence screening. The resulting comparisons are intended to
-improve interpretation of existing transfer policies rather than propose
-one model as universally preferable.
+compounds influence screening. Our central message is that improved hit
+recovery is not, by itself, evidence of useful biological transfer, and
+that specific matched comparisons reveal what historical assays actually
+contribute. We contribute these comparisons as a reusable set of
+statistical controls for any multitask BO campaign, not as a new
+optimizer.
 
 \paragraph{Contributions.}
 The main contributions are:
@@ -155,19 +161,26 @@ A response permutation control preserves historical compounds and
 activity distributions while breaking their association. This tests
 whether the observed screening advantage requires the measured activity
 of each compound, rather than just the presence of historical assays.
+Measured responses outperform permuted ones by a Recall@10 difference
+of \crossPrimary{} points, in all six families.
 
 \item \textbf{Separating GP fitting from posterior conditioning.}
 A four policy experiment independently varies auxiliary responses used
 to fit GP parameters and to condition the posterior. The resulting
 interaction and matched decision replays identify when measured
-responses change the compounds selected for screening.
+responses change the compounds selected for screening. The interaction
+is \crossInteraction{} points and positive in all six families, and the
+fitted coupling links it to the measured activity similarity of each
+protein family.
 
 \item \textbf{Explaining gains that survive response randomization.}
 Acquisition and historical sampling controls assess how screening can
 change without correct auxiliary activity assignments. A basis transfer
 control then tests whether this sensitivity differs when auxiliary
 predictions enter the primary GP as features instead of direct
-conditioning observations.
+conditioning observations. A selection control that never reads
+auxiliary activities reproduces \avoidRecallFracHundred{} of the CYP
+pooling reversal.
 
 \end{enumerate}
 
@@ -177,12 +190,6 @@ conditioning observations.
 % Retains the existing labels/macros and cites original supplementary sections.
 \section{Methods}
 \label{sec:framework}
-
-The evaluation combines five controls. The first two test how measured
-auxiliary activities influence screening; the remaining controls examine
-changes caused by acquisition, historical compound selection, and the
-transfer model. Each comparison answers a specific question, but none
-alone provides a complete causal explanation of recall gains.
 
 \subsection{Screening Setting and BO Models}
 \label{sec:matrix}
@@ -285,7 +292,19 @@ without imputing unmeasured activities.
 Recall@10 is the fraction of the ten compounds with highest
 measured primary target activity that a campaign discovers within its
 primary assay budget. Differences in Recall@10 are reported in
-percentage points.
+percentage points. Each family is evaluated at two primary assay
+budgets (12 family and budget settings), starting from 10 random
+compounds and selecting batches of 10; each setting averages 128
+campaigns, 32 per primary target (Supplement~S1.5).
+
+Family level inference uses a two sided Wilcoxon signed rank test over
+the six family effects, reported with 95\% $t$ intervals; targets,
+campaigns, and budgets are aggregated within families rather than
+counted as independent replicates. With six families, the smallest
+attainable $p$ value is $0.031$, reached only when all six effects share
+a sign. The C1 permutation contrast and the C2 interaction are the
+primary tests; the remaining tests are exploratory and are not adjusted
+for multiplicity.
 
 The resulting panels contain between 248 and 904
 compounds. Although this design supports matched
@@ -408,9 +427,7 @@ k_{\mathrm{Tanimoto}}(m,m')
 with hyperparameters fitted by marginal likelihood.
 Auxiliary activity information thus reaches the primary GP through
 predictive features, not through direct conditioning on auxiliary assay
-rows. These features can affect both primary predictions and their
-uncertainty. Unlike \mt{} and \pooled{}, the primary GP does not
-condition directly on historical auxiliary assay rows. The comparison
+rows. The comparison
 therefore tests whether the route used to incorporate auxiliary data
 changes sensitivity to the sampling design~\cite{tighineanu2021transfer}.
 
@@ -419,7 +436,7 @@ changes sensitivity to the sampling design~\cite{tighineanu2021transfer}.
 \section{Results}
 \label{sec:results}
 
-\paragraph{Initial comparison under uniform histories.}
+\paragraph{Multitask BO helps in every family; full pooling does not.}
 Under uniform historical sampling, \mt{} improves Recall@10 over
 \stl{} in all 12 family and budget settings, with a mean gain of
 \valMtUniform{} percentage points across the six families. Complete
@@ -456,11 +473,6 @@ and the observations used for posterior conditioning. C1 therefore
 establishes that the response assignments matter, but not which use
 of those responses accounts for the improvement.
 
-Inference in this section treats the six protein families as the
-independent units. Targets, campaigns, and budgets are aggregated
-within families rather than counted as separate biological
-replicates (Methods; Supplement~S2).
-
 \subsection{Useful GP Fitting Depends on Subsequent Conditioning}
 \label{sec:res-mech}
 
@@ -494,6 +506,28 @@ better than randomized ones: a GP fitted on measured activities can
 perform worse when its posterior is then conditioned on permuted
 activities. Parameter fitting and conditioning must therefore be
 considered together when interpreting apparent activity transfer.
+
+\paragraph{The fitted coupling explains the interaction.}
+Fitting on
+measured responses gives a mean coupling of $\hat r=\,$\couplingMeasured{}
+(family range \couplingMeasuredMin{} to \couplingMeasuredMax{}), whereas
+fitting on permuted responses gives \couplingPermuted{}, with $\hat r=0$
+in \couplingPermutedZeroPct{} of fitted states. A measured fit therefore
+opens a route through which the conditioning responses reach the primary
+posterior: measured conditioning then helps, and permuted conditioning
+then hurts, more than under a permuted fit that largely ignores the
+auxiliary rows. The interaction is thus a consequence of the learned
+coupling rather than a separate effect. Across families, the measured
+coupling tracks the median pairwise activity correlation between
+targets (Spearman \couplingVsCorr{}; Supplement~S1.3), from
+\couplingMeasuredLowFamily{} (correlation \couplingLowFamilyCorr{})
+to \couplingMeasuredHighFamily{} (\couplingHighFamilyCorr{}), and the
+conditioning benefit after measured fitting ($MM-MP$) follows the same
+family order as $\hat r$ (Spearman \condVsCoupling{}). These six family
+associations are descriptive, but they connect the interaction to a
+biological quantity: the GP learns a coupling consistent with how
+similarly the related proteins rank the same compounds, and that
+coupling limits how much the measured activities can contribute.
 
 \begin{figure}[!htbp]
 \centering
@@ -540,7 +574,11 @@ They do not imply that every gain from auxiliary assays has that
 origin. One alternative is that the GP changes the balance between
 exploring uncertain compounds and favoring compounds with high
 predicted activity. C3 tests this possibility by changing only the
-uncertainty supplied to the \stl{} acquisition function.
+uncertainty supplied to the \stl{} acquisition function. Gains that
+survive randomization are clearest when the primary target's best
+compounds are absent from history, so C3 uses the withheld history
+stress test of C4; under uniform histories, the CYP \pooled{} gain with
+randomized responses is instead \pooledRecallUniformFifty{} points.
 
 On JAK, \mt{} has about $0.80$ times the predictive standard deviation
 of \stl{} near 50 observed primary compounds. Scaling the \stl{}
@@ -557,8 +595,7 @@ $c\in[0.35,20]$, the best \stl{} gain is only $+0.08$ points,
 compared with \valMechCypPooled{} points for \pooled{} with
 randomized responses. Changes in the acquisition uncertainty input
 therefore account for some, but not all, gains that survive
-randomization. This experiment does not evaluate GP uncertainty
-calibration (Supplement~S2).
+randomization.
 
 \paragraph{Which compounds were historically assayed matters (C4).}
 If changing acquisition uncertainty does not explain the CYP gain,
@@ -570,6 +607,12 @@ sampled histories. With 100 observations per auxiliary target
 from a $+22.97$ point advantage over \stl{} under withheld histories
 to a $-23.05$ point disadvantage under uniform histories. This is
 a 46.02 percentage point reversal (Fig.~\ref{fig:cyp-sampling}a).
+At this size, the auxiliary histories cover \avoidCoverageHundred{} of
+the 335 compound CYP library, so a uniform history almost always
+contains the primary target's best compounds, whereas a withheld history
+never does. The CYP reversal is therefore an extreme case of history
+composition, and the six family estimate below gives its typical
+magnitude.
 Because the auxiliary responses are randomized, the reversal cannot
 be attributed to correct measured response assignments in this
 experiment. Withholding uses knowledge of the primary target's true
@@ -603,12 +646,14 @@ compared with $0.542$ on other compounds. Lower uncertainty at
 historical locations can make them less attractive to Expected
 Improvement. Avoiding such compounds could help when the best primary
 hits are absent from history, but could hurt when those hits are
-included. These measurements suggest a plausible explanation;
-they do not, by themselves, prove what caused the recall reversal.
+included. These measurements suggest, but do not prove, this
+explanation.
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=\linewidth]{generated/results_fig_cyp_sampling_editable.pdf}
+\includegraphics[width=\linewidth,
+        height=0.35\textheight,
+        keepaspectratio]{generated/results_fig_cyp_sampling_editable.pdf}
 \caption{Historical sampling sensitivity on CYP (C4).
 (a) Full pooling Recall@10 gain over \stl{} with randomized ($q=0$) auxiliary
 responses and 100 historical observations per auxiliary target (300 in total) under
@@ -655,9 +700,7 @@ $q=1$ uses measured auxiliary responses and $q=0$ uses randomized
 responses. A negative value means the model loses more of its
 advantage over \stl{} under preferential sampling.
 
-The randomized response comparison tests which sampling effects
-persist without correct activity assignments. Importantly,
-preferential historical locations were originally chosen using
+Preferential historical locations were originally chosen using
 measured auxiliary activities. They may therefore remain
 informative even after the activities attached to those locations
 are randomized. The difference $D(1)-D(0)$ compares two experimental
@@ -694,18 +737,18 @@ to uniform sampling in all six families
 For \basis{}, the estimated change is \decompBasisArtefact{}
 percentage points (95\% CI: \decompBasisArtefactCi{}); this
 comparison does not show a statistically significant change in its
-recall advantage between the two sampling designs. The sampling change is detectable for the joint GP policies,
-but not for the basis transfer control. A statistically significant
-effect for one model and a nonsignificant effect for another do not,
-however, establish a significant difference between the models. A direct paired comparison of their sampling effects
-would be needed for that conclusion.
+recall advantage between the two sampling designs. A significant effect
+for one model and a nonsignificant effect for another do not, however,
+establish a difference between the models.
 
 The choice of transfer model also affects hit recovery itself.
 Under uniform histories, \basis{} trails \mt{} by
 \decompBasisMinusMtUniform{} points (95\% CI:
 \decompBasisMinusMtUniformCi{};
 $p=\decompBasisMinusMtUniformP{}$,
-\decompBasisMinusMtUniformPositive{}/\decompFamilies{} families).
+\decompBasisMinusMtUniformPositive{}/\decompFamilies{} families; the
+signed rank test reflects the consistent sign, while the $t$ interval
+reflects the spread of magnitudes).
 Under preferential histories, the difference is
 \decompBasisMinusMtPreferential{} points (95\% CI:
 \decompBasisMinusMtPreferentialCi{}). Basis transfer is therefore a
@@ -724,7 +767,10 @@ adds an important qualification: using measured auxiliary data to fit
 a GP is not automatically beneficial unless its subsequent
 conditioning data support those fitted relationships. The positive
 fitting and conditioning interaction across six families provides a
-specific diagnostic for this dependence. Together, these experiments
+specific diagnostic for this dependence, and the fitted coupling
+explains it: measured fitting raises $\hat r$ roughly in proportion to
+how similarly the family's proteins rank compounds, which amplifies
+whichever responses are then conditioned on. Together, these experiments
 support a contribution from measured compound activities, rather than
 attributing every multitask gain to shared biological function.
 
@@ -737,22 +783,15 @@ historically assayed. The response free avoidance control reproduces
 much of this sensitivity, while the uncertainty scaling experiment
 accounts for a JAK gain but not the CYP pooling result. No single
 acquisition explanation fits every family, and the avoidance penalty
-was calibrated from \pooled{} selections. These tests identify
-plausible routes to performance changes rather than uniquely dividing
-each recall gain into biological and nonbiological components.
+was calibrated from \pooled{} selections.
 
 \paragraph{What the basis comparison adds.}
-The basis transfer GP uses predictions from separate auxiliary models
-without conditioning the primary GP on their individual assay rows.
-Under randomized responses, the experiments detect a reduction in
-recall advantage from uniform to preferential histories for \mt{}
-and \pooled{}, but not a statistically significant change for
-\basis{}. This comparison raises the possibility that sampling
-sensitivity depends on the transfer architecture. It does not show
-that basis transfer has zero sensitivity, nor does it establish a
-statistically significant difference between architectures. Its value
-is to ask whether the same conclusion about historical data holds
-when those data enter the model differently.
+Under randomized responses, preferential sampling detectably reduces
+the advantage of \mt{} and \pooled{}, but not of \basis{}, which does
+not condition on individual auxiliary assay rows. This raises the
+possibility that sampling sensitivity depends on the transfer
+architecture, without establishing a significant difference between
+architectures.
 
 \paragraph{Biological meaning depends on the screening objective.}
 Proteins in the same family often recognize related chemical features,
@@ -760,7 +799,11 @@ but may have different ligand preferences. Pooling their activities
 therefore need not improve screening for a particular primary target
 \cite{wang2019negative,xu2017demystifying}. Activity on another target
 may be desirable for a multitarget drug, yet undesirable when
-selectivity is important\cite{paolini2006global,lankas2005dpp,vandenbroucke2014mmp}.
+selectivity is important~\cite{paolini2006global,lankas2005dpp,vandenbroucke2014mmp}.
+DPP illustrates both points: selectivity of DPP4 inhibitors over DPP8
+and DPP9 is a recognized safety consideration~\cite{lankas2005dpp}, and
+DPP has the weakest activity correlation and the smallest learned
+coupling of the six families.
 Historical assays for such targets may still be useful as constraints
 rather than as positive training examples. The present experiments
 optimize primary target Recall@10, not selectivity, so they do not
@@ -772,30 +815,33 @@ The study uses retrospective BindingDB panels of 248 to 904 compounds,
 requiring measurements on all four targets. These panels allow matched
 comparisons but favor densely characterized compounds and do not
 represent the missing measurements common in prospective campaigns.
-Biological inference is based on six families, not on the larger
-number of repeated simulations. Withheld histories require knowledge
+Withheld histories require knowledge
 of the true primary hits and are only a stress test. The GP uses
-ECFP4 fingerprints with a single nonnegative coupling parameter;
-protein sequence and structure are not model inputs. We have not
+ECFP4 fingerprints with a single nonnegative coupling parameter, so
+neither the three dimensional structure of the molecules nor protein
+sequence or structure enters the model. A structure aware surrogate
+built on a state of the art molecular encoder may extract more from
+historical assays than fingerprints do; whether the controls reach the
+same verdicts under such a model is untested. We have not
 tested prospective assay savings, generalization to broader chemical
-spaces, or improvements in target selectivity. The crossed policies
-and matched decision replays also do not provide a unique causal
-partition of final campaign performance.
+spaces, or improvements in target selectivity.
 
 \paragraph{Implications and future evaluation.}
-A screening comparison should report not only final hit recovery but
-also which compounds were included in auxiliary histories, whether
-correctly matched auxiliary activities matter, and whether changing
-the acquisition rule or transfer model changes the result. The
-crossed fitting and conditioning experiment is particularly useful
-when attributing improvements to shared activity information.
+A claim that auxiliary assays transfer useful activity information
+should report, beyond final hit recovery:
+(i) a response permutation control at fixed historical locations (C1);
+(ii) the crossed fitting and conditioning contrast, together with the
+fitted coupling (C2);
+(iii) which compounds the auxiliary histories contain, with withheld
+or other outcome dependent designs labelled as stress tests (C4);
+(iv) a selection control that uses no auxiliary responses (C4); and
+(v) whether changing the acquisition rule or transfer model changes the
+result (C3, C5).
 Future work could test these diagnostics on naturally sparse assay
 histories and prospectively collected measurements. Sequence,
 structure, and binding site representations may also help assess
 which protein targets are relevant before transferring assays
-\cite{vanwesten2011pcm,cortesciriano2015pcm}. Such models would need
-to be evaluated against explicit primary activity and selectivity
-objectives rather than family membership alone.
+\cite{vanwesten2011pcm,cortesciriano2015pcm}.
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -804,15 +850,15 @@ Historical assays improved molecular BO in several settings, but
 those gains had different explanations. Correctly matched auxiliary
 activities contributed to hit recovery, and the benefit of fitting
 on measured responses depended on the values subsequently used for
-posterior conditioning. At the same time, historical compound
+posterior conditioning, through a learned coupling that tracked the
+activity similarity of each protein family. At the same time, historical compound
 coverage and acquisition behavior changed screening performance
 even after auxiliary responses were randomized. The basis transfer
 comparison showed that sampling sensitivity may also vary with how
-auxiliary predictions enter the GP. For molecular screening, the
-relevant question is therefore not only whether historical assays
-improve recall, but whether the improvement depends on informative
-activity measurements and remains reliable under different sampling
-and modeling choices.
+auxiliary predictions enter the GP. Our results therefore suggest
+caution when reading hit recovery gains from related target assays as
+evidence of biological transfer unless a response permutation control
+and the historical sampling design are reported.
 
 
 % Flush main-text floats before the excluded bibliography.
